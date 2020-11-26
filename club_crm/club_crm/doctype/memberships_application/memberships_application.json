@@ -1,0 +1,442 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2020-10-29 03:13:49.396620",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "gm_date",
+  "membership_id",
+  "client",
+  "client_name",
+  "column_break_2",
+  "company",
+  "application_status",
+  "status",
+  "type",
+  "disabled",
+  "memberships_details_section",
+  "application_type",
+  "membership_plan",
+  "benefits_plan",
+  "discount_amount",
+  "payment_details_column",
+  "membership_fee",
+  "joining_fee",
+  "total",
+  "grand_total",
+  "section_break_3",
+  "full_name",
+  "date_of_birth",
+  "nationality",
+  "qid_number",
+  "occupation",
+  "attach_qid",
+  "attach_qid_back",
+  "column_break_11",
+  "gender",
+  "mobile_number",
+  "landline_number",
+  "email_address",
+  "emergency_contact_number",
+  "emergency_contact_name",
+  "details_of_second_member_section",
+  "second_member_full_name",
+  "second_member_date_of_birth",
+  "second_member_nationality",
+  "second_member_qid_number",
+  "second_member_occupation",
+  "attach_qid_2",
+  "attach_back",
+  "1_column",
+  "second_member_gender",
+  "second_member_mobile_number",
+  "second_member_email_address",
+  "client_second",
+  "section_break_28",
+  "family_members",
+  "client_flamiy",
+  "section_break_39",
+  "how_did_you_hear_about_katara_club_section",
+  "other",
+  "column_break_40",
+  "amended_from",
+  "section_break_55",
+  "membershi_couple_item",
+  "membership_item"
+ ],
+ "fields": [
+  {
+   "default": "MEM-APP-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Naming Series",
+   "options": "MEM-APP-.YYYY.-"
+  },
+  {
+   "default": "Single Membership",
+   "fieldname": "application_type",
+   "fieldtype": "Link",
+   "label": "Membership Type",
+   "options": "Memberships Type"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "client",
+   "fieldtype": "Link",
+   "label": "Client ID",
+   "options": "Client"
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break",
+   "label": "Details of Primary Member"
+  },
+  {
+   "fetch_from": "client.client_name",
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Full Name",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "client.birth_date",
+   "fieldname": "date_of_birth",
+   "fieldtype": "Date",
+   "label": "Date Of Birth"
+  },
+  {
+   "fetch_from": "client.nationality",
+   "fieldname": "nationality",
+   "fieldtype": "Data",
+   "label": "Nationality"
+  },
+  {
+   "fetch_from": "client.qatar_id",
+   "fieldname": "qid_number",
+   "fieldtype": "Data",
+   "label": "QID Number"
+  },
+  {
+   "fieldname": "emergency_contact_number",
+   "fieldtype": "Data",
+   "label": "Emergency Contact Number"
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "client.mobile",
+   "fieldname": "mobile_number",
+   "fieldtype": "Data",
+   "label": "Mobile Number"
+  },
+  {
+   "fieldname": "landline_number",
+   "fieldtype": "Data",
+   "label": "Landline Number"
+  },
+  {
+   "fetch_from": "client.email",
+   "fieldname": "email_address",
+   "fieldtype": "Data",
+   "label": "Email Address"
+  },
+  {
+   "fetch_from": "client.sex",
+   "fieldname": "gender",
+   "fieldtype": "Link",
+   "label": "Gender",
+   "options": "Gender"
+  },
+  {
+   "fieldname": "occupation",
+   "fieldtype": "Data",
+   "label": "Occupation"
+  },
+  {
+   "fieldname": "emergency_contact_name",
+   "fieldtype": "Data",
+   "label": "Emergency Contact Name"
+  },
+  {
+   "depends_on": "eval:doc.application_type == \"Couple Membership\"",
+   "fieldname": "details_of_second_member_section",
+   "fieldtype": "Section Break",
+   "label": "Details of Second Member"
+  },
+  {
+   "fieldname": "second_member_full_name",
+   "fieldtype": "Data",
+   "label": "Full Name"
+  },
+  {
+   "fieldname": "second_member_date_of_birth",
+   "fieldtype": "Date",
+   "label": "Date Of Birth"
+  },
+  {
+   "fieldname": "second_member_gender",
+   "fieldtype": "Data",
+   "label": "Gender"
+  },
+  {
+   "fieldname": "second_member_nationality",
+   "fieldtype": "Data",
+   "label": "Nationality"
+  },
+  {
+   "fieldname": "second_member_qid_number",
+   "fieldtype": "Data",
+   "label": "QID Number"
+  },
+  {
+   "fieldname": "second_member_occupation",
+   "fieldtype": "Data",
+   "label": "Occupation"
+  },
+  {
+   "fieldname": "1_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "second_member_mobile_number",
+   "fieldtype": "Data",
+   "label": "Mobile Number"
+  },
+  {
+   "fieldname": "second_member_email_address",
+   "fieldtype": "Data",
+   "label": "Email Address"
+  },
+  {
+   "depends_on": "eval:doc.application_type == \"Family Membership\"",
+   "fieldname": "section_break_28",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "family_members",
+   "fieldtype": "Table",
+   "label": "Children Details ",
+   "options": "Membership Family Item"
+  },
+  {
+   "fieldname": "how_did_you_hear_about_katara_club_section",
+   "fieldtype": "Section Break",
+   "label": "How did you hear about Katara Club?"
+  },
+  {
+   "fieldname": "column_break_40",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "other",
+   "fieldtype": "Data"
+  },
+  {
+   "default": "Today",
+   "fieldname": "gm_date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Memberships Application",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "membership_plan",
+   "fieldtype": "Link",
+   "label": "Membership Plan",
+   "options": "Memberships Plan"
+  },
+  {
+   "fieldname": "attach_qid",
+   "fieldtype": "Attach",
+   "label": "Attach QID Front"
+  },
+  {
+   "fieldname": "attach_qid_2",
+   "fieldtype": "Attach",
+   "label": "Attach QID Front"
+  },
+  {
+   "fieldname": "section_break_39",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fetch_from": "membership_plan.membership_fee",
+   "fieldname": "membership_fee",
+   "fieldtype": "Currency",
+   "label": "Membership Fee",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "membership_plan.joining_fee",
+   "fieldname": "joining_fee",
+   "fieldtype": "Currency",
+   "label": "Joining Fee",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "membership_plan.benefits_item",
+   "fieldname": "benefits_plan",
+   "fieldtype": "Link",
+   "label": "Benefits Plan",
+   "options": "Benefits Plan",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total",
+   "fieldtype": "Currency",
+   "label": "Net Total",
+   "read_only": 1
+  },
+  {
+   "fieldname": "membership_id",
+   "fieldtype": "Data",
+   "label": "Membership ID",
+   "read_only": 1
+  },
+  {
+   "default": "Not Paid",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Payment Status",
+   "options": "Not Paid\nPaid"
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Disabled"
+  },
+  {
+   "fieldname": "application_status",
+   "fieldtype": "Select",
+   "label": "Application Status",
+   "options": "Pending\nApproved\nRejected"
+  },
+  {
+   "fieldname": "client_second",
+   "fieldtype": "Link",
+   "label": "Client Second",
+   "options": "Client",
+   "read_only": 1
+  },
+  {
+   "fieldname": "client_flamiy",
+   "fieldtype": "Link",
+   "label": "Client Flamiy",
+   "options": "Client",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "client.client_name",
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "label": "Client Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_55",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "fieldname": "membershi_couple_item",
+   "fieldtype": "Table",
+   "label": "Membershi Couple Item",
+   "options": "Membershi Couple Item"
+  },
+  {
+   "fieldname": "membership_item",
+   "fieldtype": "Table",
+   "label": "Membership Item",
+   "options": "Membership Item"
+  },
+  {
+   "fieldname": "memberships_details_section",
+   "fieldtype": "Section Break",
+   "label": "Memberships Details"
+  },
+  {
+   "fieldname": "payment_details_column",
+   "fieldtype": "Column Break",
+   "label": "Payment Details"
+  },
+  {
+   "fieldname": "attach_qid_back",
+   "fieldtype": "Attach",
+   "label": "Attach QID Back"
+  },
+  {
+   "fieldname": "attach_back",
+   "fieldtype": "Attach",
+   "label": "Attach QID Back"
+  },
+  {
+   "fieldname": "discount_amount",
+   "fieldtype": "Currency",
+   "label": "Discount Amount"
+  },
+  {
+   "fieldname": "grand_total",
+   "fieldtype": "Currency",
+   "label": "Grand Total",
+   "read_only": 1
+  },
+  {
+   "default": "Individual",
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "label": "Type",
+   "options": "Individual\nFamily\nCorporate"
+  }
+ ],
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2020-11-21 20:52:04.046056",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Memberships Application",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

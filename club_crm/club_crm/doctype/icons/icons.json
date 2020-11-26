@@ -1,0 +1,84 @@
+{
+ "actions": [],
+ "creation": "2020-11-11 14:49:04.224290",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "icons_section",
+  "check_in",
+  "order_food",
+  "pt_sessions",
+  "column_break_5",
+  "request_valet",
+  "group_classes",
+  "spa_bookings"
+ ],
+ "fields": [
+  {
+   "fieldname": "icons_section",
+   "fieldtype": "Section Break",
+   "label": "Icons"
+  },
+  {
+   "fieldname": "check_in",
+   "fieldtype": "Attach Image",
+   "label": "Check-In"
+  },
+  {
+   "fieldname": "order_food",
+   "fieldtype": "Attach Image",
+   "label": "Order Food"
+  },
+  {
+   "fieldname": "pt_sessions",
+   "fieldtype": "Attach Image",
+   "label": "PT Sessions"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "request_valet",
+   "fieldtype": "Attach Image",
+   "label": "Request Valet"
+  },
+  {
+   "fieldname": "group_classes",
+   "fieldtype": "Attach Image",
+   "label": "Group Classes"
+  },
+  {
+   "fieldname": "spa_bookings",
+   "fieldtype": "Attach Image",
+   "label": "Spa Bookings"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2020-11-11 17:36:54.513474",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Icons",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Customer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -1,0 +1,214 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2020-10-27 10:48:07.455485",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "date",
+  "group_class_name",
+  "image",
+  "capacity",
+  "remaining",
+  "column_break_3",
+  "status",
+  "members_only",
+  "on_app",
+  "section_break_7",
+  "trainer",
+  "trainer_name",
+  "class_type",
+  "class_category",
+  "color",
+  "column_break_8",
+  "from_time",
+  "to_time",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "trainer",
+   "fieldtype": "Link",
+   "label": "Trainer",
+   "options": "Gym Trainer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_7",
+   "fieldtype": "Section Break",
+   "label": "Class Details"
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "from_time",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "From Time",
+   "reqd": 1
+  },
+  {
+   "fieldname": "to_time",
+   "fieldtype": "Datetime",
+   "label": "To Time",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "class_category.group_class_type",
+   "fieldname": "class_type",
+   "fieldtype": "Link",
+   "label": "Class Type",
+   "options": "Group Class Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "class_category",
+   "fieldtype": "Link",
+   "label": "Class Category",
+   "options": "Group Class Category",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "trainer.practitioner_name",
+   "fieldname": "trainer_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Trainer Name",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Open",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Open\nFull\nCompleted"
+  },
+  {
+   "fieldname": "group_class_name",
+   "fieldtype": "Data",
+   "label": "Group Class Name",
+   "reqd": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "remaining",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Remaining",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "on_app",
+   "fieldtype": "Check",
+   "label": "Show on App"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Group Class",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "capacity",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Capacity",
+   "reqd": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "GPC-.YYYY.-"
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "label": "Image"
+  },
+  {
+   "default": "0",
+   "fieldname": "members_only",
+   "fieldtype": "Check",
+   "label": "Members only"
+  },
+  {
+   "fetch_from": "class_category.color",
+   "fieldname": "color",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Color",
+   "read_only": 1
+  }
+ ],
+ "image_field": "image",
+ "is_submittable": 1,
+ "links": [
+  {
+   "link_doctype": "Group Class Attendees",
+   "link_fieldname": "group_class_name"
+  }
+ ],
+ "modified": "2020-11-27 00:27:17.660712",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Group Class",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "group_class_name",
+ "track_changes": 1
+}

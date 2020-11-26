@@ -1,0 +1,43 @@
+{
+ "actions": [],
+ "autoname": "field:type",
+ "creation": "2020-11-08 08:17:04.999380",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "type"
+ ],
+ "fields": [
+  {
+   "fieldname": "type",
+   "fieldtype": "Data",
+   "label": "Type",
+   "unique": 1
+  }
+ ],
+ "links": [],
+ "modified": "2020-11-11 10:50:43.383535",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Group Class Type",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -1,0 +1,73 @@
+{
+ "actions": [],
+ "creation": "2020-10-27 13:03:48.210071",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item",
+  "item_name",
+  "column_break_3",
+  "spa_treatment",
+  "duration",
+  "uom"
+ ],
+ "fields": [
+  {
+   "fetch_from": "item.spa_treatment",
+   "fieldname": "spa_treatment",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Spa Treatment",
+   "options": "Spa Menu",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "spa_treatment.default_duration",
+   "fieldname": "duration",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Duration"
+  },
+  {
+   "fetch_from": "spa_treatment.item",
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "item.item_name",
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Item Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "item.stock_uom",
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "UOM",
+   "options": "UOM"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2020-11-20 16:35:39.777965",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Spa Treatment Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

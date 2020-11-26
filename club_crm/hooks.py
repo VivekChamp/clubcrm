@@ -83,13 +83,14 @@ app_license = "MIT"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-#	}
-# }
+doc_events = {
+ 	"User": {
+                "after_insert": "club_crm.core.doctype.user.user.create_client_user"
+        	},
+        "Client":{
+                "after_insert": "club_crm.club_crm.doctype.client.client.create_customer_client"
+                }
+}
 
 # Scheduled Tasks
 # ---------------
@@ -134,4 +135,14 @@ app_license = "MIT"
 # exempt linked doctypes from being automatically cancelled
 #
 # auto_cancel_exempted_doctypes = ["Auto Repeat"]
-
+fixtures = [
+{"dt": "Custom Field",
+"filters": [
+    {"name": ["in", [
+        "User-is_employee",
+        "User-qatar_id"
+        ]
+    ]
+    }
+]}
+]

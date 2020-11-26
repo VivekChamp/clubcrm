@@ -1,0 +1,82 @@
+{
+ "actions": [],
+ "autoname": "field:benefits_name",
+ "creation": "2020-10-29 02:40:03.586365",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "benefits_name",
+  "included_benefits",
+  "discounts_section",
+  "boho_social",
+  "barberbeauty_salon",
+  "retail",
+  "spa_treatments"
+ ],
+ "fields": [
+  {
+   "fieldname": "benefits_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Benefits Plan Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "included_benefits",
+   "fieldtype": "Table",
+   "label": "Included Benefits",
+   "options": "Benefits Item"
+  },
+  {
+   "fieldname": "discounts_section",
+   "fieldtype": "Section Break",
+   "label": "Discounts"
+  },
+  {
+   "fieldname": "boho_social",
+   "fieldtype": "Int",
+   "label": "BOHO Social"
+  },
+  {
+   "fieldname": "barberbeauty_salon",
+   "fieldtype": "Int",
+   "label": "Barber/Beauty Salon"
+  },
+  {
+   "fieldname": "retail",
+   "fieldtype": "Int",
+   "label": "Retail"
+  },
+  {
+   "fieldname": "spa_treatments",
+   "fieldtype": "Int",
+   "label": "Spa Treatments"
+  }
+ ],
+ "links": [],
+ "modified": "2020-11-16 20:21:05.234004",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Benefits Plan",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "benefits_name",
+ "track_changes": 1
+}

@@ -1,0 +1,132 @@
+{
+ "actions": [],
+ "creation": "2020-11-19 04:34:08.814215",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "date",
+  "client_id",
+  "client_name",
+  "membership_status",
+  "appointment_type",
+  "column_break_6",
+  "trainer",
+  "trainer_name",
+  "training_type",
+  "customer_preference_section",
+  "gym_customer_preference",
+  "section_break_12",
+  "status",
+  "section_break_14",
+  "customer_remarks"
+ ],
+ "fields": [
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Data",
+   "label": "Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Link",
+   "label": "Client ID",
+   "options": "Client"
+  },
+  {
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "label": "Client Name"
+  },
+  {
+   "fieldname": "membership_status",
+   "fieldtype": "Data",
+   "label": "Membership Status"
+  },
+  {
+   "default": "Gym",
+   "fieldname": "appointment_type",
+   "fieldtype": "Select",
+   "label": "Appointment Type",
+   "options": "Gym",
+   "read_only": 1
+  },
+  {
+   "fieldname": "trainer",
+   "fieldtype": "Link",
+   "label": "Trainer",
+   "options": "Gym Trainer"
+  },
+  {
+   "fieldname": "trainer_name",
+   "fieldtype": "Data",
+   "label": "Trainer Name"
+  },
+  {
+   "fieldname": "training_type",
+   "fieldtype": "Select",
+   "label": "Training Type",
+   "options": "Personal Training"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer_preference_section",
+   "fieldtype": "Section Break",
+   "label": "Customer Preference"
+  },
+  {
+   "fieldname": "gym_customer_preference",
+   "fieldtype": "Table",
+   "options": "Gym Customer Preference"
+  },
+  {
+   "fieldname": "section_break_12",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Scheduled\nApproved by Customer\nRejected by Customer"
+  },
+  {
+   "fieldname": "section_break_14",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.status == \"Rejected by Customer\"",
+   "fieldname": "customer_remarks",
+   "fieldtype": "Small Text",
+   "label": "Customer Remarks"
+  }
+ ],
+ "links": [],
+ "modified": "2020-11-26 15:32:22.537599",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Gym Appointment",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -1,0 +1,62 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:spa_category_name",
+ "creation": "2020-10-28 09:15:06.651190",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "spa_category_name",
+  "on_app",
+  "category_image"
+ ],
+ "fields": [
+  {
+   "fieldname": "spa_category_name",
+   "fieldtype": "Data",
+   "label": "Spa Category Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "category_image",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "label": "Category Image"
+  },
+  {
+   "default": "0",
+   "fieldname": "on_app",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Show on App"
+  }
+ ],
+ "image_field": "category_image",
+ "links": [],
+ "modified": "2020-11-21 02:43:48.892642",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Spa Menu Category",
+ "nsm_parent_field": "parent_spa_menu_category",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

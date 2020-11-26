@@ -1,0 +1,34 @@
+{
+ "actions": [],
+ "creation": "2020-11-20 00:09:26.010743",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "secret_key"
+ ],
+ "fields": [
+  {
+   "fieldname": "secret_key",
+   "fieldtype": "Text",
+   "label": "Secret Key"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2020-11-20 00:09:41.443782",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Cybersource Signature",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "read": 1,
+   "role": "System Manager",
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

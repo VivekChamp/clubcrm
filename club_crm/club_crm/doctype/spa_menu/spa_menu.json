@@ -1,0 +1,204 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "field:spa_item_name",
+ "creation": "2020-10-27 13:19:37.863023",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "disabled",
+  "column_break_2",
+  "on_app",
+  "has_addon",
+  "section_break_2",
+  "spa_item_name",
+  "spa_menu_group",
+  "spa_menu_category",
+  "column_break_3",
+  "description",
+  "other_details_section",
+  "duration",
+  "turn_around_time_in_minutes",
+  "spa_rooms",
+  "column_break_14",
+  "rate",
+  "capacity",
+  "spa_machine",
+  "item_details_section",
+  "item",
+  "column_break_20",
+  "item_code",
+  "item_name",
+  "item_group",
+  "image"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "label": "Rate"
+  },
+  {
+   "fieldname": "item_details_section",
+   "fieldtype": "Section Break",
+   "label": "Item Details"
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "label": "Item",
+   "options": "Item"
+  },
+  {
+   "fetch_from": "item.item_code",
+   "fieldname": "item_code",
+   "fieldtype": "Data",
+   "label": "Item Code",
+   "set_only_once": 1
+  },
+  {
+   "fetch_from": "item.item_name",
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item Name"
+  },
+  {
+   "fetch_from": "item.item_group",
+   "fieldname": "item_group",
+   "fieldtype": "Link",
+   "label": "Item Group",
+   "options": "Item Group"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "on_app",
+   "fieldtype": "Check",
+   "label": "Show on App"
+  },
+  {
+   "fieldname": "spa_item_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Spa Item Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "spa_rooms",
+   "fieldtype": "Table MultiSelect",
+   "label": "Spa Rooms",
+   "options": "Spa Service Unit Item"
+  },
+  {
+   "fieldname": "spa_machine",
+   "fieldtype": "Link",
+   "label": "Spa Machine",
+   "options": "Spa Machine"
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "label": "Image"
+  },
+  {
+   "fieldname": "duration",
+   "fieldtype": "Int",
+   "label": "Duration (in minutes)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "turn_around_time_in_minutes",
+   "fieldtype": "Int",
+   "label": "Turn Around Time (in minutes)"
+  },
+  {
+   "fieldname": "capacity",
+   "fieldtype": "Int",
+   "label": "Capacity (at a time)"
+  },
+  {
+   "fieldname": "spa_menu_group",
+   "fieldtype": "Link",
+   "label": "Spa Menu Group",
+   "options": "Spa Menu Group"
+  },
+  {
+   "fetch_from": "spa_menu_group.spa_menu_category",
+   "fieldname": "spa_menu_category",
+   "fieldtype": "Link",
+   "label": "Spa Menu Category",
+   "options": "Spa Menu Category",
+   "read_only": 1
+  },
+  {
+   "fieldname": "other_details_section",
+   "fieldtype": "Section Break",
+   "label": "Other Details"
+  },
+  {
+   "fieldname": "column_break_14",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "has_addon",
+   "fieldtype": "Check",
+   "label": "Has Add-ons"
+  }
+ ],
+ "image_field": "image",
+ "links": [],
+ "modified": "2020-11-23 14:54:06.846432",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Spa Menu",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

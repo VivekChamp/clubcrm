@@ -1,0 +1,265 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2020-11-16 08:54:16.546241",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "date",
+  "column_break_3",
+  "status",
+  "customer_details_section",
+  "client_id",
+  "column_break_7",
+  "client_name",
+  "membership_status",
+  "gender",
+  "mobile_no",
+  "appointment_details",
+  "spa_item",
+  "spa_menu_group",
+  "spa_menu_category",
+  "column_break_11",
+  "duration",
+  "rate",
+  "therapist_details_section",
+  "spa_therapist",
+  "treatment_duration",
+  "spa_service_unit",
+  "appointment_details_section",
+  "spa_appointment_type",
+  "column_break_20",
+  "appointment_date",
+  "appointment_time",
+  "more_info_section",
+  "sales_invoice",
+  "column_break_28",
+  "note",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "default": "Now",
+   "fieldname": "date",
+   "fieldtype": "Datetime",
+   "label": "Date",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "memberships.client_id",
+   "fieldname": "client_id",
+   "fieldtype": "Link",
+   "label": "Client ID",
+   "options": "Client"
+  },
+  {
+   "fetch_from": "client_id.client_name",
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "label": "Client Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "client_id.membership_status",
+   "fieldname": "membership_status",
+   "fieldtype": "Data",
+   "label": "Membership Status",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "spa_therapist",
+   "fieldtype": "Link",
+   "label": "Spa Therapist",
+   "options": "Spa Therapist"
+  },
+  {
+   "fetch_from": "spa_treatment.default_duration",
+   "fieldname": "treatment_duration",
+   "fieldtype": "Data",
+   "label": "Treatment Duration",
+   "read_only": 1
+  },
+  {
+   "fieldname": "spa_service_unit",
+   "fieldtype": "Link",
+   "label": "SPA Service Unit",
+   "options": "Spa Service Unit"
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "appointment_details_section",
+   "fieldtype": "Section Break",
+   "label": "Appointment Details"
+  },
+  {
+   "default": "Today",
+   "fieldname": "appointment_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Appointment Date"
+  },
+  {
+   "default": "Now",
+   "fieldname": "appointment_time",
+   "fieldtype": "Time",
+   "in_list_view": 1,
+   "label": "Appointment Time",
+   "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "more_info_section",
+   "fieldtype": "Section Break",
+   "label": "More Info"
+  },
+  {
+   "fieldname": "column_break_28",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "note",
+   "fieldtype": "Small Text",
+   "label": "Note"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Open",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Open\nScheduled\nComplete\nCancelled"
+  },
+  {
+   "fieldname": "customer_details_section",
+   "fieldtype": "Section Break",
+   "label": "Customer Details"
+  },
+  {
+   "fetch_from": "client_id.sex",
+   "fieldname": "gender",
+   "fieldtype": "Data",
+   "label": "Gender"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "SPA-APP-.YYYY.-"
+  },
+  {
+   "fetch_from": "spa_item.duration",
+   "fieldname": "duration",
+   "fieldtype": "Data",
+   "label": "Duration",
+   "read_only": 1
+  },
+  {
+   "fieldname": "spa_appointment_type",
+   "fieldtype": "Link",
+   "label": "Spa Appointment Type",
+   "options": "Spa Appointment Type"
+  },
+  {
+   "fetch_from": "client_id.mobile",
+   "fieldname": "mobile_no",
+   "fieldtype": "Data",
+   "label": "Mobile Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "appointment_details",
+   "fieldtype": "Section Break",
+   "label": "Appointment Details"
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Spa Appointment",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "spa_item",
+   "fieldtype": "Link",
+   "label": "Spa Item",
+   "options": "Spa Menu"
+  },
+  {
+   "fetch_from": "spa_item.spa_menu_group",
+   "fieldname": "spa_menu_group",
+   "fieldtype": "Data",
+   "label": "Spa Menu Group",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "spa_item.spa_menu_group",
+   "fieldname": "spa_menu_category",
+   "fieldtype": "Data",
+   "label": "Spa Menu Category",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "spa_item.rate",
+   "fieldname": "rate",
+   "fieldtype": "Data",
+   "label": "Rate",
+   "read_only": 1
+  },
+  {
+   "fieldname": "therapist_details_section",
+   "fieldtype": "Section Break",
+   "label": "Therapist Details"
+  },
+  {
+   "fieldname": "sales_invoice",
+   "fieldtype": "Link",
+   "label": "Sales Invoice",
+   "options": "Sales Invoice"
+  }
+ ],
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2020-11-23 08:09:31.346541",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Spa Appointment",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
