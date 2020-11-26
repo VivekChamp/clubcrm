@@ -25,7 +25,7 @@ class GroupClassAttendees(Document):
         gr_class=frappe.get_doc('Group Class',self.group_class)
 
         if gr_class.remaining==0:
-            frappe.db.set_value('Group Class', self.group_class, {'status': "Full",'remaining': int(gr_class.remaining)+1})
+            frappe.db.set_value('Group Class', self.group_class, {'status': "Open",'remaining': int(gr_class.remaining)+1})
         else:
             frappe.db.set_value('Group Class', self.group_class, 'remaining', int(gr_class.remaining)+1)
 
