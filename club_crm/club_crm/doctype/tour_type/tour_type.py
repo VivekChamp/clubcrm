@@ -6,5 +6,5 @@ from __future__ import unicode_literals
 # import frappe
 from frappe.model.document import Document
 
-class GroupClassAppointment(Document):
+class TourType(Document):
 	pass

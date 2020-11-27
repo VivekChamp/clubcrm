@@ -10,7 +10,6 @@
  "field_order": [
   "basic_info",
   "naming_series",
-  "user",
   "first_name",
   "middle_name",
   "last_name",
@@ -21,14 +20,16 @@
   "nationality",
   "image",
   "column_break_14",
-  "status",
-  "membership_status",
-  "qatar_id",
   "mobile_no",
   "email",
-  "phone",
+  "qatar_id",
+  "status",
+  "membership_status",
   "reg_on_app",
   "notification_preference",
+  "primary_member",
+  "apply_membership",
+  "mem_application",
   "customer_details_section",
   "customer",
   "customer_group",
@@ -75,7 +76,8 @@
    "fieldname": "first_name",
    "fieldtype": "Data",
    "label": "First Name",
-   "oldfieldtype": "Data"
+   "oldfieldtype": "Data",
+   "reqd": 1
   },
   {
    "fieldname": "middle_name",
@@ -100,7 +102,7 @@
   },
   {
    "fieldname": "age_html",
-   "fieldtype": "HTML",
+   "fieldtype": "Data",
    "label": "Age",
    "no_copy": 1,
    "print_hide": 1,
@@ -147,13 +149,6 @@
    "reqd": 1
   },
   {
-   "fieldname": "phone",
-   "fieldtype": "Data",
-   "in_filter": 1,
-   "label": "Phone",
-   "options": "Phone"
-  },
-  {
    "collapsible": 1,
    "fieldname": "customer_details_section",
    "fieldtype": "Section Break",
@@ -167,12 +162,14 @@
    "options": "Customer"
   },
   {
+   "default": "Clients",
    "fieldname": "customer_group",
    "fieldtype": "Link",
    "label": "Customer Group",
    "options": "Customer Group"
   },
   {
+   "default": "Qatar",
    "fieldname": "territory",
    "fieldtype": "Link",
    "label": "Territory",
@@ -305,8 +302,9 @@
   {
    "fieldname": "referral_type",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Referral Type",
-   "options": "Family Member\nSocial Media\nWebsite\nFriends"
+   "options": "\nFamily Member\nSocial Media\nWebsite\nFriends"
   },
   {
    "fieldname": "amended_from",
@@ -316,12 +314,6 @@
    "options": "Client",
    "print_hide": 1,
    "read_only": 1
-  },
-  {
-   "fieldname": "user",
-   "fieldtype": "Link",
-   "label": "User",
-   "options": "User"
   },
   {
    "fieldname": "gender",
@@ -346,7 +338,9 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Mobile",
-   "reqd": 1
+   "options": "Phone",
+   "reqd": 1,
+   "unique": 1
   },
   {
    "default": "No",
@@ -355,13 +349,33 @@
    "label": "Registered on App",
    "options": "Yes\nNo",
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.membership_status==\"Member\"",
+   "fieldname": "primary_member",
+   "fieldtype": "Check",
+   "label": "Is Primary Member"
+  },
+  {
+   "default": "0",
+   "fieldname": "apply_membership",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Applied for Membership"
+  },
+  {
+   "fieldname": "mem_application",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Membership Application"
   }
  ],
  "icon": "fa fa-user",
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2020-11-24 17:13:09.771320",
+ "modified": "2020-11-27 20:54:59.922888",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",

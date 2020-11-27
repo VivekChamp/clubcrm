@@ -36,27 +36,31 @@
   },
   {
    "fieldname": "boho_social",
-   "fieldtype": "Int",
-   "label": "BOHO Social"
+   "fieldtype": "Percent",
+   "label": "BOHO Social",
+   "precision": "1"
   },
   {
    "fieldname": "barberbeauty_salon",
-   "fieldtype": "Int",
-   "label": "Barber/Beauty Salon"
+   "fieldtype": "Percent",
+   "label": "Barber/Beauty Salon",
+   "precision": "1"
   },
   {
    "fieldname": "retail",
-   "fieldtype": "Int",
-   "label": "Retail"
+   "fieldtype": "Percent",
+   "label": "Retail",
+   "precision": "1"
   },
   {
    "fieldname": "spa_treatments",
-   "fieldtype": "Int",
-   "label": "Spa Treatments"
+   "fieldtype": "Percent",
+   "label": "Spa Treatments",
+   "precision": "1"
   }
  ],
  "links": [],
- "modified": "2020-11-16 20:21:05.234004",
+ "modified": "2020-11-27 01:42:23.235202",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Benefits Plan",
