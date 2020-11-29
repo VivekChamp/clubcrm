@@ -60,9 +60,14 @@
   "occupation_2",
   "relation_to_primary_member",
   "section_break_39",
-  "how_did_hear",
+  "how_did",
   "column_break_40",
-  "amended_from"
+  "amended_from",
+  "payment_details_section",
+  "payment_type",
+  "column_break_60",
+  "transaction_date",
+  "transaction_reference"
  ],
  "fields": [
   {
@@ -210,7 +215,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "default": "Single Membership",
    "fieldname": "membership_type",
    "fieldtype": "Link",
    "label": "Membership Type",
@@ -377,11 +381,6 @@
    "label": "Submitted by Staff"
   },
   {
-   "fieldname": "how_did_hear",
-   "fieldtype": "Data",
-   "label": "How did you hear about Katara Club?"
-  },
-  {
    "fieldname": "company_1",
    "fieldtype": "Data",
    "label": "Company"
@@ -398,11 +397,49 @@
    "fieldtype": "Select",
    "label": "Payment Status",
    "options": "Not Paid\nPaid"
+  },
+  {
+   "fieldname": "how_did",
+   "fieldtype": "Data",
+   "label": "How did you hear about Katara Club?"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval:doc.status==1",
+   "fieldname": "payment_details_section",
+   "fieldtype": "Section Break",
+   "label": "Payment Details"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval:doc.status==1",
+   "fieldname": "payment_type",
+   "fieldtype": "Select",
+   "label": "Payment Type",
+   "options": "Cash\nOffline Card\nOnline Card"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval:doc.status==1",
+   "fieldname": "transaction_reference",
+   "fieldtype": "Data",
+   "label": "Transaction Reference"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval:doc.status==1",
+   "fieldname": "transaction_date",
+   "fieldtype": "Data",
+   "label": "Transaction Date"
+  },
+  {
+   "fieldname": "column_break_60",
+   "fieldtype": "Column Break"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-27 21:16:01.495199",
+ "modified": "2020-11-29 02:49:22.090502",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",

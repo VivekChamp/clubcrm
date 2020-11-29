@@ -6,26 +6,27 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "naming_series",
-  "tour_name",
-  "tour_type",
-  "column_break_5",
-  "status",
   "date",
-  "tour_details_section",
-  "tour_incharge",
-  "incharge_name",
-  "from_date",
-  "to_date",
+  "naming_series",
+  "column_break_5",
+  "tour_status",
+  "client_details_section",
+  "client_id",
+  "client_name",
+  "preferred_date",
   "column_break_10",
-  "planned_qty_of_members",
-  "place",
-  "details",
-  "country",
+  "gender",
+  "mobile_no",
+  "preferred_time_between",
+  "tour_details_section",
+  "assign_cec",
+  "cec_name",
+  "column_break_15",
+  "start_time",
+  "end_time",
   "more_information_section",
-  "purpose",
-  "column_break_18",
-  "note"
+  "note",
+  "amended_from"
  ],
  "fields": [
   {
@@ -39,23 +40,9 @@
    "default": "CBT-.YYYY.-",
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Naming Series",
    "options": "CBT-.YYYY.-",
-   "reqd": 1
-  },
-  {
-   "fieldname": "tour_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Tour Name",
-   "reqd": 1
-  },
-  {
-   "fieldname": "tour_type",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Tour Type",
-   "options": "Tour Type",
    "reqd": 1
   },
   {
@@ -63,62 +50,13 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Status",
-   "options": "Scheduled\nCompleted"
-  },
-  {
    "fieldname": "tour_details_section",
    "fieldtype": "Section Break",
-   "label": "Tour Details"
-  },
-  {
-   "fieldname": "tour_incharge",
-   "fieldtype": "Link",
-   "label": "Tour Incharge",
-   "options": "User"
-  },
-  {
-   "fetch_from": "tour_incharge.full_name",
-   "fieldname": "incharge_name",
-   "fieldtype": "Data",
-   "label": "Incharge Name",
-   "read_only": 1
+   "label": "Staff Use"
   },
   {
    "fieldname": "column_break_10",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "from_date",
-   "fieldtype": "Datetime",
-   "label": "From Date"
-  },
-  {
-   "fieldname": "to_date",
-   "fieldtype": "Datetime",
-   "label": "To Date"
-  },
-  {
-   "fieldname": "place",
-   "fieldtype": "Select",
-   "label": "Place",
-   "options": "Inter Country\nOther Country"
-  },
-  {
-   "depends_on": "eval:doc.place == \"Inter Country\"",
-   "fieldname": "details",
-   "fieldtype": "Small Text",
-   "label": "Details"
-  },
-  {
-   "depends_on": "eval:doc.place == \"Other Country\"",
-   "fieldname": "country",
-   "fieldtype": "Link",
-   "label": "Country",
-   "options": "Country"
   },
   {
    "fieldname": "more_information_section",
@@ -126,27 +64,107 @@
    "label": "More Information"
   },
   {
-   "fieldname": "purpose",
-   "fieldtype": "Small Text",
-   "label": "Purpose"
-  },
-  {
-   "fieldname": "column_break_18",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "note",
    "fieldtype": "Small Text",
    "label": "Note"
   },
   {
-   "fieldname": "planned_qty_of_members",
-   "fieldtype": "Int",
-   "label": "Planned Qty of Members"
+   "fieldname": "client_details_section",
+   "fieldtype": "Section Break",
+   "label": "Client Details"
+  },
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Link",
+   "label": "Client ID",
+   "options": "Client",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "client_id.client_name",
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "label": "Client Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_15",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "client_id.gender",
+   "fieldname": "gender",
+   "fieldtype": "Data",
+   "label": "Gender",
+   "read_only": 1
+  },
+  {
+   "fieldname": "preferred_date",
+   "fieldtype": "Date",
+   "label": "Preferred Date"
+  },
+  {
+   "fetch_from": "client_id.mobile_no",
+   "fieldname": "mobile_no",
+   "fieldtype": "Data",
+   "label": "Mobile Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "preferred_time_between",
+   "fieldtype": "Link",
+   "label": "Preferred Time (Between)",
+   "options": "Club Tour Schedule"
+  },
+  {
+   "fieldname": "assign_cec",
+   "fieldtype": "Link",
+   "label": "Assign CEC",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "assign_cec.employee_name",
+   "fieldname": "cec_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Staff",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "start_time",
+   "fieldtype": "Datetime",
+   "label": "Time from"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "end_time",
+   "fieldtype": "Datetime",
+   "label": "Time to"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Club Tour",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Pending",
+   "fieldname": "tour_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Tour Status",
+   "options": "Pending\nScheduled\nCompleted\nNo Show"
   }
  ],
+ "is_submittable": 1,
  "links": [],
- "modified": "2020-11-27 13:38:10.271669",
+ "modified": "2020-11-29 04:06:48.391121",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club Tour",
@@ -165,8 +183,8 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "client_name",
  "track_changes": 1
 }

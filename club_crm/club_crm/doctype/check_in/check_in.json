@@ -1,0 +1,142 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2020-10-28 12:57:00.394666",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "date",
+  "client_id",
+  "column_break",
+  "check_in_type",
+  "client_name",
+  "membership_status",
+  "section_break",
+  "check_in_time",
+  "check_out_time",
+  "column_break_11",
+  "spa_booking",
+  "gym_booking",
+  "group_class_id"
+ ],
+ "fields": [
+  {
+   "fetch_from": "client_id.membership_status",
+   "fieldname": "membership_status",
+   "fieldtype": "Data",
+   "label": "Membership Status",
+   "read_only": 1
+  },
+  {
+   "default": "Now",
+   "fieldname": "check_in_time",
+   "fieldtype": "Datetime",
+   "label": "Check In Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "check_out_time",
+   "fieldtype": "Datetime",
+   "label": "Check Out Time"
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Client ID",
+   "options": "Client",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "client_id.first_name",
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "label": "Client Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "check_in_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Check-in Type",
+   "options": "Member Check-in\nSpa\nGym\nGroup Class",
+   "reqd": 1
+  },
+  {
+   "default": "CHK-.YYYY.-MEM.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "CHK-.YYYY.-MEM.-\nCHK-.YYYY.-SPA.-\nCHK-.YYYY.-GYM.-\nCHK-.YYYY.-SOCIAL.-"
+  },
+  {
+   "fieldname": "column_break",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break",
+   "fieldtype": "Section Break",
+   "label": "Check-in Details"
+  },
+  {
+   "depends_on": "eval:doc.check_in_type==\"Spa\"",
+   "fieldname": "spa_booking",
+   "fieldtype": "Link",
+   "label": "Spa Booking ID",
+   "options": "Spa Appointment"
+  },
+  {
+   "depends_on": "eval:doc.check_in_type==\"Gym\"",
+   "fetch_from": "appointment.appointment_department",
+   "fieldname": "gym_booking",
+   "fieldtype": "Link",
+   "label": "Gym Booking ID",
+   "options": "Gym Appointment"
+  },
+  {
+   "depends_on": "eval:doc.check_in_type==\"Group Class\"",
+   "fieldname": "group_class_id",
+   "fieldtype": "Link",
+   "label": "Group Class ID",
+   "options": "Group Class"
+  }
+ ],
+ "links": [],
+ "modified": "2020-11-29 01:18:58.842688",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Check In",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "client_name",
+ "track_changes": 1
+}

@@ -5,7 +5,7 @@ from frappe.utils.file_manager import upload
 from frappe import throw, msgprint, _
 
 @frappe.whitelist()
-def apply_single(date,client_id,membership_plan,qatar_id,nationality,occupation,company,front_qid_filedata,back_qid_filedata):
+def apply_single(date,client_id,membership_plan,qatar_id,nationality,occupation,company,front_qid_filedata,back_qid_filedata,how_did):
     doc = frappe.get_doc({
         'doctype': 'Memberships Application',
         'submitted_by_staff':0,
@@ -16,7 +16,8 @@ def apply_single(date,client_id,membership_plan,qatar_id,nationality,occupation,
         'qatar_id_1': qatar_id,
         'nationality_1': nationality,
         'occupation_1': occupation,
-        'company_1': company
+        'company_1': company,
+        'how_did': how_did
         })
     doc.insert()
     title=doc.get_title()
@@ -34,8 +35,9 @@ def apply_single(date,client_id,membership_plan,qatar_id,nationality,occupation,
     frappe.db.set_value('Client',client_id,'apply_membership',1)
     frappe.db.set_value('Client',client_id,'mem_application',title)
     frappe.response["message"] = {
+        "Status": 1,
+        "Status Message":"Membership Application has been submitted",
         "Name": title,
-        "Status":"Membership Application has been submitted"
         }
 
 def upload_image(docname,filename,isprivate,filedata):
@@ -57,11 +59,23 @@ def upload_image(docname,filename,isprivate,filedata):
 def check_status(mem_application):
     application = frappe.get_doc('Memberships Application', mem_application)
     if application.application_status=="Pending":
-        frappe.response["message"] = "Pending approval"
+        frappe.response["message"] = {
+            "Status": 0,
+            "Status Message":"Pending approval"
+        }
     elif application.application_status=="Rejected":
-        frappe.response["message"] = "Rejected"
+        frappe.response["message"] = {
+            "Status": 2,
+            "Status Message":"Rejected"
+        }
     elif application.application_status=="Approved":
         if application.payment_status=="Not Paid":
-            frappe.response["message"] = "Approved. Pending Payment"
+            frappe.response["message"] = {
+            "Status": 1,
+            "Status Message":"Approved. Pending Payment"
+        }
         else:
-            frappe.response["message"] = "You are a member. Please login again to reflect your changes"
+            frappe.response["message"] = {
+            "Status": 3,
+            "Status Message": "You are a member. Please login again to reflect your changes"
+        }

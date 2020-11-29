@@ -1,24 +1,25 @@
 {
  "actions": [],
- "autoname": "field:title",
+ "autoname": "naming_series:",
  "creation": "2020-11-01 15:59:09.795112",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "title",
+  "series",
+  "date",
+  "column_break_7",
+  "start_date",
+  "end_date",
+  "membership_plan",
   "client_id",
   "name1",
-  "column_break_7",
   "membership_id",
   "membership_type",
   "plan_details",
-  "membership_plan",
   "membership_typess",
   "duration",
   "column_break_11",
-  "start_date",
-  "end_date",
   "benefit_details_section",
   "benefits_paln",
   "benefits_item",
@@ -30,13 +31,6 @@
   "spa_treatments"
  ],
  "fields": [
-  {
-   "fieldname": "title",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "label": "Series",
-   "unique": 1
-  },
   {
    "fieldname": "name1",
    "fieldtype": "Data",
@@ -67,7 +61,7 @@
    "fieldtype": "Link",
    "label": "Membership Plan",
    "options": "Memberships Plan",
-   "read_only": 1
+   "reqd": 1
   },
   {
    "fieldname": "benefits_paln",
@@ -166,10 +160,22 @@
   {
    "fieldname": "column_break_20",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "MEM-.YYYY.-####"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Data",
+   "label": "Date"
   }
  ],
  "links": [],
- "modified": "2020-11-21 21:07:54.820282",
+ "modified": "2020-11-29 00:26:41.764615",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships",

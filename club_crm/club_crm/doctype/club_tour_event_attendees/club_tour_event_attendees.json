@@ -1,0 +1,63 @@
+{
+ "actions": [],
+ "creation": "2020-11-28 10:28:15.639998",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "client_id",
+  "client_name",
+  "column_break_3",
+  "membership_status",
+  "contact_number"
+ ],
+ "fields": [
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Client ID",
+   "options": "Client"
+  },
+  {
+   "fetch_from": "client_id.client_name",
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Client Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "client_id.membership_status",
+   "fieldname": "membership_status",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Membership Status",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "client_id.mobile_no",
+   "fieldname": "contact_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Contact Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2020-11-28 10:33:32.438686",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Club Tour Event Attendees",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

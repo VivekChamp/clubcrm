@@ -15,7 +15,10 @@ def create_attendee(client_id,class_id):
     check= frappe.get_all('Group Class Attendees', filters={'group_class':class_id, 'client_id':client_id})
     
     if check:
-        frappe.response["message"] = "Client has already enrolled for this class"
+        frappe.response["message"] = {
+        "Status": 0,
+        "Status Message":"This client has already enrolled for this class"
+        }
     
     else:
         doc= frappe.get_doc({
@@ -25,4 +28,7 @@ def create_attendee(client_id,class_id):
             })
         doc.insert()
         doc.submit()
-        frappe.response["message"] = "Enrollment successful"
+        frappe.response["message"] = {
+        "Status": 1,
+        "Status Message":"Enrollment successful"
+        }

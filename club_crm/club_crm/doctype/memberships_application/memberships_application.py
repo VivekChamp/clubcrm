@@ -9,11 +9,17 @@ from frappe.model.document import Document
 class MembershipsApplication(Document):
 	def validate(self):
 			self.calculate_total()
+			self.payment_status()
 
 	def before_insert(self):
 			self.check_existing_application()
 			self.check_primary_client_id()
-		
+	
+	def on_submit(self):
+			mem_apply= frappe.get_doc('Client', self.client_id)
+			mem_apply.apply_membership==1
+			mem_apply.save()
+
 	def check_primary_client_id(self):
 			if self.submitted_by_staff==1:
 					client1_all= frappe.get_all('Client', filters={'mobile_no':self.mobile_no_1})
@@ -50,7 +56,8 @@ class MembershipsApplication(Document):
 			else:
 				self.grand_total = self.net_total - self.discount_amount
 
-	def on_submit(self):
-			mem_apply= frappe.get_doc('Client', self.client_id)
-			mem_apply.apply_membership==1
-			mem_apply.save()
+	def add_offline_payment(payment_method, transaction_date, transaction_reference):
+		self.payment_method=payment_method
+		self.transaction_date=transaction_date
+		self.transaction_reference=transaction_reference
+		self.save()

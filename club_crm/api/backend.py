@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import frappe
 from frappe.website.utils import is_signup_enabled
 from frappe.utils import escape_html

@@ -19,7 +19,7 @@ def login(usr,pwd):
     frappe.errprint(frappe.session)
     api_generate=generate_keys(frappe.session.user)
     user = frappe.get_doc('User',frappe.session.user)
-    client_details = frappe.get_all('Client', filters={'mobile_no': usr}, fields=['name','first_name','last_name','client_name','gender','birth_date','nationality','qatar_id','email','mobile_no','membership_status','apply_membership','mem_application','status','customer_group','territory','marital_status','image'])
+    client_details = frappe.get_all('Client', filters={'mobile_no': usr}, fields=['name','first_name','last_name','client_name','gender','birth_date','nationality','qatar_id','email','mobile_no','apply_membership','mem_application','membership_status','status','customer_group','territory','marital_status','image'])
     frappe.response["message"] =	{
             "sid": frappe.session.sid,
             "client details": client_details,
@@ -100,3 +100,19 @@ def check_user(email, mobile_no):
         else:
             return "User does not exist"
 
+@frappe.whitelist(allow_guest=True)
+def forgot_password(mobile_no, new_password):
+    doc = frappe.get_all('User', filters={'mobile_no':mobile_no}, fields=["*"])
+    if doc:
+        user = doc[0]
+        user.new_password=new_password
+        user.save()
+        frappe.response["message"] = {
+            "Status": "1",
+            "Description":"Password reset success"
+        }
+    else:
+        frappe.response["message"] = {
+            "Status": "0",
+            "Description":"User does not exist"
+        }
