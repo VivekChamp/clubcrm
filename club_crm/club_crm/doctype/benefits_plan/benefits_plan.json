@@ -9,10 +9,12 @@
   "benefits_name",
   "included_benefits",
   "discounts_section",
-  "boho_social",
-  "barberbeauty_salon",
-  "retail",
-  "spa_treatments"
+  "spa_discount",
+  "retail_discount",
+  "grams_discount",
+  "column_break_7",
+  "boho_discount",
+  "salon_discount"
  ],
  "fields": [
   {
@@ -35,32 +37,41 @@
    "label": "Discounts"
   },
   {
-   "fieldname": "boho_social",
+   "fieldname": "boho_discount",
    "fieldtype": "Percent",
    "label": "BOHO Social",
    "precision": "1"
   },
   {
-   "fieldname": "barberbeauty_salon",
+   "fieldname": "salon_discount",
    "fieldtype": "Percent",
    "label": "Barber/Beauty Salon",
    "precision": "1"
   },
   {
-   "fieldname": "retail",
+   "fieldname": "retail_discount",
    "fieldtype": "Percent",
    "label": "Retail",
    "precision": "1"
   },
   {
-   "fieldname": "spa_treatments",
+   "fieldname": "spa_discount",
    "fieldtype": "Percent",
    "label": "Spa Treatments",
    "precision": "1"
+  },
+  {
+   "fieldname": "grams_discount",
+   "fieldtype": "Percent",
+   "label": "Grams Restaurant"
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
   }
  ],
  "links": [],
- "modified": "2020-11-27 01:42:23.235202",
+ "modified": "2020-12-02 01:11:45.321088",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Benefits Plan",

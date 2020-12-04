@@ -9,7 +9,8 @@
  "field_order": [
   "spa_menu_group",
   "spa_menu_category",
-  "on_app"
+  "on_app",
+  "color"
  ],
  "fields": [
   {
@@ -33,10 +34,16 @@
    "fieldtype": "Check",
    "in_list_view": 1,
    "label": "Show on App"
+  },
+  {
+   "description": "For easier identification on calendar view",
+   "fieldname": "color",
+   "fieldtype": "Color",
+   "label": "Color"
   }
  ],
  "links": [],
- "modified": "2020-11-21 02:51:07.130831",
+ "modified": "2020-12-01 16:51:14.058580",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Menu Group",

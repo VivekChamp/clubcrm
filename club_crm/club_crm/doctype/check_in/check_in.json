@@ -19,7 +19,8 @@
   "column_break_11",
   "spa_booking",
   "gym_booking",
-  "group_class_id"
+  "group_class_id",
+  "amended_from"
  ],
  "fields": [
   {
@@ -105,7 +106,7 @@
    "fieldname": "gym_booking",
    "fieldtype": "Link",
    "label": "Gym Booking ID",
-   "options": "Gym Appointment"
+   "options": "Fitness Training Appointment"
   },
   {
    "depends_on": "eval:doc.check_in_type==\"Group Class\"",
@@ -113,10 +114,20 @@
    "fieldtype": "Link",
    "label": "Group Class ID",
    "options": "Group Class"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Check In",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
+ "is_submittable": 1,
  "links": [],
- "modified": "2020-11-29 01:18:58.842688",
+ "modified": "2020-12-03 10:29:17.671031",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Check In",
@@ -132,6 +143,20 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Reception Staff",
+   "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],

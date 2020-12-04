@@ -148,6 +148,7 @@
    "options": "GPC-.YYYY.-"
   },
   {
+   "fetch_from": "class_category.cat_image",
    "fieldname": "image",
    "fieldtype": "Attach Image",
    "hidden": 1,
@@ -176,7 +177,7 @@
    "link_fieldname": "group_class_name"
   }
  ],
- "modified": "2020-11-27 00:27:17.660712",
+ "modified": "2020-12-02 16:24:24.325579",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class",

@@ -105,7 +105,7 @@ def forgot_password(mobile_no, new_password):
     doc = frappe.get_all('User', filters={'mobile_no':mobile_no}, fields=["*"])
     if doc:
         user = doc[0]
-        user.new_password=new_password
+        frappe.db.set_value("User",user.name,"new_password",new_password)
         user.save()
         frappe.response["message"] = {
             "Status": "1",

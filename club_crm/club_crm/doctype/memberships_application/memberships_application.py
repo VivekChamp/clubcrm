@@ -9,7 +9,6 @@ from frappe.model.document import Document
 class MembershipsApplication(Document):
 	def validate(self):
 			self.calculate_total()
-			self.payment_status()
 
 	def before_insert(self):
 			self.check_existing_application()

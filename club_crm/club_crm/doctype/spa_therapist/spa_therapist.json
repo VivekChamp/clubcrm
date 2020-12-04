@@ -7,80 +7,40 @@
  "engine": "InnoDB",
  "field_order": [
   "naming_series",
-  "first_name",
-  "middle_name",
-  "last_name",
-  "full_name",
-  "gender",
-  "column_break_6",
-  "status",
-  "mobile",
-  "phone",
-  "email",
-  "image",
-  "section_break_10",
   "employee",
   "employee_name",
-  "user",
-  "department",
-  "column_break_14",
-  "designation",
-  "address",
-  "address_display",
+  "column_break_6",
+  "gender",
+  "mobile",
+  "status",
+  "on_app",
+  "image",
   "section_break_19",
-  "appointment_type",
+  "spa_menu_assignment",
   "schedule_section",
-  "service_unit_schedule",
-  "salary_details_section",
-  "salary_structure",
-  "column_break_20",
-  "consulting_charge",
-  "inpatient_visit_charge"
+  "service_unit_schedule"
  ],
  "fields": [
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Naming Series",
    "options": "SPA-THR-.####"
   },
   {
-   "fieldname": "first_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "First Name",
-   "reqd": 1
-  },
-  {
-   "fieldname": "middle_name",
-   "fieldtype": "Data",
-   "label": "Middle Name"
-  },
-  {
-   "fieldname": "last_name",
-   "fieldtype": "Data",
-   "label": "Last Name"
-  },
-  {
+   "fetch_from": "employee.gender",
    "fieldname": "gender",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "label": "Gender",
-   "options": "Gender"
+   "read_only": 1
   },
   {
+   "fetch_from": "employee_mobile_no",
    "fieldname": "mobile",
    "fieldtype": "Data",
-   "label": "Mobile"
-  },
-  {
-   "fieldname": "phone",
-   "fieldtype": "Data",
-   "label": "Phone"
-  },
-  {
-   "fieldname": "email",
-   "fieldtype": "Data",
-   "label": "Email"
+   "label": "Mobile",
+   "read_only": 1
   },
   {
    "fieldname": "image",
@@ -89,80 +49,12 @@
    "label": "Image"
   },
   {
-   "fieldname": "section_break_10",
-   "fieldtype": "Section Break",
-   "label": "Employee and User Details"
-  },
-  {
    "fieldname": "employee",
    "fieldtype": "Link",
-   "label": "Employee",
-   "options": "Employee"
-  },
-  {
-   "fetch_from": "employee.user_id",
-   "fieldname": "user",
-   "fieldtype": "Link",
-   "label": "User",
-   "options": "User",
-   "read_only": 1
-  },
-  {
-   "fetch_from": "employee.department",
-   "fieldname": "department",
-   "fieldtype": "Link",
-   "label": "Department",
-   "options": "Department",
-   "read_only": 1
-  },
-  {
-   "fieldname": "column_break_14",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fetch_from": "employee.designation",
-   "fieldname": "designation",
-   "fieldtype": "Link",
-   "label": "Designation",
-   "options": "Designation",
-   "read_only": 1
-  },
-  {
-   "fieldname": "address",
-   "fieldtype": "Link",
-   "label": "Address",
-   "options": "Address"
-  },
-  {
-   "fieldname": "address_display",
-   "fieldtype": "Small Text",
-   "label": "Address Display"
-  },
-  {
-   "collapsible": 1,
-   "fieldname": "salary_details_section",
-   "fieldtype": "Section Break",
-   "label": "Charges"
-  },
-  {
-   "fieldname": "salary_structure",
-   "fieldtype": "Link",
-   "label": "Salary Structure",
-   "options": "Salary Structure"
-  },
-  {
-   "fieldname": "column_break_20",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "consulting_charge",
-   "fieldtype": "Currency",
-   "label": "Consulting Charge"
-  },
-  {
-   "fieldname": "inpatient_visit_charge",
-   "fieldtype": "Currency",
-   "label": "Inpatient Visit Charge"
+   "in_list_view": 1,
+   "label": "Employee ID",
+   "options": "Employee",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_6",
@@ -172,13 +64,7 @@
    "collapsible": 1,
    "fieldname": "section_break_19",
    "fieldtype": "Section Break",
-   "label": "Appointments"
-  },
-  {
-   "fieldname": "appointment_type",
-   "fieldtype": "Table",
-   "label": "Appointment Type",
-   "options": "Appointment Type Item"
+   "label": "Spa Assignment"
   },
   {
    "collapsible": 1,
@@ -193,13 +79,10 @@
    "options": "Therapist Service Unit Schedule"
   },
   {
-   "default": "Active",
    "fieldname": "status",
    "fieldtype": "Select",
-   "in_list_view": 1,
    "label": "Status",
-   "options": "\nActive\nDisabled",
-   "reqd": 1
+   "options": "Active\nDisabled"
   },
   {
    "fetch_from": "employee.employee_name",
@@ -209,15 +92,20 @@
    "read_only": 1
   },
   {
-   "fieldname": "full_name",
-   "fieldtype": "Data",
-   "label": "Full Name",
-   "read_only": 1
+   "default": "0",
+   "fieldname": "on_app",
+   "fieldtype": "Check",
+   "label": "Show on App"
+  },
+  {
+   "fieldname": "spa_menu_assignment",
+   "fieldtype": "Table",
+   "options": "Spa Therapist Assignment"
   }
  ],
  "image_field": "image",
  "links": [],
- "modified": "2020-11-16 09:17:28.896138",
+ "modified": "2020-12-05 02:04:55.934043",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Therapist",
@@ -248,8 +136,8 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "employee_name",
  "track_changes": 1
 }

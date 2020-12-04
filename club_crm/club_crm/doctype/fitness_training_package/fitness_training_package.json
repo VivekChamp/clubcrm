@@ -1,0 +1,119 @@
+{
+ "actions": [],
+ "autoname": "field:package_name",
+ "creation": "2020-12-02 21:57:29.969448",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "show_on_app",
+  "package_name",
+  "pt_category",
+  "type",
+  "column_break_3",
+  "durat_in_week",
+  "session_per_month",
+  "price",
+  "item_details_section",
+  "item_code",
+  "item_name",
+  "column_break_10",
+  "item_group"
+ ],
+ "fields": [
+  {
+   "fieldname": "pt_category",
+   "fieldtype": "Link",
+   "label": "PT Category",
+   "options": "Fitness Training category"
+  },
+  {
+   "depends_on": "eval:doc.type == \"Limited\"",
+   "fieldname": "durat_in_week",
+   "fieldtype": "Data",
+   "label": "Durat In Week"
+  },
+  {
+   "depends_on": "eval:doc.type == \"Limited\"",
+   "fieldname": "session_per_month",
+   "fieldtype": "Data",
+   "label": "Session Per Month"
+  },
+  {
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "label": "Price"
+  },
+  {
+   "fieldname": "package_name",
+   "fieldtype": "Data",
+   "label": "Package Name",
+   "unique": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "item_details_section",
+   "fieldtype": "Section Break",
+   "label": "Item Details"
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Data",
+   "label": "Item Code"
+  },
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item Name"
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "item_group",
+   "fieldtype": "Data",
+   "label": "Item Group"
+  },
+  {
+   "default": "0",
+   "fieldname": "show_on_app",
+   "fieldtype": "Check",
+   "label": "Show On App"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "label": "Type",
+   "options": "Limited\nUn-Limited"
+  }
+ ],
+ "links": [],
+ "modified": "2020-12-04 20:29:36.824626",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Fitness Training package",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "search_fields": "durat_in_week,session_per_month",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

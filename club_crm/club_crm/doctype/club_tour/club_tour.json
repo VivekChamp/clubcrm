@@ -26,6 +26,8 @@
   "end_time",
   "more_information_section",
   "note",
+  "column_break_21",
+  "staff_remarks",
   "amended_from"
  ],
  "fields": [
@@ -52,7 +54,7 @@
   {
    "fieldname": "tour_details_section",
    "fieldtype": "Section Break",
-   "label": "Staff Use"
+   "label": "Office Use"
   },
   {
    "fieldname": "column_break_10",
@@ -66,7 +68,7 @@
   {
    "fieldname": "note",
    "fieldtype": "Small Text",
-   "label": "Note"
+   "label": "Client Remarks"
   },
   {
    "fieldname": "client_details_section",
@@ -119,7 +121,7 @@
   {
    "fieldname": "assign_cec",
    "fieldtype": "Link",
-   "label": "Assign CEC",
+   "label": "Staff To Attend",
    "options": "Employee"
   },
   {
@@ -160,11 +162,20 @@
    "in_list_view": 1,
    "label": "Tour Status",
    "options": "Pending\nScheduled\nCompleted\nNo Show"
+  },
+  {
+   "fieldname": "column_break_21",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "staff_remarks",
+   "fieldtype": "Small Text",
+   "label": "Staff Remarks"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-29 04:06:48.391121",
+ "modified": "2020-11-29 23:23:43.709092",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club Tour",

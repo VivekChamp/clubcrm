@@ -7,7 +7,7 @@ import frappe
 from frappe.model.document import Document
 
 class ValetParking(Document):
-	def validate(self):
+	def before_insert(self):
 		if self.status=="Parked":
 			valet = frappe.get_all('Valet Parking', filters={'date':self.date,'vehicle_no':self.vehicle_no}, fields=["*"])
 			if valet:

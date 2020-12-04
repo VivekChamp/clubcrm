@@ -7,13 +7,16 @@
  "engine": "InnoDB",
  "field_order": [
   "date",
-  "client",
+  "client_id",
   "data_3",
   "name1",
   "membership_status",
   "section_break_5",
   "item",
-  "total_amount"
+  "section_break_8",
+  "total_amount",
+  "column_break_10",
+  "payment_status"
  ],
  "fields": [
   {
@@ -24,20 +27,14 @@
    "read_only": 1
   },
   {
-   "fieldname": "client",
-   "fieldtype": "Link",
-   "label": "Client",
-   "options": "Client"
-  },
-  {
-   "fetch_from": "client.client_name",
+   "fetch_from": "client_id.client_name",
    "fieldname": "name1",
    "fieldtype": "Data",
    "label": "Name",
    "read_only": 1
   },
   {
-   "fetch_from": "client.membership_status",
+   "fetch_from": "client_id.membership_status",
    "fieldname": "membership_status",
    "fieldtype": "Data",
    "label": "Membership Status",
@@ -61,10 +58,30 @@
   {
    "fieldname": "data_3",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "payment_status",
+   "fieldtype": "Select",
+   "label": "Payment Status",
+   "options": "Not Paid\nPaid"
+  },
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Link",
+   "label": "Client ID",
+   "options": "Client"
   }
  ],
  "links": [],
- "modified": "2020-11-13 20:05:41.805744",
+ "modified": "2020-11-30 12:18:44.008910",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Online Order",

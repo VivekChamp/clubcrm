@@ -1,0 +1,70 @@
+{
+ "actions": [],
+ "creation": "2020-12-02 01:55:44.501150",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "benefits_name",
+  "count",
+  "quantity",
+  "used",
+  "remaining",
+  "duration"
+ ],
+ "fields": [
+  {
+   "columns": 3,
+   "fieldname": "benefits_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Benefits Name"
+  },
+  {
+   "columns": 2,
+   "fieldname": "count",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Count"
+  },
+  {
+   "columns": 2,
+   "fieldname": "quantity",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Quantity"
+  },
+  {
+   "columns": 1,
+   "fieldname": "duration",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Duration"
+  },
+  {
+   "columns": 1,
+   "fieldname": "used",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Used"
+  },
+  {
+   "columns": 2,
+   "fieldname": "remaining",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Balance"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2020-12-02 02:01:57.452036",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Member Benefits Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

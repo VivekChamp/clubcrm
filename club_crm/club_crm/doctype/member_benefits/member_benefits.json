@@ -1,0 +1,141 @@
+{
+ "actions": [],
+ "autoname": "naming_series",
+ "creation": "2020-12-02 01:49:41.246335",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "client_id",
+  "client_name",
+  "column_break_3",
+  "member_id",
+  "membership",
+  "start_date",
+  "expiry_date",
+  "section_break_8",
+  "benefits",
+  "discounts_section",
+  "spa_treatments",
+  "retail",
+  "grams",
+  "column_break_14",
+  "boho_social",
+  "salon"
+ ],
+ "fields": [
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Data",
+   "label": "Client ID"
+  },
+  {
+   "fetch_from": "client_id.client_name",
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Client Name"
+  },
+  {
+   "fieldname": "member_id",
+   "fieldtype": "Data",
+   "label": "Member ID"
+  },
+  {
+   "fieldname": "membership",
+   "fieldtype": "Link",
+   "label": "Membership ID",
+   "options": "Memberships"
+  },
+  {
+   "fieldname": "benefits",
+   "fieldtype": "Table",
+   "label": "Benefits",
+   "options": "Member Benefits Item"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "expiry_date",
+   "fieldtype": "Date",
+   "label": "Expiry Date"
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break",
+   "label": "Benefits"
+  },
+  {
+   "fieldname": "discounts_section",
+   "fieldtype": "Section Break",
+   "label": "Discounts"
+  },
+  {
+   "fieldname": "spa_treatments",
+   "fieldtype": "Data",
+   "label": "Spa Treatments"
+  },
+  {
+   "fieldname": "retail",
+   "fieldtype": "Data",
+   "label": "Retail"
+  },
+  {
+   "fieldname": "grams",
+   "fieldtype": "Data",
+   "label": "Grams"
+  },
+  {
+   "fieldname": "column_break_14",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "boho_social",
+   "fieldtype": "Data",
+   "label": "BOHO Social"
+  },
+  {
+   "fieldname": "salon",
+   "fieldtype": "Data",
+   "label": "Salon"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "BEN-.YYYY.-"
+  }
+ ],
+ "links": [],
+ "modified": "2020-12-02 03:30:49.246038",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Member Benefits",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

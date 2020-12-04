@@ -8,7 +8,8 @@
  "field_order": [
   "category_name",
   "group_class_type",
-  "color"
+  "color",
+  "cat_image"
  ],
  "fields": [
   {
@@ -30,10 +31,16 @@
    "fieldname": "color",
    "fieldtype": "Color",
    "label": "Color"
+  },
+  {
+   "fieldname": "cat_image",
+   "fieldtype": "Attach Image",
+   "label": "Image"
   }
  ],
+ "image_field": "cat_image",
  "links": [],
- "modified": "2020-11-26 18:44:16.541693",
+ "modified": "2020-12-02 15:58:59.753270",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class Category",
