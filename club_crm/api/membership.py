@@ -17,3 +17,7 @@ def membership_plan(membership_type):
             "Membership Plans": membership_plan
             }
 
+@frappe.whitelist()
+def nationality():
+    nationality = frappe.get_all('Country', fields=['name'])
+    frappe.response["message"] = nationality

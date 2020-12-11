@@ -2,38 +2,111 @@
  "cards": [
   {
    "hidden": 0,
-   "label": "Masters",
-   "links": "[\n    {\n        \"description\": \"Database of all clients.\",\n        \"label\": \"Clients\",\n        \"name\": \"Client\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of all Staff.\",\n        \"label\": \"Staffs\",\n        \"name\": \"Staff Member\",\n        \"type\": \"doctype\"\n    }\n]"
+   "label": "Clients",
+   "links": "[\n    {\n        \"description\": \"Database of all clients.\",\n        \"label\": \"Clients\",\n        \"name\": \"Client\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of all Check-ins.\",\n        \"label\": \"Check-ins\",\n        \"name\": \"Check In\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of all Valet Parking.\",\n        \"label\": \"Valet Parking\",\n        \"name\": \"Valet Parking\",\n        \"type\": \"doctype\"\n    }\n]"
   },
   {
    "hidden": 0,
    "label": "Memberships",
-   "links": "[\n    {\n        \"description\": \"Database of all clients.\",\n        \"label\": \"Clients\",\n        \"name\": \"Client\",\n        \"type\": \"doctype\"\n    }\n    ]"
+   "links": "[\n    {\n        \"description\": \"Database of all memberships.\",\n        \"label\": \"Memberships\",\n        \"name\": \"Memberships\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of all Membership Benefits.\",\n        \"label\": \"Member Benefits\",\n        \"name\": \"Member Benefits\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of all Membership Applications.\",\n        \"label\": \"Memberships Application\",\n        \"name\": \"Memberships Application\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of all Membership Plans.\",\n        \"label\": \"Membership Plans\",\n        \"name\": \"Memberships Plan\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of all Membership Plans.\",\n        \"label\": \"Membership Types\",\n        \"name\": \"Membership Type\",\n        \"type\": \"doctype\"\n    }\n]"
   },
   {
    "hidden": 0,
-   "label": "Facility",
-   "links": "[\n    {\n        \"description\": \"List of Facility\",\n        \"label\": \"Facility\",\n        \"name\": \"Facility\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Facility Types\",\n        \"label\": \"Facility Type\",\n        \"name\": \"Facility Type\",\n        \"type\": \"doctype\"\n    }\n]"
+   "label": "Spa",
+   "links": "[\n    {\n        \"description\": \"List of Spa Appointments\",\n        \"label\": \"Spa Appointment\",\n        \"name\": \"Spa Appointment\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Spa Progress Notes\",\n        \"label\": \"Spa Progress Notes\",\n        \"name\": \"Spa Progress Notes\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Spa Therapists\",\n        \"label\": \"Spa Therapists\",\n        \"name\": \"Spa Therapist\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Spa Therapist Schedule\",\n        \"label\": \"Spa Therapist Schedule\",\n        \"name\": \"Spa Therapist Schedule\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Spa Therapist Schedule\",\n        \"label\": \"Spa Therapist Schedule\",\n        \"name\": \"Spa Therapist Schedule\",\n        \"type\": \"doctype\"\n    }\n]"
+  },
+  {
+   "hidden": 0,
+   "label": "Spa",
+   "links": "[\n    {\n        \"description\": \"List of Spa Menu\",\n        \"label\": \"Spa Menu\",\n        \"name\": \"Spa Menu\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Spa Group\",\n        \"label\": \"Spa Menu Group\",\n        \"name\": \"Spa Menu Group\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Spa Category\",\n        \"label\": \"Spa Menu Category\",\n        \"name\": \"Spa Menu Category\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Spa Rooms\",\n        \"label\": \"Spa Rooms\",\n        \"name\": \"Spa Room\",\n        \"type\": \"doctype\"\n    }\n]"
+  },
+  {
+   "hidden": 0,
+   "label": "Group Class",
+   "links": "[\n    {\n        \"description\": \"List of Group Class\",\n        \"label\": \"Group Class\",\n        \"name\": \"Group Class\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Group Class\",\n        \"label\": \"Group Class Attendees\",\n        \"name\": \"Group Class Attendees\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Group Class Scheduler\",\n        \"label\": \"Group Class Scheduler\",\n        \"name\": \"Group Class Scheduler\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Group Class Type\",\n        \"label\": \"Group Class Type\",\n        \"name\": \"Group Class Type\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Group Class Category\",\n        \"label\": \"Group Class Category\",\n        \"name\": \"Group Class Category\",\n        \"type\": \"doctype\"\n    }\n]"
+  },
+  {
+   "hidden": 0,
+   "label": "Fitness Training",
+   "links": "[\n    {\n        \"description\": \"List of PT Appointments\",\n        \"label\": \"Fitness Training Appointment\",\n        \"name\": \"Fitness Training Appointment\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of PT Trainers\",\n        \"label\": \"Fitness Trainer\",\n        \"name\": \"Gym Trainer\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of PT Trainer Schedules\",\n        \"label\": \"Fitness Trainer Schedule\",\n        \"name\": \"Fitness Trainer Schedule\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of PT Packages\",\n        \"label\": \"Fitness Training Package\",\n        \"name\": \"Fitness Training Package\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of PT Categories\",\n        \"label\": \"Fitness Training Category\",\n        \"name\": \"Fitness Training Catefory\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of PT Categories\",\n        \"label\": \"Fitness Training Category\",\n        \"name\": \"Fitness Training Category\",\n        \"type\": \"doctype\"\n    }\n]"
+  },
+  {
+   "hidden": 0,
+   "label": "Restaurant",
+   "links": "[\n    {\n        \"description\": \"List of Restaurants Reservation\",\n        \"label\": \"Restaurant Reservation\",\n        \"name\": \"Restaurant Reservation\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Restaurants Orders\",\n        \"label\": \"Restaurant Orders\",\n        \"name\": \"Food Order Entry\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Restaurants\",\n        \"label\": \"Restaurant Menu\",\n        \"name\": \"Restaurant Menu\",\n        \"type\": \"doctype\"\n    }\n]"
+  },
+  {
+   "hidden": 0,
+   "label": "Online Order",
+   "links": "[\n    {\n        \"description\": \"List of Online Orders\",\n        \"label\": \"Online Orders\",\n        \"name\": \"Online Order\",\n        \"type\": \"doctype\"\n    }\n]"
   }
  ],
+ "cards_label": "Menu",
  "category": "Domains",
  "charts": [],
  "creation": "2020-10-08 02:26:52.788984",
  "developer_mode_only": 0,
- "disable_user_customization": 0,
+ "disable_user_customization": 1,
  "docstatus": 0,
  "doctype": "Desk Page",
  "extends_another_page": 0,
- "hide_custom": 0,
+ "hide_custom": 1,
  "idx": 0,
  "is_standard": 1,
  "label": "Club CRM",
- "modified": "2020-10-25 00:03:02.743351",
+ "modified": "2020-12-08 04:10:50.671882",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club CRM",
  "owner": "Administrator",
  "pin_to_bottom": 0,
  "pin_to_top": 0,
- "shortcuts": []
+ "shortcuts": [
+  {
+   "label": "Client List",
+   "link_to": "Client",
+   "type": "DocType"
+  },
+  {
+   "label": "Check-ins",
+   "link_to": "Check In",
+   "type": "DocType"
+  },
+  {
+   "label": "Membership Applications",
+   "link_to": "Memberships Application",
+   "type": "DocType"
+  },
+  {
+   "label": "Spa Appointments",
+   "link_to": "Spa Appointment",
+   "type": "DocType"
+  },
+  {
+   "label": "Fitness Training",
+   "link_to": "Fitness Training Appointment",
+   "type": "DocType"
+  },
+  {
+   "label": "Group Class",
+   "link_to": "Group Class",
+   "type": "DocType"
+  },
+  {
+   "label": "Restaurant Orders",
+   "link_to": "Restaurant Order Entry",
+   "type": "DocType"
+  },
+  {
+   "label": "Online Orders",
+   "link_to": "Online Order",
+   "type": "DocType"
+  },
+  {
+   "label": "Valet Parking",
+   "link_to": "Valet Parking",
+   "type": "DocType"
+  }
+ ],
+ "shortcuts_label": "Quick Access"
 }

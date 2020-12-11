@@ -11,7 +11,9 @@
   "date",
   "group_class",
   "group_class_name",
+  "trainer_name",
   "column_break_4",
+  "class_status",
   "from_time",
   "to_time",
   "attendee_details_section",
@@ -112,12 +114,26 @@
    "fieldtype": "Select",
    "hidden": 1,
    "label": "Series",
-   "options": "GCP-.YYYY.-"
+   "options": "GCA-.YYYY.-"
+  },
+  {
+   "default": "Scheduled",
+   "fieldname": "class_status",
+   "fieldtype": "Select",
+   "label": "Class Status",
+   "options": "Scheduled\nOpen\nCompleted\nCancelled\nNo Show"
+  },
+  {
+   "fetch_from": "group_class.trainer_name",
+   "fieldname": "trainer_name",
+   "fieldtype": "Data",
+   "label": "Trainer Name",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-26 06:24:38.400423",
+ "modified": "2020-12-09 00:01:23.814427",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class Attendees",

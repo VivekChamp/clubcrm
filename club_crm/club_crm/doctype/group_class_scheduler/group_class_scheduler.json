@@ -1,0 +1,196 @@
+{
+ "actions": [],
+ "autoname": "field:group_class_name",
+ "creation": "2020-12-05 07:45:53.055704",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "group_class_details_section",
+  "posting_date",
+  "company",
+  "group_class_name",
+  "group_class_type",
+  "column_break_3",
+  "status",
+  "group_class_category",
+  "capacity",
+  "members_only",
+  "show_on_app",
+  "trainer_details_section",
+  "trainer",
+  "trainer_name",
+  "class_schedule_details_section",
+  "start_date",
+  "end_date",
+  "class_day",
+  "add_class_dates",
+  "class_details_section",
+  "details",
+  "clear_table"
+ ],
+ "fields": [
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "group_class_type",
+   "fieldtype": "Link",
+   "label": "Group Class Type",
+   "options": "Group Class Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "group_class_category",
+   "fieldtype": "Link",
+   "label": "Group Class Category",
+   "options": "Group Class Category",
+   "reqd": 1
+  },
+  {
+   "fieldname": "group_class_details_section",
+   "fieldtype": "Section Break",
+   "label": "Group Class Details"
+  },
+  {
+   "fieldname": "trainer_details_section",
+   "fieldtype": "Section Break",
+   "label": "Trainer Details"
+  },
+  {
+   "fieldname": "trainer",
+   "fieldtype": "Link",
+   "label": "Trainer",
+   "options": "Fitness Trainer"
+  },
+  {
+   "fetch_from": "trainer.practitioner_name",
+   "fieldname": "trainer_name",
+   "fieldtype": "Data",
+   "label": "Trainer Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "group_class_name",
+   "fieldtype": "Data",
+   "label": "Group Class Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "capacity",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Capacity",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "members_only",
+   "fieldtype": "Check",
+   "label": "Members Only"
+  },
+  {
+   "default": "0",
+   "fieldname": "show_on_app",
+   "fieldtype": "Check",
+   "label": "Show on App"
+  },
+  {
+   "fieldname": "class_schedule_details_section",
+   "fieldtype": "Section Break",
+   "label": "Class Schedule Details"
+  },
+  {
+   "default": "Today",
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "End Date",
+   "reqd": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Open\nCancelled\nIn Progress\nCompleted"
+  },
+  {
+   "fieldname": "class_day",
+   "fieldtype": "Select",
+   "label": "Class Day",
+   "options": "\nSunday\nMonday\nTuesday\nWednesday\nThursday\nFriday\nSaturday"
+  },
+  {
+   "fieldname": "add_class_dates",
+   "fieldtype": "Button",
+   "label": "Add Class Dates",
+   "options": "add_class_dates"
+  },
+  {
+   "fieldname": "class_details_section",
+   "fieldtype": "Section Break",
+   "label": "Class Details"
+  },
+  {
+   "fieldname": "details",
+   "fieldtype": "Table",
+   "label": "Details",
+   "options": "Group Class Days"
+  },
+  {
+   "fieldname": "clear_table",
+   "fieldtype": "Button",
+   "label": "Clear Table",
+   "options": "clear_table"
+  }
+ ],
+ "links": [],
+ "modified": "2020-12-09 14:48:15.267841",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Group Class Scheduler",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "group_class_name",
+ "track_changes": 1
+}

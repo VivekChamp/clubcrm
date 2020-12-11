@@ -5,27 +5,35 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "spa_item",
+  "spa_group",
+  "on_app",
   "commission"
  ],
  "fields": [
   {
-   "fieldname": "spa_item",
+   "fieldname": "commission",
+   "fieldtype": "Percent",
+   "in_list_view": 1,
+   "label": "Commission %"
+  },
+  {
+   "fieldname": "spa_group",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Spa Group",
    "options": "Spa Menu Group"
   },
   {
-   "fieldname": "commission",
-   "fieldtype": "Percent",
+   "default": "0",
+   "fieldname": "on_app",
+   "fieldtype": "Check",
    "in_list_view": 1,
-   "label": "Commission %"
+   "label": "Show on App"
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2020-12-05 02:05:25.403706",
+ "modified": "2020-12-09 22:25:39.654798",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Therapist Assignment",

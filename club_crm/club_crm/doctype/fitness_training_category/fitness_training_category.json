@@ -1,33 +1,42 @@
 {
  "actions": [],
- "autoname": "field:name1",
+ "allow_rename": 1,
+ "autoname": "field:category_name",
  "creation": "2020-12-02 21:48:59.968102",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "name1",
-  "on_app"
+  "category_name",
+  "on_app",
+  "category_image"
  ],
  "fields": [
   {
-   "fieldname": "name1",
+   "default": "0",
+   "fieldname": "on_app",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Show on App"
+  },
+  {
+   "fieldname": "category_name",
    "fieldtype": "Data",
    "label": "Category Name",
    "unique": 1
   },
   {
-   "default": "0",
-   "fieldname": "on_app",
-   "fieldtype": "Check",
-   "label": "Show on App"
+   "fieldname": "category_image",
+   "fieldtype": "Attach Image",
+   "label": "Image"
   }
  ],
+ "image_field": "category_image",
  "links": [],
- "modified": "2020-12-04 20:23:22.996696",
+ "modified": "2020-12-06 17:14:32.249692",
  "modified_by": "Administrator",
  "module": "Club CRM",
- "name": "Fitness Training category",
+ "name": "Fitness Training Category",
  "owner": "Administrator",
  "permissions": [
   {
@@ -43,7 +52,6 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

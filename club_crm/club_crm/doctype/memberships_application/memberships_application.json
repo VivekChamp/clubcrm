@@ -18,11 +18,13 @@
   "payment_status",
   "type",
   "memberships_details_section",
+  "no_adults",
   "membership_type",
   "membership_plan",
   "benefits_plan",
   "discount_amount",
   "payment_details_column",
+  "no_kids",
   "membership_fee",
   "joining_fee",
   "net_total",
@@ -30,44 +32,79 @@
   "section_break_3",
   "first_name_1",
   "last_name_1",
-  "birth_date_1",
-  "nationality_1",
-  "qatar_id_1",
-  "front_qid_1",
-  "back_qid_1",
-  "column_break_11",
-  "client_id_1",
-  "gender_1",
   "mobile_no_1",
   "email_1",
   "occupation_1",
+  "column_break_28",
+  "birth_date_1",
+  "gender_1",
+  "nationality_1",
   "company_1",
+  "qatar_id_1",
+  "column_break_11",
+  "client_id_1",
   "em_contact_name",
   "em_contact_no",
+  "front_qid_1",
+  "back_qid_1",
   "details_of_second_member_section",
   "first_name_2",
   "last_name_2",
-  "birth_date_2",
-  "nationality_2",
-  "qatar_id_2",
-  "front_qid_2",
-  "back_qid_2",
-  "1_column",
-  "client_id_2",
-  "gender_2",
   "mobile_no_2",
   "email_2",
   "occupation_2",
-  "relation_to_primary_member",
+  "column_break_47",
+  "birth_date_2",
+  "gender_2",
+  "nationality_2",
+  "company_2",
+  "qatar_id_2",
+  "1_column",
+  "client_id_2",
+  "relation_2",
+  "front_qid_2",
+  "back_qid_2",
+  "details_3_section",
+  "age_16_1",
+  "first_name_3",
+  "last_name_3",
+  "mobile_no_3",
+  "email_3",
+  "occupation_3",
+  "column_break_72",
+  "birth_date_3",
+  "gender_3",
+  "nationality_3",
+  "qatar_id_3",
+  "column_break_66",
+  "relation_3",
+  "client_id_3",
+  "front_qid_3",
+  "back_qid_3",
+  "details_4_section",
+  "age_16_2",
+  "first_name_4",
+  "last_name_4",
+  "mobile_no_4",
+  "email_4",
+  "occupation_4",
+  "column_break_60",
+  "birth_date_4",
+  "gender_4",
+  "nationality_4",
+  "qatar_id_4",
+  "column_break_86",
+  "relation_4",
+  "front_qid_4",
+  "back_qid_4",
   "section_break_39",
   "how_did",
-  "column_break_40",
-  "amended_from",
   "payment_details_section",
   "payment_type",
-  "column_break_60",
+  "column_break_94",
   "transaction_date",
-  "transaction_reference"
+  "transaction_reference",
+  "amended_from"
  ],
  "fields": [
   {
@@ -83,6 +120,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "collapsible": 1,
    "fieldname": "section_break_3",
    "fieldtype": "Section Break",
    "label": "Details of Primary Member"
@@ -92,17 +130,14 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval:doc.membership_type == \"Couple Membership\"",
+   "collapsible": 1,
+   "depends_on": "eval: in_list([\"Couple Membership\", \"Family Membership\"], doc.membership_type)",
    "fieldname": "details_of_second_member_section",
    "fieldtype": "Section Break",
    "label": "Details of Second Member"
   },
   {
    "fieldname": "1_column",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_40",
    "fieldtype": "Column Break"
   },
   {
@@ -124,6 +159,8 @@
   {
    "fieldname": "membership_plan",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Membership Plan",
    "options": "Memberships Plan"
   },
@@ -164,6 +201,7 @@
    "allow_on_submit": 1,
    "fieldname": "application_status",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Application Status",
    "options": "\nPending\nApproved\nRejected"
   },
@@ -224,7 +262,6 @@
    "fetch_from": "client.first_name",
    "fieldname": "first_name_1",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "First Name",
    "reqd": 1
   },
@@ -261,12 +298,14 @@
   {
    "fieldname": "front_qid_1",
    "fieldtype": "Attach",
-   "label": "Qatar ID Front"
+   "label": "Qatar ID Front",
+   "reqd": 1
   },
   {
    "fieldname": "back_qid_1",
    "fieldtype": "Attach",
-   "label": "Qatar ID Back"
+   "label": "Qatar ID Back",
+   "reqd": 1
   },
   {
    "fetch_from": "client.sex",
@@ -281,6 +320,7 @@
    "fieldname": "mobile_no_1",
    "fieldtype": "Data",
    "label": "Mobile Number",
+   "length": 8,
    "reqd": 1
   },
   {
@@ -288,6 +328,7 @@
    "fieldname": "email_1",
    "fieldtype": "Data",
    "label": "Email Address",
+   "options": "Email",
    "reqd": 1
   },
   {
@@ -353,7 +394,8 @@
   {
    "fieldname": "email_2",
    "fieldtype": "Data",
-   "label": "Email Address"
+   "label": "Email Address",
+   "options": "Email"
   },
   {
    "fieldname": "client_id_1",
@@ -367,12 +409,6 @@
    "fieldtype": "Data",
    "label": "Client ID",
    "read_only": 1
-  },
-  {
-   "fieldname": "relation_to_primary_member",
-   "fieldtype": "Select",
-   "label": "Relation to Primary Member",
-   "options": "Spouse\nSon\nDaughter\nBrother\nSister\nFather\nMother"
   },
   {
    "default": "0",
@@ -435,11 +471,222 @@
   {
    "fieldname": "column_break_60",
    "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "age_16_1",
+   "fieldtype": "Check",
+   "label": "Less than 16 years of age"
+  },
+  {
+   "default": "0",
+   "fieldname": "age_16_2",
+   "fieldtype": "Check",
+   "label": "Less than 16 years of age"
+  },
+  {
+   "fieldname": "relation_2",
+   "fieldtype": "Select",
+   "label": "Relation to Primary Member",
+   "options": "Spouse\nSon\nDaughter\nBrother\nSister\nFather\nMother"
+  },
+  {
+   "collapsible": 1,
+   "depends_on": "eval:doc.membership_type==\"Family Membership\"",
+   "fieldname": "details_3_section",
+   "fieldtype": "Section Break",
+   "label": "Details of Third Member"
+  },
+  {
+   "fieldname": "first_name_3",
+   "fieldtype": "Data",
+   "label": "First Name"
+  },
+  {
+   "fieldname": "last_name_3",
+   "fieldtype": "Data",
+   "label": "Last Name"
+  },
+  {
+   "fieldname": "birth_date_3",
+   "fieldtype": "Data",
+   "label": "Date of Birth"
+  },
+  {
+   "depends_on": "eval:doc.age_16_1==0",
+   "fieldname": "nationality_3",
+   "fieldtype": "Data",
+   "label": "Nationality"
+  },
+  {
+   "fieldname": "qatar_id_3",
+   "fieldtype": "Data",
+   "label": "QID Number"
+  },
+  {
+   "fieldname": "front_qid_3",
+   "fieldtype": "Attach Image",
+   "label": "Qatar ID Front"
+  },
+  {
+   "fieldname": "back_qid_3",
+   "fieldtype": "Attach Image",
+   "label": "Qatar ID Back"
+  },
+  {
+   "fieldname": "column_break_72",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.age_16_1==0",
+   "fieldname": "client_id_3",
+   "fieldtype": "Data",
+   "label": "Client ID",
+   "read_only": 1
+  },
+  {
+   "fieldname": "gender_3",
+   "fieldtype": "Data",
+   "label": "Gender"
+  },
+  {
+   "depends_on": "eval:doc.age_16_1==0",
+   "fieldname": "mobile_no_3",
+   "fieldtype": "Data",
+   "label": "Mobile Number"
+  },
+  {
+   "depends_on": "eval:doc.age_16_1==0",
+   "fieldname": "email_3",
+   "fieldtype": "Data",
+   "label": "Email Address",
+   "options": "Email"
+  },
+  {
+   "depends_on": "eval:doc.age_16_1==0",
+   "fieldname": "occupation_3",
+   "fieldtype": "Data",
+   "label": "Occupation"
+  },
+  {
+   "fieldname": "relation_3",
+   "fieldtype": "Select",
+   "label": "Relation to Primary Member",
+   "options": "Spouse\nSon\nDaughter\nBrother\nSister\nFather\nMother"
+  },
+  {
+   "collapsible": 1,
+   "depends_on": "eval:doc.membership_type==\"Family Membership\"",
+   "fieldname": "details_4_section",
+   "fieldtype": "Section Break",
+   "label": "Details of Fourth Member"
+  },
+  {
+   "fieldname": "column_break_66",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_28",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_47",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company_2",
+   "fieldtype": "Data",
+   "label": "Company"
+  },
+  {
+   "fieldname": "first_name_4",
+   "fieldtype": "Data",
+   "label": "First Name"
+  },
+  {
+   "fieldname": "last_name_4",
+   "fieldtype": "Data",
+   "label": "Last Name"
+  },
+  {
+   "depends_on": "eval:doc.age_16_2==0",
+   "fieldname": "mobile_no_4",
+   "fieldtype": "Data",
+   "label": "Mobile Number"
+  },
+  {
+   "depends_on": "eval:doc.age_16_2==0",
+   "fieldname": "email_4",
+   "fieldtype": "Data",
+   "label": "Email Address",
+   "options": "Email"
+  },
+  {
+   "depends_on": "eval:doc.age_16_2==0",
+   "fieldname": "occupation_4",
+   "fieldtype": "Data",
+   "label": "Occupation"
+  },
+  {
+   "fieldname": "birth_date_4",
+   "fieldtype": "Data",
+   "label": "Date of Birth"
+  },
+  {
+   "fieldname": "gender_4",
+   "fieldtype": "Data",
+   "label": "Gender"
+  },
+  {
+   "depends_on": "eval:doc.age_16_2==0",
+   "fieldname": "nationality_4",
+   "fieldtype": "Data",
+   "label": "Nationality"
+  },
+  {
+   "fieldname": "qatar_id_4",
+   "fieldtype": "Data",
+   "label": "QID Number"
+  },
+  {
+   "fieldname": "column_break_86",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "relation_4",
+   "fieldtype": "Data",
+   "label": "Relation to Primary Member"
+  },
+  {
+   "fieldname": "front_qid_4",
+   "fieldtype": "Attach Image",
+   "label": "Qatar ID Front"
+  },
+  {
+   "fieldname": "back_qid_4",
+   "fieldtype": "Attach Image",
+   "label": "Qatar ID Back"
+  },
+  {
+   "fieldname": "column_break_94",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "no_adults",
+   "fieldtype": "Select",
+   "label": "Number of Adults",
+   "options": "1\n2\n3\n4"
+  },
+  {
+   "fieldname": "no_kids",
+   "fieldtype": "Select",
+   "label": "Number of Kids",
+   "options": "0\n1\n2"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-29 02:49:22.090502",
+ "modified": "2020-12-08 22:07:26.950071",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",
@@ -460,5 +707,6 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "client_name",
  "track_changes": 1
 }

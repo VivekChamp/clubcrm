@@ -1,6 +1,6 @@
 {
  "actions": [],
- "autoname": "naming_series",
+ "autoname": "naming_series:",
  "creation": "2020-12-02 01:49:41.246335",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -22,20 +22,25 @@
   "grams",
   "column_break_14",
   "boho_social",
-  "salon"
+  "salon",
+  "notes_section",
+  "staff_notes",
+  "amended_from"
  ],
  "fields": [
   {
    "fieldname": "client_id",
-   "fieldtype": "Data",
-   "label": "Client ID"
+   "fieldtype": "Link",
+   "label": "Client ID",
+   "options": "Client"
   },
   {
    "fetch_from": "client_id.client_name",
    "fieldname": "client_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Client Name"
+   "label": "Client Name",
+   "read_only": 1
   },
   {
    "fieldname": "member_id",
@@ -44,9 +49,8 @@
   },
   {
    "fieldname": "membership",
-   "fieldtype": "Link",
-   "label": "Membership ID",
-   "options": "Memberships"
+   "fieldtype": "Data",
+   "label": "Membership ID"
   },
   {
    "fieldname": "benefits",
@@ -113,11 +117,31 @@
    "hidden": 1,
    "label": "Series",
    "options": "BEN-.YYYY.-"
+  },
+  {
+   "fieldname": "notes_section",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "staff_notes",
+   "fieldtype": "Small Text",
+   "label": "Staff Notes"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Member Benefits",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
+ "is_submittable": 1,
  "links": [],
- "modified": "2020-12-02 03:30:49.246038",
- "modified_by": "Administrator",
+ "modified": "2020-12-08 13:53:37.785165",
+ "modified_by": "mithleena@bluelynx.qa",
  "module": "Club CRM",
  "name": "Member Benefits",
  "owner": "Administrator",
@@ -137,5 +161,6 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "client_name",
  "track_changes": 1
 }

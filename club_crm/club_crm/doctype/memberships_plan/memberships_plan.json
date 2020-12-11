@@ -6,14 +6,20 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "plan_details_section",
   "membership_plan_name",
   "membership_type",
   "column_break_3",
   "duration",
   "on_app",
   "amount_section",
+  "maximum_number_of_members",
+  "max_adults",
+  "max_kids",
+  "column_break_10",
   "joining_fee",
-  "membership_fee",
+  "mem_fee_adult",
+  "mem_fee_kid",
   "benefits_item"
  ],
  "fields": [
@@ -48,13 +54,7 @@
    "fieldname": "joining_fee",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Joining Fee"
-  },
-  {
-   "fieldname": "membership_fee",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Membership Fee"
+   "label": "Joining Fee (per Adult)"
   },
   {
    "fieldname": "duration",
@@ -75,10 +75,51 @@
    "fieldtype": "Check",
    "in_list_view": 1,
    "label": "Show on App"
+  },
+  {
+   "fieldname": "plan_details_section",
+   "fieldtype": "Section Break",
+   "label": "Plan Details"
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "maximum_number_of_members",
+   "fieldtype": "Int",
+   "label": "Maximum number of Member(s)"
+  },
+  {
+   "default": "1",
+   "fieldname": "max_adults",
+   "fieldtype": "Select",
+   "label": "Maximum number of Adult(s)",
+   "options": "1\n2\n3\n4"
+  },
+  {
+   "default": "0",
+   "fieldname": "max_kids",
+   "fieldtype": "Select",
+   "label": "Maximum number of Kid(s)",
+   "options": "0\n1\n2\n3\n4"
+  },
+  {
+   "fieldname": "mem_fee_adult",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Membership Fee (per Adult)",
+   "precision": "2"
+  },
+  {
+   "fieldname": "mem_fee_kid",
+   "fieldtype": "Currency",
+   "label": "Membership Fee (per Kid)",
+   "precision": "2"
   }
  ],
  "links": [],
- "modified": "2020-11-17 13:38:32.962494",
+ "modified": "2020-12-08 21:56:13.654055",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Plan",

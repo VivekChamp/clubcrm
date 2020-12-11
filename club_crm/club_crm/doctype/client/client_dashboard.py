@@ -7,7 +7,7 @@ def get_data():
 		'transactions': [
 			{
 				'label': _('Appointments'),
-				'items': ['Spa Appointment', 'Group Class Attendees', 'Check In']
+				'items': ['Spa Appointment', 'Group Class Attendees', 'Check In', 'Rating']
 			},
 			{
 				'label': _('Membership Details'),

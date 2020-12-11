@@ -1,0 +1,227 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2020-11-19 04:34:08.814215",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "request_status",
+  "column_break_6",
+  "payment_status",
+  "client_details_section",
+  "date",
+  "client_id",
+  "column_break_8",
+  "client_name",
+  "gender",
+  "mobile_number",
+  "membership_status",
+  "trainer_and_session_details_section",
+  "trainer",
+  "fitness_package",
+  "column_break_12",
+  "number_of_sessions",
+  "sessions_per_week",
+  "price",
+  "customer_preference_section",
+  "start_date",
+  "customer_preference",
+  "customer_remarks",
+  "trainer_schedule_section",
+  "table_schedule",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Data",
+   "label": "Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Link",
+   "label": "Client ID",
+   "options": "Client"
+  },
+  {
+   "fetch_from": "client_id.client_name",
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "label": "Client Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "client_id.membership_status",
+   "fieldname": "membership_status",
+   "fieldtype": "Data",
+   "label": "Membership Status",
+   "read_only": 1
+  },
+  {
+   "fieldname": "trainer",
+   "fieldtype": "Link",
+   "label": "Trainer",
+   "options": "Fitness Trainer"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "customer_preference_section",
+   "fieldtype": "Section Break",
+   "label": "Preferred Days and Time"
+  },
+  {
+   "fieldname": "customer_remarks",
+   "fieldtype": "Small Text",
+   "label": "Customer Remarks"
+  },
+  {
+   "fieldname": "client_details_section",
+   "fieldtype": "Section Break",
+   "label": "Client Details"
+  },
+  {
+   "fetch_from": "client_id.mobile_no",
+   "fieldname": "mobile_number",
+   "fieldtype": "Data",
+   "label": "Mobile Number",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "client_id.gender",
+   "fieldname": "gender",
+   "fieldtype": "Data",
+   "label": "Gender",
+   "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "trainer_and_session_details_section",
+   "fieldtype": "Section Break",
+   "label": "Trainer and Session Details"
+  },
+  {
+   "fieldname": "fitness_package",
+   "fieldtype": "Link",
+   "label": "Fitness Training Package",
+   "options": "Fitness Training Package"
+  },
+  {
+   "fieldname": "column_break_12",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "fitness_package.no_of_session",
+   "fieldname": "number_of_sessions",
+   "fieldtype": "Data",
+   "label": "Number of Sessions",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "fitness_package.sessions_per_week",
+   "fieldname": "sessions_per_week",
+   "fieldtype": "Data",
+   "label": "Session(s) per week",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Fitness Training Request",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fetch_from": "fitness_package.price",
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "label": "Price",
+   "read_only": 1
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Pending",
+   "fieldname": "request_status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Pending\nScheduled\nCompleted"
+  },
+  {
+   "default": "FIT-REQ-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "FIT-REQ-.YYYY.-",
+   "read_only": 1
+  },
+  {
+   "default": "Not Paid",
+   "fieldname": "payment_status",
+   "fieldtype": "Select",
+   "label": "Payment Status",
+   "options": "Paid\nNot Paid",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "collapsible_depends_on": "eval:doc.status==1",
+   "fieldname": "trainer_schedule_section",
+   "fieldtype": "Section Break",
+   "label": "Trainer Scheduler"
+  },
+  {
+   "fieldname": "customer_preference",
+   "fieldtype": "Table",
+   "options": "Fitness Training Customer Preference"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "table_schedule",
+   "fieldtype": "Table",
+   "options": "Fitness Training Trainer Scheduler"
+  }
+ ],
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2020-12-11 17:12:42.101663",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Fitness Training Request",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "client_name",
+ "track_changes": 1
+}

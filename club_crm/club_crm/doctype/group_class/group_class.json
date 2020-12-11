@@ -14,7 +14,8 @@
   "capacity",
   "remaining",
   "column_break_3",
-  "status",
+  "class_status",
+  "booking_status",
   "members_only",
   "on_app",
   "section_break_7",
@@ -24,6 +25,7 @@
   "class_category",
   "color",
   "column_break_8",
+  "day",
   "from_time",
   "to_time",
   "amended_from"
@@ -33,7 +35,7 @@
    "fieldname": "trainer",
    "fieldtype": "Link",
    "label": "Trainer",
-   "options": "Gym Trainer",
+   "options": "Fitness Trainer",
    "reqd": 1
   },
   {
@@ -93,15 +95,6 @@
    "in_standard_filter": 1,
    "label": "Trainer Name",
    "read_only": 1
-  },
-  {
-   "allow_on_submit": 1,
-   "default": "Open",
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "in_standard_filter": 1,
-   "label": "Status",
-   "options": "Open\nFull\nCompleted"
   },
   {
    "fieldname": "group_class_name",
@@ -167,17 +160,33 @@
    "hidden": 1,
    "label": "Color",
    "read_only": 1
+  },
+  {
+   "fieldname": "booking_status",
+   "fieldtype": "Select",
+   "label": "Booking Status",
+   "options": "Available\nFull",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Scheduled",
+   "fieldname": "class_status",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Class Status",
+   "options": "Scheduled\nCompleted\nCancelled"
+  },
+  {
+   "fieldname": "day",
+   "fieldtype": "Data",
+   "label": "Day"
   }
  ],
  "image_field": "image",
  "is_submittable": 1,
- "links": [
-  {
-   "link_doctype": "Group Class Attendees",
-   "link_fieldname": "group_class_name"
-  }
- ],
- "modified": "2020-12-02 16:24:24.325579",
+ "links": [],
+ "modified": "2020-12-08 15:17:40.697620",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class",

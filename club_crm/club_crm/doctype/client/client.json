@@ -25,6 +25,7 @@
   "qatar_id",
   "status",
   "membership_status",
+  "member",
   "reg_on_app",
   "notification_preference",
   "primary_member",
@@ -49,9 +50,9 @@
   "medication",
   "column_break_20",
   "medical_history",
+  "other_notes",
   "more_info",
   "client_details",
-  "referral_type",
   "amended_from"
  ],
  "fields": [
@@ -223,6 +224,7 @@
    "collapsible": 1,
    "fieldname": "sb_relation",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Client Relation"
   },
   {
@@ -272,7 +274,7 @@
   {
    "description": "Additional information regarding the client",
    "fieldname": "client_details",
-   "fieldtype": "Text",
+   "fieldtype": "Small Text",
    "ignore_xss_filter": 1,
    "label": "Client Details"
   },
@@ -284,8 +286,7 @@
    "in_standard_filter": 1,
    "label": "Membership Status",
    "no_copy": 1,
-   "options": "Non-Member\nMember",
-   "read_only": 1
+   "options": "Non-Member\nMember"
   },
   {
    "fieldname": "nationality",
@@ -298,13 +299,6 @@
    "fieldtype": "Data",
    "in_standard_filter": 1,
    "label": "Qatar ID"
-  },
-  {
-   "fieldname": "referral_type",
-   "fieldtype": "Select",
-   "hidden": 1,
-   "label": "Referral Type",
-   "options": "\nFamily Member\nSocial Media\nWebsite\nFriends"
   },
   {
    "fieldname": "amended_from",
@@ -369,14 +363,26 @@
    "fieldtype": "Data",
    "hidden": 1,
    "label": "Membership Application"
+  },
+  {
+   "fieldname": "other_notes",
+   "fieldtype": "Small Text",
+   "label": "Other Notes"
+  },
+  {
+   "fieldname": "member",
+   "fieldtype": "Link",
+   "label": "Member",
+   "options": "Memberships",
+   "read_only": 1
   }
  ],
  "icon": "fa fa-user",
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2020-11-29 05:31:31.596776",
- "modified_by": "Administrator",
+ "modified": "2020-12-11 20:03:56.375845",
+ "modified_by": "suba@bluelynx.com",
  "module": "Club CRM",
  "name": "Client",
  "name_case": "Title Case",

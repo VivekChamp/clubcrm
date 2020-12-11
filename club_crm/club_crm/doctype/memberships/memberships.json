@@ -6,25 +6,33 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "membership_details_section",
   "naming_series",
   "date",
   "membership_application",
   "membership_plan",
-  "client_id",
+  "type",
   "client_name",
   "column_break_7",
   "membership_id",
-  "type",
+  "client_id",
   "start_date",
   "end_date",
   "duration",
   "member_details_section",
-  "primary_client_id",
-  "primary_client_name",
+  "client_id_1",
+  "client_name_1",
   "column_break_11",
-  "member_number",
-  "card_number",
-  "member_benefits",
+  "member_no_1",
+  "card_no_1",
+  "member_benefits_1",
+  "second_member_section",
+  "client_2",
+  "client_name_2",
+  "column_break_24",
+  "member_no_2",
+  "card_no_2",
+  "member_benefits_2",
   "amended_from"
  ],
  "fields": [
@@ -65,8 +73,7 @@
   {
    "fieldname": "end_date",
    "fieldtype": "Date",
-   "label": "Membership Expiry Date",
-   "read_only": 1
+   "label": "Membership Expiry Date"
   },
   {
    "fieldname": "column_break_11",
@@ -108,32 +115,7 @@
   {
    "fieldname": "member_details_section",
    "fieldtype": "Section Break",
-   "label": "Member Details"
-  },
-  {
-   "fieldname": "primary_client_id",
-   "fieldtype": "Data",
-   "label": "Primary Client ID"
-  },
-  {
-   "fieldname": "primary_client_name",
-   "fieldtype": "Data",
-   "label": "Primary Client Name"
-  },
-  {
-   "fieldname": "member_number",
-   "fieldtype": "Data",
-   "label": "Member Number"
-  },
-  {
-   "fieldname": "card_number",
-   "fieldtype": "Data",
-   "label": "Card Number"
-  },
-  {
-   "fieldname": "member_benefits",
-   "fieldtype": "Data",
-   "label": "Member Benefits"
+   "label": "Primary Member"
   },
   {
    "fieldname": "naming_series",
@@ -150,11 +132,83 @@
    "options": "Memberships",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "membership_details_section",
+   "fieldtype": "Section Break",
+   "label": "Membership Details"
+  },
+  {
+   "fieldname": "client_id_1",
+   "fieldtype": "Link",
+   "label": "Client ID",
+   "options": "Client"
+  },
+  {
+   "fieldname": "client_name_1",
+   "fieldtype": "Data",
+   "label": "Client Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "member_no_1",
+   "fieldtype": "Data",
+   "label": "Member ID"
+  },
+  {
+   "fieldname": "card_no_1",
+   "fieldtype": "Data",
+   "label": "Card Number"
+  },
+  {
+   "fieldname": "member_benefits_1",
+   "fieldtype": "Link",
+   "label": "Member Benefits",
+   "options": "Member Benefits"
+  },
+  {
+   "collapsible": 1,
+   "collapsible_depends_on": "eval:doc.membership_type==\"Couple Membership\"",
+   "fieldname": "second_member_section",
+   "fieldtype": "Section Break",
+   "label": "Second Member"
+  },
+  {
+   "fieldname": "client_2",
+   "fieldtype": "Link",
+   "label": "Client ID",
+   "options": "Client"
+  },
+  {
+   "fieldname": "client_name_2",
+   "fieldtype": "Data",
+   "label": "Client Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "member_no_2",
+   "fieldtype": "Data",
+   "label": "Member ID"
+  },
+  {
+   "fieldname": "card_no_2",
+   "fieldtype": "Data",
+   "label": "Card Number"
+  },
+  {
+   "fieldname": "member_benefits_2",
+   "fieldtype": "Link",
+   "label": "Member Benefits",
+   "options": "Member Benefits"
+  },
+  {
+   "fieldname": "column_break_24",
+   "fieldtype": "Column Break"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-02 03:09:07.257014",
+ "modified": "2020-12-08 12:59:45.464539",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships",

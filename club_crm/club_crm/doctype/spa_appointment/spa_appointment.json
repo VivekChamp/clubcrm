@@ -12,8 +12,8 @@
   "status",
   "customer_details_section",
   "client_id",
-  "column_break_7",
   "client_name",
+  "column_break_7",
   "membership_status",
   "gender",
   "mobile_no",
@@ -141,7 +141,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Status",
-   "options": "Open\nScheduled\nComplete\nCancelled"
+   "options": "Open\nSpa Schedule Time Slotsd\nComplete\nCancelled"
   },
   {
    "fieldname": "customer_details_section",
@@ -149,10 +149,11 @@
    "label": "Customer Details"
   },
   {
-   "fetch_from": "client_id.sex",
+   "fetch_from": "client_id.gender",
    "fieldname": "gender",
    "fieldtype": "Data",
-   "label": "Gender"
+   "label": "Gender",
+   "read_only": 1
   },
   {
    "fieldname": "naming_series",
@@ -175,7 +176,7 @@
    "options": "Spa Appointment Type"
   },
   {
-   "fetch_from": "client_id.mobile",
+   "fetch_from": "client_id.mobile_no",
    "fieldname": "mobile_no",
    "fieldtype": "Data",
    "label": "Mobile Number",
@@ -240,7 +241,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-23 08:09:31.346541",
+ "modified": "2020-12-06 00:31:14.490501",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Appointment",

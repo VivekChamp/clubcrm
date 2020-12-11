@@ -10,7 +10,9 @@
   "spa_menu_group",
   "spa_menu_category",
   "on_app",
-  "color"
+  "color",
+  "spa_therapist_assignment_section",
+  "spa_menu_assignment"
  ],
  "fields": [
   {
@@ -40,10 +42,20 @@
    "fieldname": "color",
    "fieldtype": "Color",
    "label": "Color"
+  },
+  {
+   "fieldname": "spa_menu_assignment",
+   "fieldtype": "Table",
+   "options": "Spa Menu Group Assignment"
+  },
+  {
+   "fieldname": "spa_therapist_assignment_section",
+   "fieldtype": "Section Break",
+   "label": "Spa Therapist Assignment"
   }
  ],
  "links": [],
- "modified": "2020-12-01 16:51:14.058580",
+ "modified": "2020-12-05 16:58:47.200661",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Menu Group",

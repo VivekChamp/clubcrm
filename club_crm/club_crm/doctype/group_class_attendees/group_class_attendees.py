@@ -9,7 +9,7 @@ from frappe.model.document import Document
 class GroupClassAttendees(Document):
     def validate(self):
         doc = frappe.get_doc('Group Class',self.group_class)
-        if doc.status=="Full":
+        if doc.booking_status=="Full":
             frappe.throw('Group Class booking is full')
     
     def on_submit(self):
@@ -17,7 +17,7 @@ class GroupClassAttendees(Document):
         gr_class.remaining= int(gr_class.remaining)-1
 
         if gr_class.remaining==0:
-            frappe.db.set_value('Group Class', self.group_class, {'status': "Full",'remaining': gr_class.remaining})
+            frappe.db.set_value('Group Class', self.group_class, {'booking_status': "Full",'remaining': gr_class.remaining})
         else:
             frappe.db.set_value('Group Class', self.group_class, 'remaining', gr_class.remaining)
         
@@ -25,7 +25,7 @@ class GroupClassAttendees(Document):
         gr_class=frappe.get_doc('Group Class',self.group_class)
 
         if gr_class.remaining==0:
-            frappe.db.set_value('Group Class', self.group_class, {'status': "Open",'remaining': int(gr_class.remaining)+1})
+            frappe.db.set_value('Group Class', self.group_class, {'booking_status': "Available",'remaining': int(gr_class.remaining)+1})
         else:
             frappe.db.set_value('Group Class', self.group_class, 'remaining', int(gr_class.remaining)+1)
 

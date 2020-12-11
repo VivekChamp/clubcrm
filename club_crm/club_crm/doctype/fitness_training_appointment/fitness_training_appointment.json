@@ -1,112 +1,190 @@
 {
  "actions": [],
- "creation": "2020-11-19 04:34:08.814215",
+ "autoname": "naming_series:",
+ "creation": "2020-12-08 03:33:38.422144",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "client_details",
   "date",
   "client_id",
   "client_name",
+  "mobile_number",
+  "column_break_4",
   "membership_status",
-  "appointment_type",
-  "column_break_6",
-  "trainer",
-  "trainer_name",
-  "training_type",
-  "customer_preference_section",
-  "gym_customer_preference",
-  "section_break_12",
   "status",
+  "payment_status",
+  "trainer_details",
+  "trainer_id",
+  "appointment_details",
+  "fitness_session",
+  "package_name",
+  "color",
+  "column_break_15",
+  "start_time",
+  "end_time",
+  "section_break_notes",
+  "customer_remarks",
+  "column_break_21",
   "section_break_14",
-  "customer_remarks"
+  "amended_from",
+  "naming_series"
  ],
  "fields": [
   {
    "default": "Today",
    "fieldname": "date",
-   "fieldtype": "Data",
+   "fieldtype": "Date",
    "label": "Date",
    "read_only": 1
   },
   {
    "fieldname": "client_id",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Client ID",
    "options": "Client"
   },
   {
+   "fetch_from": "client_id.client_name",
    "fieldname": "client_name",
    "fieldtype": "Data",
-   "label": "Client Name"
-  },
-  {
-   "fieldname": "membership_status",
-   "fieldtype": "Data",
-   "label": "Membership Status"
-  },
-  {
-   "default": "Gym",
-   "fieldname": "appointment_type",
-   "fieldtype": "Select",
-   "label": "Appointment Type",
-   "options": "Gym",
+   "label": "Client Name",
    "read_only": 1
   },
   {
-   "fieldname": "trainer",
-   "fieldtype": "Link",
-   "label": "Trainer",
-   "options": "Gym Trainer"
-  },
-  {
-   "fieldname": "trainer_name",
+   "fetch_from": "client_id.membership_status",
+   "fieldname": "membership_status",
    "fieldtype": "Data",
-   "label": "Trainer Name"
+   "label": "Membership Status",
+   "read_only": 1
   },
   {
-   "fieldname": "training_type",
-   "fieldtype": "Select",
-   "label": "Training Type",
-   "options": "Personal Training"
-  },
-  {
-   "fieldname": "column_break_6",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "customer_preference_section",
-   "fieldtype": "Section Break",
-   "label": "Customer Preference"
-  },
-  {
-   "fieldname": "gym_customer_preference",
-   "fieldtype": "Table",
-   "options": "Gym Customer Preference"
-  },
-  {
-   "fieldname": "section_break_12",
-   "fieldtype": "Section Break"
-  },
-  {
+   "allow_on_submit": 1,
    "fieldname": "status",
    "fieldtype": "Select",
-   "label": "Status",
-   "options": "Scheduled\nApproved by Customer\nRejected by Customer"
+   "label": "Session Status",
+   "options": "Scheduled\nOpen\nCompleted\nCancelled\nNo show"
   },
   {
    "fieldname": "section_break_14",
-   "fieldtype": "Column Break"
+   "fieldtype": "Small Text",
+   "label": "Staff Notes"
   },
   {
-   "depends_on": "eval:doc.status == \"Rejected by Customer\"",
    "fieldname": "customer_remarks",
    "fieldtype": "Small Text",
    "label": "Customer Remarks"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "client_details",
+   "fieldtype": "Section Break",
+   "label": "Client Details"
+  },
+  {
+   "fieldname": "payment_status",
+   "fieldtype": "Select",
+   "label": "Payment Status",
+   "options": "Paid\nNot Paid"
+  },
+  {
+   "fieldname": "trainer_details",
+   "fieldtype": "Section Break",
+   "label": "Trainer Details"
+  },
+  {
+   "fieldname": "trainer_id",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Trainer",
+   "options": "Fitness Trainer"
+  },
+  {
+   "fieldname": "appointment_details",
+   "fieldtype": "Section Break",
+   "label": "Appointment Details"
+  },
+  {
+   "fieldname": "column_break_15",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "start_time",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Start Time"
+  },
+  {
+   "fieldname": "end_time",
+   "fieldtype": "Datetime",
+   "label": "End Time"
+  },
+  {
+   "fetch_from": "client_id.mobile_no",
+   "fieldname": "mobile_number",
+   "fieldtype": "Data",
+   "label": "Mobile Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_21",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "fitness_session",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Fitness Session",
+   "options": "Fitness Training Session"
+  },
+  {
+   "fetch_from": "fitness_session.package_name",
+   "fieldname": "package_name",
+   "fieldtype": "Data",
+   "label": "Package Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_notes",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Fitness Training Appointment",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fetch_from": "fitness_session.color",
+   "fieldname": "color",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Color",
+   "read_only": 1
+  },
+  {
+   "default": "PT-APP-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "PT-APP-.YYYY.-",
+   "read_only": 1
   }
  ],
+ "is_submittable": 1,
  "links": [],
- "modified": "2020-11-26 15:32:22.537599",
+ "modified": "2020-12-12 01:05:18.638127",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Appointment",
@@ -125,8 +203,8 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "client_name",
  "track_changes": 1
 }
