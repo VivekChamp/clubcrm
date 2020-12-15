@@ -19,6 +19,7 @@
   "column_break_11",
   "spa_booking",
   "gym_booking",
+  "class_attendee_id",
   "group_class_id",
   "amended_from"
  ],
@@ -62,7 +63,7 @@
    "reqd": 1
   },
   {
-   "fetch_from": "client_id.first_name",
+   "fetch_from": "client_id.client_name",
    "fieldname": "client_name",
    "fieldtype": "Data",
    "label": "Client Name",
@@ -109,11 +110,11 @@
    "options": "Fitness Training Request"
   },
   {
-   "depends_on": "eval:doc.check_in_type==\"Group Class\"",
+   "fetch_from": "class_attendee_id.group_class",
    "fieldname": "group_class_id",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "label": "Group Class ID",
-   "options": "Group Class"
+   "read_only": 1
   },
   {
    "fieldname": "amended_from",
@@ -123,11 +124,18 @@
    "options": "Check In",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.check_in_type==\"Group Class\"",
+   "fieldname": "class_attendee_id",
+   "fieldtype": "Link",
+   "label": "Group Class Attendee ID",
+   "options": "Group Class Attendees"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-08 03:49:10.347179",
+ "modified": "2020-12-13 14:49:47.284252",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Check In",

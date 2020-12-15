@@ -1,0 +1,104 @@
+{
+ "actions": [],
+ "creation": "2020-12-15 00:53:44.779509",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "first_name",
+  "last_name",
+  "mobile_number",
+  "email_address",
+  "nationality",
+  "column_break_6",
+  "dob",
+  "age_html",
+  "column_break_9",
+  "client_id",
+  "qid_number",
+  "qatar_id_front",
+  "qatar_id_back"
+ ],
+ "fields": [
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "First Name"
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "Last Name"
+  },
+  {
+   "fieldname": "mobile_number",
+   "fieldtype": "Data",
+   "label": "Mobile Number"
+  },
+  {
+   "fieldname": "email_address",
+   "fieldtype": "Data",
+   "label": "Email Address"
+  },
+  {
+   "fieldname": "nationality",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Nationality"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dob",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "DOB"
+  },
+  {
+   "fieldname": "column_break_9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Client ID",
+   "options": "Client"
+  },
+  {
+   "fieldname": "qid_number",
+   "fieldtype": "Data",
+   "label": "QID Number"
+  },
+  {
+   "fieldname": "qatar_id_front",
+   "fieldtype": "Attach Image",
+   "label": "Qatar ID Front"
+  },
+  {
+   "fieldname": "qatar_id_back",
+   "fieldtype": "Attach Image",
+   "label": "Qatar ID Back"
+  },
+  {
+   "fieldname": "age_html",
+   "fieldtype": "HTML",
+   "label": "Age"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2020-12-15 01:13:04.408712",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Additional Members",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

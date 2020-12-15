@@ -22,7 +22,8 @@
   "column_break_10",
   "membership_status",
   "mobile_number",
-  "amended_from"
+  "amended_from",
+  "checked_in"
  ],
  "fields": [
   {
@@ -117,6 +118,7 @@
    "options": "GCA-.YYYY.-"
   },
   {
+   "allow_on_submit": 1,
    "default": "Scheduled",
    "fieldname": "class_status",
    "fieldtype": "Select",
@@ -129,11 +131,20 @@
    "fieldtype": "Data",
    "label": "Trainer Name",
    "read_only": 1
+  },
+  {
+   "default": "No",
+   "fieldname": "checked_in",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Checked in?",
+   "options": "Yes\nNo",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-09 00:01:23.814427",
+ "modified": "2020-12-13 14:38:08.910115",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class Attendees",

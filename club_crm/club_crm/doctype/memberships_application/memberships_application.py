@@ -7,9 +7,6 @@ import frappe
 from frappe.model.document import Document
 
 class MembershipsApplication(Document):
-	def validate(self):
-			self.calculate_total()
-
 	def before_insert(self):
 			self.check_existing_application()
 			self.check_primary_client_id()
@@ -35,28 +32,7 @@ class MembershipsApplication(Document):
 				self.email_1= details.email
 				self.client_id_1= self.client_id
 
-	def check_other_client_id(self):
-			client2_all= frappe.get_all('Client', filters={'mobile_no':self.mobile_no_2})
-			if client2_all:
-					client_2 = client2_all[0]
-					self.client_id_2=client_2.name
-
 	def check_existing_application(self):
 			mem_app= frappe.get_all('Memberships Application', filters={'qatar_id_1':self.qatar_id_1,'application_status':"Pending"})
 			if mem_app:
 					frappe.throw('A pending Membership Application already exists. Kindly wait until it is reviewed.')
-
-	def calculate_total(self):
-			self.net_total = self.membership_fee + self.joining_fee
-			if not self.discount_amount:
-				self.grand_total = self.net_total
-			elif self.discount_amount>self.net_total:
-				frappe.throw('The discount amount is greater than Total Membership amount')
-			else:
-				self.grand_total = self.net_total - self.discount_amount
-
-	def add_offline_payment(payment_method, transaction_date, transaction_reference):
-		self.payment_method=payment_method
-		self.transaction_date=transaction_date
-		self.transaction_reference=transaction_reference
-		self.save()

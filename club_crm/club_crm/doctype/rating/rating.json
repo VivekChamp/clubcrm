@@ -13,6 +13,7 @@
   "column_break_4",
   "rating_type",
   "document_id",
+  "document_date",
   "section_break_7",
   "rating_point",
   "comments_section",
@@ -58,7 +59,7 @@
   {
    "fieldname": "document_id",
    "fieldtype": "Dynamic Link",
-   "label": "Booking ID",
+   "label": "Document ID",
    "options": "rating_type"
   },
   {
@@ -112,11 +113,17 @@
    "hidden": 1,
    "label": "Series",
    "options": "RATE-.YYYY.-"
+  },
+  {
+   "fetch_from": "document_id.date",
+   "fieldname": "document_date",
+   "fieldtype": "Date",
+   "label": "Document Date"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-06 15:29:41.949340",
+ "modified": "2020-12-16 01:39:10.157213",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Rating",

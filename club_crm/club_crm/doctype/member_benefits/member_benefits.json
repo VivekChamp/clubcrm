@@ -10,6 +10,7 @@
   "client_id",
   "client_name",
   "column_break_3",
+  "benefit_status",
   "member_id",
   "membership",
   "start_date",
@@ -136,12 +137,20 @@
    "options": "Member Benefits",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "default": "Active",
+   "fieldname": "benefit_status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Active\nExpired",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-08 13:53:37.785165",
- "modified_by": "mithleena@bluelynx.qa",
+ "modified": "2020-12-14 19:40:19.046447",
+ "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Member Benefits",
  "owner": "Administrator",

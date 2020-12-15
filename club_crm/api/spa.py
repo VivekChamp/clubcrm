@@ -44,7 +44,7 @@ def get_therapist(spa_item,client_id):
 
 @frappe.whitelist()
 def get_details(client_id):
-    doc = frappe.get_all('Spa Appointment', filters={'client_id':client_id}, fields=['name','spa_item','duration','status','appointment_date','appointment_time','rate','therapist_name'])
+    doc = frappe.get_all('Spa Appointment', filters={'client_id':client_id, 'docstatus':1}, fields=['name','spa_item','duration','status','appointment_date','appointment_time','rate','therapist_name'])
     details=[]
     if doc:
         for rating in doc:
@@ -52,7 +52,7 @@ def get_details(client_id):
             if rate:
                 rate=rate[0]
                 details.append({
-                    'Spa Appoinment': rating,
+                    'Spa Appointment': rating,
                     'Rating': rate.rating_point
                     })
             else:

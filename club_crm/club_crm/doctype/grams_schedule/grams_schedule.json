@@ -1,0 +1,65 @@
+{
+ "actions": [],
+ "creation": "2020-12-14 14:27:17.276406",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "grams_working_hours_section",
+  "opening_time",
+  "closing_time",
+  "table_reservation_section",
+  "time_slots"
+ ],
+ "fields": [
+  {
+   "fieldname": "grams_working_hours_section",
+   "fieldtype": "Section Break",
+   "label": "Grams working hours"
+  },
+  {
+   "fieldname": "opening_time",
+   "fieldtype": "Time",
+   "label": "Opening Time"
+  },
+  {
+   "fieldname": "closing_time",
+   "fieldtype": "Time",
+   "label": "Closing Time"
+  },
+  {
+   "fieldname": "table_reservation_section",
+   "fieldtype": "Section Break",
+   "label": "Table Reservation"
+  },
+  {
+   "fieldname": "time_slots",
+   "fieldtype": "Table",
+   "label": "Time Slots",
+   "options": "Grams Time Slots"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2020-12-14 14:27:17.276406",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Grams Schedule",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -11,6 +11,7 @@
   "date",
   "membership_application",
   "membership_plan",
+  "membership_type",
   "type",
   "client_name",
   "column_break_7",
@@ -33,6 +34,8 @@
   "member_no_2",
   "card_no_2",
   "member_benefits_2",
+  "additional_member_details_section",
+  "additional_members_item",
   "amended_from"
  ],
  "fields": [
@@ -167,8 +170,7 @@
    "options": "Member Benefits"
   },
   {
-   "collapsible": 1,
-   "collapsible_depends_on": "eval:doc.membership_type==\"Couple Membership\"",
+   "depends_on": "eval:(doc.membership_type ==\"Couple Membership\" || doc.membership_type==\"Family Membership\")",
    "fieldname": "second_member_section",
    "fieldtype": "Section Break",
    "label": "Second Member"
@@ -204,11 +206,30 @@
   {
    "fieldname": "column_break_24",
    "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "membership_application.membership_type",
+   "fieldname": "membership_type",
+   "fieldtype": "Link",
+   "label": "Membership Type",
+   "options": "Memberships Type"
+  },
+  {
+   "depends_on": "eval:doc.membership_type==\"Family Membership\"",
+   "fieldname": "additional_member_details_section",
+   "fieldtype": "Section Break",
+   "label": "Additional Member Details"
+  },
+  {
+   "fieldname": "additional_members_item",
+   "fieldtype": "Table",
+   "label": "Additional Members Item",
+   "options": "Additional Members Item"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-08 12:59:45.464539",
+ "modified": "2020-12-15 00:49:45.458586",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships",

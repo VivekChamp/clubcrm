@@ -6,7 +6,7 @@ frappe.ui.form.on('Rating', {
 		frm.set_query('rating_type',function() {
 			return {
 				filters: {
-					'name':['in',['Spa Appointment', 'Group Class']]
+					'name':['in',['Spa Appointment', 'Group Class','Fitness Training Appointment']]
 				}
 			}
 		});

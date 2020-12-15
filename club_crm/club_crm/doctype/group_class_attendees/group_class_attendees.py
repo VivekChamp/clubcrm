@@ -22,10 +22,11 @@ class GroupClassAttendees(Document):
             frappe.db.set_value('Group Class', self.group_class, 'remaining', gr_class.remaining)
         
     def on_cancel(self):
+        frappe.db.set_value('Group Class Attendees', self.name, 'class_status', 'Cancelled')
         gr_class=frappe.get_doc('Group Class',self.group_class)
-
         if gr_class.remaining==0:
             frappe.db.set_value('Group Class', self.group_class, {'booking_status': "Available",'remaining': int(gr_class.remaining)+1})
         else:
             frappe.db.set_value('Group Class', self.group_class, 'remaining', int(gr_class.remaining)+1)
+        
 

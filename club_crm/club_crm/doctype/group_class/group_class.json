@@ -88,7 +88,7 @@
    "reqd": 1
   },
   {
-   "fetch_from": "trainer.practitioner_name",
+   "fetch_from": "trainer.employee_name",
    "fieldname": "trainer_name",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -175,7 +175,7 @@
    "fieldtype": "Select",
    "in_standard_filter": 1,
    "label": "Class Status",
-   "options": "Scheduled\nCompleted\nCancelled"
+   "options": "Scheduled\nOpen\nCompleted\nCancelled"
   },
   {
    "fieldname": "day",
@@ -186,7 +186,7 @@
  "image_field": "image",
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-08 15:17:40.697620",
+ "modified": "2020-12-13 16:28:15.411413",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class",

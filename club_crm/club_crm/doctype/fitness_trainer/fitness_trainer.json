@@ -14,6 +14,7 @@
   "description",
   "column_break_7",
   "gender",
+  "email",
   "mobile_phone",
   "status",
   "on_app",
@@ -65,11 +66,12 @@
    "reqd": 1
   },
   {
-   "fetch_from": "employee_mobile_no",
+   "fetch_from": "employee.cell_number",
    "fieldname": "mobile_phone",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Mobile"
+   "label": "Mobile",
+   "read_only": 1
   },
   {
    "fieldname": "employee",
@@ -107,11 +109,18 @@
    "fieldname": "description",
    "fieldtype": "Small Text",
    "label": "Profile Description"
+  },
+  {
+   "fetch_from": "employee.user_id",
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "unique": 1
   }
  ],
  "image_field": "image",
  "links": [],
- "modified": "2020-12-09 23:17:16.408524",
+ "modified": "2020-12-12 17:24:11.943748",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Trainer",

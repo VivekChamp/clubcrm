@@ -63,14 +63,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "allow_on_submit": 1,
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Status",
-   "options": "Pending\nScheduled\nRejected\nNo Show\nCompleted"
-  },
-  {
    "fieldname": "reservation_details_section",
    "fieldtype": "Section Break",
    "label": "Reservation Details"
@@ -108,11 +100,19 @@
    "fieldtype": "Date",
    "label": "Date",
    "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Pending\nScheduled\nRejected\nNo Show\nCompleted\nCancelled"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-10 01:02:46.306296",
+ "modified": "2020-12-14 17:51:36.392467",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Grams Reservation",

@@ -25,6 +25,7 @@
   "discount_amount",
   "payment_details_column",
   "no_kids",
+  "calculate_fee",
   "membership_fee",
   "joining_fee",
   "net_total",
@@ -64,40 +65,8 @@
   "relation_2",
   "front_qid_2",
   "back_qid_2",
-  "details_3_section",
-  "age_16_1",
-  "first_name_3",
-  "last_name_3",
-  "mobile_no_3",
-  "email_3",
-  "occupation_3",
-  "column_break_72",
-  "birth_date_3",
-  "gender_3",
-  "nationality_3",
-  "qatar_id_3",
-  "column_break_66",
-  "relation_3",
-  "client_id_3",
-  "front_qid_3",
-  "back_qid_3",
-  "details_4_section",
-  "age_16_2",
-  "first_name_4",
-  "last_name_4",
-  "mobile_no_4",
-  "email_4",
-  "occupation_4",
-  "column_break_60",
-  "birth_date_4",
-  "gender_4",
-  "nationality_4",
-  "qatar_id_4",
-  "column_break_86",
-  "relation_4",
-  "front_qid_4",
-  "back_qid_4",
-  "section_break_39",
+  "additional_member_details_section",
+  "additional_members",
   "how_did",
   "payment_details_section",
   "payment_type",
@@ -163,11 +132,6 @@
    "in_standard_filter": 1,
    "label": "Membership Plan",
    "options": "Memberships Plan"
-  },
-  {
-   "fieldname": "section_break_39",
-   "fieldtype": "Section Break",
-   "label": "Other Details"
   },
   {
    "fetch_from": "membership_plan.membership_fee",
@@ -298,14 +262,12 @@
   {
    "fieldname": "front_qid_1",
    "fieldtype": "Attach",
-   "label": "Qatar ID Front",
-   "reqd": 1
+   "label": "Qatar ID Front"
   },
   {
    "fieldname": "back_qid_1",
    "fieldtype": "Attach",
-   "label": "Qatar ID Back",
-   "reqd": 1
+   "label": "Qatar ID Back"
   },
   {
    "fetch_from": "client.sex",
@@ -469,121 +431,10 @@
    "label": "Transaction Date"
   },
   {
-   "fieldname": "column_break_60",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "0",
-   "fieldname": "age_16_1",
-   "fieldtype": "Check",
-   "label": "Less than 16 years of age"
-  },
-  {
-   "default": "0",
-   "fieldname": "age_16_2",
-   "fieldtype": "Check",
-   "label": "Less than 16 years of age"
-  },
-  {
    "fieldname": "relation_2",
    "fieldtype": "Select",
    "label": "Relation to Primary Member",
    "options": "Spouse\nSon\nDaughter\nBrother\nSister\nFather\nMother"
-  },
-  {
-   "collapsible": 1,
-   "depends_on": "eval:doc.membership_type==\"Family Membership\"",
-   "fieldname": "details_3_section",
-   "fieldtype": "Section Break",
-   "label": "Details of Third Member"
-  },
-  {
-   "fieldname": "first_name_3",
-   "fieldtype": "Data",
-   "label": "First Name"
-  },
-  {
-   "fieldname": "last_name_3",
-   "fieldtype": "Data",
-   "label": "Last Name"
-  },
-  {
-   "fieldname": "birth_date_3",
-   "fieldtype": "Data",
-   "label": "Date of Birth"
-  },
-  {
-   "depends_on": "eval:doc.age_16_1==0",
-   "fieldname": "nationality_3",
-   "fieldtype": "Data",
-   "label": "Nationality"
-  },
-  {
-   "fieldname": "qatar_id_3",
-   "fieldtype": "Data",
-   "label": "QID Number"
-  },
-  {
-   "fieldname": "front_qid_3",
-   "fieldtype": "Attach Image",
-   "label": "Qatar ID Front"
-  },
-  {
-   "fieldname": "back_qid_3",
-   "fieldtype": "Attach Image",
-   "label": "Qatar ID Back"
-  },
-  {
-   "fieldname": "column_break_72",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval:doc.age_16_1==0",
-   "fieldname": "client_id_3",
-   "fieldtype": "Data",
-   "label": "Client ID",
-   "read_only": 1
-  },
-  {
-   "fieldname": "gender_3",
-   "fieldtype": "Data",
-   "label": "Gender"
-  },
-  {
-   "depends_on": "eval:doc.age_16_1==0",
-   "fieldname": "mobile_no_3",
-   "fieldtype": "Data",
-   "label": "Mobile Number"
-  },
-  {
-   "depends_on": "eval:doc.age_16_1==0",
-   "fieldname": "email_3",
-   "fieldtype": "Data",
-   "label": "Email Address",
-   "options": "Email"
-  },
-  {
-   "depends_on": "eval:doc.age_16_1==0",
-   "fieldname": "occupation_3",
-   "fieldtype": "Data",
-   "label": "Occupation"
-  },
-  {
-   "fieldname": "relation_3",
-   "fieldtype": "Select",
-   "label": "Relation to Primary Member",
-   "options": "Spouse\nSon\nDaughter\nBrother\nSister\nFather\nMother"
-  },
-  {
-   "collapsible": 1,
-   "depends_on": "eval:doc.membership_type==\"Family Membership\"",
-   "fieldname": "details_4_section",
-   "fieldtype": "Section Break",
-   "label": "Details of Fourth Member"
-  },
-  {
-   "fieldname": "column_break_66",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "column_break_28",
@@ -599,95 +450,46 @@
    "label": "Company"
   },
   {
-   "fieldname": "first_name_4",
-   "fieldtype": "Data",
-   "label": "First Name"
-  },
-  {
-   "fieldname": "last_name_4",
-   "fieldtype": "Data",
-   "label": "Last Name"
-  },
-  {
-   "depends_on": "eval:doc.age_16_2==0",
-   "fieldname": "mobile_no_4",
-   "fieldtype": "Data",
-   "label": "Mobile Number"
-  },
-  {
-   "depends_on": "eval:doc.age_16_2==0",
-   "fieldname": "email_4",
-   "fieldtype": "Data",
-   "label": "Email Address",
-   "options": "Email"
-  },
-  {
-   "depends_on": "eval:doc.age_16_2==0",
-   "fieldname": "occupation_4",
-   "fieldtype": "Data",
-   "label": "Occupation"
-  },
-  {
-   "fieldname": "birth_date_4",
-   "fieldtype": "Data",
-   "label": "Date of Birth"
-  },
-  {
-   "fieldname": "gender_4",
-   "fieldtype": "Data",
-   "label": "Gender"
-  },
-  {
-   "depends_on": "eval:doc.age_16_2==0",
-   "fieldname": "nationality_4",
-   "fieldtype": "Data",
-   "label": "Nationality"
-  },
-  {
-   "fieldname": "qatar_id_4",
-   "fieldtype": "Data",
-   "label": "QID Number"
-  },
-  {
-   "fieldname": "column_break_86",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "relation_4",
-   "fieldtype": "Data",
-   "label": "Relation to Primary Member"
-  },
-  {
-   "fieldname": "front_qid_4",
-   "fieldtype": "Attach Image",
-   "label": "Qatar ID Front"
-  },
-  {
-   "fieldname": "back_qid_4",
-   "fieldtype": "Attach Image",
-   "label": "Qatar ID Back"
-  },
-  {
    "fieldname": "column_break_94",
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:(doc.membership_type ==\"Couple Membership\" || doc.membership_type==\"Family Membership\")",
    "fieldname": "no_adults",
    "fieldtype": "Select",
    "label": "Number of Adults",
    "options": "1\n2\n3\n4"
   },
   {
+   "depends_on": "eval:(doc.membership_type ==\"Couple Membership\" || doc.membership_type==\"Family Membership\")",
    "fieldname": "no_kids",
    "fieldtype": "Select",
    "label": "Number of Kids",
    "options": "0\n1\n2"
+  },
+  {
+   "depends_on": "eval:doc.membership_type==\"Family Membership\"",
+   "fieldname": "additional_member_details_section",
+   "fieldtype": "Section Break",
+   "label": "Additional Member Details"
+  },
+  {
+   "fieldname": "additional_members",
+   "fieldtype": "Table",
+   "label": "Additional Members",
+   "options": "Additional Members"
+  },
+  {
+   "depends_on": "eval:doc.membership_type==\"Family Membership\"",
+   "fieldname": "calculate_fee",
+   "fieldtype": "Button",
+   "label": "Calculate Fee"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-08 22:07:26.950071",
- "modified_by": "Administrator",
+ "modified": "2020-12-15 14:47:05.422091",
+ "modified_by": "suba@bluelynx.com",
  "module": "Club CRM",
  "name": "Memberships Application",
  "owner": "Administrator",

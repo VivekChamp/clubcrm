@@ -10,3 +10,22 @@ class GroupClass(Document):
 
     def before_save(self):
         self.remaining = self.capacity
+
+    def on_update_after_submit(self):
+        if self.class_status =='Completed':
+            doc= frappe.get_all('Group Class Attendees', filters={'group_class':self.name, 'docstatus':1}, fields=["*"])
+            for name in doc:
+                if name.checked_in=='Yes':
+                    frappe.db.set_value('Group Class Attendees', name.name, 'class_status', 'Completed')
+                else:
+                    frappe.db.set_value('Group Class Attendees', name.name, 'class_status', 'No Show')
+
+        elif self.class_status == "Cancelled":
+            doc = frappe.get_all('Group Class Attendees', filters={'group_class':self.name, 'docstatus':1}, fields=["*"])
+            for name in doc:
+                frappe.db.set_value('Group Class Attendees', name.name, 'class_status', 'Cancelled')
+
+        elif self.class_status == "Open":
+            doc = frappe.get_all('Group Class Attendees', filters={'group_class':self.name, 'docstatus':1}, fields=["*"])
+            for name in doc:
+                frappe.db.set_value('Group Class Attendees', name.name, 'class_status', 'Open')
