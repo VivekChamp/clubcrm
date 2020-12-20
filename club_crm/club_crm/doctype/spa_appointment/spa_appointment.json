@@ -27,7 +27,6 @@
   "therapist_details_section",
   "spa_therapist",
   "treatment_duration",
-  "spa_service_unit",
   "appointment_details_section",
   "spa_appointment_type",
   "column_break_20",
@@ -84,12 +83,6 @@
    "fieldtype": "Data",
    "label": "Treatment Duration",
    "read_only": 1
-  },
-  {
-   "fieldname": "spa_service_unit",
-   "fieldtype": "Link",
-   "label": "SPA Service Unit",
-   "options": "Spa Service Unit"
   },
   {
    "fieldname": "column_break_11",

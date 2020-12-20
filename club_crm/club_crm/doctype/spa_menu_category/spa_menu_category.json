@@ -9,6 +9,8 @@
  "field_order": [
   "spa_category_name",
   "on_app",
+  "column_break_3",
+  "complimentary",
   "category_image"
  ],
  "fields": [
@@ -32,11 +34,21 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Show on App"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "complimentary",
+   "fieldtype": "Check",
+   "label": "Complimentary"
   }
  ],
  "image_field": "category_image",
  "links": [],
- "modified": "2020-11-21 02:43:48.892642",
+ "modified": "2020-12-20 18:29:36.493017",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Menu Category",

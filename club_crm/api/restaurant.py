@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 import frappe
 import datetime
 import time
+import re
 from datetime import datetime, timedelta
 from frappe.utils import escape_html
 from frappe import throw, msgprint, _
@@ -74,3 +75,123 @@ def cancel_reservation(client_id):
             "status": 1,
             "status_message":"Table Reservation Cancelled"
             }
+
+@frappe.whitelist()         
+def get_menu_categories():
+    doc= frappe.get_all('Item Group', filters={'parent_item_group':'Restaurant'}, fields=['name','image'])
+    return doc
+
+@frappe.whitelist()         
+def get_menu_item(category):
+    doc= frappe.get_all('Item', filters={'item_group':category, 'disabled': 0}, fields=['*'])
+    if doc:
+        menu=[]
+        for d in doc:
+            price= frappe.get_all('Item Price', filters={'item_code':d.item_code, 'price_list':'Grams Menu'}, fields=['*'])
+            if price:
+                price_1=price[0]
+                description = re.sub("<.*?>", "", price_1.item_description)
+                menu.append({
+                    "item_code": d.item_code,
+                    "item_name": d.item_name,
+                    "item_group": d.item_group,
+                    "image": d.image,
+                    "description": description,
+                    "currency": price_1.currency,
+                    "rate": format(price_1.price_list_rate, '.2f')
+                })
+            
+        frappe.response["message"] = {
+            "status": 1,
+            "status_message": "Product Details",
+            "item": menu
+        }
+
+    else:
+        frappe.response["message"] = {
+            "status": 0,
+            "status_message": "No products available for this category"
+        }
+
+@frappe.whitelist()         
+def add_to_cart(client_id, item_code, qty):
+    cart= frappe.get_list('Food Order Entry', filters={'client_id':client_id, 'order_status': 'Cart'}, fields=['*'])
+    if cart:
+        cart_1=cart[0]
+        doc= frappe.get_doc('Food Order Entry', cart_1.name)
+        doc.append('order_items', {
+            'item': item_code,
+            'qty':qty
+            })
+        doc.save()
+        return doc
+        
+    else:
+        doc = frappe.get_doc({
+            'doctype':'Food Order Entry',
+            'client_id': client_id,
+            'order_items': [{
+            'item': item_code,
+            'qty':qty
+            }]
+        })
+        doc.insert()
+        return doc
+
+@frappe.whitelist()         
+def delete_from_cart(document_name,item_document_name):
+    cart= frappe.get_doc('Food Order Entry', document_name)
+    row= None
+    for d in cart.order_items:
+        if d.name==item_document_name:
+            row = d
+            cart.remove(row)
+            cart.save()
+            frappe.db.commit()
+
+    if cart.order_items:
+        frappe.response["message"] = {
+            "status": 1,
+            "document_name": cart.name,
+            "date": cart.date,
+            "payment_status": cart.payment_status,
+            "client_id": cart.client_id,
+            "total_amount": cart.total_amount,
+            "items": cart.order_items
+        }
+    else:
+        cart.submit()
+        frappe.db.set_value('Food Order Entry', cart.name, {
+            'docstatus':2,
+            'order_status': 'Cancelled'
+        })
+        frappe.db.commit()
+        frappe.response["message"] = {
+            "status": 0
+        }
+
+@frappe.whitelist()         
+def get_cart(client_id):
+    cart= frappe.get_list('Food Order Entry', filters={'client_id':client_id, 'order_status': 'Cart'}, fields=['*'])
+    if cart:
+        cart_1=cart[0]
+        doc= frappe.get_doc('Food Order Entry', cart_1.name)
+        frappe.response["message"] = {
+            "status": 1,
+            "document_name": doc.name,
+            "date": doc.date,
+            "payment_status": doc.payment_status,
+            "client_id": doc.client_id,
+            "total_amount": doc.total_amount,
+            "items": doc.order_items
+        }
+    else:
+        frappe.response["message"] = {
+            "status": 0
+        }
+
+@frappe.whitelist()         
+def checkout(document_name):
+    doc= frappe.get_doc('Food Order Entry', document_name)
+    doc.submit()
+    return doc

@@ -21,3 +21,13 @@ def medical_history(client_id,allergies,medication,history,notes):
     frappe.response["message"] =  {
 		"Status": 1
     }
+
+@frappe.whitelist()
+def get_medical_history(client_id):
+    doc= frappe.get_doc('Client', client_id)
+    frappe.response["message"] = {
+        "medical_history": doc.medical_history,
+        "allergies": doc.allergies,
+        "medication": doc.medication,
+        "other_notes": doc.other_notes
+    }

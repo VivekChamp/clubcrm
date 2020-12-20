@@ -1,16 +1,20 @@
 {
  "actions": [],
+ "allow_rename": 1,
  "autoname": "field:employee_name",
  "creation": "2020-10-27 08:11:18.023110",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "therapist_details_section",
   "naming_series",
   "employee",
   "employee_name",
+  "description",
   "column_break_6",
   "gender",
+  "email",
   "mobile",
   "status",
   "on_app",
@@ -18,14 +22,14 @@
   "section_break_19",
   "spa_menu_assignment",
   "schedule_section",
-  "service_unit_schedule"
+  "spa_therapist_schedule"
  ],
  "fields": [
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "hidden": 1,
-   "label": "Naming Series",
+   "label": "Series",
    "options": "SPA-THR-.####"
   },
   {
@@ -73,16 +77,13 @@
    "label": "Schedule"
   },
   {
-   "fieldname": "service_unit_schedule",
-   "fieldtype": "Table",
-   "label": "Service Unit Schedule",
-   "options": "Therapist Service Unit Schedule"
-  },
-  {
+   "default": "Active",
    "fieldname": "status",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Status",
-   "options": "Active\nDisabled"
+   "options": "Active\nDisabled",
+   "reqd": 1
   },
   {
    "fetch_from": "employee.employee_name",
@@ -102,11 +103,33 @@
    "fieldname": "spa_menu_assignment",
    "fieldtype": "Table",
    "options": "Spa Therapist Assignment"
+  },
+  {
+   "fieldname": "therapist_details_section",
+   "fieldtype": "Section Break",
+   "label": "Therapist Details"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Profile Description"
+  },
+  {
+   "fetch_from": "employee.user_id",
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "unique": 1
+  },
+  {
+   "fieldname": "spa_therapist_schedule",
+   "fieldtype": "Table",
+   "options": "Spa Therapist Schedule"
   }
  ],
  "image_field": "image",
  "links": [],
- "modified": "2020-12-09 23:03:23.517227",
+ "modified": "2020-12-19 22:42:16.224109",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Therapist",
@@ -125,14 +148,12 @@
    "write": 1
   },
   {
-   "create": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "All",
+   "role": "Customer",
    "share": 1,
    "write": 1
   }

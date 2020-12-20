@@ -19,7 +19,7 @@ def login(usr,pwd):
     frappe.errprint(frappe.session)
     api_generate=generate_keys(frappe.session.user)
     user = frappe.get_doc('User',frappe.session.user)
-    client_details = frappe.get_all('Client', filters={'mobile_no': usr}, fields=['name','first_name','last_name','client_name','gender','birth_date','nationality','qatar_id','email','mobile_no','apply_membership','mem_application','membership_status','status','customer_group','territory','marital_status','image','allergies','medication','medical_history','other_notes'])
+    client_details = frappe.get_all('Client', filters={'mobile_no': usr}, fields=['name','first_name','last_name','client_name','gender','birth_date','nationality','qatar_id','email','mobile_no','apply_membership','mem_application','membership_status','status','customer_group','territory','marital_status','image'])
     frappe.response["message"] =	{
             "sid": frappe.session.sid,
             "client details": client_details,

@@ -5,11 +5,10 @@ from frappe.utils.file_manager import upload
 from frappe import throw, msgprint, _
 
 @frappe.whitelist()
-def apply_single(date,client_id,membership_plan,qatar_id,nationality,occupation,company,front_qid_filedata,back_qid_filedata,how_did):
+def apply_single(client_id,membership_plan,qatar_id,nationality,occupation,company,front_qid_filedata,back_qid_filedata,how_did):
     doc = frappe.get_doc({
         'doctype': 'Memberships Application',
         'submitted_by_staff':0,
-        'date': date,
         'client_id': client_id,
         'membership_type': "Single Membership",
         'membership_plan': membership_plan,
@@ -20,28 +19,23 @@ def apply_single(date,client_id,membership_plan,qatar_id,nationality,occupation,
         'how_did': how_did
         })
     doc.insert()
-    title=doc.get_title()
-    docs= frappe.get_doc('Memberships Application',title)
+    upload_image(doc.name,"qid_front.jpg",1,front_qid_filedata)
+    doc.front_qid_1 = ret.file_url
+    upload_image(doc.name,"qid_back.jpg",1,back_qid_filedata)
+    doc.back_qid_1= ret.file_url
+    doc.save()
 
-    upload_image(title,"qid_front.jpg",1,front_qid_filedata)
-    docs.front_qid_1 = ret1.file_url
-
-    upload_image(title,"qid_back.jpg",1,back_qid_filedata)
-    docs.back_qid_1= ret1.file_url
-
-    docs.save()
-
-    frappe.db.set_value('Memberships Application', title, 'application_status', "Pending")
-    frappe.db.set_value('Client',client_id,'apply_membership',1)
-    frappe.db.set_value('Client',client_id,'mem_application',title)
+    frappe.db.set_value('Client',client_id,'apply_membership','1')
+    frappe.db.set_value('Client',client_id,'mem_application',doc.name)
+    frappe.db.commit()
     frappe.response["message"] = {
         "Status": 1,
         "Status Message":"Membership Application has been submitted",
-        "Name": title,
+        "Name": doc.name
         }
 
 def upload_image(docname,filename,isprivate,filedata):
-    global ret1
+    global ret
     ret = frappe.get_doc({
         "doctype": "File",
         "attached_to_name": docname,
@@ -52,30 +46,31 @@ def upload_image(docname,filename,isprivate,filedata):
         "decode": True
         })
     ret.save()
-    ret1= frappe.get_last_doc('File')
-    return ret1.file_url
+    return ret.file_url
 
 @frappe.whitelist()
 def check_status(mem_application):
-    application = frappe.get_doc('Memberships Application', mem_application)
-    if application.application_status=="Pending":
+    doc= frappe.get_doc('Memberships Application', mem_application)
+    if doc.application_status=="Pending":
         frappe.response["message"] = {
-            "Status": 0,
-            "Status Message":"Pending approval"
-        }
-    elif application.application_status=="Rejected":
+            "status": 0,
+            "status_message":"Pending approval"
+            }
+    elif doc.application_status=="Rejected":
         frappe.response["message"] = {
-            "Status": 2,
-            "Status Message":"Rejected"
-        }
-    elif application.application_status=="Approved":
-        if application.payment_status=="Not Paid":
+            "status": 2,
+            "status_message":"Rejected",
+            "reason": doc.notes
+            }
+    elif doc.application_status=="Approved":
+        if doc.payment_status=="Not Paid":
             frappe.response["message"] = {
-            "Status": 1,
-            "Status Message":"Approved. Pending Payment"
-        }
+                "status": 1,
+                "status_message":"Approved. Pending Payment",
+                "total_amount": doc.grand_total
+                }
         else:
             frappe.response["message"] = {
-            "Status": 3,
-            "Status Message": "You are a member. Please login again to reflect your changes"
-        }
+                "status": 3,
+                "status_message":"Please wait while you membership is activated",
+                }

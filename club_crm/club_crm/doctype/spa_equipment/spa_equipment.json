@@ -1,46 +1,39 @@
 {
  "actions": [],
- "autoname": "field:machine_name",
+ "autoname": "field:equipment_name",
  "creation": "2020-10-27 10:45:24.005981",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "machine_name",
-  "service_unit",
+  "equipment_name",
   "column_break_3",
-  "machine_description"
+  "equipment_description"
  ],
  "fields": [
-  {
-   "fieldname": "machine_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Machine Name",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
-   "fieldname": "service_unit",
-   "fieldtype": "Link",
-   "label": "Service Unit",
-   "options": "Spa Service Unit"
-  },
   {
    "fieldname": "column_break_3",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "machine_description",
+   "fieldname": "equipment_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Equipment Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "equipment_description",
    "fieldtype": "Small Text",
    "label": "Machine Description"
   }
  ],
  "links": [],
- "modified": "2020-10-28 07:46:13.349030",
+ "modified": "2020-12-19 15:35:47.234649",
  "modified_by": "Administrator",
  "module": "Club CRM",
- "name": "Spa Machine",
+ "name": "Spa Equipment",
  "owner": "Administrator",
  "permissions": [
   {
@@ -56,8 +49,8 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "equipment_name",
  "track_changes": 1
 }

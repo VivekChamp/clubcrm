@@ -10,18 +10,13 @@ class MembershipsApplication(Document):
 	def before_insert(self):
 			self.check_existing_application()
 			self.check_primary_client_id()
-	
-	def on_submit(self):
-			mem_apply= frappe.get_doc('Client', self.client_id)
-			mem_apply.apply_membership==1
-			mem_apply.save()
 
 	def check_primary_client_id(self):
 			if self.submitted_by_staff==1:
 					client1_all= frappe.get_all('Client', filters={'mobile_no':self.mobile_no_1})
 					if client1_all:
 							client_1 = client1_all[0]
-							self.client_id_1=client_1.name
+							self.client_id_1=client_1.client_id
 			else:
 				details=frappe.get_doc('Client', self.client_id)
 				self.first_name_1=details.first_name

@@ -1,7 +1,7 @@
 // Copyright (c) 2020, Blue Lynx and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on('Spa Therapist Schedule', {
+frappe.ui.form.on('Spa Schedule', {
 	refresh: function(frm) {
 		cur_frm.fields_dict["time_slots"].grid.wrapper.find('.grid-add-row').hide();
 		cur_frm.fields_dict["time_slots"].grid.add_custom_button(__('Add Time Slots'), () => {

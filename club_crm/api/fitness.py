@@ -19,7 +19,7 @@ def get_fitness_category(client_id):
             frappe.response["message"] = {
                 "Status":1,
                 "Status Message": "Training has been scheduled",
-                "Docuemnt ID": doc_1.name,
+                "Document ID": doc_1.name,
                 "Number of Sessions": doc_1.number_of_sessions,
                 "Schedule": schedule
                 }

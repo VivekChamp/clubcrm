@@ -12,7 +12,7 @@ def membership_type():
 
 @frappe.whitelist()
 def membership_plan(membership_type):
-    membership_plan = frappe.get_all('Memberships Plan', filters={'membership_type':membership_type,'on_app': 1}, fields=['membership_plan_name','joining_fee','membership_fee'])
+    membership_plan = frappe.get_all('Memberships Plan', filters={'membership_type':membership_type,'on_app': 1}, fields=['membership_plan_name','joining_fee','mem_fee_adult','mem_fee_kid'])
     frappe.response["message"] = {
             "Membership Plans": membership_plan
             }

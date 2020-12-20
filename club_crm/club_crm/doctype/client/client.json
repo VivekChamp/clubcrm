@@ -355,13 +355,11 @@
    "default": "0",
    "fieldname": "apply_membership",
    "fieldtype": "Check",
-   "hidden": 1,
    "label": "Applied for Membership"
   },
   {
    "fieldname": "mem_application",
    "fieldtype": "Data",
-   "hidden": 1,
    "label": "Membership Application"
   },
   {
@@ -381,8 +379,8 @@
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2020-12-11 20:03:56.375845",
- "modified_by": "suba@bluelynx.com",
+ "modified": "2020-12-20 15:56:16.149395",
+ "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",
  "name_case": "Title Case",

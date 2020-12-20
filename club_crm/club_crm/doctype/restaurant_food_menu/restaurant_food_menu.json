@@ -1,0 +1,90 @@
+{
+ "actions": [],
+ "autoname": "prompt",
+ "creation": "2020-12-16 18:17:06.231710",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "restaurant",
+  "enabled",
+  "column_break_3",
+  "price_list",
+  "items_section",
+  "items"
+ ],
+ "fields": [
+  {
+   "fieldname": "restaurant",
+   "fieldtype": "Link",
+   "label": "Restaurant",
+   "options": "Restaurant",
+   "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "price_list",
+   "fieldtype": "Link",
+   "label": "Price List (Auto created)",
+   "options": "Price List",
+   "read_only": 1
+  },
+  {
+   "fieldname": "items_section",
+   "fieldtype": "Section Break",
+   "label": "Items"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Restaurant Food Menu Item",
+   "reqd": 1
+  }
+ ],
+ "links": [],
+ "modified": "2020-12-16 18:28:04.683123",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Restaurant Food Menu",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Restaurant Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Customer",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "restrict_to_domain": "Hospitality",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

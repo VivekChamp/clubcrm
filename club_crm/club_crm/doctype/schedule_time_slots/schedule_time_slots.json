@@ -8,7 +8,7 @@
   "day",
   "from_time",
   "to_time",
-  "disabled"
+  "disable"
  ],
  "fields": [
   {
@@ -35,7 +35,7 @@
   },
   {
    "default": "0",
-   "fieldname": "disabled",
+   "fieldname": "disable",
    "fieldtype": "Check",
    "in_list_view": 1,
    "label": "Disable"
@@ -43,10 +43,10 @@
  ],
  "istable": 1,
  "links": [],
- "modified": "2020-12-19 23:05:26.758503",
+ "modified": "2020-12-19 22:18:59.466377",
  "modified_by": "Administrator",
  "module": "Club CRM",
- "name": "Spa Schedule Time Slots",
+ "name": "Schedule Time Slots",
  "owner": "Administrator",
  "permissions": [],
  "quick_entry": 1,

@@ -17,6 +17,7 @@
   "application_status",
   "payment_status",
   "type",
+  "notes",
   "memberships_details_section",
   "no_adults",
   "membership_type",
@@ -65,8 +66,12 @@
   "relation_2",
   "front_qid_2",
   "back_qid_2",
+  "section_break_61",
+  "ddd",
+  "sadaul",
   "additional_member_details_section",
   "additional_members",
+  "section_break_62",
   "how_did",
   "payment_details_section",
   "payment_type",
@@ -163,11 +168,12 @@
   },
   {
    "allow_on_submit": 1,
+   "default": "Pending",
    "fieldname": "application_status",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Application Status",
-   "options": "\nPending\nApproved\nRejected"
+   "options": "\nPending\nApproved\nRejected\nActive"
   },
   {
    "depends_on": "eval:doc.submitted_by_staff==0",
@@ -484,11 +490,37 @@
    "fieldname": "calculate_fee",
    "fieldtype": "Button",
    "label": "Calculate Fee"
+  },
+  {
+   "fieldname": "section_break_62",
+   "fieldtype": "Section Break",
+   "label": "Other Details"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "section_break_61",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "default": "2",
+   "fieldname": "sadaul",
+   "fieldtype": "Data",
+   "label": "SAdaul"
+  },
+  {
+   "fieldname": "ddd",
+   "fieldtype": "Data",
+   "label": "ddd"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-15 14:47:05.422091",
+ "modified": "2020-12-18 10:28:06.376355",
  "modified_by": "suba@bluelynx.com",
  "module": "Club CRM",
  "name": "Memberships Application",
