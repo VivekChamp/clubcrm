@@ -17,7 +17,6 @@ def login(usr,pwd):
                 "message":"Authentication Failed"
                 }
         return
-    frappe.errprint(frappe.session)
     api_generate=generate_keys(frappe.session.user)
     roles = frappe.get_roles()
     user=frappe.get_doc('User',frappe.session.user)

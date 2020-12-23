@@ -54,7 +54,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Club CRM",
- "modified": "2020-12-08 04:10:50.671882",
+ "modified": "2020-12-21 16:57:22.035826",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club CRM",
@@ -105,6 +105,11 @@
   {
    "label": "Valet Parking",
    "link_to": "Valet Parking",
+   "type": "DocType"
+  },
+  {
+   "label": "Club Tour",
+   "link_to": "Club Tour",
    "type": "DocType"
   }
  ],

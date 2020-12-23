@@ -59,14 +59,14 @@
   {
    "fetch_from": "group_class.from_time",
    "fieldname": "from_time",
-   "fieldtype": "Data",
+   "fieldtype": "Datetime",
    "label": "From Time",
    "read_only": 1
   },
   {
    "fetch_from": "group_class.to_time",
    "fieldname": "to_time",
-   "fieldtype": "Data",
+   "fieldtype": "Datetime",
    "label": "To Time",
    "read_only": 1
   },
@@ -144,7 +144,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-13 14:38:08.910115",
+ "modified": "2020-12-23 03:30:10.029114",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class Attendees",

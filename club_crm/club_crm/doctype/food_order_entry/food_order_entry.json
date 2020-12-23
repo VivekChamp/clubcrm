@@ -134,6 +134,7 @@
    "label": "Transacation Date"
   },
   {
+   "allow_on_submit": 1,
    "default": "Cart",
    "fieldname": "order_status",
    "fieldtype": "Select",
@@ -185,7 +186,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-17 21:48:42.928835",
+ "modified": "2020-12-23 02:03:57.539202",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Food Order Entry",

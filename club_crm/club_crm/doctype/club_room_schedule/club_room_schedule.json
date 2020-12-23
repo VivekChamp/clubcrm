@@ -1,0 +1,124 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2020-12-21 02:02:25.714050",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "room_name",
+  "room_type",
+  "column_break_3",
+  "date",
+  "from_time",
+  "to_time",
+  "section_break_7",
+  "booking_type",
+  "column_break_9",
+  "spa_booking",
+  "fitness_booking",
+  "group_class",
+  "naming_series"
+ ],
+ "fields": [
+  {
+   "fieldname": "room_name",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Room Name",
+   "options": "Club Room"
+  },
+  {
+   "fetch_from": "room_name.for_gender",
+   "fieldname": "room_type",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Room Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "from_time",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "From Time"
+  },
+  {
+   "fieldname": "to_time",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "To Time"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "ROOM-"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "section_break_7",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "booking_type",
+   "fieldtype": "Select",
+   "label": "Booking Type",
+   "options": "\nSpa\nFitness\nGroup Class"
+  },
+  {
+   "fieldname": "column_break_9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "spa_booking",
+   "fieldtype": "Link",
+   "label": "Spa Booking ID",
+   "options": "Spa Appointment"
+  },
+  {
+   "fieldname": "fitness_booking",
+   "fieldtype": "Link",
+   "label": "Fitness Booking ID",
+   "options": "Fitness Training Appointment"
+  },
+  {
+   "fieldname": "group_class",
+   "fieldtype": "Link",
+   "label": "Group Class ID",
+   "options": "Group Class"
+  }
+ ],
+ "links": [],
+ "modified": "2020-12-21 04:47:26.736419",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Club Room Schedule",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "room_name",
+ "track_changes": 1
+}

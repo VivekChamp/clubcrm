@@ -25,6 +25,32 @@ class SpaAppointment(Document):
 				d = flt(doc_1.spa_treatments)
 				self.member_discount= flt(self.regular_rate) * d/100.0
 				self.rate = flt(self.regular_rate) - flt(self.member_discount)
+			else:
+				self.member_discount=0.00
+				self.rate = flt(self.regular_rate)
 		else:
 			self.member_discount=0.00
 			self.rate = flt(self.regular_rate)
+	
+	def on_update_after_submit(self):
+		if self.club_room:
+			room= frappe.get_all('Club Room Schedule', filters={'spa_booking': self.name,}, fields=["*"])
+			if room:
+				for d in room:
+					schedule= frappe.get_doc('Club Room Schedule', d.name)
+					schedule.room_name=self.club_room
+					schedule.save()
+			else:
+				doc= frappe.get_doc({
+					"doctype": 'Club Room Schedule',
+					"room_name": self.club_room,
+					"date": self.appointment_date,
+					"from_time": self.start_time,
+					"to_time": self.end_time,
+					"booking_type": 'Spa',
+					"spa_booking": self.name
+					})
+				doc.insert()
+				doc.save()
+
+

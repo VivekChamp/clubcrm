@@ -7,7 +7,7 @@ from frappe import throw, msgprint, _
 
 @frappe.whitelist()
 def get_appointments(client_id):
-    spa= frappe.get_all('Spa Appointment', filters={'client_id':client_id,'status':'Open'}, fields=['spa_item','duration','appointment_date','appointment_time','rate','payment_status','therapist_name'])
+    spa= frappe.get_all('Spa Appointment', filters={'client_id':client_id,'status':'Open'}, fields=['spa_item','duration','appointment_date','appointment_time','rate','payment_status','spa_therapist'])
     group_class= frappe.get_all('Group Class Attendees', filters={'client_id':client_id,'docstatus':1,'class_status':'Open'}, fields=['name','group_class_name','trainer_name','class_status','from_time','to_time'])
     frappe.local.response["message"] ={
                 "Spa Booking": spa,

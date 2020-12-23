@@ -6,7 +6,14 @@ frappe.ui.form.on('Spa Menu', {
 	cur_frm.get_field('rooms').get_query = function(doc) {
         return {
             filters: [
-                ["Club Room", "parent_club_room", "in", ["Male Room","Female Room"]]
+                ["Club Room", "parent_club_room", "in", ["Male Room"]]
+               ]
+           };
+       };
+       cur_frm.get_field('female_room').get_query = function(doc) {
+        return {
+            filters: [
+                ["Club Room", "parent_club_room", "in", ["Female Room"]]
                ]
            };
        };

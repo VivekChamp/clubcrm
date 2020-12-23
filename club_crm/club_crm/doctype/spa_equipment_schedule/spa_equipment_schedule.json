@@ -1,0 +1,96 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2020-12-21 02:24:05.143788",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "equipment_name",
+  "equipment_type",
+  "column_break_3",
+  "date",
+  "from_time",
+  "to_time",
+  "naming_series",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "equipment_name",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Equipment Name",
+   "options": "Spa Equipment"
+  },
+  {
+   "fieldname": "equipment_type",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Equipment Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "from_time",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "From Time"
+  },
+  {
+   "fieldname": "to_time",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "To Time"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "SPAEQ-"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Spa Equipment Schedule",
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2020-12-21 02:24:05.143788",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Spa Equipment Schedule",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "equipment_name",
+ "track_changes": 1
+}

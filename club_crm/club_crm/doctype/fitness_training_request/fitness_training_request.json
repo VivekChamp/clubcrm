@@ -170,12 +170,12 @@
    "read_only": 1
   },
   {
+   "allow_on_submit": 1,
    "default": "Not Paid",
    "fieldname": "payment_status",
    "fieldtype": "Select",
    "label": "Payment Status",
-   "options": "Paid\nNot Paid",
-   "read_only": 1
+   "options": "Paid\nNot Paid"
   },
   {
    "fieldname": "column_break_8",
@@ -201,8 +201,8 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-16 01:03:25.824447",
- "modified_by": "Administrator",
+ "modified": "2020-12-22 15:01:36.760668",
+ "modified_by": "mithleena@bluelynx.qa",
  "module": "Club CRM",
  "name": "Fitness Training Request",
  "owner": "Administrator",

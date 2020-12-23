@@ -72,7 +72,7 @@ def get_therapist(spa_item,client_id):
 
 @frappe.whitelist()
 def get_details(client_id):
-    doc = frappe.get_all('Spa Appointment', filters={'client_id':client_id, 'docstatus':1}, fields=['name','spa_item','duration','status','appointment_date','appointment_time','rate','therapist_name'])
+    doc = frappe.get_all('Spa Appointment', filters={'client_id':client_id, 'docstatus':1}, fields=['name','spa_item','duration','status','appointment_date','appointment_time','rate','spa_therapist'])
     details=[]
     if doc:
         for rating in doc:
@@ -80,32 +80,50 @@ def get_details(client_id):
             if rate:
                 rate=rate[0]
                 details.append({
-                    'Spa Appointment': rating,
+                    'Spa Appointment': {
+                        "name": rating.name,
+                        "spa_item": rating.spa_item,
+                        "duration": rating.duration,
+                        "status": rating.status,
+                        "appointment_date": rating.appointment_date,
+                        "appointment_time": rating.appointment_time,
+                        "rate": str(rating.rate),
+                        "therapist_name": rating.spa_therapist
+                    },
                     'Rating': rate.rating_point
                     })
             else:
                 details.append({
-                    'Spa Appointment':rating,
+                    'Spa Appointment': {
+                        "name": rating.name,
+                        "spa_item": rating.spa_item,
+                        "duration": rating.duration,
+                        "status": rating.status,
+                        "appointment_date": rating.appointment_date,
+                        "appointment_time": rating.appointment_time,
+                        "rate": str(rating.rate),
+                        "therapist_name": rating.spa_therapist
+                    },
                     'Rating': -1
                     })
         return details
 
-@frappe.whitelist()
-def get_slots(date, spa_item, therapist_name):
-    day_name= ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
-    day= day_name[datetime.strptime(str(date), '%d-%m-%Y').weekday()]
+# @frappe.whitelist()
+# def get_slots(date, spa_item, therapist_name):
+#     day_name= ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+#     day= day_name[datetime.strptime(str(date), '%d-%m-%Y').weekday()]
     
-    doc= frappe.get_doc('Spa Therapist', therapist_name)
-    for d in doc.spa_therapist_schedule:
-        sch= frappe.get_doc('Spa Schedule', d.schedule)
-        slots = sch.time_slots
-        time_slot=[]
-        for days in slots:
-            if days.day==day:
-                time_slot.append(days.from_time)
-        frappe.response["message"] = {
-            "available_slots": time_slot
-        }         
+#     doc= frappe.get_doc('Spa Therapist', therapist_name)
+#     for d in doc.spa_therapist_schedule:
+#         sch= frappe.get_doc('Spa Schedule', d.schedule)
+#         slots = sch.time_slots
+#         time_slot=[]
+#         for days in slots:
+#             if days.day==day:
+#                 time_slot.append(days.from_time)
+#         frappe.response["message"] = {
+#             "available_slots": time_slot
+#         }         
 
 @frappe.whitelist()
 def book_spa(client_id, spa_item, therapist_name, date, time,any_surgeries,payment_method):
@@ -141,12 +159,63 @@ def get_room(gender):
     doc= frappe.get_all('Club Room', filters={'is_group':0, 'for_gender':gender})
     return doc
 
+# @frappe.whitelist()
+# def get_slots(date, spa_item, therapist_name):
+#     doc = frappe.get_doc('Spa Menu', spa_item)
+
+#     day_name= ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+#     weekday= day_name[datetime.strptime(str(date), '%Y-%m-%d').weekday()]
+
+#     therapist_doc = frappe.get_doc('Spa Therapist', therapist_name)
+#     if therapist_doc.spa_therapist_schedule:
+#         for d in therapist_doc.spa_therapist_schedule:
+#             therapist_schedule= frappe.get_doc('Spa Schedule', d.schedule)
+#             if therapist_schedule:
+#                 time_slot=[]
+#                 for t in therapist_schedule.time_slots:
+#                     if t.day==weekday:
+#                         time_slot.append(t.from_time)
+
+#                 appointments = frappe.get_all('Spa Appointment', filters= {'spa_therapist': therapist_name, 'docstatus':'1', 'appointment_date': date,'status': ['in', {'Scheduled','Open'}]}, fields=['name','appointment_date','appointment_time','total_duration','spa_item','start_time','end_time','status'])
+#                 if appointments:
+#                     for s in appointments:
+#                             # start = datetime.strptime(s.start_time, "%Y-%m-%d %H:%M:%S")
+#                             # end= datetime.strptime(s.end_time, "%Y-%m-%d %H:%M:%S")
+#                             # slot=[]
+#                             for a in time_slot[:]:
+#                                 slot_time= datetime.combine(getdate(s.appointment_date), get_time(a))
+#                                 if s.start_time <= slot_time <= s.end_time:
+#                                     time_slot.remove(a)
+                    
+#                     # for i in range(len(time_slot) - 1):
+#                     #     for j in range(i+1, len(time_slot)):
+#                     #         first_time= time_slot[i]
+#                     #         next_time= time_slot[j]
+#                     #         # return next_date - first_date
+#                     #         if duration < next_time - first_time:
+#                     #             time_slot.remove(first_time)
+
+#                     frappe.response["message"] = {
+#                         "available_slots": time_slot
+#                         }
+#                 else:
+#                     frappe.response["message"] = {
+#                         "available_slots": time_slot
+#                         }
+#             else:
+#                 frappe.throw('No schedule assigned for this therapist')
+#     else:
+#         frappe.throw('No schedule assigned for this therapist')
+
 @frappe.whitelist()
-def get_slot(date, spa_item, therapist_name):
+def get_slots(date, spa_item, therapist_name):
     doc = frappe.get_doc('Spa Menu', spa_item)
+    a = ((doc.total_duration//30) * 30) + 30
+    minutes= time.strftime("%H:%M:%S", time.gmtime(a*60))
+    dur = datetime.strptime(minutes,"%H:%M:%S") - datetime(1900,1,1)
 
     day_name= ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
-    weekday= day_name[datetime.strptime(str(date), '%d-%m-%Y').weekday()]
+    weekday= day_name[datetime.strptime(str(date), '%Y-%m-%d').weekday()]
 
     therapist_doc = frappe.get_doc('Spa Therapist', therapist_name)
     if therapist_doc.spa_therapist_schedule:
@@ -158,25 +227,33 @@ def get_slot(date, spa_item, therapist_name):
                     if t.day==weekday:
                         time_slot.append(t.from_time)
 
-                appointments = frappe.get_all('Spa Appointment', filters= {'spa_therapist': therapist_name,'appointment_date': '2020-12-05','status': ['in', {'Scheduled','Open'}]}, fields=['name','appointment_date','appointment_time','total_duration','spa_item','start_time','end_time','status'])
+                appointments = frappe.get_all('Spa Appointment', filters= {'spa_therapist': therapist_name, 'docstatus':'1', 'appointment_date': date,'status': ['in', {'Scheduled','Open'}]}, fields=['name','appointment_date','appointment_time','total_duration','spa_item','start_time','end_time','status'])
                 if appointments:
                     for s in appointments:
-                            start = datetime.strptime(s.start_time, "%Y-%m-%d %H:%M:%S")
-                            end= datetime.strptime(s.end_time, "%Y-%m-%d %H:%M:%S")
-                            slot=[]
-                            for a in time_slot:
+                            # start = datetime.strptime(s.start_time, "%Y-%m-%d %H:%M:%S")
+                            # end= datetime.strptime(s.end_time, "%Y-%m-%d %H:%M:%S")
+                            # slot=[]
+                            for a in time_slot[:]:
                                 slot_time= datetime.combine(getdate(s.appointment_date), get_time(a))
-                                if start <= slot_time <= end:
+                                if s.start_time <= slot_time <= s.end_time:
                                     time_slot.remove(a)
-                                else:
-                                    slot.append(a)
-                    
-                    return slot
+                    slot=[]
+                    for i in range(len(time_slot) - 1):
+                        for j in range(i+1, len(time_slot)):
+                            first_time= time_slot[i]
+                            next_time= time_slot[j]
+                            tur = next_time - first_time
+                            if dur == tur:
+                                slot.append(first_time)
+                    frappe.response["message"] = {
+                        "available_slots": slot
+                        }
                 else:
                     frappe.response["message"] = {
                         "available_slots": time_slot
                         }
             else:
-                frappe.throw('No available schedule')
+                frappe.throw('No schedule assigned for this therapist')
     else:
         frappe.throw('No schedule assigned for this therapist')
+

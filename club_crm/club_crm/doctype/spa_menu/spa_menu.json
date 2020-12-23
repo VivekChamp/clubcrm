@@ -9,7 +9,7 @@
  "engine": "InnoDB",
  "field_order": [
   "disabled",
-  "column_break_2",
+  "column_break_1",
   "on_app",
   "has_addon",
   "section_break_2",
@@ -26,8 +26,10 @@
   "rate",
   "dependencies_section",
   "rooms",
+  "female_room",
   "column_break_18",
-  "spa_machine",
+  "equipment_male",
+  "equipment_female",
   "capacity",
   "item_details_section",
   "item",
@@ -101,13 +103,10 @@
    "label": "Description"
   },
   {
-   "fieldname": "column_break_2",
-   "fieldtype": "Column Break"
-  },
-  {
    "default": "0",
    "fieldname": "on_app",
    "fieldtype": "Check",
+   "in_list_view": 1,
    "label": "Show on App"
   },
   {
@@ -116,12 +115,6 @@
    "label": "Spa Item Name",
    "reqd": 1,
    "unique": 1
-  },
-  {
-   "fieldname": "spa_machine",
-   "fieldtype": "Link",
-   "label": "Spa Equipment",
-   "options": "Spa Equipment"
   },
   {
    "fieldname": "image",
@@ -188,7 +181,7 @@
   {
    "fieldname": "rooms",
    "fieldtype": "Table MultiSelect",
-   "label": "Rooms",
+   "label": "Male Rooms",
    "options": "Club Room Table"
   },
   {
@@ -205,11 +198,33 @@
    "fieldtype": "Int",
    "label": "Total Duration (in minutes)",
    "read_only": 1
+  },
+  {
+   "fieldname": "female_room",
+   "fieldtype": "Table MultiSelect",
+   "label": "Female Rooms",
+   "options": "Club Room Table"
+  },
+  {
+   "fieldname": "equipment_male",
+   "fieldtype": "Table MultiSelect",
+   "label": "Spa Equipment for Male",
+   "options": "Spa Equipment Table"
+  },
+  {
+   "fieldname": "equipment_female",
+   "fieldtype": "Table MultiSelect",
+   "label": "Spa Eqiupment for Female",
+   "options": "Spa Equipment Table"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
   }
  ],
  "image_field": "image",
  "links": [],
- "modified": "2020-12-20 17:53:12.937603",
+ "modified": "2020-12-21 03:39:17.756641",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Menu",
