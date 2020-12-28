@@ -1,12 +1,16 @@
 import frappe
 import re
+import uuid
 from frappe.utils import now
 import hashlib
 import hmac
 import hashlib
 import base64 
+from datetime import datetime
+import random
+import string
 
-secret = "c6972c68328a4b75904ae71388f69bfb62a2c611fa5241859c5826b67224642ed9d1678f1db44edba7d848739c3b014fe89ac7c5d4aa420cbfa2158443f6cd82ca7cbc17b88743cd9769f341980153ff477b1f7d07914fd0a8f24b31635e72410445ddc66a8349398ba595d7db62d2b199456797e33e4a5397215eea7f3b2f96"
+secret = frappe.db.get_value("CS Signature",None,"secret_key")
 
 @frappe.whitelist(allow_guest = True)
 def create_log(**kwargs):
@@ -15,6 +19,7 @@ def create_log(**kwargs):
     doc = frappe.new_doc("Payment Logs")
     doc.transaction_time=now()
     doc.response_data=str(kwargs)
+    doc.payment_gateway_hash = kwargs['signature']
     doc.transaction_id=kwargs['transaction_id']
     doc.decision=kwargs['decision']
     doc.req_access_key=kwargs['req_access_key']
@@ -24,7 +29,7 @@ def create_log(**kwargs):
     doc.req_reference_number=kwargs['req_reference_number']
     doc.req_amount=kwargs['req_amount']
     doc.req_currency=kwargs['req_currency']
-    doc.req_currency=kwargs['req_currency']
+    doc.req_locale=kwargs['req_locale']
     doc.req_payment_method=kwargs['req_payment_method']
     doc.req_payment_token=kwargs['req_payment_token']
     doc.req_card_number=kwargs['req_card_number']
@@ -42,9 +47,18 @@ def create_log(**kwargs):
     doc.auth_time=kwargs['auth_time']
     doc.request_token=kwargs['request_token']
     doc.bill_trans_ref_no=kwargs['bill_trans_ref_no']
-    # doc.signed_field_names=kwargs['signed_field_names']
+    doc.signed_field_names=kwargs['signed_field_names']
     doc.signed_date_time=kwargs['signed_date_time']
     # doc.generated_hash = generate_hash(str(kwargs['signed_date_time']))
+    signed_list = kwargs['signed_field_names'].split(",")
+    sample_dict = {}
+    for item in signed_list:
+        sample_dict[item] = kwargs[item]
+    # return sample_dict
+    doc.generated_hash = generate_hash_varifier(sample_dict)
+    if doc.generated_hash == kwargs['signature']:
+        doc.signature_verified = 1
+
     doc.insert(ignore_permissions=True)
     return doc
 
@@ -56,10 +70,51 @@ def generate_data_string(data_dict):
     str1 = ",".join(test_array)
     return str1
 
-@frappe.whitelist(allow_guest = True)
-def generate_hash(data_dict,API_SECRET):
-    hash_value = hmac.new(API_SECRET.encode(), generate_data_string(data_dict).encode(), hashlib.sha256)
-    print(hash_value.digest())
-    signature = base64.b64encode(hash_value.digest()).decode("utf-8")
-    return {"signature":signature}
+def get_random_alphanumeric_string(length):
+    letters_and_digits = string.ascii_lowercase + string.digits
+    result_str = ''.join((random.choice(letters_and_digits) for i in range(length)))
+    return result_str
 
+def generate_uuid():
+    transaction_uuid = str(uuid.uuid4()).replace("-", "")
+    return transaction_uuid
+
+@frappe.whitelist(allow_guest = True)
+def generate_hash(data_dict):
+    default_dict = {
+        #"transaction_uuid" : get_random_alphanumeric_string(13),
+        "transaction_uuid": generate_uuid(),
+        "signed_date_time" : generate_signed_time(),
+        "locale":"en",
+        "currency":"qar",
+	    "payment_method":"card",
+        "bill_to_address_country":"qa",
+        "signed_field_names":"transaction_uuid,signed_date_time,locale,currency,payment_method,bill_to_address_country,signed_field_names,unsigned_field_names,access_key,profile_id,transaction_type,reference_number,amount,bill_to_forename,bill_to_surname,bill_to_email,bill_to_address_line1,bill_to_address_city",
+        "unsigned_field_names":"card_number,card_type,card_expiry_date"
+    }
+    default_dict.update(data_dict)
+    # return default_dict
+    API_SECRET = frappe.db.get_value("CS Signature",None,"secret_key")
+    hash_value = hmac.new(API_SECRET.encode(), generate_data_string(default_dict).encode(), hashlib.sha256)
+    # print(hash_value.digest())
+    signature = base64.b64encode(hash_value.digest()).decode("utf-8")
+    default_dict['signature'] = signature
+    
+    return default_dict
+
+
+@frappe.whitelist(allow_guest = True)
+def generate_hash_varifier(data_dict):
+   
+    # return default_dict
+    API_SECRET = frappe.db.get_value("CS Signature",None,"secret_key")
+    hash_value = hmac.new(API_SECRET.encode(), generate_data_string(data_dict).encode(), hashlib.sha256)
+    # print(hash_value.digest())
+    signature = base64.b64encode(hash_value.digest()).decode("utf-8")
+    
+    return signature
+
+
+def generate_signed_time():
+    signed_date=datetime.utcnow().replace(microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return signed_date

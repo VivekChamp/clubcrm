@@ -7,15 +7,23 @@ import frappe
 from frappe.utils import getdate, get_time, flt
 from datetime import datetime, timedelta
 from frappe.model.document import Document
+from club_crm.api.wallet import get_balance
 
 class SpaAppointment(Document):
 	def after_insert(self):
 			self.calculate_time()
 			self.check_discount()
 
+	def before_submit(self):
+			self.calculate_time()
+			self.check_discount()
+	
+	def on_save(self):
+			self.check_discount()
+
 	def calculate_time(self):
 		self.start_time = "%s %s" % (self.appointment_date, self.appointment_time)
-		self.end_time= datetime.combine(getdate(self.appointment_date), get_time(self.appointment_time)) + timedelta(minutes=flt(self.total_duration))
+		self.end_time= datetime.combine(getdate(self.appointment_date), get_time(self.appointment_time)) + timedelta(seconds=flt(self.total_duration))
 	
 	def check_discount(self):
 		if self.membership_status=='Member':
@@ -52,5 +60,35 @@ class SpaAppointment(Document):
 					})
 				doc.insert()
 				doc.save()
+	
+	def before_submit(self):
+		if self.payment_method=="Wallet":
+			wallet= get_balance(self.client_id)
+			if wallet < self.rate:
+				frappe.throw("Not enough wallet balance")
 
-
+	def on_submit(self):
+		if self.payment_method=="Wallet":	
+			doc= frappe.get_doc({
+				"doctype": 'Wallet Transaction',
+				"client_id": self.client_id,
+				"transaction_type": 'Payment',
+				"amount": self.rate,
+				"payment_type": 'Spa'
+			})
+			doc.insert()
+			doc.submit()
+	
+	def on_cancel(self):
+		self.db_set('status', 'Cancelled')
+		if self.payment_method=="Wallet":
+			doc= frappe.get_doc({
+				"doctype": 'Wallet Transaction',
+				"client_id": self.client_id,
+				"transaction_type": 'Refund',
+				"amount": self.rate,
+				"payment_type": 'Spa'
+			})
+			doc.insert()
+			doc.submit()
+		self.reload()

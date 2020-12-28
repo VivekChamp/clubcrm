@@ -91,7 +91,6 @@
    "read_only": 1
   },
   {
-   "default": "Now",
    "fieldname": "created_time",
    "fieldtype": "Time",
    "label": "Created Time",
@@ -163,7 +162,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-17 16:36:03.530841",
+ "modified": "2020-12-25 19:51:12.107516",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Online Order",

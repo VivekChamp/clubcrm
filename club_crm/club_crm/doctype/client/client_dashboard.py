@@ -7,15 +7,19 @@ def get_data():
 		'transactions': [
 			{
 				'label': _('Appointments'),
-				'items': ['Spa Appointment', 'Group Class Attendees', 'Check In', 'Rating']
+				'items': ['Spa Appointment','Group Class Attendees','Fitness Training Appointment','Grams Reservation','Club Tour']
 			},
 			{
-				'label': _('Membership Details'),
- 				'items': ['Memberships', 'Membership Benefits', 'Memberships Application']
+				'label': _('Membership'),
+ 				'items': ['Memberships','Member Benefits','Memberships Application','Fitness Training Session']
 			},
             {
-				'label': _('Orders'),
-				'items': ['Online Order', 'Food Order']
+				'label': _('Others'),
+				'items': ['Check In','Rating','Valet Parking','Online Order','Food Order Entry']
+			},
+			{
+				'label': _('Transactions'),
+				'items': ['Wallet Transaction']
 			}
 		]	
 	}

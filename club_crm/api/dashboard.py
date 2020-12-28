@@ -10,6 +10,7 @@ def get_dashboard_details(client_id):
     valet= frappe.get_list('Valet Parking', filters={'client_id': client_id, 'date': today, 'status': ['in', {'Parked','Requested for Delivery','Ready for Delivery'}]}, fields=['name', 'vehicle_no','status'])
     if valet:
         val=valet[0]
+        valet_name=val.name
         if val.status=="Requested for Delivery":
             valet_parking = "Requested"
         elif val.status=="Ready for Delivery":
@@ -17,6 +18,7 @@ def get_dashboard_details(client_id):
         else:
             valet_parking= "Parked"
     else:
+        valet_name=None
         valet_parking=None
 
     checkin= frappe.get_list('Check In', filters={'client_id': client_id, 'check_in_type': 'Member Check-in'}, fields={'name', 'check_in_time'}, order_by="check_in_time desc")
@@ -55,9 +57,10 @@ def get_dashboard_details(client_id):
     
     frappe.response["message"] = {
         "Valet": valet_parking,
+        "valet_id": valet_name,
         "checkin": check_in,
         "food_order": food_order,
         "group_class": grp_class,
-        "fitness": len(pt),
+        "fitness": fitness,
         "spa": spa_next
          }

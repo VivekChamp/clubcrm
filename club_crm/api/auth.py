@@ -1,5 +1,6 @@
 import frappe
 from frappe.website.utils import is_signup_enabled
+from club_crm.api.wallet import get_balance
 from frappe.utils import escape_html
 from frappe import throw, msgprint, _
 
@@ -18,14 +19,30 @@ def login(usr,pwd):
         return
     api_generate=generate_keys(frappe.session.user)
     user = frappe.get_doc('User',frappe.session.user)
+    pg = frappe.get_doc('CS Settings')
     client_details = frappe.get_all('Client', filters={'mobile_no': usr}, fields=['name','first_name','last_name','client_name','gender','birth_date','nationality','qatar_id','email','mobile_no','apply_membership','mem_application','membership_status','status','customer_group','territory','marital_status','image'])
-    frappe.response["message"] =	{
+    if client_details:
+        d = client_details[0]
+        wallet= get_balance(d.name)
+        frappe.response["message"] =	{
             "sid": frappe.session.sid,
             "client details": client_details,
             "api_key":user.api_key,
+            "api secret": api_generate,
+            "wallet_balance": wallet,
+            "access_key": pg.access_key,
+            "profile_id": pg.profile_id,
+            "transaction_url": pg.transaction_url
+            }
+    else:
+        frappe.response["message"] =	{
+            "sid": frappe.session.sid,
+            "client details": [],
+            "api_key":user.api_key,
             "api secret": api_generate
             }
-    return
+
+        return
 
 def generate_keys(user):
     user_details = frappe.get_doc('User', user)

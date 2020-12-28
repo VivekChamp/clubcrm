@@ -1,0 +1,78 @@
+{
+ "actions": [],
+ "creation": "2020-12-24 21:54:26.727109",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "spa_settings",
+  "spa_cancel_time",
+  "fitness_settings",
+  "fitness_cancel_time",
+  "group_class_settings",
+  "group_class_cancel_time"
+ ],
+ "fields": [
+  {
+   "fieldname": "spa_settings",
+   "fieldtype": "Section Break",
+   "label": "Spa Settings"
+  },
+  {
+   "fieldname": "fitness_settings",
+   "fieldtype": "Section Break",
+   "label": "Fitness Settings"
+  },
+  {
+   "fieldname": "group_class_settings",
+   "fieldtype": "Section Break",
+   "label": "Group Class Settings"
+  },
+  {
+   "description": "Minimum time for an appointment to be available for cancellation or reschedule (in minutes)",
+   "fieldname": "spa_cancel_time",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Spa Appointment Cancellation Time"
+  },
+  {
+   "description": "Minimum time for an appointment to be available for cancellation or reschedule (in minutes)",
+   "fieldname": "fitness_cancel_time",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Fitness Session Cancellation Time"
+  },
+  {
+   "description": "Minimum time for an appointment to be available for cancellation or reschedule (in minutes)",
+   "fieldname": "group_class_cancel_time",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Group Class Cancellation"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2020-12-25 04:13:51.773150",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Club Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

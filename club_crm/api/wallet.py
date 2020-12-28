@@ -9,7 +9,7 @@ from frappe.model.document import Document
 
 @frappe.whitelist()
 def get_balance(client_id):
-    doc = frappe.get_list('Wallet Transaction', filters={'client_id':client_id, 'transaction_type':'Top Up'}, fields={'amount'})
+    doc = frappe.get_list('Wallet Transaction', filters={'client_id':client_id, 'docstatus':1, 'transaction_type': ['in',['Top Up','Refund']]}, fields={'amount'})
     if doc:
         t = [each['amount'] for each in doc]
         topup= sum(t)
@@ -28,7 +28,7 @@ def get_balance(client_id):
 
 @frappe.whitelist()
 def transactions(client_id):
-    doc = frappe.get_list('Wallet Transaction', filters={'client_id':client_id}, fields={'date', 'transaction_type', 'amount','mode_of_payment','payment_type'})
+    doc = frappe.get_list('Wallet Transaction', filters={'client_id':client_id, 'docstatus':1}, fields={'date', 'transaction_type', 'amount','mode_of_payment','payment_type'})
     if doc:
         return doc
     else:

@@ -20,13 +20,13 @@
   "nationality",
   "image",
   "column_break_14",
+  "membership_status",
+  "reg_on_app",
   "mobile_no",
   "email",
   "qatar_id",
   "status",
-  "membership_status",
   "member",
-  "reg_on_app",
   "notification_preference",
   "primary_member",
   "apply_membership",
@@ -53,7 +53,10 @@
   "other_notes",
   "more_info",
   "client_details",
-  "amended_from"
+  "amended_from",
+  "alert",
+  "alert_notes",
+  "test"
  ],
  "fields": [
   {
@@ -139,6 +142,7 @@
    "default": "SMS",
    "fieldname": "notification_preference",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Notification Preference",
    "options": "\nEmail\nSMS\nBoth"
   },
@@ -147,7 +151,8 @@
    "fieldtype": "Data",
    "label": "Email",
    "options": "Email",
-   "reqd": 1
+   "reqd": 1,
+   "set_only_once": 1
   },
   {
    "collapsible": 1,
@@ -286,7 +291,8 @@
    "in_standard_filter": 1,
    "label": "Membership Status",
    "no_copy": 1,
-   "options": "Non-Member\nMember"
+   "options": "Non-Member\nMember",
+   "read_only": 1
   },
   {
    "fieldname": "nationality",
@@ -355,11 +361,13 @@
    "default": "0",
    "fieldname": "apply_membership",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Applied for Membership"
   },
   {
    "fieldname": "mem_application",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Membership Application"
   },
   {
@@ -373,13 +381,29 @@
    "label": "Member",
    "options": "Memberships",
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "alert",
+   "fieldtype": "Check",
+   "label": "Alert"
+  },
+  {
+   "fieldname": "alert_notes",
+   "fieldtype": "Small Text",
+   "label": "Alert Notes"
+  },
+  {
+   "fieldname": "test",
+   "fieldtype": "HTML",
+   "label": "Test"
   }
  ],
  "icon": "fa fa-user",
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2020-12-20 15:56:16.149395",
+ "modified": "2020-12-24 21:49:50.525989",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",

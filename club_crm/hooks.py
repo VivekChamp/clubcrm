@@ -86,10 +86,10 @@ app_license = "MIT"
 doc_events = {
  	"User": {
                 "after_insert": "club_crm.core.doctype.user.user.create_client_user"
-        	},
-        "Client":{
-                "after_insert": "club_crm.club_crm.doctype.client.client.create_customer_client"
-                }
+        	}
+    # "Client":{
+    #             "after_insert": "club_crm.club_crm.doctype.client.client.create_customer_client"
+    #             }
 }
 
 # Scheduled Tasks

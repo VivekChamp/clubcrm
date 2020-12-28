@@ -38,7 +38,6 @@
    "read_only": 1
   },
   {
-   "default": "Now",
    "fieldname": "time",
    "fieldtype": "Time",
    "label": "Time",
@@ -53,7 +52,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Transaction Type",
-   "options": "Top Up\nPayment"
+   "options": "Top Up\nPayment\nRefund"
   },
   {
    "fieldname": "amount",
@@ -127,7 +126,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-23 04:59:54.940009",
+ "modified": "2020-12-25 19:52:11.685305",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Wallet Transaction",

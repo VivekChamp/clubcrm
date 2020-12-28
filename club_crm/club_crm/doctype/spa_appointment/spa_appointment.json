@@ -163,8 +163,8 @@
   {
    "fetch_from": "spa_item.duration",
    "fieldname": "duration",
-   "fieldtype": "Data",
-   "label": "Duration (in minutes)",
+   "fieldtype": "Duration",
+   "label": "Duration",
    "read_only": 1
   },
   {
@@ -234,7 +234,7 @@
    "fieldname": "payment_method",
    "fieldtype": "Select",
    "label": "Payment Method",
-   "options": "Credit Card\nWallet\nCash"
+   "options": "Credit Card\nWallet\nCash\nComplimentary"
   },
   {
    "fieldname": "column_break_spa",
@@ -243,7 +243,7 @@
   {
    "fetch_from": "spa_item.total_duration",
    "fieldname": "total_duration",
-   "fieldtype": "Data",
+   "fieldtype": "Duration",
    "label": "Total Duration (including turn over)",
    "read_only": 1
   },
@@ -309,7 +309,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "default": "Now",
    "fieldname": "time",
    "fieldtype": "Time",
    "label": "Time",
@@ -318,7 +317,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-23 01:19:06.990262",
+ "modified": "2020-12-28 17:22:57.621857",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Appointment",

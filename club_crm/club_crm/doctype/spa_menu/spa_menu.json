@@ -124,7 +124,9 @@
   },
   {
    "fieldname": "duration",
-   "fieldtype": "Int",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
    "label": "Duration (in minutes)",
    "reqd": 1
   },
@@ -190,12 +192,16 @@
   },
   {
    "fieldname": "turn_over_time",
-   "fieldtype": "Int",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
    "label": "Turnover Time (in minutes)"
   },
   {
    "fieldname": "total_duration",
-   "fieldtype": "Int",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
    "label": "Total Duration (in minutes)",
    "read_only": 1
   },
@@ -224,7 +230,7 @@
  ],
  "image_field": "image",
  "links": [],
- "modified": "2020-12-21 03:39:17.756641",
+ "modified": "2020-12-25 03:46:48.368684",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Menu",
