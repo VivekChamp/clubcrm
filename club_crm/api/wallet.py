@@ -31,5 +31,5 @@ def transactions(client_id):
     doc = frappe.get_list('Wallet Transaction', filters={'client_id':client_id, 'docstatus':1}, fields={'date', 'transaction_type', 'amount','mode_of_payment','payment_type'})
     if doc:
         return doc
-    else:
-        return 0
+    # else:
+    #     return 0

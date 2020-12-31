@@ -177,7 +177,7 @@ def get_slots(date, spa_item, therapist_name):
                         time_slot.append(t.from_time)
                 
                 # Check for existing appointments and remove the appointment times from time slots
-                appointments = frappe.get_all('Spa Appointment', filters= {'spa_therapist': therapist_name, 'docstatus':'1', 'appointment_date': date,'status': ['in', {'Scheduled','Open'}]}, fields=['name','appointment_date','appointment_time','total_duration','spa_item','start_time','end_time','status'])
+                appointments = frappe.get_all('Spa Appointment', filters= {'spa_therapist': therapist_name, 'docstatus':'1', 'appointment_date': date,'status': ['in', {'Draft','Scheduled','Open'}]}, fields=['name','appointment_date','appointment_time','total_duration','spa_item','start_time','end_time','status'])
                 if appointments:
                     for s in appointments:
                             for a in time_slot[:]:

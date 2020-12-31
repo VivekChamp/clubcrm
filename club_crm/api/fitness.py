@@ -2,6 +2,7 @@ import frappe
 from frappe.website.utils import is_signup_enabled
 from frappe.utils import escape_html
 from frappe import throw, msgprint, _
+from club_crm.api.wallet import get_balance
 
 @frappe.whitelist()
 def get_fitness_category(client_id):
@@ -20,6 +21,8 @@ def get_fitness_category(client_id):
                 "Status":1,
                 "Status Message": "Training has been scheduled",
                 "Document ID": doc_1.name,
+                "rate": doc_1.price,
+                "package_name": doc_1.fitness_package,
                 "Number of Sessions": doc_1.number_of_sessions,
                 "Schedule": schedule
                 }
@@ -121,3 +124,15 @@ def cancel_session(appointment_id):
             "status": 0,
             "status_message": "Fitness Training Appointmnent already cancelled"
             }
+
+@frappe.whitelist()
+def proceed_payment(client_id,doc_id, payment_method):
+    doc= frappe.get_doc('Fitness Training Request', doc_id)
+    doc.payment_method= payment_method
+    doc.save()
+    wallet= get_balance(client_id)
+    frappe.response["message"] = {
+        "status": 1,
+        "document_name": doc.name,
+        "wallet_balance": wallet
+        }

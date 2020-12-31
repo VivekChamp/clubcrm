@@ -74,7 +74,9 @@
   "section_break_62",
   "how_did",
   "payment_details_section",
-  "payment_type",
+  "payment_method",
+  "paid_amount",
+  "sales_invoice",
   "column_break_94",
   "transaction_date",
   "transaction_reference",
@@ -94,7 +96,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "collapsible": 1,
    "fieldname": "section_break_3",
    "fieldtype": "Section Break",
    "label": "Details of Primary Member"
@@ -401,7 +402,8 @@
    "fieldname": "payment_status",
    "fieldtype": "Select",
    "label": "Payment Status",
-   "options": "Not Paid\nPaid"
+   "options": "Not Paid\nPaid",
+   "read_only": 1
   },
   {
    "fieldname": "how_did",
@@ -409,33 +411,23 @@
    "label": "How did you hear about Katara Club?"
   },
   {
-   "allow_on_submit": 1,
-   "depends_on": "eval:doc.status==1",
    "fieldname": "payment_details_section",
    "fieldtype": "Section Break",
    "label": "Payment Details"
   },
   {
    "allow_on_submit": 1,
-   "depends_on": "eval:doc.status==1",
-   "fieldname": "payment_type",
-   "fieldtype": "Select",
-   "label": "Payment Type",
-   "options": "Cash\nOffline Card\nOnline Card"
-  },
-  {
-   "allow_on_submit": 1,
-   "depends_on": "eval:doc.status==1",
    "fieldname": "transaction_reference",
    "fieldtype": "Data",
-   "label": "Transaction Reference"
+   "label": "Transaction Reference",
+   "read_only": 1
   },
   {
    "allow_on_submit": 1,
-   "depends_on": "eval:doc.status==1",
    "fieldname": "transaction_date",
    "fieldtype": "Data",
-   "label": "Transaction Date"
+   "label": "Transaction Date",
+   "read_only": 1
   },
   {
    "fieldname": "relation_2",
@@ -517,11 +509,34 @@
    "fieldname": "ddd",
    "fieldtype": "Data",
    "label": "ddd"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "payment_method",
+   "fieldtype": "Select",
+   "label": "Payment Method",
+   "options": "\nCredit Card\nWallet\nCash\nComplimentary",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "paid_amount",
+   "fieldtype": "Currency",
+   "label": "Paid Amount",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "sales_invoice",
+   "fieldtype": "Link",
+   "label": "Sales Invoice",
+   "options": "Sales Invoice",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-21 12:57:41.521622",
+ "modified": "2020-12-31 10:07:48.087221",
  "modified_by": "mithleena@bluelynx.qa",
  "module": "Club CRM",
  "name": "Memberships Application",

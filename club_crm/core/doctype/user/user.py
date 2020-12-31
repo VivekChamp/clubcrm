@@ -24,7 +24,6 @@ def create_client_user(doc, method=None):
                 default_currency='QAR', 
                 ))
             d.insert()
-            d.save()
 
         else:
             frappe.response["message"] = "Employee Created"   

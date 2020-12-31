@@ -64,3 +64,24 @@ def get_dashboard_details(client_id):
         "fitness": fitness,
         "spa": spa_next
          }
+
+@frappe.whitelist()
+def get_nonmember_dashboard(client_id):
+    spa= frappe.get_list('Spa Appointment', filters={'client_id':client_id, 'status':['in', {'Open','Scheduled'}]}, fields={'start_time'}, order_by="start_time asc")
+    if spa:
+        t=spa[0]
+        spa_next=t.start_time.date()
+    else:
+        spa_next= None
+    
+    club_tour = frappe.get_list('Club Tour', filters={'client_id':client_id,'tour_status':['in', {'Pending','Scheduled'}]})
+    if club_tour:
+        s= club_tour[0]
+        club_tour= s.tour_status
+    else:
+        club_tour= None
+    
+    frappe.response["message"] = {
+        "spa": spa_next,
+        "club_tour": club_tour
+        }

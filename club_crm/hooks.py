@@ -86,22 +86,22 @@ app_license = "MIT"
 doc_events = {
  	"User": {
                 "after_insert": "club_crm.core.doctype.user.user.create_client_user"
-        	}
-    # "Client":{
-    #             "after_insert": "club_crm.club_crm.doctype.client.client.create_customer_client"
-    #             }
+                }
+    # "Client": {
+    #              "after_insert": "club_crm.club_crm.doctype.client.client.create_customer_client"
+    #              }
 }
 
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {
 # 	"all": [
 # 		"club_crm.tasks.all"
 # 	],
-# 	"daily": [
-# 		"club_crm.tasks.daily"
-# 	],
+ 	"daily": [
+ 		"club_crm.doctype.spa_appointment.spa_appointment.update_appointment_status"
+ 	]
 # 	"hourly": [
 # 		"club_crm.tasks.hourly"
 # 	],
@@ -111,7 +111,7 @@ doc_events = {
 # 	"monthly": [
 # 		"club_crm.tasks.monthly"
 # 	]
-# }
+}
 
 # Testing
 # -------

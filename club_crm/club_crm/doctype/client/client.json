@@ -291,8 +291,7 @@
    "in_standard_filter": 1,
    "label": "Membership Status",
    "no_copy": 1,
-   "options": "Non-Member\nMember",
-   "read_only": 1
+   "options": "Non-Member\nMember"
   },
   {
    "fieldname": "nationality",
@@ -403,8 +402,8 @@
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2020-12-24 21:49:50.525989",
- "modified_by": "Administrator",
+ "modified": "2020-12-29 15:18:49.179631",
+ "modified_by": "mithleena@bluelynx.qa",
  "module": "Club CRM",
  "name": "Client",
  "name_case": "Title Case",

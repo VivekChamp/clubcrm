@@ -91,7 +91,8 @@ def user_sign_up(email, first_name, last_name, gender, birth_date, qatar_id, mob
     user.flags.ignore_permissions = True
     user.flags.ignore_password_policy = True
     user.insert()
-
+    user.new_password=password
+    user.save()
     # set default signup role as per Portal Settings
     default_role = frappe.db.get_value("Portal Settings", None, "default_role")
     if default_role:

@@ -7,14 +7,14 @@
  "engine": "InnoDB",
  "field_order": [
   "naming_series",
-  "request_status",
+  "date",
   "column_break_6",
+  "request_status",
   "payment_status",
   "client_details_section",
-  "date",
   "client_id",
-  "column_break_8",
   "client_name",
+  "column_break_8",
   "gender",
   "mobile_number",
   "membership_status",
@@ -28,9 +28,15 @@
   "customer_preference_section",
   "start_date",
   "customer_preference",
-  "customer_remarks",
   "trainer_schedule_section",
   "table_schedule",
+  "customer_remarks",
+  "section_break_4",
+  "payment_method",
+  "paid_amount",
+  "column_break_9",
+  "transaction_date",
+  "transaction_reference",
   "amended_from"
  ],
  "fields": [
@@ -157,7 +163,7 @@
    "default": "Pending",
    "fieldname": "request_status",
    "fieldtype": "Select",
-   "label": "Status",
+   "label": "Request Status",
    "options": "Pending\nScheduled\nCompleted\nCancelled"
   },
   {
@@ -175,7 +181,8 @@
    "fieldname": "payment_status",
    "fieldtype": "Select",
    "label": "Payment Status",
-   "options": "Paid\nNot Paid"
+   "options": "Paid\nNot Paid",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_8",
@@ -197,12 +204,50 @@
    "fieldname": "table_schedule",
    "fieldtype": "Table",
    "options": "Fitness Training Trainer Scheduler"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "payment_method",
+   "fieldtype": "Select",
+   "label": "Payment Method",
+   "options": "\nCredit Card\nWallet\nCash",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break",
+   "label": "Payment Details"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "transaction_date",
+   "fieldtype": "Date",
+   "label": "Transaction Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "paid_amount",
+   "fieldtype": "Data",
+   "label": "Paid Amount",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "transaction_reference",
+   "fieldtype": "Data",
+   "label": "Transaction Reference",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-22 15:01:36.760668",
- "modified_by": "mithleena@bluelynx.qa",
+ "modified": "2020-12-31 01:17:04.005105",
+ "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Request",
  "owner": "Administrator",

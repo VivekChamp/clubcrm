@@ -29,7 +29,11 @@
   "column_break_21",
   "section_break_14",
   "amended_from",
-  "naming_series"
+  "naming_series",
+  "section_break_25",
+  "number_of_sessions",
+  "used_sessions",
+  "remaining_sessions"
  ],
  "fields": [
   {
@@ -180,12 +184,36 @@
    "label": "Series",
    "options": "PT-APP-.YYYY.-",
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_25",
+   "fieldtype": "Section Break",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "fitness_session.number_of_sessions",
+   "fieldname": "number_of_sessions",
+   "fieldtype": "Data",
+   "label": " number_of_sessions"
+  },
+  {
+   "default": "0",
+   "fetch_from": "fitness_session.used_sessions",
+   "fieldname": "used_sessions",
+   "fieldtype": "Data",
+   "label": "Used Session(s)"
+  },
+  {
+   "fetch_from": "fitness_session.remaining_sessions",
+   "fieldname": "remaining_sessions",
+   "fieldtype": "Data",
+   "label": "Remaining Session(s)"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-22 14:59:39.065405",
- "modified_by": "mithleena@bluelynx.qa",
+ "modified": "2020-12-29 15:52:59.395005",
+ "modified_by": "suba@bluelynx.com",
  "module": "Club CRM",
  "name": "Fitness Training Appointment",
  "owner": "Administrator",

@@ -12,7 +12,7 @@ def get_group_class():
 
 @frappe.whitelist()
 def create_attendee(client_id,class_id):
-    check= frappe.get_all('Group Class Attendees', filters={'group_class':class_id, 'client_id':client_id})
+    check= frappe.get_all('Group Class Attendees', filters={'group_class':class_id, 'docstatus':'1', 'client_id':client_id})
     
     if check:
         frappe.response["message"] = {

@@ -92,3 +92,22 @@ class SpaAppointment(Document):
 			doc.insert()
 			doc.submit()
 		self.reload()
+
+	def set_status(self):
+		today = getdate()
+		appointment_date = getdate(self.appointment_date)
+
+		# If appointment is created for today set status as Open else Scheduled
+		if appointment_date == today:
+			self.status = 'Open'
+		elif appointment_date > today:
+			self.status = 'Scheduled'
+
+def update_appointment_status():
+	# update the status of appointments daily
+	appointments = frappe.get_all('Spa Appointment', {
+		'status': ('not in', ['Draft', 'Complete', 'Cancelled'])
+	}, as_dict=1)
+
+	for appointment in appointments:
+		frappe.get_doc('Spa Appointment', appointment.name).set_status()

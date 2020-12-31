@@ -28,7 +28,7 @@
   {
    "hidden": 0,
    "label": "Fitness Training",
-   "links": "[\n    {\n        \"description\": \"List of PT Appointments\",\n        \"label\": \"Fitness Training Appointment\",\n        \"name\": \"Fitness Training Appointment\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of PT Requests\",\n        \"label\": \"Fitness Training Request\",\n        \"name\": \"Fitness Training Request\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of PT Trainers\",\n        \"label\": \"Fitness Trainer\",\n        \"name\": \"Fitness Trainer\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of PT Trainer Schedules\",\n        \"label\": \"Fitness Training Session\",\n        \"name\": \"Fitness Training Session\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of PT Packages\",\n        \"label\": \"Fitness Training Package\",\n        \"name\": \"Fitness Training Package\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of PT Categories\",\n        \"label\": \"Fitness Training Category\",\n        \"name\": \"Fitness Training Category\",\n        \"type\": \"doctype\"\n    }\n]"
+   "links": "[\n    {\n        \"description\": \"List of PT Appointments\",\n        \"label\": \"Fitness Training Appointment\",\n        \"name\": \"Fitness Training Appointment\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of PT Trainer Schedules\",\n        \"label\": \"Fitness Training Session\",\n        \"name\": \"Fitness Training Session\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of PT Requests\",\n        \"label\": \"Fitness Training Request\",\n        \"name\": \"Fitness Training Request\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of PT Trainers\",\n        \"label\": \"Fitness Trainer\",\n        \"name\": \"Fitness Trainer\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of PT Packages\",\n        \"label\": \"Fitness Training Package\",\n        \"name\": \"Fitness Training Package\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of PT Categories\",\n        \"label\": \"Fitness Training Category\",\n        \"name\": \"Fitness Training Category\",\n        \"type\": \"doctype\"\n    }\n]"
   },
   {
    "hidden": 0,
@@ -59,7 +59,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Club CRM",
- "modified": "2020-12-24 22:08:00.582044",
+ "modified": "2020-12-31 02:01:33.831127",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club CRM",
@@ -99,7 +99,7 @@
   },
   {
    "label": "Restaurant Orders",
-   "link_to": "Restaurant Order Entry",
+   "link_to": "Food Order Entry",
    "type": "DocType"
   },
   {

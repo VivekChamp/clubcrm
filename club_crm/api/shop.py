@@ -5,6 +5,7 @@ import re
 from frappe.utils import getdate
 from frappe.model.document import Document
 from frappe import throw, msgprint, _
+from club_crm.api.wallet import get_balance
 
 @frappe.whitelist()
 def get_category():
@@ -160,8 +161,28 @@ def get_cart(client_id):
             "status": 0
         }
 
-@frappe.whitelist()         
-def checkout(document_name):
-    doc= frappe.get_doc('Online Order', document_name)
-    doc.submit()
-    return doc
+# @frappe.whitelist()         
+# def checkout(document_name):
+#     doc= frappe.get_doc('Online Order', document_name)
+#     doc.submit()
+#     return doc
+
+
+@frappe.whitelist()
+def checkout(client_id, payment_method):
+    cart= frappe.get_list('Online Order', filters={'client_id':client_id, 'cart_status': 'Cart'}, fields=['*'])
+    if cart:
+        cart_1=cart[0]
+        doc= frappe.get_doc('Online Order', cart_1.name)
+        doc.payment_method = payment_method
+        doc.submit()
+        wallet= get_balance(client_id)
+    frappe.response["message"] = {
+        "status": 1,
+        "document_name": doc.name,
+        "cart_status": doc.cart_status,
+        "payment_status": doc.payment_status,
+        "client_name": doc.client_name,
+        "total_amount": doc.total_amount,
+        "wallet_balance": wallet
+        }

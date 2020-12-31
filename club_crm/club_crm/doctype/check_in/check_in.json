@@ -107,7 +107,7 @@
    "fieldname": "gym_booking",
    "fieldtype": "Link",
    "label": "Gym Booking ID",
-   "options": "Fitness Training Request"
+   "options": "Fitness Training Appointment"
   },
   {
    "fetch_from": "class_attendee_id.group_class",
@@ -135,7 +135,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-13 14:49:47.284252",
+ "modified": "2020-12-30 10:59:00.136018",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Check In",

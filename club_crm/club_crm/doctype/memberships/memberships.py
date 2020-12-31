@@ -15,3 +15,4 @@ class Memberships(Document):
 			start_date= datetime.strptime(self.start_date, "%Y-%m-%d")
 			expiry_date= start_date + timedelta(days=int(self.duration))
 			self.end_date= expiry_date.strftime("%Y-%m-%d")
+

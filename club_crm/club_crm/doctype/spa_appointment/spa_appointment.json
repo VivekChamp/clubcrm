@@ -12,7 +12,6 @@
   "column_break_3",
   "status",
   "payment_status",
-  "payment_method",
   "customer_details_section",
   "client_id",
   "client_name",
@@ -43,9 +42,12 @@
   "column_break_20",
   "any_surgeries",
   "more_info_section",
+  "payment_method",
+  "paid_amount",
   "sales_invoice",
   "column_break_28",
-  "note",
+  "transaction_date",
+  "transaction_reference",
   "amended_from",
   "color"
  ],
@@ -58,11 +60,11 @@
    "read_only": 1
   },
   {
-   "fetch_from": "memberships.client_id",
    "fieldname": "client_id",
    "fieldtype": "Link",
    "label": "Client ID",
-   "options": "Client"
+   "options": "Client",
+   "reqd": 1
   },
   {
    "fetch_from": "client_id.client_name",
@@ -85,7 +87,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "allow_on_submit": 1,
    "fieldname": "spa_therapist",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -119,25 +120,20 @@
    "collapsible": 1,
    "fieldname": "more_info_section",
    "fieldtype": "Section Break",
-   "label": "More Info"
+   "label": "Payment Details"
   },
   {
    "fieldname": "column_break_28",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "note",
-   "fieldtype": "Small Text",
-   "label": "Note"
-  },
-  {
    "allow_on_submit": 1,
-   "default": "Scheduled",
+   "default": "Draft",
    "fieldname": "status",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Status",
-   "options": "Scheduled\nOpen\nComplete\nCancelled"
+   "options": "Draft\nScheduled\nOpen\nComplete\nCancelled"
   },
   {
    "fieldname": "customer_details_section",
@@ -150,7 +146,7 @@
    "fieldtype": "Select",
    "in_standard_filter": 1,
    "label": "Gender",
-   "options": "Male\nFemale",
+   "options": "\nMale\nFemale",
    "read_only": 1
   },
   {
@@ -192,7 +188,8 @@
    "fieldname": "spa_item",
    "fieldtype": "Link",
    "label": "Spa Item",
-   "options": "Spa Menu"
+   "options": "Spa Menu",
+   "reqd": 1
   },
   {
    "fetch_from": "spa_item.spa_menu_group",
@@ -216,10 +213,12 @@
    "precision": "2"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "sales_invoice",
    "fieldtype": "Link",
    "label": "Sales Invoice",
-   "options": "Sales Invoice"
+   "options": "Sales Invoice",
+   "read_only": 1
   },
   {
    "allow_on_submit": 1,
@@ -227,14 +226,16 @@
    "fieldname": "payment_status",
    "fieldtype": "Select",
    "label": "Payment Status",
-   "options": "Paid\nNot Paid"
+   "options": "Paid\nNot Paid",
+   "read_only": 1
   },
   {
-   "default": "Credit Card",
+   "allow_on_submit": 1,
    "fieldname": "payment_method",
    "fieldtype": "Select",
    "label": "Payment Method",
-   "options": "Credit Card\nWallet\nCash\nComplimentary"
+   "options": "\nCredit Card\nWallet\nCash\nComplimentary",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_spa",
@@ -313,11 +314,32 @@
    "fieldtype": "Time",
    "label": "Time",
    "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "transaction_date",
+   "fieldtype": "Data",
+   "label": "Transaction Date",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "paid_amount",
+   "fieldtype": "Currency",
+   "label": "Paid Amount",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "transaction_reference",
+   "fieldtype": "Data",
+   "label": "Transaction Reference",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-28 17:22:57.621857",
+ "modified": "2020-12-31 01:41:39.795781",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Appointment",
