@@ -76,7 +76,7 @@ def get_details(client_id):
     if time.spa_cancel_time and int(time.spa_cancel_time) >0:
         b= int(int(time.spa_cancel_time)/3600)
 
-    doc = frappe.get_all('Spa Appointment', filters={'client_id':client_id, 'docstatus':1}, fields=['name','spa_item','duration','status','appointment_date','appointment_time', 'start_time','rate','spa_therapist'])
+    doc = frappe.get_all('Spa Appointment', filters={'client_id':client_id, 'status':['not in',{'Cancelled','No Show'}]}, fields=['name','spa_item','duration','status','payment_status','appointment_date','appointment_time', 'start_time','rate','spa_therapist'])
     details=[]
     if doc:
         for rating in doc:
@@ -88,8 +88,9 @@ def get_details(client_id):
                     'Spa Appointment': {
                         "name": rating.name,
                         "spa_item": rating.spa_item,
-                        "duration": rating.duration,
+                        "duration": int(rating.duration),
                         "status": rating.status,
+                        "payment_status": rating.payment_status,
                         "appointment_date": rating.appointment_date,
                         "appointment_time": rating.appointment_time,
                         "start_time": rating.start_time,
@@ -104,8 +105,9 @@ def get_details(client_id):
                     'Spa Appointment': {
                         "name": rating.name,
                         "spa_item": rating.spa_item,
-                        "duration": rating.duration,
+                        "duration": int(rating.duration),
                         "status": rating.status,
+                        "payment_status": rating.payment_status,
                         "appointment_date": rating.appointment_date,
                         "appointment_time": rating.appointment_time,
                         "start_time": rating.start_time,
@@ -121,8 +123,10 @@ def get_details(client_id):
 def book_spa(client_id, spa_item, therapist_name, date, time,any_surgeries,payment_method):
     doc = frappe.get_doc({
         'doctype': 'Spa Appointment',
+        'online': '1',
         'client_id': client_id,
         'spa_item': spa_item,
+        'status': "Draft",
         'spa_therapist': therapist_name,
         'appointment_date': date,
         'appointment_time': time,
@@ -130,7 +134,6 @@ def book_spa(client_id, spa_item, therapist_name, date, time,any_surgeries,payme
         'payment_method': payment_method
         })
     doc.insert()
-    doc.submit()
     wallet= get_balance(client_id)
     frappe.response["message"] = {
         "status": 1,

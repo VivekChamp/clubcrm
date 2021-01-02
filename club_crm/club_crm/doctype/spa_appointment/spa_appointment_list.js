@@ -5,6 +5,7 @@ frappe.listview_settings['Spa Appointment'] = {
             "Open": "orange",
 			"Scheduled": "yellow",
 			"Complete": "green",
+			"No Show": "grey",
 			"Cancelled": "red"
 		};
 		return [__(doc.status), colors[doc.status], "status,=," + doc.status];

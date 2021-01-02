@@ -10,38 +10,49 @@ from frappe.model.document import Document
 from club_crm.api.wallet import get_balance
 
 class SpaAppointment(Document):
-	def after_insert(self):
-			self.calculate_time()
-			self.check_discount()
-
-	def before_submit(self):
-			self.calculate_time()
-			self.check_discount()
+	def validate(self):
+		self.set_status()
+		self.calculate_time()
+		self.check_discount()
+		#self.validate_overlaps()
+		if self.club_room:
+			self.create_room_schedule()
 	
-	def on_save(self):
-			self.check_discount()
+	def after_insert(self):
+		self.reload()
+		#invoice_appointment(self)
+
+	# def before_submit(self):
+	# 		self.calculate_time()
+	# 		self.check_discount()
+	
+	# def on_save(self):
+	# 		self.calculate_time()
+	# 		self.check_discount()
 
 	def calculate_time(self):
 		self.start_time = "%s %s" % (self.appointment_date, self.appointment_time)
-		self.end_time= datetime.combine(getdate(self.appointment_date), get_time(self.appointment_time)) + timedelta(seconds=flt(self.total_duration))
+		self.end_time = datetime.combine(getdate(self.appointment_date), get_time(self.appointment_time)) + timedelta(seconds=self.total_duration)
 	
 	def check_discount(self):
 		if self.membership_status=='Member':
-			doc= frappe.get_all('Member Benefits', filters={'client_id': self.client_id, 'benefit_status': 'Active'}, fields=['*'])
+			doc = frappe.get_all('Member Benefits', filters={'client_id': self.client_id, 'benefit_status': 'Active'}, fields=['*'])
 			if doc:
 				doc_1= doc[0]
-				d = flt(doc_1.spa_treatments)
-				self.member_discount= flt(self.regular_rate) * d/100.0
-				self.rate = flt(self.regular_rate) - flt(self.member_discount)
+				if doc_1.spa_treatments and float(doc_1.spa_treatments) > 0:
+					d = float(doc_1.spa_treatments)
+					member_discount = float(self.regular_rate) * d/100.0
+					self.member_discount = int(member_discount//5*5)
+				else:
+					self.member_discount = int(0)
 			else:
-				self.member_discount=0.00
-				self.rate = flt(self.regular_rate)
+				self.member_discount = int(0)
 		else:
-			self.member_discount=0.00
-			self.rate = flt(self.regular_rate)
-	
-	def on_update_after_submit(self):
-		if self.club_room:
+			self.member_discount = int(0)
+		self.rate = self.regular_rate - self.member_discount
+		return self.member_discount
+
+	def create_room_schedule(self):
 			room= frappe.get_all('Club Room Schedule', filters={'spa_booking': self.name,}, fields=["*"])
 			if room:
 				for d in room:
@@ -60,7 +71,7 @@ class SpaAppointment(Document):
 					})
 				doc.insert()
 				doc.save()
-	
+				
 	def before_submit(self):
 		if self.payment_method=="Wallet":
 			wallet= get_balance(self.client_id)
@@ -97,11 +108,20 @@ class SpaAppointment(Document):
 		today = getdate()
 		appointment_date = getdate(self.appointment_date)
 
-		# If appointment is created for today set status as Open else Scheduled
-		if appointment_date == today:
-			self.status = 'Open'
-		elif appointment_date > today:
-			self.status = 'Scheduled'
+		# If appointment is created for today set status as Open else Scheduled (only for offline booking)
+		if self.online==0:
+			if appointment_date == today:
+				self.status = 'Open'
+			elif appointment_date > today:
+				self.status = 'Scheduled'
+		elif self.online==1:
+			if self.payment_status=="Paid":
+				if appointment_date == today:
+					self.status = 'Open'
+				elif appointment_date > today:
+					self.status = 'Scheduled'
+			else:
+				self.status = 'Draft'
 
 def update_appointment_status():
 	# update the status of appointments daily
@@ -111,3 +131,57 @@ def update_appointment_status():
 
 	for appointment in appointments:
 		frappe.get_doc('Spa Appointment', appointment.name).set_status()
+
+# def invoice_appointment(appointment_doc):
+# 	if appointment_doc.payment_status=="Paid":
+
+# 		sales_invoice = frappe.new_doc('Sales Invoice')
+# 		sales_invoice.client_id = appointment_doc.client_id
+# 		sales_invoice.customer = frappe.get_value('Client', appointment_doc.client_id, 'customer')
+# 		sales_invoice.spa_booking_id = appointment_doc.name
+
+# 		item = sales_invoice.append('items', {})
+# 		item = get_appointment_item(appointment_doc, item)
+
+# 		# Add payments if payment details are supplied else proceed to create invoice as Unpaid
+# 		if appointment_doc.mode_of_payment and appointment_doc.paid_amount:
+# 			sales_invoice.is_pos = 1
+# 			payment = sales_invoice.append('payments', {})
+# 			payment.mode_of_payment = appointment_doc.mode_of_payment
+# 			payment.amount = appointment_doc.paid_amount
+
+# 		sales_invoice.set_missing_values(for_validate=True)
+# 		sales_invoice.flags.ignore_mandatory = True
+# 		sales_invoice.save(ignore_permissions=True)
+# 		sales_invoice.submit()
+# 		frappe.msgprint(_('Sales Invoice {0} created'.format(sales_invoice.name)), alert=True)
+# 		frappe.db.set_value('Patient Appointment', appointment_doc.name, 'invoiced', 1)
+# 		frappe.db.set_value('Patient Appointment', appointment_doc.name, 'ref_sales_invoice', sales_invoice.name)
+
+@frappe.whitelist()
+def update_status(appointment_id, status):
+	frappe.db.set_value('Spa Appointment', appointment_id, 'status', status)
+	appointment_booked = True
+	if status == 'Cancelled':
+		appointment_booked = False
+		cancel_appointment(appointment_id)
+
+	procedure_prescription = frappe.db.get_value('Patient Appointment', appointment_id, 'procedure_prescription')
+	if procedure_prescription:
+		frappe.db.set_value('Procedure Prescription', procedure_prescription, 'appointment_booked', appointment_booked)
+
+def cancel_appointment(appointment_id):
+	appointment = frappe.get_doc('Patient Appointment', appointment_id)
+	if appointment.invoiced:
+		sales_invoice = check_sales_invoice_exists(appointment)
+		if sales_invoice and cancel_sales_invoice(sales_invoice):
+			msg = _('Appointment {0} and Sales Invoice {1} cancelled').format(appointment.name, sales_invoice.name)
+		else:
+			msg = _('Appointment Cancelled. Please review and cancel the invoice {0}').format(sales_invoice.name)
+	else:
+		fee_validity = manage_fee_validity(appointment)
+		msg = _('Appointment Cancelled.')
+		if fee_validity:
+			msg += _('Fee Validity {0} updated.').format(fee_validity.name)
+
+	frappe.msgprint(msg)

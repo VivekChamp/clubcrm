@@ -12,6 +12,7 @@
   "column_break_3",
   "status",
   "payment_status",
+  "online",
   "customer_details_section",
   "client_id",
   "client_name",
@@ -49,7 +50,8 @@
   "transaction_date",
   "transaction_reference",
   "amended_from",
-  "color"
+  "color",
+  "card_type"
  ],
  "fields": [
   {
@@ -64,7 +66,8 @@
    "fieldtype": "Link",
    "label": "Client ID",
    "options": "Client",
-   "reqd": 1
+   "reqd": 1,
+   "set_only_once": 1
   },
   {
    "fetch_from": "client_id.client_name",
@@ -73,6 +76,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Client Name",
+   "no_copy": 1,
    "read_only": 1
   },
   {
@@ -92,7 +96,9 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Spa Therapist",
-   "options": "Spa Therapist"
+   "no_copy": 1,
+   "options": "Spa Therapist",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_20",
@@ -104,17 +110,20 @@
    "label": "Appointment Details"
   },
   {
-   "default": "Today",
    "fieldname": "appointment_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Appointment Date"
+   "in_standard_filter": 1,
+   "label": "Appointment Date",
+   "no_copy": 1,
+   "read_only": 1
   },
   {
    "fieldname": "appointment_time",
    "fieldtype": "Time",
    "in_list_view": 1,
-   "label": "Appointment Time"
+   "label": "Appointment Time",
+   "read_only": 1
   },
   {
    "collapsible": 1,
@@ -128,12 +137,12 @@
   },
   {
    "allow_on_submit": 1,
-   "default": "Draft",
+   "default": "Scheduled",
    "fieldname": "status",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Status",
-   "options": "Draft\nScheduled\nOpen\nComplete\nCancelled"
+   "options": "Draft\nScheduled\nOpen\nComplete\nNo Show\nCancelled"
   },
   {
    "fieldname": "customer_details_section",
@@ -146,6 +155,7 @@
    "fieldtype": "Select",
    "in_standard_filter": 1,
    "label": "Gender",
+   "no_copy": 1,
    "options": "\nMale\nFemale",
    "read_only": 1
   },
@@ -194,9 +204,10 @@
   {
    "fetch_from": "spa_item.spa_menu_group",
    "fieldname": "spa_menu_group",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "hidden": 1,
    "label": "Spa Menu Group",
+   "options": "Spa Menu Group",
    "read_only": 1
   },
   {
@@ -210,7 +221,8 @@
    "fieldname": "rate",
    "fieldtype": "Currency",
    "label": "Grand Total",
-   "precision": "2"
+   "precision": "2",
+   "read_only": 1
   },
   {
    "allow_on_submit": 1,
@@ -257,12 +269,15 @@
    "fieldname": "regular_rate",
    "fieldtype": "Currency",
    "label": "Regular Rate",
+   "precision": "2",
    "read_only": 1
   },
   {
    "fieldname": "member_discount",
    "fieldtype": "Currency",
-   "label": "Member Discount"
+   "label": "Member Discount",
+   "precision": "2",
+   "read_only": 1
   },
   {
    "fieldname": "section_break_24",
@@ -299,7 +314,7 @@
    "label": "Any recent surgeries"
   },
   {
-   "fetch_from": "spa_item.color",
+   "fetch_from": "spa_menu_group.color",
    "fieldname": "color",
    "fieldtype": "Data",
    "hidden": 1,
@@ -335,11 +350,24 @@
    "fieldtype": "Data",
    "label": "Transaction Reference",
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "online",
+   "fieldtype": "Check",
+   "label": "Online Booking",
+   "read_only": 1
+  },
+  {
+   "fieldname": "card_type",
+   "fieldtype": "Select",
+   "label": "Card Type",
+   "options": "\nVisa\nMasterCard\nAmex\nNAPS\nCB-Smart",
+   "read_only": 1
   }
  ],
- "is_submittable": 1,
  "links": [],
- "modified": "2020-12-31 01:41:39.795781",
+ "modified": "2021-01-02 21:18:26.761152",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Appointment",

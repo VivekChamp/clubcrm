@@ -52,7 +52,7 @@
   }
  ],
  "links": [],
- "modified": "2020-12-19 14:10:25.332640",
+ "modified": "2021-01-03 02:43:49.390416",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club Room Type",
@@ -71,7 +71,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "Healthcare",
+ "restrict_to_domain": "Services",
  "sort_field": "modified",
  "sort_order": "DESC",
  "title_field": "room_type",

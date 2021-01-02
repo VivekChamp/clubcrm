@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_copy": 1,
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "naming_series:",
  "creation": "2020-10-08 02:09:56.413635",
@@ -53,10 +54,7 @@
   "other_notes",
   "more_info",
   "client_details",
-  "amended_from",
-  "alert",
-  "alert_notes",
-  "test"
+  "amended_from"
  ],
  "fields": [
   {
@@ -380,30 +378,14 @@
    "label": "Member",
    "options": "Memberships",
    "read_only": 1
-  },
-  {
-   "default": "0",
-   "fieldname": "alert",
-   "fieldtype": "Check",
-   "label": "Alert"
-  },
-  {
-   "fieldname": "alert_notes",
-   "fieldtype": "Small Text",
-   "label": "Alert Notes"
-  },
-  {
-   "fieldname": "test",
-   "fieldtype": "HTML",
-   "label": "Test"
   }
  ],
  "icon": "fa fa-user",
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2020-12-29 15:18:49.179631",
- "modified_by": "mithleena@bluelynx.qa",
+ "modified": "2021-01-03 02:48:22.703139",
+ "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",
  "name_case": "Title Case",
