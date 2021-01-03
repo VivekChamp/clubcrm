@@ -41,19 +41,20 @@ frappe.ui.form.on('Spa Appointment', {
 			});
 		}
 
-		frm.add_custom_button(__('Check-in'), function(){
-			frappe.model.open_mapped_doc({
-				method: 'club_crm.club_crm.doctype.check_in.check_in.spa_checkin',
-				frm: frm,
+		if(!frm.is_new() && (frm.doc.status=="Open")) {
+			frm.add_custom_button(__('Check-in'), function(){
+				frappe.model.open_mapped_doc({
+					method: 'club_crm.club_crm.doctype.check_in.check_in.spa_checkin',
+					frm: frm,
+				});
 			});
-		});
-
-		frm.add_custom_button(__('Progress Notes'), function(){
-			frappe.model.open_mapped_doc({
-				method: 'club_crm.club_crm.doctype.spa_progress_notes.spa_progress_notes.create_progress_notes',
-				frm: frm,
+			frm.add_custom_button(__('Progress Notes'), function(){
+				frappe.model.open_mapped_doc({
+					method: 'club_crm.club_crm.doctype.spa_progress_notes.spa_progress_notes.create_progress_notes',
+					frm: frm,
+				});
 			});
-		});
+		}
 
 		if((frm.doc.status=="Open" || frm.doc.status=="Scheduled" || frm.doc.status=="Complete" || frm.doc.status=="Draft" ) && frm.doc.payment_status == "Not Paid"){	
 			frm.add_custom_button(__('Offline Payment'), function() {	  
@@ -118,10 +119,7 @@ frappe.ui.form.on('Spa Appointment', {
 				  }
 	
 	}
-	
-	// refresh: function(frm) {
-	// 		
-	// }
+
 });
 
 let check_and_set_availability = function(frm) {
@@ -255,7 +253,7 @@ let update_status = function(frm, status){
 	frappe.confirm(__('Are you sure you want to cancel this appointment?'),
 		function() {
 			frappe.call({
-				method: 'erpnext.healthcare.doctype.patient_appointment.patient_appointment.update_status',
+				method: 'club_crm.club_crm.doctype.spa_appointment.spa_appointment.update_status',
 				args: {appointment_id: doc.name, status:status},
 				callback: function(data) {
 					if (!data.exc) {
