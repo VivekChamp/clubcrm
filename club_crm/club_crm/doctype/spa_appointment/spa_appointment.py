@@ -109,19 +109,20 @@ class SpaAppointment(Document):
 		appointment_date = getdate(self.appointment_date)
 
 		# If appointment is created for today set status as Open else Scheduled (only for offline booking)
-		if self.online==0:
-			if appointment_date == today:
-				self.status = 'Open'
-			elif appointment_date > today:
-				self.status = 'Scheduled'
-		elif self.online==1:
-			if self.payment_status=="Paid":
+		if not self.status=="Complete":
+			if self.online==0:
 				if appointment_date == today:
 					self.status = 'Open'
 				elif appointment_date > today:
 					self.status = 'Scheduled'
-			else:
-				self.status = 'Draft'
+			elif self.online==1:
+				if self.payment_status=="Paid":
+					if appointment_date == today:
+						self.status = 'Open'
+					elif appointment_date > today:
+						self.status = 'Scheduled'
+				else:
+					self.status = 'Draft'
 
 def update_appointment_status():
 	# update the status of appointments daily
@@ -161,27 +162,20 @@ def update_appointment_status():
 @frappe.whitelist()
 def update_status(appointment_id, status):
 	frappe.db.set_value('Spa Appointment', appointment_id, 'status', status)
-	appointment_booked = True
-	if status == 'Cancelled':
-		appointment_booked = False
-		cancel_appointment(appointment_id)
-
-	procedure_prescription = frappe.db.get_value('Patient Appointment', appointment_id, 'procedure_prescription')
-	if procedure_prescription:
-		frappe.db.set_value('Procedure Prescription', procedure_prescription, 'appointment_booked', appointment_booked)
+	cancel_appointment(appointment_id)
 
 def cancel_appointment(appointment_id):
-	appointment = frappe.get_doc('Patient Appointment', appointment_id)
-	if appointment.invoiced:
-		sales_invoice = check_sales_invoice_exists(appointment)
-		if sales_invoice and cancel_sales_invoice(sales_invoice):
-			msg = _('Appointment {0} and Sales Invoice {1} cancelled').format(appointment.name, sales_invoice.name)
-		else:
-			msg = _('Appointment Cancelled. Please review and cancel the invoice {0}').format(sales_invoice.name)
-	else:
-		fee_validity = manage_fee_validity(appointment)
-		msg = _('Appointment Cancelled.')
-		if fee_validity:
-			msg += _('Fee Validity {0} updated.').format(fee_validity.name)
+	appointment = frappe.get_doc('Spa Appointment', appointment_id)
+	# if appointment.invoiced:
+	# 	sales_invoice = check_sales_invoice_exists(appointment)
+	# 	if sales_invoice and cancel_sales_invoice(sales_invoice):
+	# 		msg = _('Appointment {0} and Sales Invoice {1} cancelled').format(appointment.name, sales_invoice.name)
+	# 	else:
+	# 		msg = _('Appointment Cancelled. Please review and cancel the invoice {0}').format(sales_invoice.name)
+	# else:
+	# 	fee_validity = manage_fee_validity(appointment)
+	# 	msg = _('Appointment Cancelled.')
+	# 	if fee_validity:
+	# 		msg += _('Fee Validity {0} updated.').format(fee_validity.name)
 
-	frappe.msgprint(msg)
+	# frappe.msgprint(msg)

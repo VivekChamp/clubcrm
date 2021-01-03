@@ -8,7 +8,13 @@ from frappe.model.document import Document
 from frappe.model.mapper import get_mapped_doc
 
 class SpaProgressNotes(Document):
-	pass
+	def on_update(self):
+		if self.appointment_id:
+			frappe.db.set_value('Spa Appointment', self.appointment_id, 'status', 'Complete')
+	
+	def on_cancel(self):
+		if self.appointment_id:
+			frappe.db.set_value('Spa Appointment', self.appointment_id, 'status', 'Complete')
 
 @frappe.whitelist()
 def create_progress_notes(source_name, target_doc=None):
