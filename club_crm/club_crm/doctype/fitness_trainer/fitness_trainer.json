@@ -120,7 +120,7 @@
  ],
  "image_field": "image",
  "links": [],
- "modified": "2020-12-19 03:36:47.885945",
+ "modified": "2021-01-03 02:43:34.399176",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Trainer",
@@ -139,7 +139,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "Healthcare",
+ "restrict_to_domain": "Services",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

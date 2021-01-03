@@ -4,10 +4,14 @@ from frappe import _
 def get_data():
 	return {
 		'fieldname': 'document_id',
+		'non_standard_fieldnames': {
+			'Check In': 'spa_booking',
+			'Spa Progress Notes': 'appointment_id'
+		},
 		'transactions': [
 			{
 				'label': _(''),
-				'items': ['Rating']
+				'items': ['Check In', 'Spa Progress Notes', 'Rating']
 			}
 		]	
 	}

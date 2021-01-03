@@ -2,9 +2,6 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Spa Appointment', {
-	// refresh: function(frm) {
-
-	// }
 	onload: function(frm) {
 		if (frm.is_new()) {
 			frm.set_value('appointment_time', null);
@@ -32,12 +29,34 @@ frappe.ui.form.on('Spa Appointment', {
 				}
 			});
 		} else {
-			frm.page.set_primary_action(__('Update'), () => frm.save('Update'));
+			frm.page.set_primary_action(__('Save'), () => frm.save());
 		}
 
-		if(frm.doc.docstatus==1 && frm.doc.payment_status == "Not Paid"){
-			frm.add_custom_button(__('Offline Payment'), function() {
-				  
+		if(!frm.is_new() && (frm.doc.status=="Scheduled" || frm.doc.status=="Open" || frm.doc.status=="Draft")) {
+			frm.add_custom_button(__('Reschedule'), function() {
+				check_and_set_availability(frm);
+			});
+			frm.add_custom_button(__('Cancel'), function() {
+				update_status(frm, 'Cancelled');
+			});
+		}
+
+		frm.add_custom_button(__('Check-in'), function(){
+			frappe.model.open_mapped_doc({
+				method: 'club_crm.club_crm.doctype.check_in.check_in.spa_checkin',
+				frm: frm,
+			});
+		});
+
+		frm.add_custom_button(__('Progress Notes'), function(){
+			frappe.model.open_mapped_doc({
+				method: 'club_crm.club_crm.doctype.spa_progress_notes.spa_progress_notes.create_progress_notes',
+				frm: frm,
+			});
+		});
+
+		if((frm.doc.status=="Open" || frm.doc.status=="Scheduled" || frm.doc.status=="Complete" || frm.doc.status=="Draft" ) && frm.doc.payment_status == "Not Paid"){	
+			frm.add_custom_button(__('Offline Payment'), function() {	  
 						  let d = new frappe.ui.Dialog({
 						  title: 'Offline Payment',
 						  fields: [
@@ -67,23 +86,31 @@ frappe.ui.form.on('Spa Appointment', {
 							  reqd:1
 						  },
 						  {
-							  label: 'Transaction Reference #',
-							  fieldname: 'transaction_reference',
-							  fieldtype: 'Data',
-							  depends_on: 'eval:doc.payment_type=="Credit Card"'
+							label: 'Card Type',
+							fieldname: 'card_type',
+							fieldtype: 'Select',
+							options:['Visa','MasterCard','Amex','NAPS','CB-Smart'],
+							depends_on: 'eval:doc.payment_type=="Credit Card"'
+						  },
+						  {
+							label: 'Transaction Reference #',
+							fieldname: 'transaction_reference',
+							fieldtype: 'Data',
+							depends_on: 'eval:doc.payment_type=="Credit Card"'
 						  }
-					  ],
+					  		],
 				   primary_action_label: ('Submit'),
 					 primary_action: function() {
 					  d.hide();
 					  frm.enable_save();
-					  frm.save('Update');
+					  frm.save();
 						frm.set_value("paid_amount",d.get_value('amount'));
 						frm.set_value("payment_method",d.get_value('payment_type'));
+						frm.set_value("card_type",d.get_value('card_type'));
 						frm.set_value("transaction_date",d.get_value('transaction_date'));
 						frm.set_value("transaction_reference",d.get_value('transaction_reference'));
 						frm.set_value("payment_status","Paid");
-						frm.set_value("status","Scheduled");
+						//frm.set_value("status","Scheduled");
 					 }
 					});
 					d.show();
@@ -132,7 +159,7 @@ let check_and_set_availability = function(frm) {
 				frm.set_value('appointment_date', d.get_value('appointment_date'));
 				d.hide();
 				frm.enable_save();
-				frm.save('Submit');
+				frm.save();
 				d.get_primary_btn().attr('disabled', true);
 			}
 		});
@@ -221,4 +248,21 @@ let check_and_set_availability = function(frm) {
 			fd.available_slots.html(__('Appointment date and therapist name are mandatory').bold());
 		}
 	}
+};
+
+let update_status = function(frm, status){
+	let doc = frm.doc;
+	frappe.confirm(__('Are you sure you want to cancel this appointment?'),
+		function() {
+			frappe.call({
+				method: 'erpnext.healthcare.doctype.patient_appointment.patient_appointment.update_status',
+				args: {appointment_id: doc.name, status:status},
+				callback: function(data) {
+					if (!data.exc) {
+						frm.reload_doc();
+					}
+				}
+			});
+		}
+	);
 };
