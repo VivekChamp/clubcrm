@@ -16,6 +16,7 @@
   "customer_details_section",
   "client_id",
   "client_name",
+  "member_id",
   "column_break_client",
   "membership_status",
   "gender",
@@ -153,7 +154,6 @@
    "fetch_from": "client_id.gender",
    "fieldname": "gender",
    "fieldtype": "Select",
-   "in_standard_filter": 1,
    "label": "Gender",
    "no_copy": 1,
    "options": "\nMale\nFemale",
@@ -177,6 +177,7 @@
    "fetch_from": "client_id.mobile_no",
    "fieldname": "mobile_no",
    "fieldtype": "Data",
+   "in_standard_filter": 1,
    "label": "Mobile Number",
    "read_only": 1
   },
@@ -364,10 +365,18 @@
    "label": "Card Type",
    "options": "\nVisa\nMasterCard\nAmex\nNAPS\nCB-Smart",
    "read_only": 1
+  },
+  {
+   "fetch_from": "client_id.member_id",
+   "fieldname": "member_id",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Member ID",
+   "read_only": 1
   }
  ],
  "links": [],
- "modified": "2021-01-02 21:18:26.761152",
+ "modified": "2021-01-04 00:33:37.040214",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Appointment",
@@ -386,6 +395,7 @@
    "write": 1
   }
  ],
+ "search_fields": "client_name",
  "sort_field": "modified",
  "sort_order": "DESC",
  "title_field": "client_name",

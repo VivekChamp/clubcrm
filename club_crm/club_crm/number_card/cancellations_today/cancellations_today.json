@@ -1,0 +1,22 @@
+{
+ "color": "",
+ "creation": "2021-01-03 23:22:06.292294",
+ "docstatus": 0,
+ "doctype": "Number Card",
+ "document_type": "Spa Appointment",
+ "filters_json": "[[\"Spa Appointment\",\"status\",\"=\",\"Cancelled\",false],[\"Spa Appointment\",\"date\",\"Timespan\",\"today\",false]]",
+ "function": "Count",
+ "idx": 0,
+ "is_public": 0,
+ "is_standard": 1,
+ "label": "Cancellations Today",
+ "modified": "2021-01-03 23:22:06.292294",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Cancellations Today",
+ "owner": "Administrator",
+ "report_function": "Sum",
+ "show_percentage_stats": 1,
+ "stats_time_interval": "Daily",
+ "type": "Document Type"
+}

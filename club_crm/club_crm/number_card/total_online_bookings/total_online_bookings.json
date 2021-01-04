@@ -1,0 +1,22 @@
+{
+ "color": "",
+ "creation": "2021-01-03 23:12:04.501747",
+ "docstatus": 0,
+ "doctype": "Number Card",
+ "document_type": "Spa Appointment",
+ "filters_json": "[[\"Spa Appointment\",\"online\",\"=\",1,false]]",
+ "function": "Count",
+ "idx": 0,
+ "is_public": 0,
+ "is_standard": 1,
+ "label": "Online Bookings",
+ "modified": "2021-01-03 23:19:58.463058",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Total Online Bookings",
+ "owner": "Administrator",
+ "report_function": "Sum",
+ "show_percentage_stats": 1,
+ "stats_time_interval": "Daily",
+ "type": "Document Type"
+}
