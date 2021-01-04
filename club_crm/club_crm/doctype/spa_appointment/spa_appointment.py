@@ -36,17 +36,19 @@ class SpaAppointment(Document):
 	
 	def check_discount(self):
 		if self.membership_status=='Member':
-			doc = frappe.get_all('Member Benefits', filters={'client_id': self.client_id, 'benefit_status': 'Active'}, fields=['*'])
-			if doc:
-				doc_1= doc[0]
-				if doc_1.spa_treatments and float(doc_1.spa_treatments) > 0:
-					d = float(doc_1.spa_treatments)
-					member_discount = float(self.regular_rate) * d/100.0
-					self.member_discount = int(member_discount//5*5)
-				else:
-					self.member_discount = int(0)
-			else:
-				self.member_discount = int(0)
+			member_discount = self.regular_rate * 0.25
+			self.member_discount = int(member_discount//5*5)
+			# doc = frappe.get_all('Member Benefits', filters={'client_id': self.client_id, 'benefit_status': 'Active'}, fields=['*'])
+			# if doc:
+			# 	doc_1= doc[0]
+			# 	if doc_1.spa_treatments and float(doc_1.spa_treatments) > 0:
+			# 		d = float(doc_1.spa_treatments)
+			# 		member_discount = float(self.regular_rate) * d/100.0
+			# 		self.member_discount = int(member_discount//5*5)
+			# 	else:
+			# 		self.member_discount = int(0)
+			# else:
+			# 	self.member_discount = int(0)
 		else:
 			self.member_discount = int(0)
 		self.rate = self.regular_rate - self.member_discount
@@ -179,3 +181,31 @@ def cancel_appointment(appointment_id):
 	# 		msg += _('Fee Validity {0} updated.').format(fee_validity.name)
 
 	# frappe.msgprint(msg)
+
+@frappe.whitelist()
+def get_events(start, end, filters=None):
+	"""Returns events for Gantt / Calendar view rendering.
+
+	:param start: Start date-time.
+	:param end: End date-time.
+	:param filters: Filters (JSON).
+	"""
+	from frappe.desk.calendar import get_event_conditions
+	conditions = get_event_conditions('Spa Appointment', filters)
+
+	data = frappe.db.sql("""
+		select
+		`tabSpa Appointment`.name, `tabSpa Appointment`.client_name,
+		`tabSpa Appointment`.spa_therapist, `tabSpa Appointment`.status,
+		`tabSpa Appointment`.total_duration,
+		`tabSpa Appointment`.start_time as 'start',
+		`tabSpa Appointment`.end_time as 'end',
+		`tabSpa Appointment`.color
+		from
+		`tabSpa Appointment`
+		where
+		(`tabSpa Appointment`.appointment_date between %(start)s and %(end)s)
+		and `tabSpa Appointment`.status != 'Cancelled' and `tabSpa Appointment`.docstatus < 2 {conditions}""".format(conditions=conditions),
+		{"start": start, "end": end}, as_dict=True, update={"allDay": 0})
+
+	return data

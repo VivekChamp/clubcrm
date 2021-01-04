@@ -56,7 +56,7 @@ frappe.ui.form.on('Spa Appointment', {
 			});
 		}
 
-		if((frm.doc.status=="Open" || frm.doc.status=="Scheduled" || frm.doc.status=="Complete" || frm.doc.status=="Draft" ) && frm.doc.payment_status == "Not Paid"){	
+		if(!frm.is_new() && (frm.doc.status=="Open" || frm.doc.status=="Scheduled" || frm.doc.status=="Complete" || frm.doc.status=="Draft" ) && frm.doc.payment_status == "Not Paid"){	
 			frm.add_custom_button(__('Offline Payment'), function() {	  
 						  let d = new frappe.ui.Dialog({
 						  title: 'Offline Payment',

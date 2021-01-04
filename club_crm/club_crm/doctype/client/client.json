@@ -15,21 +15,25 @@
   "middle_name",
   "last_name",
   "client_name",
-  "gender",
-  "birth_date",
   "age_html",
-  "nationality",
-  "image",
   "column_break_14",
-  "membership_status",
-  "reg_on_app",
-  "mobile_no",
-  "email",
-  "qatar_id",
   "status",
-  "member",
-  "notification_preference",
+  "membership_status",
+  "member_id",
+  "card_no",
+  "membership_no",
   "primary_member",
+  "image",
+  "other_details_section",
+  "gender",
+  "mobile_no",
+  "birth_date",
+  "qatar_id",
+  "column_break_17",
+  "reg_on_app",
+  "email",
+  "nationality",
+  "notification_preference",
   "apply_membership",
   "mem_application",
   "customer_details_section",
@@ -60,7 +64,7 @@
   {
    "fieldname": "basic_info",
    "fieldtype": "Section Break",
-   "label": "Client Demographics",
+   "label": "Client Details",
    "oldfieldtype": "Section Break",
    "options": "fa fa-user"
   },
@@ -75,6 +79,7 @@
    "set_only_once": 1
   },
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "first_name",
    "fieldtype": "Data",
    "label": "First Name",
@@ -84,9 +89,11 @@
   {
    "fieldname": "middle_name",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Middle Name (optional)"
   },
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "last_name",
    "fieldtype": "Data",
    "label": "Last Name"
@@ -128,6 +135,7 @@
   {
    "fieldname": "status",
    "fieldtype": "Select",
+   "hidden": 1,
    "in_filter": 1,
    "in_list_view": 1,
    "label": "Status",
@@ -289,7 +297,8 @@
    "in_standard_filter": 1,
    "label": "Membership Status",
    "no_copy": 1,
-   "options": "Non-Member\nMember"
+   "options": "Non-Member\nMember",
+   "read_only": 1
   },
   {
    "fieldname": "nationality",
@@ -300,7 +309,6 @@
   {
    "fieldname": "qatar_id",
    "fieldtype": "Data",
-   "in_standard_filter": 1,
    "label": "Qatar ID"
   },
   {
@@ -313,10 +321,10 @@
    "read_only": 1
   },
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "gender",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "in_preview": 1,
    "label": "Gender",
    "options": "Gender",
    "reqd": 1
@@ -329,7 +337,7 @@
    "label": "Date of birth"
   },
   {
-   "bold": 1,
+   "allow_in_quick_entry": 1,
    "fieldname": "mobile_no",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -373,18 +381,39 @@
    "label": "Other Notes"
   },
   {
-   "fieldname": "member",
-   "fieldtype": "Link",
-   "label": "Member",
-   "options": "Memberships",
+   "fieldname": "column_break_17",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "member_id",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Member ID",
    "read_only": 1
+  },
+  {
+   "fieldname": "card_no",
+   "fieldtype": "Data",
+   "label": "Card Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "membership_no",
+   "fieldtype": "Data",
+   "label": "Membership Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "other_details_section",
+   "fieldtype": "Section Break",
+   "label": "Other Details"
   }
  ],
  "icon": "fa fa-user",
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2021-01-03 02:48:22.703139",
+ "modified": "2021-01-04 00:23:37.475369",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",
@@ -404,9 +433,10 @@
    "write": 1
   }
  ],
- "search_fields": "client_name,mobile_no,email",
+ "quick_entry": 1,
+ "search_fields": "client_name,mobile_no,member_id",
  "show_name_in_global_search": 1,
- "sort_field": "modified",
+ "sort_field": "client_name",
  "sort_order": "ASC",
  "title_field": "client_name",
  "track_changes": 1

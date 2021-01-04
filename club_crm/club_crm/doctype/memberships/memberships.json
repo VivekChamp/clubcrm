@@ -1,5 +1,7 @@
 {
  "actions": [],
+ "allow_events_in_timeline": 1,
+ "allow_import": 1,
  "autoname": "naming_series:",
  "creation": "2020-11-01 15:59:09.795112",
  "doctype": "DocType",
@@ -227,9 +229,10 @@
    "options": "Additional Members Item"
   }
  ],
+ "hide_toolbar": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-15 00:49:45.458586",
+ "modified": "2021-01-03 21:15:02.260464",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships",
@@ -244,18 +247,6 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "All",
    "share": 1,
    "write": 1
   }
