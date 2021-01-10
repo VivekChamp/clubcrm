@@ -44,11 +44,18 @@ frappe.ui.form.on('Memberships Application', {
                   options:['Credit Card','Cash'],
                   reqd:1
               },
+			  {
+				label: 'Card Type',
+				fieldname: 'card_type',
+				fieldtype: 'Select',
+				options:['Visa','MasterCard','Amex','NAPS','CB-Smart'],
+				depends_on: 'eval:doc.payment_method=="Credit Card"'
+			  },
               {
                   label: 'Transaction Reference #',
                   fieldname: 'transaction_reference',
                   fieldtype: 'Data',
-                  depends_on: 'eval:doc.payment_type=="Credit Card"'
+                  depends_on: 'eval:doc.payment_method=="Credit Card"'
               }
           ],
        primary_action_label: ('Submit'),
@@ -68,37 +75,3 @@ frappe.ui.form.on('Memberships Application', {
       }
     }
 });
-
-// Copyright (c) 2020, Blue Lynx and contributors
-// For license information, please see license.txt
-
-// frappe.ui.form.on('Memberships Application', {
-// 	refresh: function(frm) {
-// 		if (frm.doc.docstatus == 1 && frm.doc.application_status == "Approved"){
-// 		cur_frm.add_custom_button(__("Make Offline Payment"), function() {
-
-// 			let d = new frappe.ui.Dialog({
-// 			title: 'Enter payment details',
-// 			fields: [
-//         		{
-//            		label: 'Payment Method',
-//             	fieldname: 'payment_method',
-//             	fieldtype: 'Select',
-// 				options: [ 'Cash','Card']
-// 				}
-				
-// 			],
-//     		primary_action: function(){
-//        		d.hide();
-//         	show_alert(d.get_values());
-//             }
-            
-
-
-//         });
-//         d.show()
-// 		});
-//     }
-// }
-// });
-

@@ -12,6 +12,12 @@ import string
 
 secret = frappe.db.get_value("CS Signature",None,"secret_key")
 
+membership_application = "^MEM-APP-[0-9]{4,4}-[0-9]{5,5}$"
+online_order = "^ON-[0-9]{3,3}$"
+food_order = "^FOE-[0-9]{4,4}-[0-9]{5,5}$"
+fitness_training = "^FIT-REQ-[0-9]{4,4}-[0-9]{5,5}$"
+spa_app = "^SPA-APP-[0-9]{4,4}-[0-9]{5,5}$"
+
 @frappe.whitelist(allow_guest = True)
 def create_log(**kwargs):
     kwargs=frappe._dict(kwargs)
@@ -58,9 +64,13 @@ def create_log(**kwargs):
     doc.generated_hash = generate_hash_varifier(sample_dict)
     if doc.generated_hash == kwargs['signature']:
         doc.signature_verified = 1
+        make_status_paid(kwargs['req_reference_number'])
+        
 
     doc.insert(ignore_permissions=True)
     return doc
+
+
 
 def generate_data_string(data_dict):
     test_array = []
@@ -118,3 +128,19 @@ def generate_hash_varifier(data_dict):
 def generate_signed_time():
     signed_date=datetime.utcnow().replace(microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ")
     return signed_date
+
+def make_status_paid(docname):
+    if re.match(membership_application, docname):
+        frappe.db.set_value("Memberships Application",str(docname),"payment_status","Paid")
+        
+    elif re.match(online_order, docname):
+        frappe.db.set_value("Online Order",str(docname),"payment_status","Paid")
+        
+    elif re.match(food_order, docname):
+        frappe.db.set_value("Food Order Entry",str(docname),"payment_status","Paid")
+        
+    elif re.match(fitness_training, docname):
+        frappe.db.set_value("Fitness Training Request",str(docname),"payment_status","Paid")
+        
+    elif re.match(spa_app, docname):
+        frappe.db.set_value("Spa Appointment",str(docname),"payment_status","Paid")

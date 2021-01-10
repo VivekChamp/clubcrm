@@ -10,10 +10,11 @@
   "date",
   "client_id",
   "client_name",
-  "mobile_number",
+  "member_id",
   "column_break_4",
-  "membership_status",
   "status",
+  "membership_status",
+  "mobile_number",
   "payment_status",
   "trainer_details",
   "trainer_id",
@@ -94,6 +95,7 @@
   {
    "fieldname": "payment_status",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Payment Status",
    "options": "Paid\nNot Paid"
   },
@@ -194,6 +196,7 @@
    "fetch_from": "fitness_session.number_of_sessions",
    "fieldname": "number_of_sessions",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": " number_of_sessions"
   },
   {
@@ -201,19 +204,29 @@
    "fetch_from": "fitness_session.used_sessions",
    "fieldname": "used_sessions",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Used Session(s)"
   },
   {
    "fetch_from": "fitness_session.remaining_sessions",
    "fieldname": "remaining_sessions",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Remaining Session(s)"
+  },
+  {
+   "fetch_from": "client_id.member_id",
+   "fieldname": "member_id",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Member ID",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-29 15:52:59.395005",
- "modified_by": "suba@bluelynx.com",
+ "modified": "2021-01-10 07:02:08.628889",
+ "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Appointment",
  "owner": "Administrator",

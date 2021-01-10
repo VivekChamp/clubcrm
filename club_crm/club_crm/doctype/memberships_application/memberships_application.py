@@ -64,7 +64,7 @@ class MembershipsApplication(Document):
 				doc.insert()
 			else:
 				d = frappe.get_doc({
-					'doctype': 'Clients',
+					'doctype': 'Client',
 					'first_name': self.first_name_1,
 					'last_name': self.last_name_1,
 					'gender': self.gender_1,
