@@ -12,7 +12,6 @@
   "column_break_3",
   "order_status",
   "payment_status",
-  "payment_method",
   "card",
   "cash",
   "client_details_section",
@@ -28,10 +27,12 @@
   "column_break_17",
   "total_amount",
   "payment_details_section",
+  "payment_method",
+  "paid_amount",
   "sales_invoice",
   "column_break_18",
-  "transaction_number",
-  "transacation_date",
+  "transaction_date",
+  "transaction_reference",
   "amended_from"
  ],
  "fields": [
@@ -121,20 +122,9 @@
   {
    "allow_on_submit": 1,
    "fieldname": "sales_invoice",
-   "fieldtype": "Data",
-   "label": "Sales Invoice"
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "transaction_number",
-   "fieldtype": "Data",
-   "label": "Transaction Number"
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "transacation_date",
-   "fieldtype": "Data",
-   "label": "Transacation Date"
+   "fieldtype": "Link",
+   "label": "Sales Invoice",
+   "options": "Sales Invoice"
   },
   {
    "allow_on_submit": 1,
@@ -182,11 +172,10 @@
    "fieldtype": "Column Break"
   },
   {
-   "default": "Credit Card",
    "fieldname": "payment_method",
    "fieldtype": "Select",
    "label": "Payment Method",
-   "options": "Credit Card\nWallet\nCash"
+   "options": "\nCredit Card\nWallet\nCash\nComplimentary"
   },
   {
    "depends_on": "eval:doc.payment_method==\"Credit Card\"",
@@ -200,11 +189,28 @@
    "fieldname": "cash",
    "fieldtype": "Data",
    "label": "Cash Reference No"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "transaction_date",
+   "fieldtype": "Data",
+   "label": "Transacation Date"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "transaction_reference",
+   "fieldtype": "Data",
+   "label": "Transaction Reference"
+  },
+  {
+   "fieldname": "paid_amount",
+   "fieldtype": "Data",
+   "label": "Paid Amount"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-30 21:32:06.141992",
+ "modified": "2021-01-07 14:05:54.927206",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Food Order Entry",

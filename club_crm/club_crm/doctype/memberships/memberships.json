@@ -25,6 +25,8 @@
   "member_details_section",
   "client_id_1",
   "client_name_1",
+  "assigned_to",
+  "name1",
   "column_break_11",
   "member_no_1",
   "card_no_1",
@@ -32,13 +34,16 @@
   "second_member_section",
   "client_2",
   "client_name_2",
+  "contact_to",
+  "contact_to_name",
   "column_break_24",
   "member_no_2",
   "card_no_2",
   "member_benefits_2",
   "additional_member_details_section",
   "additional_members_item",
-  "amended_from"
+  "amended_from",
+  "notes"
  ],
  "fields": [
   {
@@ -227,12 +232,43 @@
    "fieldtype": "Table",
    "label": "Additional Members Item",
    "options": "Additional Members Item"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes",
+   "read_only": 1
+  },
+  {
+   "fieldname": "assigned_to",
+   "fieldtype": "Link",
+   "label": "Assigned To",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "assigned_to.employee_name",
+   "fieldname": "name1",
+   "fieldtype": "Data",
+   "label": "Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "contact_to",
+   "fieldtype": "Link",
+   "label": "Assigned To",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "contact_to.employee_name",
+   "fieldname": "contact_to_name",
+   "fieldtype": "Data",
+   "label": "Name"
   }
  ],
  "hide_toolbar": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-01-03 21:15:02.260464",
+ "modified": "2021-01-09 05:04:33.685484",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships",

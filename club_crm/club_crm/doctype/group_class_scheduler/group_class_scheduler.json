@@ -10,16 +10,15 @@
   "posting_date",
   "company",
   "group_class_name",
-  "group_class_type",
   "column_break_3",
   "status",
+  "group_class_type",
   "group_class_category",
   "capacity",
   "members_only",
   "show_on_app",
   "trainer_details_section",
   "trainer",
-  "trainer_name",
   "class_schedule_details_section",
   "start_date",
   "end_date",
@@ -65,13 +64,6 @@
    "options": "Fitness Trainer"
   },
   {
-   "fetch_from": "trainer.practitioner_name",
-   "fieldname": "trainer_name",
-   "fieldtype": "Data",
-   "label": "Trainer Name",
-   "read_only": 1
-  },
-  {
    "fieldname": "group_class_name",
    "fieldtype": "Data",
    "label": "Group Class Name",
@@ -106,14 +98,12 @@
    "default": "Today",
    "fieldname": "start_date",
    "fieldtype": "Date",
-   "in_list_view": 1,
    "label": "Start Date",
    "reqd": 1
   },
   {
    "fieldname": "end_date",
    "fieldtype": "Date",
-   "in_list_view": 1,
    "label": "End Date",
    "reqd": 1
   },
@@ -121,22 +111,22 @@
    "default": "Today",
    "fieldname": "posting_date",
    "fieldtype": "Date",
-   "label": "Posting Date",
+   "label": "Date",
    "read_only": 1
   },
   {
    "fieldname": "company",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Company",
-   "options": "Company",
-   "reqd": 1
+   "options": "Company"
   },
   {
    "fieldname": "status",
    "fieldtype": "Select",
-   "in_list_view": 1,
+   "hidden": 1,
    "label": "Status",
-   "options": "Open\nCancelled\nIn Progress\nCompleted"
+   "options": "\nOpen\nCancelled\nIn Progress\nCompleted"
   },
   {
    "fieldname": "class_day",
@@ -169,7 +159,7 @@
   }
  ],
  "links": [],
- "modified": "2020-12-09 14:48:15.267841",
+ "modified": "2021-01-10 07:41:34.948829",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class Scheduler",
@@ -188,7 +178,6 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "title_field": "group_class_name",

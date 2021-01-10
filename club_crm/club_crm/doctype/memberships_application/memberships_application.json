@@ -20,17 +20,21 @@
   "notes",
   "memberships_details_section",
   "no_adults",
-  "membership_type",
   "membership_plan",
+  "membership_type",
   "benefits_plan",
   "discount_amount",
   "payment_details_column",
   "no_kids",
   "calculate_fee",
   "membership_fee",
+  "membership_fee_child",
   "joining_fee",
   "net_total",
   "grand_total",
+  "section_break_26",
+  "memeber_adult",
+  "member_kids",
   "section_break_3",
   "first_name_1",
   "last_name_1",
@@ -67,8 +71,8 @@
   "front_qid_2",
   "back_qid_2",
   "section_break_61",
-  "ddd",
   "sadaul",
+  "ddd",
   "additional_member_details_section",
   "additional_members",
   "section_break_62",
@@ -140,17 +144,10 @@
    "options": "Memberships Plan"
   },
   {
-   "fetch_from": "membership_plan.membership_fee",
-   "fieldname": "membership_fee",
-   "fieldtype": "Currency",
-   "label": "Membership Fee",
-   "read_only": 1
-  },
-  {
    "fetch_from": "membership_plan.joining_fee",
    "fieldname": "joining_fee",
    "fieldtype": "Currency",
-   "label": "Joining Fee",
+   "label": "Joining Fee (per adult)",
    "read_only": 1
   },
   {
@@ -224,10 +221,11 @@
    "fieldtype": "Section Break"
   },
   {
+   "fetch_from": "membership_plan.membership_type",
    "fieldname": "membership_type",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "label": "Membership Type",
-   "options": "Memberships Type"
+   "read_only": 1
   },
   {
    "fetch_from": "client.first_name",
@@ -251,8 +249,9 @@
   {
    "fetch_from": "client.nationality",
    "fieldname": "nationality_1",
-   "fieldtype": "Data",
-   "label": "Nationality"
+   "fieldtype": "Link",
+   "label": "Nationality",
+   "options": "Country"
   },
   {
    "fetch_from": "client.qatar_id",
@@ -327,8 +326,9 @@
   },
   {
    "fieldname": "nationality_2",
-   "fieldtype": "Data",
-   "label": "Nationality"
+   "fieldtype": "Link",
+   "label": "Nationality",
+   "options": "Country"
   },
   {
    "fieldname": "qatar_id_2",
@@ -352,8 +352,9 @@
   },
   {
    "fieldname": "gender_2",
-   "fieldtype": "Data",
-   "label": "Gender"
+   "fieldtype": "Link",
+   "label": "Gender",
+   "options": "Gender"
   },
   {
    "fieldname": "mobile_no_2",
@@ -453,18 +454,16 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval:(doc.membership_type ==\"Couple Membership\" || doc.membership_type==\"Family Membership\")",
+   "depends_on": "eval: doc.membership_type==\"Family Membership\"",
    "fieldname": "no_adults",
-   "fieldtype": "Select",
-   "label": "Number of Adults",
-   "options": "1\n2\n3\n4"
+   "fieldtype": "Data",
+   "label": "Number of Adults"
   },
   {
-   "depends_on": "eval:(doc.membership_type ==\"Couple Membership\" || doc.membership_type==\"Family Membership\")",
+   "depends_on": "eval: doc.membership_type==\"Family Membership\"",
    "fieldname": "no_kids",
-   "fieldtype": "Select",
-   "label": "Number of Kids",
-   "options": "0\n1\n2"
+   "fieldtype": "Data",
+   "label": "Number of Kids"
   },
   {
    "depends_on": "eval:doc.membership_type==\"Family Membership\"",
@@ -500,7 +499,6 @@
    "hidden": 1
   },
   {
-   "default": "2",
    "fieldname": "sadaul",
    "fieldtype": "Data",
    "label": "SAdaul"
@@ -532,12 +530,43 @@
    "label": "Sales Invoice",
    "options": "Sales Invoice",
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_26",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "fetch_from": "membership_plan.mem_fee_adult",
+   "fieldname": "memeber_adult",
+   "fieldtype": "Currency",
+   "label": "MEMEBER ADULT"
+  },
+  {
+   "fetch_from": "membership_plan.mem_fee_kid",
+   "fieldname": "member_kids",
+   "fieldtype": "Currency",
+   "label": "MEMBER KIDS"
+  },
+  {
+   "fetch_from": "membership_plan.mem_fee_adult",
+   "fieldname": "membership_fee",
+   "fieldtype": "Currency",
+   "label": "Membership Fee (per adult)",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "membership_plan.mem_fee_kid",
+   "fieldname": "membership_fee_child",
+   "fieldtype": "Currency",
+   "label": "Membership Fee (per child)",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-31 10:07:48.087221",
- "modified_by": "mithleena@bluelynx.qa",
+ "modified": "2021-01-10 05:23:24.031956",
+ "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",
  "owner": "Administrator",

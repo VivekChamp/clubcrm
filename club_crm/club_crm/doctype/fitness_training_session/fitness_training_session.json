@@ -6,22 +6,40 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "naming_series",
+  "date",
+  "start_date",
+  "column_break_3",
+  "session_status",
+  "payment_status",
   "client_details_section",
   "client_id",
   "client_name",
   "column_break_4",
   "member_id",
-  "card_number",
+  "card_no",
   "mobile_number",
   "session_details_section",
   "package_name",
   "color",
   "number_of_sessions",
+  "validity",
   "column_break_11",
+  "price",
   "used_sessions",
   "remaining_sessions",
-  "amended_from",
-  "naming_series"
+  "trainer_details_section",
+  "trainer_name",
+  "column_break_17",
+  "gender",
+  "payment_details",
+  "payment_method",
+  "paid_amount",
+  "sales_invoice",
+  "column_break_24",
+  "transaction_date",
+  "transaction_reference",
+  "amended_from"
  ],
  "fields": [
   {
@@ -47,14 +65,12 @@
    "fieldtype": "Column Break"
   },
   {
+   "fetch_from": "client_id.member_id",
    "fieldname": "member_id",
    "fieldtype": "Data",
-   "label": "Member ID"
-  },
-  {
-   "fieldname": "card_number",
-   "fieldtype": "Data",
-   "label": "Card Number"
+   "in_standard_filter": 1,
+   "label": "Member ID",
+   "read_only": 1
   },
   {
    "fetch_from": "client_id.mobile_no",
@@ -110,8 +126,10 @@
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Series",
-   "options": "FTS-.YYYY.-"
+   "options": "FTS-.YYYY.-",
+   "read_only": 1
   },
   {
    "fetch_from": "package_name.color",
@@ -120,12 +138,134 @@
    "hidden": 1,
    "label": "Color",
    "read_only": 1
+  },
+  {
+   "fetch_from": "client_id.card_no",
+   "fieldname": "card_no",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Card Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "trainer_details_section",
+   "fieldtype": "Section Break",
+   "label": "Trainer Details"
+  },
+  {
+   "fieldname": "trainer_name",
+   "fieldtype": "Link",
+   "label": "Trainer Name",
+   "options": "Fitness Trainer"
+  },
+  {
+   "fieldname": "column_break_17",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "trainer_name.gender",
+   "fieldname": "gender",
+   "fieldtype": "Data",
+   "label": "Gender",
+   "read_only": 1
+  },
+  {
+   "fieldname": "payment_details",
+   "fieldtype": "Section Break",
+   "label": "Payment Details"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "payment_method",
+   "fieldtype": "Select",
+   "label": "Payment Method",
+   "options": "\nCredit Card\nWallet\nCash\nComplimentary",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "paid_amount",
+   "fieldtype": "Currency",
+   "label": "Paid Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sales_invoice",
+   "fieldtype": "Data",
+   "label": "Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_24",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "transaction_date",
+   "fieldtype": "Data",
+   "label": "Transaction Date",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "transaction_reference",
+   "fieldtype": "Data",
+   "label": "Transaction Reference",
+   "read_only": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Pending",
+   "fieldname": "session_status",
+   "fieldtype": "Select",
+   "label": "Session Status",
+   "options": "\nPending\nActive\nComplete\nExpired",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Not Paid",
+   "fieldname": "payment_status",
+   "fieldtype": "Select",
+   "label": "Payment Status",
+   "options": "\nPaid\nNot Paid",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "package_name.validity",
+   "fieldname": "validity",
+   "fieldtype": "Data",
+   "label": "Session Validity",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "package_name.price",
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "label": "Price (in QAR)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-29 15:54:30.663256",
- "modified_by": "suba@bluelynx.com",
+ "modified": "2021-01-10 05:55:31.713917",
+ "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Session",
  "owner": "Administrator",

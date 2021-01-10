@@ -8,5 +8,9 @@ frappe.ui.form.on('Client', {
 		        mem_app.client=frm.doc.name;
 		         frappe.set_route('Form', 'Memberships Application', mem_app.name);
 		   },__("Membership Application"));
+		
+		frm.add_custom_button(__('Accounts Receivable'), function() {
+			frappe.set_route('query-report', 'Accounts Receivable', {customer:frm.doc.customer});
+		});
 	}
 });

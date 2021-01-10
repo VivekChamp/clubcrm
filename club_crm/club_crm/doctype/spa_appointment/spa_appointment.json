@@ -6,6 +6,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "section_break_4",
   "naming_series",
   "date",
   "time",
@@ -17,11 +18,11 @@
   "client_id",
   "client_name",
   "member_id",
-  "column_break_client",
   "membership_status",
   "gender",
   "mobile_no",
   "appointment_details",
+  "column_break_20",
   "spa_item",
   "spa_menu_group",
   "spa_menu_category",
@@ -41,7 +42,7 @@
   "appointment_time",
   "start_time",
   "end_time",
-  "column_break_20",
+  "column_break_40",
   "any_surgeries",
   "more_info_section",
   "payment_method",
@@ -322,10 +323,6 @@
    "label": "Color"
   },
   {
-   "fieldname": "column_break_client",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "time",
    "fieldtype": "Time",
    "label": "Time",
@@ -373,10 +370,18 @@
    "in_standard_filter": 1,
    "label": "Member ID",
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_40",
+   "fieldtype": "Column Break"
   }
  ],
  "links": [],
- "modified": "2021-01-04 00:33:37.040214",
+ "modified": "2021-01-10 05:27:40.610570",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Appointment",
