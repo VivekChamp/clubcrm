@@ -9,11 +9,10 @@
   "group_class_details_section",
   "posting_date",
   "company",
+  "group_class_category",
   "group_class_name",
   "column_break_3",
-  "status",
   "group_class_type",
-  "group_class_category",
   "capacity",
   "members_only",
   "show_on_app",
@@ -34,11 +33,13 @@
    "fieldtype": "Column Break"
   },
   {
+   "fetch_from": "group_class_category.group_class_type",
    "fieldname": "group_class_type",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Group Class Type",
    "options": "Group Class Type",
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fieldname": "group_class_category",
@@ -65,8 +66,9 @@
   },
   {
    "fieldname": "group_class_name",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "label": "Group Class Name",
+   "options": "Group Class Name",
    "reqd": 1,
    "unique": 1
   },
@@ -122,13 +124,6 @@
    "options": "Company"
   },
   {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "hidden": 1,
-   "label": "Status",
-   "options": "\nOpen\nCancelled\nIn Progress\nCompleted"
-  },
-  {
    "fieldname": "class_day",
    "fieldtype": "Select",
    "label": "Class Day",
@@ -159,7 +154,7 @@
   }
  ],
  "links": [],
- "modified": "2021-01-10 07:41:34.948829",
+ "modified": "2021-01-10 09:46:27.824872",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class Scheduler",

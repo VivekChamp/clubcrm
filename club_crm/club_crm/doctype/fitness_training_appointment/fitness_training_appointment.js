@@ -2,7 +2,13 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Fitness Training Appointment', {
-	// refresh: function(frm) {
-
-	// }
+	refresh: function(frm) {
+		cur_frm.get_field('fitness_session').get_query = function(doc) {
+			return {
+				filters: [
+					["Fitness Training Session", "remaining_sessions", ">", 0]
+				   ]
+			   };
+		   };
+		},
 });

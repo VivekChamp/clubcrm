@@ -40,7 +40,8 @@ frappe.ui.form.on('Fitness Training Session', {
 				fieldname: 'card_type',
 				fieldtype: 'Select',
 				options:['Visa','MasterCard','Amex','NAPS','CB-Smart'],
-				depends_on: 'eval:doc.payment_method=="Credit Card"'
+                depends_on: 'eval:doc.payment_method=="Credit Card"',
+                reqd:1
 			  },
               {
                   label: 'Transaction Reference #',
@@ -66,7 +67,7 @@ frappe.ui.form.on('Fitness Training Session', {
       });
       }
 
-      if (frm.doc.session_status=="Active") {
+      if (frm.doc.session_status=="Active" && frm.doc.remaining_sessions > 0) {
         frm.add_custom_button(__('Book Appointment'), function(){
             frappe.model.open_mapped_doc({
                 method: 'club_crm.club_crm.doctype.fitness_training_appointment.fitness_training_appointment.book_appointment',
