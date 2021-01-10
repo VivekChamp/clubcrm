@@ -1,0 +1,56 @@
+{
+ "actions": [],
+ "autoname": "field:group_class_name",
+ "creation": "2021-01-10 08:48:05.039667",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "group_class_name",
+  "group_class_category",
+  "group_class_type"
+ ],
+ "fields": [
+  {
+   "fieldname": "group_class_name",
+   "fieldtype": "Data",
+   "label": "Group Class Name",
+   "unique": 1
+  },
+  {
+   "fieldname": "group_class_category",
+   "fieldtype": "Link",
+   "label": "Group Class Category",
+   "options": "Group Class Category"
+  },
+  {
+   "fetch_from": "group_class_category.group_class_type",
+   "fieldname": "group_class_type",
+   "fieldtype": "Data",
+   "label": "Group Class Type",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2021-01-10 08:49:48.126758",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Group Class Name",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

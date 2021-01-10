@@ -23,7 +23,7 @@
   {
    "hidden": 0,
    "label": "Group Class",
-   "links": "[\n    {\n        \"description\": \"List of Group Class\",\n        \"label\": \"Group Class\",\n        \"name\": \"Group Class\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Group Class\",\n        \"label\": \"Group Class Attendees\",\n        \"name\": \"Group Class Attendees\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Group Class Scheduler\",\n        \"label\": \"Group Class Scheduler\",\n        \"name\": \"Group Class Scheduler\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Group Class Type\",\n        \"label\": \"Group Class Type\",\n        \"name\": \"Group Class Type\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Group Class Category\",\n        \"label\": \"Group Class Category\",\n        \"name\": \"Group Class Category\",\n        \"type\": \"doctype\"\n    }\n]"
+   "links": "[\n    {\n        \"description\": \"List of Group Class\",\n        \"label\": \"Group Class\",\n        \"name\": \"Group Class\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Group Class\",\n        \"label\": \"Group Class Attendees\",\n        \"name\": \"Group Class Attendees\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Group Class Scheduler\",\n        \"label\": \"Group Class Scheduler\",\n        \"name\": \"Group Class Scheduler\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Group Class Category\",\n        \"label\": \"Group Class Category\",\n        \"name\": \"Group Class Category\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Group Class Type\",\n        \"label\": \"Group Class Type\",\n        \"name\": \"Group Class Type\",\n        \"type\": \"doctype\"\n    }\n]"
   },
   {
    "hidden": 0,
@@ -59,7 +59,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Club CRM",
- "modified": "2020-12-31 02:01:33.831127",
+ "modified": "2021-01-10 08:40:18.805079",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club CRM",

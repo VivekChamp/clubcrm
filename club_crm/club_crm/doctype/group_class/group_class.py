@@ -5,8 +5,12 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
+from frappe.utils import getdate, get_time, flt
+from datetime import datetime, timedelta, date
 
 class GroupClass(Document):
+    def validate(self):
+        self.set_status()
 
     def before_save(self):
         self.remaining = self.capacity
@@ -32,3 +36,15 @@ class GroupClass(Document):
             for name in doc:
                 frappe.db.set_value('Group Class Attendees', name.name, 'class_status', 'Open')
             frappe.db.commit()
+
+    def set_status(self):
+        today = getdate()
+        class_date= datetime.strptime(str(self.from_time), '%Y-%m-%d %H:%M:%S')
+        date= class_date.date()
+
+		# If appointment is created for today set status as Open else Scheduled
+        if not self.class_status == "Complete":
+            if date == today:
+                self.class_status = "Open"
+            elif date > today:
+                self.class_status = "Scheduled"

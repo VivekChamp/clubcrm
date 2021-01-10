@@ -14,10 +14,16 @@ class CheckIn(Document):
 
 	def validate(self):
 		self.check_spa()
+		self.check_gc()
 
 	def check_spa(self):
 		spa_check = frappe.get_all('Check In', filters={'docstatus':1,'spa_booking': self.spa_booking})
 		if spa_check:
+			frappe.throw("Already Checked in")
+	
+	def check_gc(self):
+		gc_check = frappe.get_all('Check In', filters={'docstatus':1,'class_attendee_id': self.class_attendee_id, 'group_class_id': self.group_class_id})
+		if gc_check:
 			frappe.throw("Already Checked in")
 
 @frappe.whitelist()
@@ -37,3 +43,21 @@ def spa_checkin(source_name, target_doc=None):
 		}, target_doc, set_missing_values)
 
 	return doc
+
+@frappe.whitelist()
+def gc_checkin(source_name, target_doc=None):
+	def set_missing_values(source, target):
+		target.series = "CHK-.YYYY.-GC.-"
+		target.check_in_type = "Group Class"
+		target.class_attendee_id = source_name
+
+	doc = get_mapped_doc('Group Class Attendees', source_name, {
+			'Group Class Attendees': {
+				'doctype': 'Check In',
+				'field_map': [
+					['client_id', 'client_id']
+				]
+			}
+		}, target_doc, set_missing_values)
+	doc.submit()
+	

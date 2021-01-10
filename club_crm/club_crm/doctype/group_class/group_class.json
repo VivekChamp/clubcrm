@@ -9,25 +9,24 @@
  "field_order": [
   "naming_series",
   "date",
+  "class_category",
   "group_class_name",
+  "class_type",
   "image",
-  "capacity",
   "remaining",
   "column_break_3",
   "class_status",
   "booking_status",
+  "capacity",
   "members_only",
   "on_app",
   "section_break_7",
   "trainer",
-  "trainer_name",
-  "class_type",
-  "class_category",
-  "color",
   "column_break_8",
   "day",
   "from_time",
   "to_time",
+  "color",
   "amended_from"
  ],
  "fields": [
@@ -76,30 +75,23 @@
    "fetch_from": "class_category.group_class_type",
    "fieldname": "class_type",
    "fieldtype": "Link",
-   "label": "Class Type",
+   "hidden": 1,
+   "label": "Group Class Type",
    "options": "Group Class Type",
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fieldname": "class_category",
    "fieldtype": "Link",
-   "label": "Class Category",
+   "label": "Group Class Category",
    "options": "Group Class Category",
    "reqd": 1
   },
   {
-   "fetch_from": "trainer.employee_name",
-   "fieldname": "trainer_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Trainer Name",
-   "read_only": 1
-  },
-  {
    "fieldname": "group_class_name",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "label": "Group Class Name",
+   "options": "Group Class Name",
    "reqd": 1
   },
   {
@@ -186,7 +178,7 @@
  "image_field": "image",
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-13 16:28:15.411413",
+ "modified": "2021-01-10 09:00:28.720339",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class",

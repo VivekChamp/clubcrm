@@ -19,6 +19,7 @@
   "attendee_details_section",
   "client_id",
   "client_name",
+  "member_id",
   "column_break_10",
   "membership_status",
   "mobile_number",
@@ -126,7 +127,7 @@
    "options": "Scheduled\nOpen\nCompleted\nCancelled\nNo Show"
   },
   {
-   "fetch_from": "group_class.trainer_name",
+   "fetch_from": "group_class.trainer",
    "fieldname": "trainer_name",
    "fieldtype": "Data",
    "label": "Trainer Name",
@@ -140,11 +141,19 @@
    "label": "Checked in?",
    "options": "Yes\nNo",
    "read_only": 1
+  },
+  {
+   "fetch_from": "client_id.member_id",
+   "fieldname": "member_id",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Member ID",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-23 03:30:10.029114",
+ "modified": "2021-01-10 10:08:03.466093",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class Attendees",

@@ -9,6 +9,7 @@
   "naming_series",
   "date",
   "client_id",
+  "member_id",
   "column_break",
   "check_in_type",
   "client_name",
@@ -73,6 +74,7 @@
    "fieldname": "check_in_type",
    "fieldtype": "Select",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Check-in Type",
    "options": "Member Check-in\nSpa\nGym\nGroup Class",
    "reqd": 1
@@ -83,7 +85,7 @@
    "fieldtype": "Select",
    "hidden": 1,
    "label": "Series",
-   "options": "CHK-.YYYY.-MEM.-\nCHK-.YYYY.-SPA.-\nCHK-.YYYY.-GYM.-\nCHK-.YYYY.-SOCIAL.-"
+   "options": "CHK-.YYYY.-MEM.-\nCHK-.YYYY.-SPA.-\nCHK-.YYYY.-GYM.-\nCHK-.YYYY.-SOCIAL.-\nCHK-.YYYY.-GC.-"
   },
   {
    "fieldname": "column_break",
@@ -131,11 +133,18 @@
    "fieldtype": "Link",
    "label": "Group Class Attendee ID",
    "options": "Group Class Attendees"
+  },
+  {
+   "fetch_from": "client_id.member_id",
+   "fieldname": "member_id",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Member ID"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-30 10:59:00.136018",
+ "modified": "2021-01-10 11:44:42.337082",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Check In",

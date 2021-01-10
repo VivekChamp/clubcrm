@@ -9,7 +9,9 @@
   "category_name",
   "group_class_type",
   "color",
-  "cat_image"
+  "cat_image",
+  "column_break_5",
+  "for_gender"
  ],
  "fields": [
   {
@@ -36,11 +38,21 @@
    "fieldname": "cat_image",
    "fieldtype": "Attach Image",
    "label": "Image"
+  },
+  {
+   "fieldname": "for_gender",
+   "fieldtype": "Select",
+   "label": "For Gender",
+   "options": "\nMale\nFemale\nMixed"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
   }
  ],
  "image_field": "cat_image",
  "links": [],
- "modified": "2020-12-02 15:58:59.753270",
+ "modified": "2021-01-10 08:46:39.423372",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class Category",
