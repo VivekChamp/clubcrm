@@ -17,11 +17,14 @@
   "type",
   "client_name",
   "column_break_7",
+  "status",
   "membership_id",
   "client_id",
   "start_date",
   "end_date",
+  "expiry_date",
   "duration",
+  "reason_for_extension",
   "member_details_section",
   "client_id_1",
   "client_name_1",
@@ -83,7 +86,7 @@
   {
    "fieldname": "end_date",
    "fieldtype": "Date",
-   "label": "Membership Expiry Date"
+   "label": "Membership Expiry Date(As Per Contract)"
   },
   {
    "fieldname": "column_break_11",
@@ -263,12 +266,29 @@
    "fieldname": "contact_to_name",
    "fieldtype": "Data",
    "label": "Name"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Draft\nActive\nExpired\nFreezed\nCancelled"
+  },
+  {
+   "fieldname": "reason_for_extension",
+   "fieldtype": "Small Text",
+   "label": "Reason For Extension",
+   "read_only": 1
+  },
+  {
+   "fieldname": "expiry_date",
+   "fieldtype": "Date",
+   "label": "Expiry Date"
   }
  ],
  "hide_toolbar": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-01-09 05:04:33.685484",
+ "modified": "2021-02-02 22:33:50.323038",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships",
