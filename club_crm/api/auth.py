@@ -3,6 +3,8 @@ from frappe.website.utils import is_signup_enabled
 from club_crm.api.wallet import get_balance
 from frappe.utils import escape_html
 from frappe import throw, msgprint, _
+import math, random
+from frappe.core.doctype.sms_settings.sms_settings import send_sms
 
 @frappe.whitelist(allow_guest=True)
 def login(usr,pwd):
@@ -133,3 +135,15 @@ def forgot_password(mobile_no, new_password):
             "Status": "0",
             "Description":"User does not exist"
         }
+
+@frappe.whitelist(allow_guest=True)
+def generate_otp(mobile_no):
+    digits = "0123456789"
+    OTP = "" 
+    for i in range(5): 
+        OTP += digits[math.floor(random.random() * 10)]
+    #return OTP
+    msg = "Your verification code is "+OTP+". Do not share it with anyone."
+    receiver_list='"'+mobile_no+'"'
+    send_sms(receiver_list,msg)
+    return OTP

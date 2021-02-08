@@ -20,7 +20,10 @@
   "trainer",
   "class_schedule_details_section",
   "start_date",
+  "from_time",
+  "column_break_16",
   "end_date",
+  "to__time",
   "class_day",
   "add_class_dates",
   "class_details_section",
@@ -151,11 +154,25 @@
    "fieldtype": "Button",
    "label": "Clear Table",
    "options": "clear_table"
+  },
+  {
+   "fieldname": "from_time",
+   "fieldtype": "Time",
+   "label": "From Time"
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "to__time",
+   "fieldtype": "Time",
+   "label": "To  Time"
   }
  ],
  "links": [],
- "modified": "2021-01-10 09:46:27.824872",
- "modified_by": "Administrator",
+ "modified": "2021-02-03 10:50:33.040554",
+ "modified_by": "suba@bluelynx.com",
  "module": "Club CRM",
  "name": "Group Class Scheduler",
  "owner": "Administrator",

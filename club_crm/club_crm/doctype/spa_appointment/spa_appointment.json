@@ -32,6 +32,7 @@
   "column_break_21",
   "regular_rate",
   "member_discount",
+  "additional_discount",
   "rate",
   "section_break_24",
   "spa_therapist",
@@ -378,11 +379,16 @@
   {
    "fieldname": "column_break_40",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "additional_discount",
+   "fieldtype": "Currency",
+   "label": "Additional Discount"
   }
  ],
  "links": [],
- "modified": "2021-01-10 05:27:40.610570",
- "modified_by": "Administrator",
+ "modified": "2021-01-16 14:45:40.274527",
+ "modified_by": "suba@bluelynx.com",
  "module": "Club CRM",
  "name": "Spa Appointment",
  "owner": "Administrator",

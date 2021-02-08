@@ -96,7 +96,8 @@
    "allow_in_quick_entry": 1,
    "fieldname": "last_name",
    "fieldtype": "Data",
-   "label": "Last Name"
+   "label": "Last Name",
+   "reqd": 1
   },
   {
    "bold": 1,
@@ -343,6 +344,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Mobile",
+   "length": 8,
    "options": "Phone",
    "reqd": 1,
    "unique": 1
@@ -413,8 +415,8 @@
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2021-01-05 14:12:35.725925",
- "modified_by": "mithleena@bluelynx.qa",
+ "modified": "2021-01-31 09:35:05.269381",
+ "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",
  "name_case": "Title Case",

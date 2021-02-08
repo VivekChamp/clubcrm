@@ -32,6 +32,7 @@
   "amended_from",
   "naming_series",
   "section_break_25",
+  "booked_sessions",
   "number_of_sessions",
   "used_sessions",
   "remaining_sessions"
@@ -189,29 +190,24 @@
   },
   {
    "fieldname": "section_break_25",
-   "fieldtype": "Section Break",
-   "read_only": 1
+   "fieldtype": "Section Break"
   },
   {
    "fetch_from": "fitness_session.number_of_sessions",
    "fieldname": "number_of_sessions",
    "fieldtype": "Data",
-   "hidden": 1,
    "label": " number_of_sessions"
   },
   {
-   "default": "0",
-   "fetch_from": "fitness_session.used_sessions",
+   "allow_on_submit": 1,
    "fieldname": "used_sessions",
    "fieldtype": "Data",
-   "hidden": 1,
    "label": "Used Session(s)"
   },
   {
-   "fetch_from": "fitness_session.remaining_sessions",
+   "allow_on_submit": 1,
    "fieldname": "remaining_sessions",
    "fieldtype": "Data",
-   "hidden": 1,
    "label": "Remaining Session(s)"
   },
   {
@@ -221,11 +217,17 @@
    "in_standard_filter": 1,
    "label": "Member ID",
    "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "booked_sessions",
+   "fieldtype": "Data",
+   "label": " Booked Sessions"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-01-10 07:02:08.628889",
+ "modified": "2021-02-08 13:24:35.451817",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Appointment",

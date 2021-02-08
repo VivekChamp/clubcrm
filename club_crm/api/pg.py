@@ -88,36 +88,36 @@ def customer_ip():
 #     sid = frappe.session.sid
 #     return sid
 
-@frappe.whitelist()
-def generate_hash(data_dict):
-    user = frappe.get_doc('User', frappe.session.user)
-    default_dict = {
-        #"transaction_uuid" : get_random_alphanumeric_string(13),
-        "access_key": "770d2776487232ad8fe5a755ecae8b7c",
-        "profile_id": "A16CD561-596D-4334-AE65-3A65DBE6C006",
-        #"customer_ip_address": customer_ip(),
-        'customer_ip_address': "37.208.149.185",
-        "device_fingerprint_id": generate_uuid(),
-        "transaction_uuid": generate_uuid(),
-        "signed_date_time" : generate_signed_time(),
-        "locale":"en",
-        "currency":"qar",
-	    "payment_method":"card",
-        "bill_to_address_country":"qa",
-        "signed_field_names":"access_key,profile_id,customer_ip_address,device_fingerprint_id,transaction_uuid,signed_date_time,locale,currency,payment_method,bill_to_address_country,signed_field_names,unsigned_field_names,bill_to_forename,bill_to_surname,bill_to_email,transaction_type,reference_number,amount",
-        "unsigned_field_names":"",
-        "bill_to_forename": user.first_name,
-        "bill_to_surname": user.last_name,
-        "bill_to_email": frappe.session.user
-    }
-    default_dict.update(data_dict)
-    # return default_dict
-    API_SECRET = frappe.db.get_value("CS Signature",None,"secret_key")
-    hash_value = hmac.new(API_SECRET.encode(), generate_data_string(default_dict).encode(), hashlib.sha256)
-    # print(hash_value.digest())
-    signature = base64.b64encode(hash_value.digest()).decode("utf-8")
-    default_dict['signature'] = signature  
-    return default_dict
+# @frappe.whitelist()
+# def generate_hash(data_dict):
+#     user = frappe.get_doc('User', frappe.session.user)
+#     default_dict = {
+#         #"transaction_uuid" : get_random_alphanumeric_string(13),
+#         "access_key": "770d2776487232ad8fe5a755ecae8b7c",
+#         "profile_id": "A16CD561-596D-4334-AE65-3A65DBE6C006",
+#         #"customer_ip_address": customer_ip(),
+#         'customer_ip_address': "37.208.149.185",
+#         "device_fingerprint_id": generate_uuid(),
+#         "transaction_uuid": generate_uuid(),
+#         "signed_date_time" : generate_signed_time(),
+#         "locale":"en",
+#         "currency":"qar",
+# 	    "payment_method":"card",
+#         "bill_to_address_country":"qa",
+#         "signed_field_names":"access_key,profile_id,customer_ip_address,device_fingerprint_id,transaction_uuid,signed_date_time,locale,currency,payment_method,bill_to_address_country,signed_field_names,unsigned_field_names,bill_to_forename,bill_to_surname,bill_to_email,transaction_type,reference_number,amount",
+#         "unsigned_field_names":"",
+#         "bill_to_forename": user.first_name,
+#         "bill_to_surname": user.last_name,
+#         "bill_to_email": frappe.session.user
+#     }
+#     default_dict.update(data_dict)
+#     # return default_dict
+#     API_SECRET = frappe.db.get_value("CS Signature",None,"secret_key")
+#     hash_value = hmac.new(API_SECRET.encode(), generate_data_string(default_dict).encode(), hashlib.sha256)
+#     # print(hash_value.digest())
+#     signature = base64.b64encode(hash_value.digest()).decode("utf-8")
+#     default_dict['signature'] = signature  
+#     return default_dict
 
 @frappe.whitelist(allow_guest = True)
 def generate_hash_varifier(data_dict): 
@@ -131,3 +131,33 @@ def generate_hash_varifier(data_dict):
 def generate_signed_time():
     signed_date=datetime.utcnow().replace(microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ")
     return signed_date
+
+@frappe.whitelist()
+def generate_hash(data_dict):
+    user = frappe.get_doc('User', frappe.session.user)
+    default_dict = {
+        "access_key": "e2b91ef36ec434099ef8f926134ac460",
+        "profile_id": "1608CBC0-00E2-4032-BA67-B06695901253",
+        'customer_ip_address': "37.208.149.185",
+        "device_fingerprint_id": generate_uuid(),
+        "transaction_uuid": generate_uuid(),
+        "signed_date_time" : generate_signed_time(),
+        "locale":"en",
+        "currency":"qar",
+	    "payment_method":"card",
+        "bill_to_forename": user.first_name,
+        "bill_to_surname": user.last_name,
+        "bill_to_email": frappe.session.user,
+        "bill_to_address_country":"qa",
+        "signed_field_names":"access_key,profile_id,customer_ip_address,device_fingerprint_id,transaction_uuid,signed_date_time,locale,currency,payment_method,bill_to_forename,bill_to_surname,bill_to_email,bill_to_address_country,signed_field_names,unsigned_field_names,transaction_type,reference_number,amount,bill_to_address_line1,bill_to_address_city",
+        "unsigned_field_names":"card_number,card_type,card_expiry_date"
+    }
+    default_dict.update(data_dict)
+    # return default_dict
+    #API_SECRET = frappe.db.get_value("CS Signature",None,"secret_key")
+    API_SECRET = "f7954d55e34b4847941ddee882620efa387526dd28e54652937a2764c2b0b7c3979283bd151f4d8195b1b8b1d755b1ce939938fccc6a40cd96eeaffa9b72bc1fd68ac3ae4ecd43f88d634f628b2bd9f605a7d0551f5a42238481e20fb5ad463ecdeade466f084c1a95a86e37eca414420f786a2ceb1141b5b0384b6aa2530c21"
+    hash_value = hmac.new(API_SECRET.encode(), generate_data_string(default_dict).encode(), hashlib.sha256)
+    # print(hash_value.digest())
+    signature = base64.b64encode(hash_value.digest()).decode("utf-8")
+    default_dict['signature'] = signature  
+    return default_dict

@@ -132,15 +132,25 @@ def generate_signed_time():
 def make_status_paid(docname):
     if re.match(membership_application, docname):
         frappe.db.set_value("Memberships Application",str(docname),"payment_status","Paid")
+        doc = frappe.get_doc("Memberships Application",str(docname))
+        doc.save()
         
     elif re.match(online_order, docname):
         frappe.db.set_value("Online Order",str(docname),"payment_status","Paid")
+        doc = frappe.get_doc("Online Order",str(docname))
+        doc.save()
         
     elif re.match(food_order, docname):
         frappe.db.set_value("Food Order Entry",str(docname),"payment_status","Paid")
+        doc = frappe.get_doc("Food Order Entry",str(docname))
+        doc.save()
         
     elif re.match(fitness_training, docname):
         frappe.db.set_value("Fitness Training Request",str(docname),"payment_status","Paid")
+        doc = frappe.get_doc("Fitness Training Request",str(docname))
+        doc.save()
         
     elif re.match(spa_app, docname):
         frappe.db.set_value("Spa Appointment",str(docname),"payment_status","Paid")
+        doc = frappe.get_doc("Spa Appointment",str(docname))
+        doc.save()
