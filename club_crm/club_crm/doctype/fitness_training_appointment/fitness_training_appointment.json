@@ -39,11 +39,11 @@
  ],
  "fields": [
   {
+   "allow_on_submit": 1,
    "default": "Today",
    "fieldname": "date",
    "fieldtype": "Date",
-   "label": "Date",
-   "read_only": 1
+   "label": "Date"
   },
   {
    "fieldname": "client_id",
@@ -71,7 +71,7 @@
    "allow_on_submit": 1,
    "fieldname": "status",
    "fieldtype": "Select",
-   "label": "Session Status",
+   "label": "Appointment Status",
    "options": "Scheduled\nOpen\nCompleted\nCancelled\nNo show"
   },
   {
@@ -120,12 +120,6 @@
   {
    "fieldname": "column_break_15",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "start_time",
-   "fieldtype": "Datetime",
-   "in_list_view": 1,
-   "label": "Start Time"
   },
   {
    "fieldname": "end_time",
@@ -190,7 +184,8 @@
   },
   {
    "fieldname": "section_break_25",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "hidden": 1
   },
   {
    "fetch_from": "fitness_session.number_of_sessions",
@@ -223,17 +218,24 @@
    "fieldname": "booked_sessions",
    "fieldtype": "Data",
    "label": " Booked Sessions"
+  },
+  {
+   "fieldname": "start_time",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Start Time"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-02-08 13:24:35.451817",
+ "modified": "2021-02-11 15:55:22.974342",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Appointment",
  "owner": "Administrator",
  "permissions": [
   {
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -243,6 +245,21 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],

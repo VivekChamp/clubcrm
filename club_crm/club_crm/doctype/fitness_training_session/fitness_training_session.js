@@ -87,4 +87,7 @@ frappe.ui.form.on('Fitness Training Session', {
         });
       }
     }
+	number_of_sessions:function(frm){
+	    frm.set_value("remaining_sessions",frm.doc.number_of_sessions)
+	},
 });

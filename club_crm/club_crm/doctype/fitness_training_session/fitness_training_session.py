@@ -7,5 +7,4 @@ import frappe
 from frappe.model.document import Document
 
 class FitnessTrainingSession(Document):
-	def before_save(self):
-        	self.remaining_sessions = self.number_of_sessions - self.used_sessions
+	pass
