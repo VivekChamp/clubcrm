@@ -2,6 +2,19 @@
 // For license information, please see license.txt
 frappe.ui.form.on('Fitness Training Session', {
     refresh: function(frm) {
+        if((frm.doc.session_status=="Active") && (frm.doc.payment_status=="Paid") &&frm.doc.docstatus==1) {
+        frm.add_custom_button(__('Book Appointment'), function() {
+            frappe.route_options = {
+               "client_id" : frm.doc.client_id,
+               "trainer_id" : frm.doc.trainer_name,
+               "fitness_session" : frm.doc.name
+               }
+               frappe.new_doc("Fitness Training Appointment");
+        })
+    }
+    if(frm.doc.number_of_sessions==frm.doc.used_sessions){
+        frm.remove_custom_button("Book Appointment");
+    }
         if(frm.doc.docstatus==1 && frm.doc.payment_status == "Not Paid"){
             frm.add_custom_button(__('Offline Payment'), function() {
       
@@ -33,14 +46,15 @@ frappe.ui.form.on('Fitness Training Session', {
                   options:['Credit Card','Cash'],
                   reqd:1
               },
-     {
-    label: 'Card Type',
-    fieldname: 'card_type',
-    fieldtype: 'Select',
-    options:['Visa','MasterCard','Amex','NAPS','CB-Smart'],
-                depends_on: 'eval:doc.payment_method=="Credit Card"',
-                reqd:1
-     },
+              {
+                    label: 'Card Type',
+                    fieldname: 'card_type',
+                    fieldtype: 'Select',
+                    options:['Visa','MasterCard','Amex','NAPS','CB-Smart'],
+                    depends_on: 'eval:doc.payment_method=="Credit Card"',
+                    mandatory_depends_on: 'eval:doc.payment_meth0d=="Credit Card"',
+                    reqd:1          
+                },
               {
                   label: 'Transaction Reference #',
                   fieldname: 'transaction_reference',
@@ -64,30 +78,9 @@ frappe.ui.form.on('Fitness Training Session', {
         d.show();
       });
       }
-       if (frm.doc.session_status=="Active" && frm.doc.remaining_sessions > 0) {
-           var a=0;
-           if(frm.doc.used_sessions===0){
-               a=1
-           }else{
-           a=Math.ceil(frm.doc.number_of_sessions-frm.doc.remaining_sessions+1);
-           }
-           var b=0;
-           b=Math.ceil(frm.doc.number_of_sessions-a)
-           var s=Math.ceil(frm.doc.booked_sessions+1)
-        frm.add_custom_button(__('Book Appointment'), function(){
-            frappe.route_options = {
-        "client_id":frm.doc.client_id,
-		"trainer_id": frm.doc.trainer_name,
-		"fitness_session":frm.doc.name,
-		"used_sessions":a,
-		"remaining_sessions":b,
-		"booked_sessions":s
-	};
-	frappe.new_doc("Fitness Training Appointment");
-        });
-      }
-    }
-	number_of_sessions:function(frm){
-	    frm.set_value("remaining_sessions",frm.doc.number_of_sessions)
-	},
-});
+
+    },
+    number_of_sessions:function(frm){
+        frm.set_value("remaining_sessions",frm.doc.number_of_sessions)
+        }
+})
