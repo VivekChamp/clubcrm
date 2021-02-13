@@ -22,12 +22,7 @@
   "gym_booking",
   "class_attendee_id",
   "group_class_id",
-  "amended_from",
-  "section_break_18",
-  "fitness_session",
-  "used_session",
-  "remaining_session",
-  "booked_session"
+  "amended_from"
  ],
  "fields": [
   {
@@ -145,40 +140,11 @@
    "fieldtype": "Data",
    "in_standard_filter": 1,
    "label": "Member ID"
-  },
-  {
-   "fieldname": "section_break_18",
-   "fieldtype": "Section Break",
-   "hidden": 1
-  },
-  {
-   "fieldname": "used_session",
-   "fieldtype": "Data",
-   "label": "Used Session"
-  },
-  {
-   "fetch_from": "gym_booking.remaining_sessions",
-   "fieldname": "remaining_session",
-   "fieldtype": "Data",
-   "label": " Remaining Session"
-  },
-  {
-   "fetch_from": "gym_booking.fitness_session",
-   "fieldname": "fitness_session",
-   "fieldtype": "Link",
-   "label": "Fitness Session",
-   "options": "Fitness Training Session"
-  },
-  {
-   "fetch_from": "gym_booking.booked_sessions",
-   "fieldname": "booked_session",
-   "fieldtype": "Data",
-   "label": "Booked_session"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-02-10 10:24:08.944345",
+ "modified": "2021-02-13 21:20:15.116518",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Check In",
