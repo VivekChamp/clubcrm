@@ -12,11 +12,13 @@
   "class_category",
   "group_class_name",
   "class_type",
+  "for_gender",
   "image",
   "remaining",
   "column_break_3",
   "class_status",
   "booking_status",
+  "location",
   "capacity",
   "members_only",
   "on_app",
@@ -173,12 +175,24 @@
    "fieldname": "day",
    "fieldtype": "Data",
    "label": "Day"
+  },
+  {
+   "fieldname": "for_gender",
+   "fieldtype": "Select",
+   "label": "For Gender",
+   "options": "\nMale\nFemale\nMixed"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "options": "Group Class Location"
   }
  ],
  "image_field": "image",
  "is_submittable": 1,
  "links": [],
- "modified": "2021-01-10 09:00:28.720339",
+ "modified": "2021-01-21 16:51:29.072474",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class",

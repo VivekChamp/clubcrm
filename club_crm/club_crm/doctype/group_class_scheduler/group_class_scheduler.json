@@ -20,7 +20,10 @@
   "trainer",
   "class_schedule_details_section",
   "start_date",
+  "from_time",
+  "column_break_16",
   "end_date",
+  "to_time",
   "class_day",
   "add_class_dates",
   "class_details_section",
@@ -151,10 +154,24 @@
    "fieldtype": "Button",
    "label": "Clear Table",
    "options": "clear_table"
+  },
+  {
+   "fieldname": "from_time",
+   "fieldtype": "Time",
+   "label": "From Time"
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "to_time",
+   "fieldtype": "Time",
+   "label": "To  Time"
   }
  ],
  "links": [],
- "modified": "2021-01-10 09:46:27.824872",
+ "modified": "2021-02-13 23:18:21.904234",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class Scheduler",

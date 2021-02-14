@@ -9,6 +9,7 @@
   "naming_series",
   "date",
   "start_date",
+  "expiry_date",
   "column_break_3",
   "session_status",
   "payment_status",
@@ -28,6 +29,7 @@
   "price",
   "used_sessions",
   "remaining_sessions",
+  "booked_sessions",
   "trainer_details_section",
   "trainer_name",
   "column_break_17",
@@ -98,7 +100,7 @@
    "allow_on_submit": 1,
    "fetch_from": "package_name.no_of_session",
    "fieldname": "number_of_sessions",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "label": "Number of Sessions",
    "read_only": 1
   },
@@ -109,13 +111,13 @@
   {
    "allow_on_submit": 1,
    "fieldname": "used_sessions",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "label": "Used Session(s)"
   },
   {
    "allow_on_submit": 1,
    "fieldname": "remaining_sessions",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "label": "Remaining Session(s)"
   },
   {
@@ -223,8 +225,7 @@
    "default": "Today",
    "fieldname": "date",
    "fieldtype": "Date",
-   "label": "Date",
-   "read_only": 1
+   "label": "Date"
   },
   {
    "fieldname": "column_break_3",
@@ -266,11 +267,27 @@
    "fieldname": "start_date",
    "fieldtype": "Date",
    "label": "Start Date"
+  },
+  {
+   "fieldname": "expiry_date",
+   "fieldtype": "Date",
+   "label": "Expiry Date"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "booked_sessions",
+   "fieldtype": "Int",
+   "label": "Booked Sessions"
   }
  ],
  "is_submittable": 1,
- "links": [],
- "modified": "2021-01-10 11:10:54.606126",
+ "links": [
+  {
+   "link_doctype": "Fitness Training Appointment",
+   "link_fieldname": "fitness_session"
+  }
+ ],
+ "modified": "2021-02-07 22:04:27.588288",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Session",

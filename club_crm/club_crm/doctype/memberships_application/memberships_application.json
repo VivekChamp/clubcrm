@@ -14,6 +14,8 @@
   "client_id",
   "client_name",
   "column_break_2",
+  "member_type",
+  "membership_application",
   "application_status",
   "payment_status",
   "type",
@@ -84,6 +86,12 @@
   "column_break_94",
   "transaction_date",
   "transaction_reference",
+  "section_break_81",
+  "start_date",
+  "end_date",
+  "section_break_87",
+  "memberships",
+  "membership_tables",
   "amended_from"
  ],
  "fields": [
@@ -191,9 +199,10 @@
    "fieldtype": "Column Break"
   },
   {
+   "default": "0",
    "fieldname": "discount_amount",
    "fieldtype": "Currency",
-   "label": "Management Discount (in QAR)",
+   "label": "Discount (in QAR)",
    "permlevel": 1
   },
   {
@@ -228,55 +237,59 @@
    "read_only": 1
   },
   {
-   "fetch_from": "client.first_name",
+   "fetch_from": "client_id.first_name",
    "fieldname": "first_name_1",
    "fieldtype": "Data",
    "label": "First Name",
    "reqd": 1
   },
   {
+   "fetch_from": "client_id.last_name",
    "fieldname": "last_name_1",
    "fieldtype": "Data",
    "label": "Last Name"
   },
   {
-   "fetch_from": "client.dob",
+   "fetch_from": "membership_application.birth_date_1",
    "fieldname": "birth_date_1",
    "fieldtype": "Date",
    "label": "Date Of Birth",
    "reqd": 1
   },
   {
-   "fetch_from": "client.nationality",
+   "fetch_from": "membership_application.nationality",
    "fieldname": "nationality_1",
    "fieldtype": "Link",
    "label": "Nationality",
    "options": "Country"
   },
   {
-   "fetch_from": "client.qatar_id",
+   "fetch_from": "client_id.qatar_id",
    "fieldname": "qatar_id_1",
    "fieldtype": "Data",
    "label": "QID Number",
    "reqd": 1
   },
   {
+   "fetch_from": "membership_application.occupation_1",
    "fieldname": "occupation_1",
    "fieldtype": "Data",
    "label": "Occupation"
   },
   {
+   "fetch_from": "membership_application.front_qid_1",
    "fieldname": "front_qid_1",
    "fieldtype": "Attach",
    "label": "Qatar ID Front"
   },
   {
+   "fetch_from": "membership_application.back_qid_1",
    "fieldname": "back_qid_1",
    "fieldtype": "Attach",
    "label": "Qatar ID Back"
   },
   {
-   "fetch_from": "client.sex",
+   "fetch_from": "client_id.gender",
    "fieldname": "gender_1",
    "fieldtype": "Link",
    "label": "Gender",
@@ -284,7 +297,7 @@
    "reqd": 1
   },
   {
-   "fetch_from": "client.mobile",
+   "fetch_from": "membership_application.mobile_no_1",
    "fieldname": "mobile_no_1",
    "fieldtype": "Data",
    "label": "Mobile Number",
@@ -292,7 +305,7 @@
    "reqd": 1
   },
   {
-   "fetch_from": "client.email",
+   "fetch_from": "membership_application.email_1",
    "fieldname": "email_1",
    "fieldtype": "Data",
    "label": "Email Address",
@@ -300,31 +313,37 @@
    "reqd": 1
   },
   {
+   "fetch_from": "membership_application.em_contact_no",
    "fieldname": "em_contact_no",
    "fieldtype": "Data",
    "label": "Emergency Contact Number"
   },
   {
+   "fetch_from": "membership_application.em_contact_name",
    "fieldname": "em_contact_name",
    "fieldtype": "Data",
    "label": "Emergency Contact Name"
   },
   {
+   "fetch_from": "membership_application.first_name_2",
    "fieldname": "first_name_2",
    "fieldtype": "Data",
    "label": "First Name"
   },
   {
+   "fetch_from": "membership_application.last_name_2",
    "fieldname": "last_name_2",
    "fieldtype": "Data",
    "label": "Last Name"
   },
   {
+   "fetch_from": "membership_application.birth_date_2",
    "fieldname": "birth_date_2",
    "fieldtype": "Date",
    "label": "Date Of Birth"
   },
   {
+   "fetch_from": "membership_application.nationality",
    "fieldname": "nationality_2",
    "fieldtype": "Link",
    "label": "Nationality",
@@ -359,7 +378,8 @@
   {
    "fieldname": "mobile_no_2",
    "fieldtype": "Data",
-   "label": "Mobile Number"
+   "label": "Mobile Number",
+   "length": 8
   },
   {
    "fieldname": "email_2",
@@ -368,6 +388,7 @@
    "options": "Email"
   },
   {
+   "fetch_from": "membership_application.client_id_1",
    "fieldname": "client_id_1",
    "fieldtype": "Link",
    "label": "Client ID",
@@ -387,6 +408,7 @@
    "label": "Submitted by Staff"
   },
   {
+   "fetch_from": "membership_application.company_1",
    "fieldname": "company_1",
    "fieldtype": "Data",
    "label": "Company"
@@ -403,8 +425,7 @@
    "fieldname": "payment_status",
    "fieldtype": "Select",
    "label": "Payment Status",
-   "options": "Not Paid\nPaid",
-   "read_only": 1
+   "options": "Not Paid\nPaid"
   },
   {
    "fieldname": "how_did",
@@ -455,12 +476,14 @@
   },
   {
    "depends_on": "eval: doc.membership_type==\"Family Membership\"",
+   "fetch_from": "membership_application.no_adults",
    "fieldname": "no_adults",
    "fieldtype": "Data",
    "label": "Number of Adults"
   },
   {
    "depends_on": "eval: doc.membership_type==\"Family Membership\"",
+   "fetch_from": "membership_application.no_kids",
    "fieldname": "no_kids",
    "fieldtype": "Data",
    "label": "Number of Kids"
@@ -499,6 +522,7 @@
    "hidden": 1
   },
   {
+   "default": "2",
    "fieldname": "sadaul",
    "fieldtype": "Data",
    "label": "SAdaul"
@@ -561,12 +585,56 @@
    "fieldtype": "Currency",
    "label": "Membership Fee (per child)",
    "read_only": 1
+  },
+  {
+   "fieldname": "member_type",
+   "fieldtype": "Select",
+   "label": "Member Type",
+   "options": "New\nReNew",
+   "read_only": 1
+  },
+  {
+   "fieldname": "membership_application",
+   "fieldtype": "Link",
+   "label": "Membership Application",
+   "options": "Memberships Application"
+  },
+  {
+   "fieldname": "section_break_81",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "membership_tables",
+   "fieldtype": "Table",
+   "label": "Membership Tables",
+   "options": "Membership Table"
+  },
+  {
+   "default": "Today",
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date"
+  },
+  {
+   "fieldname": "section_break_87",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "memberships",
+   "fieldtype": "Link",
+   "label": "Memberships",
+   "options": "Memberships"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-01-10 05:23:24.031956",
- "modified_by": "Administrator",
+ "modified": "2021-02-06 09:36:57.636624",
+ "modified_by": "suba@bluelynx.com",
  "module": "Club CRM",
  "name": "Memberships Application",
  "owner": "Administrator",

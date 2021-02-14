@@ -1,0 +1,55 @@
+{
+ "actions": [],
+ "autoname": "field:location",
+ "creation": "2021-01-21 16:50:38.717029",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "location",
+  "column_break_2",
+  "on_app"
+ ],
+ "fields": [
+  {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "label": "Location",
+   "unique": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "on_app",
+   "fieldtype": "Check",
+   "label": "Show On App"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "links": [],
+ "modified": "2021-01-23 07:55:59.827241",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Group Class Location",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
