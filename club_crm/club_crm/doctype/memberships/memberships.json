@@ -24,11 +24,7 @@
   "end_date",
   "expiry_date",
   "duration",
-<<<<<<< Updated upstream
   "reason_for_extension",
-=======
-  "reason",
->>>>>>> Stashed changes
   "member_details_section",
   "client_id_1",
   "client_name_1",
@@ -277,7 +273,6 @@
    "label": "Name"
   },
   {
-<<<<<<< Updated upstream
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
@@ -293,33 +288,12 @@
    "fieldname": "expiry_date",
    "fieldtype": "Date",
    "label": "Expiry Date"
-=======
-   "allow_on_submit": 1,
-   "fieldname": "membership_tables",
-   "fieldtype": "Table",
-   "label": "Membership Tables",
-   "options": "Membership Table"
-  },
-  {
-   "fieldname": "section_break_37",
-   "fieldtype": "Section Break"
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "reason",
-   "fieldtype": "Small Text",
-   "label": "Reason"
->>>>>>> Stashed changes
   }
  ],
  "hide_toolbar": 1,
  "is_submittable": 1,
  "links": [],
-<<<<<<< Updated upstream
  "modified": "2021-02-02 22:33:50.323038",
-=======
- "modified": "2021-02-04 14:47:18.515387",
->>>>>>> Stashed changes
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships",
