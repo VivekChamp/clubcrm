@@ -3,6 +3,8 @@ import frappe
 import dateutil
 from frappe.utils import getdate
 from frappe.model.document import Document
+from frappe.utils import comma_and
+from frappe import _
 
 class Client(Document):
     def validate(self):
@@ -36,8 +38,14 @@ class Client(Document):
     #     user.save()
     
     def on_trash(self):
-        user= frappe.get_doc('User', self.email)
-        user.delete()
+        user_doc = frappe.db.get_value('User', {'mobile_no':self.mobile_no, 'email': self.email}, 'name')
+        if self.reg_on_app == 'Yes':
+            if user_doc:
+                frappe.throw(_(f'Unable to delete this client as it is linked with the user {0}').format(comma_and(
+                    """<a href="#Form/User/{0}">{1}</a>""".format(user_doc, user_doc))))
+        if self.reg_on_app == 'No':
+            if user_doc:
+                frappe.delete_doc('User', user_doc)
 
     def create_customer(self):
         customer = frappe.get_doc({
@@ -82,3 +90,4 @@ def create_customer_client(doc, method=None):
             'customer_group': d.customer_group,
             'territory': d.territory
             },update_modified=False)
+
