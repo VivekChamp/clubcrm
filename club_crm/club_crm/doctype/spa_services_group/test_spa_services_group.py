@@ -6,5 +6,5 @@ from __future__ import unicode_literals
 # import frappe
 import unittest
 
-class TestSpaMenuCategory(unittest.TestCase):
+class TestSpaServicesGroup(unittest.TestCase):
 	pass

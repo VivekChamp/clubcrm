@@ -7,17 +7,18 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "enabled",
+  "column_break_2",
+  "on_app",
   "therapist_details_section",
-  "naming_series",
   "employee",
   "employee_name",
-  "description",
-  "column_break_6",
+  "column_break_7",
   "gender",
   "email",
   "mobile",
-  "status",
-  "on_app",
+  "column_break_6",
+  "description",
   "image",
   "section_break_19",
   "spa_menu_assignment",
@@ -25,13 +26,6 @@
   "spa_therapist_schedule"
  ],
  "fields": [
-  {
-   "fieldname": "naming_series",
-   "fieldtype": "Select",
-   "hidden": 1,
-   "label": "Series",
-   "options": "SPA-THR-.####"
-  },
   {
    "fetch_from": "employee.gender",
    "fieldname": "gender",
@@ -77,15 +71,6 @@
    "label": "Schedule"
   },
   {
-   "default": "Active",
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Status",
-   "options": "Active\nDisabled",
-   "reqd": 1
-  },
-  {
    "fetch_from": "employee.employee_name",
    "fieldname": "employee_name",
    "fieldtype": "Data",
@@ -94,7 +79,7 @@
    "unique": 1
   },
   {
-   "default": "0",
+   "default": "1",
    "fieldname": "on_app",
    "fieldtype": "Check",
    "label": "Show on App"
@@ -125,11 +110,26 @@
    "fieldname": "spa_therapist_schedule",
    "fieldtype": "Table",
    "options": "Spa Therapist Schedule"
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
   }
  ],
  "image_field": "image",
  "links": [],
- "modified": "2020-12-19 22:42:16.224109",
+ "modified": "2021-02-25 11:59:23.547048",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Therapist",

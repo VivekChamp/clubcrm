@@ -11,9 +11,9 @@ from club_crm.api.wallet import get_balance
 
 class SpaAppointment(Document):
 	def validate(self):
-		self.set_status()
-		self.calculate_time()
-		self.check_discount()
+		#self.set_status()
+		#self.calculate_time()
+		#self.check_discount()
 		#self.validate_overlaps()
 		if self.club_room:
 			self.create_room_schedule()

@@ -2,44 +2,44 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Spa Appointment', {
-	onload: function(frm) {
-		if (frm.is_new()) {
-			frm.set_value('appointment_time', null);
-			frm.disable_save();
-		}
-	},
+	// onload: function(frm) {
+	// 	if (frm.is_new()) {
+	// 		frm.set_value('appointment_time', null);
+	// 		frm.disable_save();
+	// 	}
+	// },
 
 	refresh: function(frm) {
-		if (frm.is_new()) {
-			frm.page.set_primary_action(__('Check Availability'), function() {
-				if (!frm.doc.client_id) {
-					frappe.msgprint({
-						title: __('Not Allowed'),
-						message: __('Please select Client ID first'),
-						indicator: 'red'
-					});
-				} else if (!frm.doc.spa_item) {
-					frappe.msgprint({
-						title: __('Not Allowed'),
-						message: __('Please select Spa Treatment'),
-						indicator: 'red'
-					});
-				} else {
-					check_and_set_availability(frm);
-				}
-			});
-		} else {
-			frm.page.set_primary_action(__('Save'), () => frm.save());
-		}
+		// if (frm.is_new()) {
+		// 	frm.page.set_primary_action(__('Check Availability'), function() {
+		// 		if (!frm.doc.client_id) {
+		// 			frappe.msgprint({
+		// 				title: __('Not Allowed'),
+		// 				message: __('Please select Client ID first'),
+		// 				indicator: 'red'
+		// 			});
+		// 		} else if (!frm.doc.spa_item) {
+		// 			frappe.msgprint({
+		// 				title: __('Not Allowed'),
+		// 				message: __('Please select Spa Treatment'),
+		// 				indicator: 'red'
+		// 			});
+		// 		} else {
+		// 			check_and_set_availability(frm);
+		// 		}
+		// 	});
+		// } else {
+		// 	frm.page.set_primary_action(__('Save'), () => frm.save());
+		// }
 
-		if(!frm.is_new() && (frm.doc.status=="Scheduled" || frm.doc.status=="Open" || frm.doc.status=="Draft")) {
-			frm.add_custom_button(__('Reschedule'), function() {
-				check_and_set_availability(frm);
-			});
-			frm.add_custom_button(__('Cancel'), function() {
-				update_status(frm, 'Cancelled');
-			});
-		}
+		// if(!frm.is_new() && (frm.doc.status=="Scheduled" || frm.doc.status=="Open" || frm.doc.status=="Draft")) {
+		// 	frm.add_custom_button(__('Reschedule'), function() {
+		// 		check_and_set_availability(frm);
+		// 	});
+		// 	frm.add_custom_button(__('Cancel'), function() {
+		// 		update_status(frm, 'Cancelled');
+		// 	});
+		// }
 
 		if(!frm.is_new() && (frm.doc.status=="Open")) {
 			frm.add_custom_button(__('Check-in'), function(){

@@ -1,48 +1,45 @@
 {
  "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
  "autoname": "naming_series:",
  "creation": "2020-11-16 08:54:16.546241",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "section_break_4",
-  "naming_series",
-  "date",
-  "time",
-  "column_break_3",
-  "status",
-  "payment_status",
   "online",
-  "customer_details_section",
+  "section_break_2",
+  "naming_series",
+  "booking_date",
+  "booking_time",
   "client_id",
+  "column_break_6",
   "client_name",
   "member_id",
-  "membership_status",
-  "gender",
   "mobile_no",
-  "appointment_details",
+  "column_break_8",
+  "gender",
+  "appointment_status",
+  "payment_status",
+  "appointment_details_section",
+  "start_time",
+  "end_time",
   "column_break_20",
-  "spa_item",
-  "spa_menu_group",
-  "spa_menu_category",
-  "column_break_spa",
+  "spa_service",
+  "spa_group",
+  "spa_category",
   "duration",
   "total_duration",
-  "column_break_21",
+  "column_break_spa",
+  "spa_therapist",
+  "section_break_24",
   "regular_rate",
   "member_discount",
   "additional_discount",
   "rate",
-  "section_break_24",
-  "spa_therapist",
   "column_break_26",
   "club_room",
-  "appointment_details_section",
-  "appointment_date",
-  "appointment_time",
-  "start_time",
-  "end_time",
   "column_break_40",
   "any_surgeries",
   "more_info_section",
@@ -58,13 +55,7 @@
  ],
  "fields": [
   {
-   "default": "Today",
-   "fieldname": "date",
-   "fieldtype": "Date",
-   "label": "Date",
-   "read_only": 1
-  },
-  {
+   "allow_in_quick_entry": 1,
    "fieldname": "client_id",
    "fieldtype": "Link",
    "label": "Client ID",
@@ -73,6 +64,7 @@
    "set_only_once": 1
   },
   {
+   "allow_in_quick_entry": 1,
    "fetch_from": "client_id.client_name",
    "fieldname": "client_name",
    "fieldtype": "Data",
@@ -83,25 +75,13 @@
    "read_only": 1
   },
   {
-   "fetch_from": "client_id.membership_status",
-   "fieldname": "membership_status",
-   "fieldtype": "Data",
-   "label": "Membership Status",
-   "read_only": 1
-  },
-  {
-   "fieldname": "column_break_3",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "spa_therapist",
    "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Spa Therapist",
    "no_copy": 1,
-   "options": "Spa Therapist",
-   "read_only": 1
+   "options": "Spa Therapist"
   },
   {
    "fieldname": "column_break_20",
@@ -113,22 +93,6 @@
    "label": "Appointment Details"
   },
   {
-   "fieldname": "appointment_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Appointment Date",
-   "no_copy": 1,
-   "read_only": 1
-  },
-  {
-   "fieldname": "appointment_time",
-   "fieldtype": "Time",
-   "in_list_view": 1,
-   "label": "Appointment Time",
-   "read_only": 1
-  },
-  {
    "collapsible": 1,
    "fieldname": "more_info_section",
    "fieldtype": "Section Break",
@@ -137,20 +101,6 @@
   {
    "fieldname": "column_break_28",
    "fieldtype": "Column Break"
-  },
-  {
-   "allow_on_submit": 1,
-   "default": "Scheduled",
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Status",
-   "options": "Draft\nScheduled\nOpen\nComplete\nNo Show\nCancelled"
-  },
-  {
-   "fieldname": "customer_details_section",
-   "fieldtype": "Section Break",
-   "label": "Customer Details"
   },
   {
    "fetch_from": "client_id.gender",
@@ -169,7 +119,7 @@
    "options": "SPA-APP-.YYYY.-"
   },
   {
-   "fetch_from": "spa_item.duration",
+   "fetch_from": "spa_service.duration",
    "fieldname": "duration",
    "fieldtype": "Duration",
    "label": "Duration",
@@ -184,40 +134,12 @@
    "read_only": 1
   },
   {
-   "fieldname": "appointment_details",
-   "fieldtype": "Section Break",
-   "label": "Spa Details"
-  },
-  {
    "fieldname": "amended_from",
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
    "options": "Spa Appointment",
    "print_hide": 1,
-   "read_only": 1
-  },
-  {
-   "fieldname": "spa_item",
-   "fieldtype": "Link",
-   "label": "Spa Item",
-   "options": "Spa Menu",
-   "reqd": 1
-  },
-  {
-   "fetch_from": "spa_item.spa_menu_group",
-   "fieldname": "spa_menu_group",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Spa Menu Group",
-   "options": "Spa Menu Group",
-   "read_only": 1
-  },
-  {
-   "fetch_from": "spa_item.spa_menu_category",
-   "fieldname": "spa_menu_category",
-   "fieldtype": "Data",
-   "label": "Spa Menu Category",
    "read_only": 1
   },
   {
@@ -264,10 +186,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "column_break_21",
-   "fieldtype": "Column Break"
-  },
-  {
    "fetch_from": "spa_item.rate",
    "fieldname": "regular_rate",
    "fieldtype": "Currency",
@@ -298,18 +216,18 @@
    "options": "Club Room"
   },
   {
+   "allow_in_quick_entry": 1,
    "allow_on_submit": 1,
    "fieldname": "start_time",
    "fieldtype": "Datetime",
-   "label": "Start Time",
-   "read_only": 1
+   "label": "Start Time"
   },
   {
+   "allow_in_quick_entry": 1,
    "allow_on_submit": 1,
    "fieldname": "end_time",
    "fieldtype": "Datetime",
-   "label": "End Time",
-   "read_only": 1
+   "label": "End Time"
   },
   {
    "fieldname": "any_surgeries",
@@ -322,12 +240,6 @@
    "fieldtype": "Data",
    "hidden": 1,
    "label": "Color"
-  },
-  {
-   "fieldname": "time",
-   "fieldtype": "Time",
-   "label": "Time",
-   "read_only": 1
   },
   {
    "allow_on_submit": 1,
@@ -352,6 +264,7 @@
   },
   {
    "default": "0",
+   "description": "This checkbox implies that this booking is made using web/mobile app.",
    "fieldname": "online",
    "fieldtype": "Check",
    "label": "Online Booking",
@@ -373,10 +286,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "section_break_4",
-   "fieldtype": "Section Break"
-  },
-  {
    "fieldname": "column_break_40",
    "fieldtype": "Column Break"
   },
@@ -384,11 +293,70 @@
    "fieldname": "additional_discount",
    "fieldtype": "Currency",
    "label": "Additional Discount"
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break",
+   "label": "General Information"
+  },
+  {
+   "default": "Today",
+   "fieldname": "booking_date",
+   "fieldtype": "Date",
+   "label": "Booking Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "booking_time",
+   "fieldtype": "Time",
+   "label": "Booking Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Scheduled",
+   "depends_on": "eval:doc.is_new==0",
+   "fieldname": "appointment_status",
+   "fieldtype": "Select",
+   "label": "Appointment Status",
+   "options": "Scheduled\nOpen\nComplete\nNo Show\nCancelled",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "spa_service",
+   "fieldtype": "Link",
+   "label": "Spa Service",
+   "options": "Spa Services",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "spa_service.spa_group",
+   "fieldname": "spa_group",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Spa  Service Group",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "spa_service.spa_category",
+   "fieldname": "spa_category",
+   "fieldtype": "Data",
+   "label": "Spa Service Category",
+   "read_only": 1
   }
  ],
+ "hide_toolbar": 1,
  "links": [],
- "modified": "2021-01-16 14:45:40.274527",
- "modified_by": "suba@bluelynx.com",
+ "modified": "2021-02-26 14:58:57.192809",
+ "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Appointment",
  "owner": "Administrator",
@@ -406,6 +374,7 @@
    "write": 1
   }
  ],
+ "quick_entry": 1,
  "search_fields": "client_name",
  "sort_field": "modified",
  "sort_order": "DESC",

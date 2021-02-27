@@ -1,0 +1,32 @@
+{
+ "actions": [],
+ "creation": "2021-02-25 15:50:16.185608",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "spa_service"
+ ],
+ "fields": [
+  {
+   "fieldname": "spa_service",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Spa Service",
+   "options": "Spa Services"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2021-02-25 15:51:07.964405",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Spa Service Addon",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
