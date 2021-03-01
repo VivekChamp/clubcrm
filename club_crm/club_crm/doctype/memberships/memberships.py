@@ -28,22 +28,5 @@ class Memberships(Document):
 			frappe.db.commit()
 
 
-	def on_submit(self):
-		if self.membership_type == 'Single Membership':
-			customer = frappe.db.get_value('Customer', {"client_id":self.client_id_1 },'name')
-			if customer:
-				frappe.db.set_value('Customer', customer, 'member_id', self.member_no_1)
-		if self.membership_type == 'Couple Membership' or 'Family Membership':
-			customer1 = frappe.db.get_value('Customer', {"client_id":self.client_id_1},'name')
-			customer2 = frappe.db.get_value('Customer', {"client_id":self.client_2},'name')
-			if customer1 and customer2:
-				frappe.db.set_value('Customer', customer1, 'member_id', self.member_no_1)
-				frappe.db.set_value('Customer', customer2, 'member_id', self.member_no_2)
 
-		if self.membership_type == 'Family Membership':
-			additional_member_details = frappe.db.get_all('Additional Members Item', {'parent': self.name}, ['client_id', 'member_id'])
-			for row in additional_member_details:
-				customer = frappe.db.get_value('Customer', {"client_id":self.client_id},'name')
-				frappe.db.set_value('Customer', customer, 'member_id', self.member_id)
-		
-		
+
