@@ -22,18 +22,7 @@ class SpaAppointment(Document):
 		self.set_title()
 		# if self.club_room:
 		#  	self.create_room_schedule()
-	
-	# def after_insert(self):
-	# 	self.reload()
-		#invoice_appointment(self)
 
-	# def before_submit(self):
-	# 		self.calculate_time()
-	# 		self.check_discount()
-	
-	# def on_save(self):
-	# 		self.calculate_time()
-	# 		self.check_discount()
 	def set_title(self):
 		self.title = _('{0} for {1}').format(self.client_name,
 			self.spa_service)

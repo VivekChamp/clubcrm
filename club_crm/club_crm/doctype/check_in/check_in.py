@@ -27,24 +27,6 @@ class CheckIn(Document):
 		if gc_check:
 			frappe.throw("Already Checked in")
 
-# @frappe.whitelist()
-# def spa_checkin(source_name, target_doc=None):
-# 	def set_missing_values(source, target):
-# 		target.series = "CHK-.YYYY.-SPA.-"
-# 		target.check_in_type = "Spa"
-# 		target.spa_booking = source_name
-
-# 	doc = get_mapped_doc('Spa Appointment', source_name, {
-# 			'Spa Appointment': {
-# 				'doctype': 'Check In',
-# 				'field_map': [
-# 					['client_id', 'client_id']
-# 				]
-# 			}
-# 		}, target_doc, set_missing_values)
-
-# 	return doc
-
 @frappe.whitelist()
 def gc_checkin(source_name, target_doc=None):
 	def set_missing_values(source, target):
@@ -90,9 +72,6 @@ def club_checkout(client_id):
 @frappe.whitelist()
 def spa_checkin(client_id, appointment_id):
 	client = frappe.get_doc('Client', client_id)
-	# if client.status != "Checked-in":
-	# 	frappe.throw("The client has not checked into the club")
-	# else:
 	doc = frappe.get_doc({
         'doctype': 'Check In',
         'client_id': client_id,
@@ -104,22 +83,3 @@ def spa_checkin(client_id, appointment_id):
 	doc.submit()
 	
 	frappe.db.set_value("Spa Appointment",appointment_id,"appointment_status","Checked-in")
-
-	
-# @frappe.whitelist()
-# def club_checkin(source_name, target_doc=None):
-# 	doc = get_mapped_doc('Client', source_name, {
-# 			'Client': {
-# 				'doctype': 'Check In',
-# 				'field_map': [
-# 					['client_id', 'client_id']
-# 				]
-# 			}
-# 		}, target_doc)
-# 	doc.submit()
-
-# 	client= frappe.get_doc('Client', doc.client_id)
-# 	client.status = "Checked-in"
-# 	client.checkin_document = doc.name
-# 	client.save()
-# 	client.reload()
