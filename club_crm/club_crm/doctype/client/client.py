@@ -82,3 +82,8 @@ def create_customer_client(doc, method=None):
             'customer_group': d.customer_group,
             'territory': d.territory
             },update_modified=False)
+
+@frappe.whitelist()
+def check_status(client_id):
+    client = frappe.get_doc('Client', client_id)
+    return client.status

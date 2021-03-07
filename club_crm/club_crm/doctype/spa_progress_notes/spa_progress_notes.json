@@ -8,19 +8,18 @@
  "field_order": [
   "naming_series",
   "date",
-  "column_break_3",
   "time",
-  "appointment_details_section",
+  "column_break_3",
   "appointment_id",
-  "client_id",
   "client_name",
-  "spa_item",
-  "column_break_10",
+  "spa_service",
+  "column_break_8",
   "spa_therapist",
   "spa_duration",
   "spa_room",
-  "progress_notes",
+  "notes_section",
   "notes",
+  "column_break_10",
   "amended_from"
  ],
  "fields": [
@@ -42,13 +41,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "client_id",
-   "fieldtype": "Link",
-   "label": " Client ID",
-   "options": "Client",
-   "read_only": 1
-  },
-  {
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "hidden": 1,
@@ -56,6 +48,7 @@
    "options": "SPA-PN-.YYYY.-"
   },
   {
+   "fetch_from": "appointment_id.spa_therapist",
    "fieldname": "spa_therapist",
    "fieldtype": "Data",
    "label": " Spa Therapist",
@@ -71,11 +64,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "appointment_details_section",
-   "fieldtype": "Section Break",
-   "label": "Appointment Details"
-  },
-  {
    "fetch_from": "assessment.memberships",
    "fieldname": "appointment_id",
    "fieldtype": "Link",
@@ -85,12 +73,7 @@
    "reqd": 1
   },
   {
-   "fieldname": "spa_item",
-   "fieldtype": "Data",
-   "label": "Spa Item",
-   "read_only": 1
-  },
-  {
+   "fetch_from": "appointment_id.total_duration",
    "fieldname": "spa_duration",
    "fieldtype": "Duration",
    "hide_days": 1,
@@ -99,14 +82,10 @@
    "read_only": 1
   },
   {
+   "fetch_from": "appointment_id.club_room",
    "fieldname": "spa_room",
    "fieldtype": "Data",
    "label": "Spa Room"
-  },
-  {
-   "fieldname": "progress_notes",
-   "fieldtype": "Section Break",
-   "label": "Notes"
   },
   {
    "fieldname": "notes",
@@ -114,6 +93,7 @@
    "label": "Notes"
   },
   {
+   "fetch_from": "appointment_id.client_name",
    "fieldname": "client_name",
    "fieldtype": "Data",
    "label": "Client Name",
@@ -122,12 +102,26 @@
   {
    "fieldname": "column_break_10",
    "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "appointment_id.spa_service",
+   "fieldname": "spa_service",
+   "fieldtype": "Data",
+   "label": "Spa Service",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "notes_section",
+   "fieldtype": "Section Break"
   }
  ],
- "hide_toolbar": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-01-03 22:25:12.222261",
+ "modified": "2021-03-07 01:01:27.254891",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Progress Notes",

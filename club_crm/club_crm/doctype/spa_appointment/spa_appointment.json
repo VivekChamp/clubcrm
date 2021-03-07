@@ -1,13 +1,14 @@
 {
  "actions": [],
+ "allow_copy": 1,
  "allow_import": 1,
- "allow_rename": 1,
  "autoname": "naming_series:",
  "creation": "2020-11-16 08:54:16.546241",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "title",
   "online",
   "section_break_2",
   "naming_series",
@@ -19,28 +20,49 @@
   "member_id",
   "mobile_no",
   "column_break_8",
+  "membership_status",
   "gender",
   "appointment_status",
   "payment_status",
   "appointment_details_section",
+  "appointment_date",
+  "appointment_time",
+  "appointment_end_time",
   "start_time",
   "end_time",
   "column_break_20",
   "spa_service",
   "spa_group",
   "spa_category",
-  "duration",
-  "total_duration",
+  "service_duration",
+  "service_turnover",
   "column_break_spa",
   "spa_therapist",
-  "section_break_24",
-  "regular_rate",
-  "member_discount",
-  "additional_discount",
-  "rate",
-  "column_break_26",
+  "therapist_requested",
   "club_room",
+  "default_price",
+  "addon_section",
+  "addon_table",
+  "column_break_31",
+  "addon_total_price",
+  "addon_duration",
+  "addon_turnover",
+  "section_break_24",
+  "total_service_duration",
+  "total_addon_duration",
+  "total_duration",
+  "column_break_26",
+  "net_total",
+  "member_discount",
+  "member_discount_check",
   "column_break_40",
+  "apply_discount",
+  "discount_percentage",
+  "discount_amount",
+  "grand_total",
+  "section_break_51",
+  "notes",
+  "column_break_53",
   "any_surgeries",
   "more_info_section",
   "payment_method",
@@ -49,9 +71,10 @@
   "column_break_28",
   "transaction_date",
   "transaction_reference",
+  "card_type",
   "amended_from",
   "color",
-  "card_type"
+  "progress_notes"
  ],
  "fields": [
   {
@@ -68,7 +91,6 @@
    "fetch_from": "client_id.client_name",
    "fieldname": "client_name",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Client Name",
    "no_copy": 1,
@@ -81,7 +103,8 @@
    "in_standard_filter": 1,
    "label": "Spa Therapist",
    "no_copy": 1,
-   "options": "Spa Therapist"
+   "options": "Spa Therapist",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_20",
@@ -89,8 +112,7 @@
   },
   {
    "fieldname": "appointment_details_section",
-   "fieldtype": "Section Break",
-   "label": "Appointment Details"
+   "fieldtype": "Section Break"
   },
   {
    "collapsible": 1,
@@ -119,13 +141,6 @@
    "options": "SPA-APP-.YYYY.-"
   },
   {
-   "fetch_from": "spa_service.duration",
-   "fieldname": "duration",
-   "fieldtype": "Duration",
-   "label": "Duration",
-   "read_only": 1
-  },
-  {
    "fetch_from": "client_id.mobile_no",
    "fieldname": "mobile_no",
    "fieldtype": "Data",
@@ -140,13 +155,6 @@
    "no_copy": 1,
    "options": "Spa Appointment",
    "print_hide": 1,
-   "read_only": 1
-  },
-  {
-   "fieldname": "rate",
-   "fieldtype": "Currency",
-   "label": "Grand Total",
-   "precision": "2",
    "read_only": 1
   },
   {
@@ -179,24 +187,17 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "spa_item.total_duration",
    "fieldname": "total_duration",
    "fieldtype": "Duration",
-   "label": "Total Duration (including turn over)",
-   "read_only": 1
-  },
-  {
-   "fetch_from": "spa_item.rate",
-   "fieldname": "regular_rate",
-   "fieldtype": "Currency",
-   "label": "Regular Rate",
-   "precision": "2",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Total Duration (including turnover time)",
    "read_only": 1
   },
   {
    "fieldname": "member_discount",
    "fieldtype": "Currency",
-   "label": "Member Discount",
+   "label": "Member Discount Amount",
    "precision": "2",
    "read_only": 1
   },
@@ -220,14 +221,16 @@
    "allow_on_submit": 1,
    "fieldname": "start_time",
    "fieldtype": "Datetime",
-   "label": "Start Time"
+   "label": "Start Time",
+   "reqd": 1
   },
   {
    "allow_in_quick_entry": 1,
    "allow_on_submit": 1,
    "fieldname": "end_time",
    "fieldtype": "Datetime",
-   "label": "End Time"
+   "label": "End Time",
+   "read_only": 1
   },
   {
    "fieldname": "any_surgeries",
@@ -235,11 +238,12 @@
    "label": "Any recent surgeries"
   },
   {
-   "fetch_from": "spa_menu_group.color",
+   "default": "yellow",
    "fieldname": "color",
-   "fieldtype": "Data",
+   "fieldtype": "Select",
    "hidden": 1,
-   "label": "Color"
+   "label": "Color",
+   "options": "yellow\norange\nlightblue\ngreen\ngrey\nred"
   },
   {
    "allow_on_submit": 1,
@@ -290,14 +294,9 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "additional_discount",
-   "fieldtype": "Currency",
-   "label": "Additional Discount"
-  },
-  {
    "fieldname": "section_break_2",
    "fieldtype": "Section Break",
-   "label": "General Information"
+   "label": "Appointment Details"
   },
   {
    "default": "Today",
@@ -323,7 +322,7 @@
    "fieldname": "appointment_status",
    "fieldtype": "Select",
    "label": "Appointment Status",
-   "options": "Scheduled\nOpen\nComplete\nNo Show\nCancelled",
+   "options": "Scheduled\nOpen\nChecked-in\nComplete\nNo Show\nCancelled",
    "read_only": 1
   },
   {
@@ -351,11 +350,197 @@
    "fieldtype": "Data",
    "label": "Spa Service Category",
    "read_only": 1
+  },
+  {
+   "fieldname": "appointment_date",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Appointment Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "appointment_time",
+   "fieldtype": "Time",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Appointment Time",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "spa_service.price",
+   "fieldname": "default_price",
+   "fieldtype": "Currency",
+   "label": "Price (in QAR)",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "addon_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "description": "Add or delete add-on services and click save to calculate the total duration and total price.",
+   "fieldname": "addon_table",
+   "fieldtype": "Table",
+   "mandatory_depends_on": "eval:doc.has_addon==1",
+   "options": "Spa Addons"
+  },
+  {
+   "fetch_from": "spa_service.duration",
+   "fieldname": "service_duration",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Service Duration",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_31",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "addon_total_price",
+   "fieldtype": "Currency",
+   "label": "Add-ons Price",
+   "read_only": 1
+  },
+  {
+   "fieldname": "addon_duration",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Add-ons Duration",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_service_duration",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Total Service Duration (including turnover)",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "therapist_requested",
+   "fieldtype": "Check",
+   "label": "Requested by Customer"
+  },
+  {
+   "fetch_from": "client_id.membership_status",
+   "fieldname": "membership_status",
+   "fieldtype": "Data",
+   "label": "Membership Status",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "spa_service.turn_over_time",
+   "fetch_if_empty": 1,
+   "fieldname": "service_turnover",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Service Turnover time"
+  },
+  {
+   "fieldname": "addon_turnover",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Add-ons Turnover time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_addon_duration",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Total Addon Duration (including turnover)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "net_total",
+   "fieldtype": "Currency",
+   "label": "Net Total",
+   "read_only": 1
+  },
+  {
+   "fieldname": "grand_total",
+   "fieldtype": "Currency",
+   "label": "Grand Total",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "default": "1",
+   "depends_on": "eval:doc.membership_status==\"Member\"",
+   "description": "Uncheck this option and save if you need to remove the member discount.",
+   "fieldname": "member_discount_check",
+   "fieldtype": "Check",
+   "label": "Member Discount"
+  },
+  {
+   "default": "None",
+   "fieldname": "apply_discount",
+   "fieldtype": "Select",
+   "label": "Apply additional discount",
+   "options": "None\nAmount\nPercentage on Net Total\nPercentage on Net Total after member discount"
+  },
+  {
+   "depends_on": "eval:doc.apply_discount!=\"None\"",
+   "fieldname": "discount_amount",
+   "fieldtype": "Currency",
+   "label": "Additional Discount Amount",
+   "mandatory_depends_on": "eval:doc.apply_discount==\"Amount\"",
+   "read_only_depends_on": "eval:doc.apply_discount!=\"Amount\""
+  },
+  {
+   "depends_on": "eval:doc.apply_discount==\"Percentage on Net Total\" || doc.apply_discount==\"Percentage on Net Total after member discount\"",
+   "fieldname": "discount_percentage",
+   "fieldtype": "Int",
+   "label": "Additional Discount Percentage",
+   "mandatory_depends_on": "eval:doc.apply_discount==\"Percentage on Net Total\" || doc.apply_discount==\"Percentage on Net Total after member discount\""
+  },
+  {
+   "fieldname": "section_break_51",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "column_break_53",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "appointment_end_time",
+   "fieldtype": "Time",
+   "hidden": 1,
+   "label": "Appointment End Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Title",
+   "no_copy": 1,
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "progress_notes",
+   "fieldtype": "Text",
+   "hidden": 1,
+   "label": "Progress Notes",
+   "read_only": 1
   }
  ],
- "hide_toolbar": 1,
  "links": [],
- "modified": "2021-02-26 14:58:57.192809",
+ "modified": "2021-03-07 01:20:38.662346",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Appointment",
@@ -375,9 +560,10 @@
   }
  ],
  "quick_entry": 1,
- "search_fields": "client_name",
- "sort_field": "modified",
+ "search_fields": "client_name, spa_therapist, spa_service, appointment_date, appointment_time",
+ "show_name_in_global_search": 1,
+ "sort_field": "appointment_date",
  "sort_order": "DESC",
- "title_field": "client_name",
+ "title_field": "title",
  "track_changes": 1
 }

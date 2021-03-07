@@ -58,7 +58,8 @@
   "other_notes",
   "more_info",
   "client_details",
-  "amended_from"
+  "amended_from",
+  "checkin_document"
  ],
  "fields": [
   {
@@ -141,7 +142,7 @@
    "in_list_view": 1,
    "label": "Status",
    "no_copy": 1,
-   "options": "Active\nDisabled",
+   "options": "Active\nChecked-in\nDisabled",
    "print_hide": 1,
    "read_only": 1
   },
@@ -409,13 +410,20 @@
    "fieldname": "other_details_section",
    "fieldtype": "Section Break",
    "label": "Other Details"
+  },
+  {
+   "fieldname": "checkin_document",
+   "fieldtype": "Link",
+   "label": "Checkin Document",
+   "options": "Check In",
+   "read_only": 1
   }
  ],
  "icon": "fa fa-user",
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2021-01-31 09:35:05.269381",
+ "modified": "2021-03-06 14:19:57.317030",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",

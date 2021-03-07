@@ -15,9 +15,10 @@ app_license = "MIT"
 # ------------------
 
 # include js, css files in header of desk.html
-app_include_css = ["/assets/cl_app/css/fullcalendar.min.css","/assets/cl_app/css/scheduler.min.css"]
-app_include_js = ["/assets/cl_app/js/fullcalendar.min.js","/assets/cl_app/js/scheduler.min.js"]
-
+#app_include_css = ["/assets/club_crm/css/fullcalendar.min.css","/assets/club_crm/css/scheduler.min.css"]
+#app_include_css = "/assets/club_crm/css/scheduler.min.css"
+#app_include_js = ["/assets/club_crm/js/fullcalendar.min.js","/assets/club_crm/js/scheduler.min.js"]
+#app_include_js = "/assets/club_crm/js/scheduler.min.js"
 # include js, css files in header of web template
 # web_include_css = "/assets/club_crm/css/club_crm.css"
 # web_include_js = "/assets/club_crm/js/club_crm.js"

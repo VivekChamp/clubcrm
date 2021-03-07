@@ -11,4 +11,7 @@ class SpaMenu(Document):
 		self.calculate_duration()
 
 	def calculate_duration(self):
-		self.total_duration = self.duration + self.turn_over_time
+		if self.turn_overtime:
+			self.total_duration = self.duration + self.turn_over_time
+		else:
+			self.total_duration - self.duration

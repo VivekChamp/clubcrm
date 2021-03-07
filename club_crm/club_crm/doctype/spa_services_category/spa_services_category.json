@@ -15,7 +15,9 @@
   "on_app",
   "column_break_3",
   "complimentary",
-  "category_image"
+  "category_image",
+  "section_break_8",
+  "item_category"
  ],
  "fields": [
   {
@@ -63,11 +65,20 @@
    "fieldname": "section_break_4",
    "fieldtype": "Section Break",
    "label": "Additional Options"
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "item_category",
+   "fieldtype": "Data",
+   "label": "Item Category"
   }
  ],
  "image_field": "category_image",
  "links": [],
- "modified": "2021-02-25 14:09:50.482294",
+ "modified": "2021-02-28 17:49:25.985735",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Services Category",

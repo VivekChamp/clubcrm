@@ -1,266 +1,146 @@
 // Copyright (c) 2020, Blue Lynx and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on('Spa Appointment', {
-	// onload: function(frm) {
-	// 	if (frm.is_new()) {
-	// 		frm.set_value('appointment_time', null);
-	// 		frm.disable_save();
-	// 	}
-	// },
+frappe.ui.form.on("Spa Appointment", "onload", function(frm){
+    cur_frm.set_query("spa_service", function(){
+        return {
+            "filters": [
+                ["Spa Services", "is_addon", "=", "0"],
+                ["Spa Services", "enabled", "=", "1"]
+            ]
+        }
+    });
+    // cur_frm.set_query("addon_table","addon_service", function(){
+    //         return {
+    //             "filters" : {
+    //                 "is_addon": 1,
+    //                 "enabled": 1
+    //             }
+    //         }
+    //     });
+})
 
-	refresh: function(frm) {
-		// if (frm.is_new()) {
-		// 	frm.page.set_primary_action(__('Check Availability'), function() {
-		// 		if (!frm.doc.client_id) {
-		// 			frappe.msgprint({
-		// 				title: __('Not Allowed'),
-		// 				message: __('Please select Client ID first'),
-		// 				indicator: 'red'
-		// 			});
-		// 		} else if (!frm.doc.spa_item) {
-		// 			frappe.msgprint({
-		// 				title: __('Not Allowed'),
-		// 				message: __('Please select Spa Treatment'),
-		// 				indicator: 'red'
-		// 			});
-		// 		} else {
-		// 			check_and_set_availability(frm);
-		// 		}
-		// 	});
-		// } else {
-		// 	frm.page.set_primary_action(__('Save'), () => frm.save());
-		// }
+// frappe.ui.form.on('Spa Addons', {
+// 	refresh(frm) {
+// 	    cur_frm.set_query("addon_service", function(){
+//         return {
+//             "filters": [
+//                 ["Spa Services", "is_addon", "=", "1"]
+//             ]
+//         }
+//     });
+// 	}
+// })
 
-		// if(!frm.is_new() && (frm.doc.status=="Scheduled" || frm.doc.status=="Open" || frm.doc.status=="Draft")) {
-		// 	frm.add_custom_button(__('Reschedule'), function() {
-		// 		check_and_set_availability(frm);
-		// 	});
-		// 	frm.add_custom_button(__('Cancel'), function() {
-		// 		update_status(frm, 'Cancelled');
-		// 	});
-		// }
+frappe.ui.form.on("Spa Appointment", {
+    refresh: function(frm) {
+        if(!frm.is_new() && frm.doc.appointment_status == "Open") {
+            frappe.call({
+                method: 'club_crm.club_crm.doctype.client.client.check_status',
+                args: {client_id: frm.doc.client_id},
+                callback: function(r) {
+                    if (r.message=="Checked-in") {
+                        frm.add_custom_button(__('Check In'), function() {
+                            frappe.call({
+                                method: 'club_crm.club_crm.doctype.check_in.check_in.spa_checkin',
+                                args: {client_id: frm.doc.client_id, appointment_id:frm.doc.name},
+                                callback: function(r) {
+                                    cur_frm.reload_doc();
+                                }
+                            });
+                            frappe.msgprint({
+                                title: __('Notification'),
+                                indicator: 'green',
+                                message: __('Checked in successfully')
+                            });
+                        });
+                    }
+                }
+            });
+        }
 
-		if(!frm.is_new() && (frm.doc.status=="Open")) {
-			frm.add_custom_button(__('Check-in'), function(){
-				frappe.model.open_mapped_doc({
-					method: 'club_crm.club_crm.doctype.check_in.check_in.spa_checkin',
-					frm: frm,
-				});
-			});
-			frm.add_custom_button(__('Progress Notes'), function(){
-				frappe.model.open_mapped_doc({
-					method: 'club_crm.club_crm.doctype.spa_progress_notes.spa_progress_notes.create_progress_notes',
-					frm: frm,
-				});
-			});
-		}
-
-		if(!frm.is_new() && (frm.doc.status=="Open" || frm.doc.status=="Scheduled" || frm.doc.status=="Complete" || frm.doc.status=="Draft" ) && frm.doc.payment_status == "Not Paid"){	
-			frm.add_custom_button(__('Offline Payment'), function() {	  
-						  let d = new frappe.ui.Dialog({
-						  title: 'Offline Payment',
-						  fields: [
-						  {
-							  label: 'Transaction Date',
-							  fieldname: 'transaction_date',
-							  fieldtype: 'Date',
-							  default:'Today',
-							  read_only:1
-						  },
-						  {
-							  label: 'Paid Amount',
-							  fieldname: 'amount',
-							  fieldtype: 'Currency',
-							  reqd:1
-						  },
-						  {
-							  label: '',
-							  fieldname: 'column_break',
-							  fieldtype: 'Column Break'
-						  },
-						  {
-							  label: 'Payment Method',
-							  fieldname: 'payment_type',
-							  fieldtype: 'Select',
-							  options:['Credit Card','Cash'],
-							  reqd:1
-						  },
-						  {
-							label: 'Card Type',
-							fieldname: 'card_type',
-							fieldtype: 'Select',
-							options:['Visa','MasterCard','Amex','NAPS','CB-Smart'],
-							depends_on: 'eval:doc.payment_type=="Credit Card"'
-						  },
-						  {
-							label: 'Transaction Reference #',
-							fieldname: 'transaction_reference',
-							fieldtype: 'Data',
-							depends_on: 'eval:doc.payment_type=="Credit Card"'
-						  }
-					  		],
-				   primary_action_label: ('Submit'),
-					 primary_action: function() {
-					  d.hide();
-					  frm.enable_save();
-					  frm.save();
-						frm.set_value("paid_amount",d.get_value('amount'));
-						frm.set_value("payment_method",d.get_value('payment_type'));
-						frm.set_value("card_type",d.get_value('card_type'));
-						frm.set_value("transaction_date",d.get_value('transaction_date'));
-						frm.set_value("transaction_reference",d.get_value('transaction_reference'));
-						frm.set_value("payment_status","Paid");
-						//frm.set_value("status","Scheduled");
-					 }
-					});
-					d.show();
-				  });
-				  }
-	
-	}
-
-});
-
-let check_and_set_availability = function(frm) {
-	let selected_slot = null;
-
-	show_availability();
-
-	function show_empty_state(spa_therapist, appointment_date) {
-		frappe.msgprint({
-			title: __('Not Available'),
-			message: __('Spa Therapist {0} not available on {1}', [spa_therapist.bold(), appointment_date.bold()]),
-			indicator: 'red'
-		});
-	}
-
-	function show_availability() {
-		let selected_therapist = '';
-		let d = new frappe.ui.Dialog({
-			title: __('Available slots'),
-			fields: [
-				{ fieldtype: 'Link', options: 'Spa Menu', reqd: 1, fieldname: 'spa_item', label: 'Spa Menu'},
-				{ fieldtype: 'Column Break'},
-				{ fieldtype: 'Link', options: 'Spa Therapist', reqd: 1, fieldname: 'spa_therapist', label: 'Spa Therapist'},
-				{ fieldtype: 'Column Break'},
-				{ fieldtype: 'Date', reqd: 1, fieldname: 'appointment_date', label: 'Date'},
-				{ fieldtype: 'Section Break'},
-				{ fieldtype: 'HTML', fieldname: 'slots'}
-
-			],
-			primary_action_label: __('Book'),
-			primary_action: function() {
-				frm.set_value('appointment_time', selected_slot);
-				frm.set_value('spa_therapist', d.get_value('spa_therapist'));
-				frm.set_value('spa_item', d.get_value('spa_item'));
-				frm.set_value('appointment_date', d.get_value('appointment_date'));
-				d.hide();
-				frm.enable_save();
-				frm.save();
-				d.get_primary_btn().attr('disabled', true);
-			}
-		});
-
-		d.set_values({
-			'spa_item': frm.doc.spa_item,
-			'spa_therapist': frm.doc.spa_therapist,
-			'appointment_date': frm.doc.appointment_date
-		});
-
-		// disable dialog action initially
-		d.get_primary_btn().attr('disabled', true);
-
-		// Field Change Handler
-
-		let fd = d.fields_dict;
-
-		d.fields_dict['appointment_date'].df.onchange = () => {
-			show_slots(d, fd);
-		};
-		d.fields_dict['spa_therapist'].df.onchange = () => {
-			if (d.get_value('spa_therapist') && d.get_value('spa_therapist') != selected_therapist) {
-				selected_therapist = d.get_value('spa_therapist');
-				show_slots(d, fd);
-			}
-		};
-		d.show();
-	}
-
-	function show_slots(d, fd) {
-		if (d.get_value('appointment_date') && d.get_value('spa_therapist')) {
-			fd.slots.html('');
-			frappe.call({
-				method: 'club_crm.api.spa.get_slots',
-				args: {
-					therapist_name: d.get_value('spa_therapist'),
-					date: d.get_value('appointment_date'),
-					spa_item: d.get_value('spa_item')
-				},
-				callback: (r) => {
-					let data = r.message;
-					if (data.available_slots.length > 0) {
-						let $wrapper = d.fields_dict.slots.$wrapper;
-
-						// make buttons for each slot
-						let available_slots = data.available_slots;
-						let slot_html = '';
-						let i=0;
-						slot_html = slot_html + `<label>Select a time slot</label>`;
-						slot_html = slot_html + `<br/>` +`<br/>` + available_slots.map(slot => {
-							let start_str= slot;
-							return `<button class="btn btn-default"
-						 			data-name=${start_str}
-						 			style="margin: 0 10px 10px 0; width: 72px;">
-						 			${start_str.substring(0, start_str.length - 3)}
-						 		</button>`;
-							
-						}).join("");
-						slot_html = slot_html + `<br/>`;
-
-						$wrapper
-							.css('margin-bottom', 0)
-							.addClass('text-center')
-							.html(slot_html);
-
-						// blue button when clicked
-						$wrapper.on('click', 'button', function() {
-							let $btn = $(this);
-							$wrapper.find('button').removeClass('btn-primary');
-							$btn.addClass('btn-primary');
-							selected_slot = $btn.attr('data-name');
-							// duration = $btn.attr('data-duration');
-							// enable dialog action
-							d.get_primary_btn().attr('disabled', null);
-						});
-
-					} else {
-						//	fd.available_slots.html('Please select a valid date.'.bold())
-						show_empty_state(d.get_value('spa_therapist'), d.get_value('appointment_date'));
-					}
-				},
-				freeze: true,
-				freeze_message: __('Fetching records......')
-			});
-		} else {
-			fd.available_slots.html(__('Appointment date and therapist name are mandatory').bold());
-		}
-	}
-};
-
-let update_status = function(frm, status){
-	let doc = frm.doc;
-	frappe.confirm(__('Are you sure you want to cancel this appointment?'),
-		function() {
-			frappe.call({
-				method: 'club_crm.club_crm.doctype.spa_appointment.spa_appointment.update_status',
-				args: {appointment_id: doc.name, status:status},
-				callback: function(data) {
-					if (!data.exc) {
-						frm.reload_doc();
-					}
-				}
+        if(!frm.is_new() && (frm.doc.appointment_status=="Scheduled" || frm.doc.appointment_status=="Open" || frm.doc.appointment_status=="Draft")) {
+			frm.add_custom_button(__('Cancel'), function() {
+                frappe.call({
+                    method: 'club_crm.club_crm.doctype.spa_appointment.spa_appointment.cancel_appointment',
+                    args: {appointment_id:frm.doc.name},
+                    callback: function(r) {
+                        cur_frm.reload_doc();
+                    }
+                });
+                frappe.msgprint({
+                    title: __('Notification'),
+                    indicator: 'green',
+                    message: __('Appointment has been cancelled')
+                });
 			});
 		}
-	);
-};
+
+        if (frm.doc.appointment_status=="Cancelled") {
+			frm.disable_save();
+		}
+
+        if (frm.doc.appointment_status=="Checked-in") {
+            frappe.call({
+                method: 'club_crm.club_crm.doctype.spa_progress_notes.spa_progress_notes.check_if_exists',
+                args: {appointment_id: frm.doc.name},
+                callback: function(r) {
+                    if (r.message==0) {
+                        frm.add_custom_button(__('Progress Notes'), function(){
+                            let d = new frappe.ui.Dialog({
+                                title: 'Progress Notes',
+                                fields: [
+                                    {
+                                        label: 'Notes',
+                                        fieldname: 'notes',
+                                        fieldtype: 'Small Text',
+                                        reqd:1
+                                    }
+                                ],
+                                primary_action_label: ('Submit'), primary_action: function() {
+                                    d.hide();
+                                    frm.set_value("progress_notes",d.get_value('notes'));
+                                    frappe.call({
+                                        method: 'club_crm.club_crm.doctype.spa_progress_notes.spa_progress_notes.progress_notes',
+                                        args: {appointment_id:frm.doc.name, notes: frm.doc.progress_notes},
+                                        callback: function(r) {
+                                            cur_frm.reload_doc();
+                                        }
+                                    });
+                                    frappe.msgprint({
+                                        title: __('Notification'),
+                                        indicator: 'green',
+                                        message: __('Progress Notes added successfully')
+                                    });
+                                 }
+                            })
+                            d.show();
+            
+                        })
+                    }
+                }
+            })
+		}
+
+    }
+})
+
+// frappe.ui.form.on("Spa Addons", {
+//     onload: function(frm){
+//         frm.set_query("addon_service", function(){
+//             return {
+//                 "filters": {
+//                     "is_addon": 1
+//                 }
+//             }
+//         });
+//     }
+// })
+
+// frappe.ui.form.on("Spa Addons", "treatment_duration", function (frm, cdt, cdn) {
+//     var total = 0;
+//     $.each(frm.doc.addon_table || [], function (i, d) {
+//         total += flt(d.treatment_duration);
+//     });
+//     frm.set_value("addon_total_duration", total);
+// });

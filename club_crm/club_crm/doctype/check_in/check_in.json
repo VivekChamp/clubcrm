@@ -36,13 +36,16 @@
    "default": "Now",
    "fieldname": "check_in_time",
    "fieldtype": "Datetime",
+   "in_list_view": 1,
    "label": "Check In Time",
    "read_only": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "check_out_time",
    "fieldtype": "Datetime",
-   "label": "Check Out Time"
+   "label": "Check Out Time",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_11",
@@ -71,21 +74,22 @@
    "read_only": 1
   },
   {
+   "default": "Club Check-in",
    "fieldname": "check_in_type",
    "fieldtype": "Select",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Check-in Type",
-   "options": "Member Check-in\nSpa\nGym\nGroup Class",
+   "options": "Club Check-in\nSpa\nGym\nGroup Class",
    "reqd": 1
   },
   {
-   "default": "CHK-.YYYY.-MEM.-",
+   "default": "CHK-.YYYY.-CLUB.-",
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "hidden": 1,
    "label": "Series",
-   "options": "CHK-.YYYY.-MEM.-\nCHK-.YYYY.-SPA.-\nCHK-.YYYY.-GYM.-\nCHK-.YYYY.-SOCIAL.-\nCHK-.YYYY.-GC.-"
+   "options": "CHK-.YYYY.-CLUB.-\nCHK-.YYYY.-SPA.-\nCHK-.YYYY.-GYM.-\nCHK-.YYYY.-SOCIAL.-\nCHK-.YYYY.-GC.-"
   },
   {
    "fieldname": "column_break",
@@ -144,7 +148,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-02-13 21:20:15.116518",
+ "modified": "2021-03-06 15:41:28.451655",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Check In",
