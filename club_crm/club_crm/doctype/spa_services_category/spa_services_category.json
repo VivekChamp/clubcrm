@@ -1,23 +1,29 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:spa_category_name",
  "creation": "2020-10-28 09:15:06.651190",
+ "description": "This doctype manages the categories of spa services",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "enabled",
   "spa_category_name",
+  "section_break_4",
   "on_app",
   "column_break_3",
   "complimentary",
-  "category_image"
+  "category_image",
+  "section_break_8",
+  "item_category"
  ],
  "fields": [
   {
    "fieldname": "spa_category_name",
    "fieldtype": "Data",
-   "label": "Spa Category Name",
+   "label": "Category Name",
    "reqd": 1,
    "unique": 1
   },
@@ -28,7 +34,8 @@
    "label": "Category Image"
   },
   {
-   "default": "0",
+   "default": "1",
+   "description": "Uncheck to hide this category from client web/mobile apps",
    "fieldname": "on_app",
    "fieldtype": "Check",
    "in_list_view": 1,
@@ -41,34 +48,57 @@
   },
   {
    "default": "0",
+   "description": "Check this box if this category contains complimentary services",
    "fieldname": "complimentary",
    "fieldtype": "Check",
+   "in_list_view": 1,
    "label": "Complimentary"
+  },
+  {
+   "default": "1",
+   "description": "Uncheck to disable this category from all forms.",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break",
+   "label": "Additional Options"
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "item_category",
+   "fieldtype": "Data",
+   "label": "Item Category"
   }
  ],
  "image_field": "category_image",
  "links": [],
- "modified": "2020-12-20 18:29:36.493017",
+ "modified": "2021-02-28 17:49:25.985735",
  "modified_by": "Administrator",
  "module": "Club CRM",
- "name": "Spa Menu Category",
+ "name": "Spa Services Category",
  "nsm_parent_field": "parent_spa_menu_category",
  "owner": "Administrator",
  "permissions": [
   {
    "create": 1,
    "delete": 1,
-   "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "select": 1,
+   "set_user_permissions": 1,
    "share": 1,
    "write": 1
   }
  ],
  "sort_field": "modified",
- "sort_order": "DESC",
- "track_changes": 1
+ "sort_order": "DESC"
 }

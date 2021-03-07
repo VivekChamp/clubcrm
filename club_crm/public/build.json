@@ -1,0 +1,14 @@
+// {
+// 	"js/fullcalendar.min.js": [
+// 		"public/js/fullcalendar.js"
+// 	],
+// 	"js/scheduler.min.js": [
+// 		"public/js/scheduler.js"
+// 	],
+// 	"css/fullcalendar.min.css": [
+// 		"public/css/fullcalendar.css"
+// 	],
+// 	"css/scheduler.min.css": [
+// 		"public/css/scheduler.css"
+// 	]
+// }

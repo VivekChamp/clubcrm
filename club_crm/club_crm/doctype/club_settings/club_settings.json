@@ -5,6 +5,9 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "club_timings_section",
+  "spa_from",
+  "spa_to",
   "spa_settings",
   "spa_cancel_time",
   "fitness_settings",
@@ -51,11 +54,26 @@
    "hide_days": 1,
    "hide_seconds": 1,
    "label": "Group Class Cancellation"
+  },
+  {
+   "fieldname": "club_timings_section",
+   "fieldtype": "Section Break",
+   "label": "Club Timings"
+  },
+  {
+   "fieldname": "spa_from",
+   "fieldtype": "Time",
+   "label": "Spa From"
+  },
+  {
+   "fieldname": "spa_to",
+   "fieldtype": "Time",
+   "label": "Spa To"
   }
  ],
  "issingle": 1,
  "links": [],
- "modified": "2020-12-25 04:13:51.773150",
+ "modified": "2021-02-28 14:44:50.811814",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club Settings",

@@ -1,0 +1,334 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "field:spa_name",
+ "creation": "2021-02-25 11:47:15.858353",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "column_break_1",
+  "on_app",
+  "column_break_4",
+  "is_addon",
+  "section_break_2",
+  "spa_name",
+  "spa_group",
+  "spa_category",
+  "column_break_3",
+  "duration",
+  "turn_over_time",
+  "total_duration",
+  "column_break_14",
+  "description",
+  "other_details_section",
+  "session_type",
+  "no_of_sessions",
+  "price",
+  "column_break_17",
+  "validity",
+  "no_member_discount",
+  "column_break_21",
+  "capacity",
+  "dependencies_section",
+  "male_rooms",
+  "female_rooms",
+  "column_break_18",
+  "equipment_male",
+  "equipment_female",
+  "column_break_29",
+  "item_details_section",
+  "item",
+  "item_code",
+  "column_break_20",
+  "item_name",
+  "item_group",
+  "column_break_37",
+  "cost_center",
+  "section_break_39",
+  "image",
+  "color"
+ ],
+ "fields": [
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "description": "Uncheck to hide this service from client web/mobile apps",
+   "fieldname": "on_app",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Show on App"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "spa_name",
+   "fieldtype": "Data",
+   "label": "Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "spa_group",
+   "fieldtype": "Link",
+   "label": "Group",
+   "options": "Spa Services Group"
+  },
+  {
+   "fetch_from": "spa_group.spa_category",
+   "fieldname": "spa_category",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Category",
+   "options": "Spa Services Category",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "duration",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Duration (in minutes)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "turn_over_time",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Turnover Time (in minutes)"
+  },
+  {
+   "fieldname": "total_duration",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Total Duration (in minutes)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_14",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "other_details_section",
+   "fieldtype": "Section Break",
+   "label": "Other Details"
+  },
+  {
+   "default": "Single",
+   "depends_on": "eval:doc.is_addon==0",
+   "fieldname": "session_type",
+   "fieldtype": "Select",
+   "label": "Session Type",
+   "options": "Single\nMultiple",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.is_addon==0 && doc.session_type==\"Multiple\"",
+   "fieldname": "no_of_sessions",
+   "fieldtype": "Data",
+   "label": "No. of Sessions",
+   "mandatory_depends_on": "eval:doc.session_type==\"Multiple\""
+  },
+  {
+   "fieldname": "column_break_17",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.is_addon==0 && doc.session_type==\"Multiple\"",
+   "fieldname": "validity",
+   "fieldtype": "Duration",
+   "hide_seconds": 1,
+   "label": "Validity",
+   "mandatory_depends_on": "eval:doc.session_type==\"Multiple\""
+  },
+  {
+   "fieldname": "column_break_21",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0.00",
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Price (in QAR)",
+   "non_negative": 1,
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "dependencies_section",
+   "fieldtype": "Section Break",
+   "label": "Dependencies"
+  },
+  {
+   "fieldname": "male_rooms",
+   "fieldtype": "Table MultiSelect",
+   "label": "Male Rooms",
+   "options": "Club Room Table"
+  },
+  {
+   "fieldname": "female_rooms",
+   "fieldtype": "Table MultiSelect",
+   "label": "Female Rooms",
+   "options": "Club Room Table"
+  },
+  {
+   "fieldname": "column_break_18",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "equipment_male",
+   "fieldtype": "Table MultiSelect",
+   "label": "Spa Equipment for Male",
+   "options": "Spa Equipment Table"
+  },
+  {
+   "fieldname": "equipment_female",
+   "fieldtype": "Table MultiSelect",
+   "label": "Spa Equipment for Female",
+   "options": "Spa Equipment Table"
+  },
+  {
+   "fieldname": "column_break_29",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "capacity",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Capacity (at a time)"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "item_details_section",
+   "fieldtype": "Section Break",
+   "label": "Item Details"
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "label": "Item",
+   "options": "Item"
+  },
+  {
+   "fetch_from": "item.item_code",
+   "fieldname": "item_code",
+   "fieldtype": "Data",
+   "label": "Item Code",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "item.item_name",
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item Name"
+  },
+  {
+   "fetch_from": "item.item_group",
+   "fieldname": "item_group",
+   "fieldtype": "Link",
+   "label": "Item Group",
+   "options": "Item Group"
+  },
+  {
+   "fieldname": "column_break_37",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Data",
+   "label": "Cost Center",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_39",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "label": "Image"
+  },
+  {
+   "fetch_from": "spa_menu_group.color",
+   "fieldname": "color",
+   "fieldtype": "Color",
+   "hidden": 1,
+   "label": "Color"
+  },
+  {
+   "default": "1",
+   "description": "Uncheck to disable this service from all forms.",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "default": "0",
+   "description": "Check this option if this service is an add-on. This service will be available for purchase only with another service of same service group.",
+   "fieldname": "is_addon",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "is Add-on"
+  },
+  {
+   "default": "0",
+   "description": "Check this box if members are not offered any discount for this service",
+   "fieldname": "no_member_discount",
+   "fieldtype": "Check",
+   "label": "Do not offer Member Discount"
+  }
+ ],
+ "image_field": "image",
+ "links": [],
+ "modified": "2021-03-01 14:33:12.065435",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Spa Services",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "spa_name",
+ "track_changes": 1
+}

@@ -8,45 +8,49 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "disabled",
+  "enabled",
   "column_break_1",
   "on_app",
+  "column_break_4",
   "has_addon",
   "section_break_2",
   "spa_item_name",
   "spa_menu_group",
   "spa_menu_category",
   "column_break_3",
-  "description",
-  "other_details_section",
   "duration",
   "turn_over_time",
   "total_duration",
   "column_break_14",
-  "rate",
+  "description",
+  "other_details_section",
+  "session_type",
+  "no_of_sessions",
+  "column_break_17",
+  "validity",
+  "column_break_21",
+  "price",
   "dependencies_section",
-  "rooms",
-  "female_room",
+  "male_rooms",
+  "female_rooms",
   "column_break_18",
   "equipment_male",
   "equipment_female",
+  "column_break_29",
   "capacity",
   "item_details_section",
   "item",
-  "column_break_20",
   "item_code",
+  "column_break_20",
   "item_name",
   "item_group",
+  "column_break_37",
+  "cost_center",
+  "section_break_39",
   "image",
   "color"
  ],
  "fields": [
-  {
-   "default": "0",
-   "fieldname": "disabled",
-   "fieldtype": "Check",
-   "label": "Disabled"
-  },
   {
    "fieldname": "section_break_2",
    "fieldtype": "Section Break",
@@ -55,15 +59,6 @@
   {
    "fieldname": "column_break_3",
    "fieldtype": "Column Break"
-  },
-  {
-   "default": "0.00",
-   "fieldname": "rate",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Rate",
-   "precision": "2",
-   "reqd": 1
   },
   {
    "collapsible": 1,
@@ -139,7 +134,8 @@
    "fieldname": "spa_menu_group",
    "fieldtype": "Link",
    "label": "Spa Menu Group",
-   "options": "Spa Menu Group"
+   "options": "Spa Services Group",
+   "reqd": 1
   },
   {
    "fetch_from": "spa_menu_group.spa_menu_category",
@@ -147,7 +143,8 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Spa Menu Category",
-   "options": "Spa Menu Category"
+   "options": "Spa Services Category",
+   "read_only": 1
   },
   {
    "fieldname": "other_details_section",
@@ -181,12 +178,6 @@
    "label": "Dependencies"
   },
   {
-   "fieldname": "rooms",
-   "fieldtype": "Table MultiSelect",
-   "label": "Male Rooms",
-   "options": "Club Room Table"
-  },
-  {
    "fieldname": "column_break_18",
    "fieldtype": "Column Break"
   },
@@ -206,12 +197,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "female_room",
-   "fieldtype": "Table MultiSelect",
-   "label": "Female Rooms",
-   "options": "Club Room Table"
-  },
-  {
    "fieldname": "equipment_male",
    "fieldtype": "Table MultiSelect",
    "label": "Spa Equipment for Male",
@@ -220,17 +205,96 @@
   {
    "fieldname": "equipment_female",
    "fieldtype": "Table MultiSelect",
-   "label": "Spa Eqiupment for Female",
+   "label": "Spa Equipment for Female",
    "options": "Spa Equipment Table"
   },
   {
    "fieldname": "column_break_1",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_17",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Single",
+   "fieldname": "session_type",
+   "fieldtype": "Select",
+   "label": "Session Type",
+   "options": "Single\nMultiple",
+   "reqd": 1
+  },
+  {
+   "fieldname": "no_of_sessions",
+   "fieldtype": "Data",
+   "label": "No. of Sessions",
+   "mandatory_depends_on": "eval:doc.session_type==\"Multiple\""
+  },
+  {
+   "fieldname": "validity",
+   "fieldtype": "Duration",
+   "hide_seconds": 1,
+   "label": "Validity",
+   "mandatory_depends_on": "eval:doc.session_type==\"Multiple\""
+  },
+  {
+   "fieldname": "column_break_21",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0.00",
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Price",
+   "non_negative": 1,
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "male_rooms",
+   "fieldtype": "Table MultiSelect",
+   "label": "Male Rooms",
+   "options": "Club Room Table"
+  },
+  {
+   "fieldname": "female_rooms",
+   "fieldtype": "Table MultiSelect",
+   "label": "Female Rooms",
+   "options": "Club Room Table"
+  },
+  {
+   "fieldname": "column_break_29",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Data",
+   "label": "Cost Center",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_37",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_39",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
   }
  ],
  "image_field": "image",
  "links": [],
- "modified": "2020-12-25 03:46:48.368684",
+ "modified": "2021-02-25 11:58:35.318630",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Menu",

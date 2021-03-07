@@ -18,7 +18,7 @@
   {
    "hidden": 0,
    "label": "Spa",
-   "links": "[\n    {\n        \"description\": \"List of Spa Menu\",\n        \"label\": \"Spa Menu\",\n        \"name\": \"Spa Menu\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Spa Group\",\n        \"label\": \"Spa Menu Group\",\n        \"name\": \"Spa Menu Group\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Spa Category\",\n        \"label\": \"Spa Menu Category\",\n        \"name\": \"Spa Menu Category\",\n        \"type\": \"doctype\"\n    }\n]"
+   "links": "[\n    {\n        \"description\": \"List of Spa Menu\",\n        \"label\": \"Spa Services\",\n        \"name\": \"Spa Services\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Spa Group\",\n        \"label\": \"Spa Services Group\",\n        \"name\": \"Spa Services Group\",\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"List of Spa Category\",\n        \"label\": \"Spa Services Category\",\n        \"name\": \"Spa Services Category\",\n        \"type\": \"doctype\"\n    }\n]"
   },
   {
    "hidden": 0,
@@ -57,9 +57,10 @@
  "extends_another_page": 0,
  "hide_custom": 1,
  "idx": 0,
+ "is_default": 0,
  "is_standard": 1,
  "label": "Club CRM",
- "modified": "2021-01-10 08:40:18.805079",
+ "modified": "2021-02-28 12:37:01.207042",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club CRM",

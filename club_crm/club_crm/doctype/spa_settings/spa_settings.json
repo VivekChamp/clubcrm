@@ -1,0 +1,60 @@
+{
+ "actions": [],
+ "creation": "2021-02-28 14:48:58.200952",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "spa_hours",
+  "table_2",
+  "spa_cancellation_section",
+  "spa_cancellation_time"
+ ],
+ "fields": [
+  {
+   "fieldname": "table_2",
+   "fieldtype": "Table",
+   "options": "Time Schedule"
+  },
+  {
+   "fieldname": "spa_cancellation_section",
+   "fieldtype": "Section Break",
+   "label": "Spa Cancellation"
+  },
+  {
+   "fieldname": "spa_hours",
+   "fieldtype": "Section Break",
+   "label": "Spa Business Hours"
+  },
+  {
+   "description": "Minimum time for an appointment to be available for cancellation or reschedule (in minutes)",
+   "fieldname": "spa_cancellation_time",
+   "fieldtype": "Duration",
+   "label": "Spa Appointment Cancellation Time"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2021-02-28 14:50:36.072738",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Spa Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
