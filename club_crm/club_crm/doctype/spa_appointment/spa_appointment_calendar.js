@@ -6,7 +6,8 @@ frappe.views.calendar["Spa Appointment"] = {
 		"allDay": "allDay",
 		"description": "notes",
 		"resourceId": "spa_therapist",
-		"color": "color"
+		"color": "color",
+		"eventTextColor": "textcolor"
 		// "description": "description",
         // "name": "name",
 		// "rendering": "rendering"
@@ -36,8 +37,8 @@ frappe.views.calendar["Spa Appointment"] = {
 					  type: 'agendaDay',
 					  duration: { days: 1 },
 					  buttonText: 'Day Overview',
-					  minTime: "05:00:00",
-					  maxTime: "23:00:00"
+					  minTime: "08:00:00",
+					  maxTime: "22:00:00"
 					}
 				},
 				resources: function(callback) {
@@ -54,9 +55,11 @@ frappe.views.calendar["Spa Appointment"] = {
 				defaultView: 'agendaOneDay',
 				allDaySlot:false,
 				slotEventOverlap:false,
+				eventTextColor : '#ffffff',
 				eventRender: function(eventObj, $el) {
 					$el.popover({
 					  title: "Notes",
+					  html: true,
 					  content: eventObj.description,
 					  trigger: 'hover',
 					  placement: 'top',

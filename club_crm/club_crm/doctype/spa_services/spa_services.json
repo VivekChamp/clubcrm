@@ -39,14 +39,14 @@
   "equipment_male",
   "equipment_female",
   "column_break_29",
+  "cost_center",
+  "revenue_account",
   "item_details_section",
   "item",
-  "item_code",
   "column_break_20",
   "item_name",
   "item_group",
   "column_break_37",
-  "cost_center",
   "section_break_39",
   "image",
   "color"
@@ -181,7 +181,7 @@
   {
    "fieldname": "dependencies_section",
    "fieldtype": "Section Break",
-   "label": "Dependencies"
+   "label": "Dependencies & Accounting"
   },
   {
    "fieldname": "male_rooms",
@@ -234,13 +234,6 @@
    "options": "Item"
   },
   {
-   "fetch_from": "item.item_code",
-   "fieldname": "item_code",
-   "fieldtype": "Data",
-   "label": "Item Code",
-   "set_only_once": 1
-  },
-  {
    "fieldname": "column_break_20",
    "fieldtype": "Column Break"
   },
@@ -248,23 +241,28 @@
    "fetch_from": "item.item_name",
    "fieldname": "item_name",
    "fieldtype": "Data",
-   "label": "Item Name"
+   "label": "Item Name",
+   "read_only": 1
   },
   {
    "fetch_from": "item.item_group",
    "fieldname": "item_group",
    "fieldtype": "Link",
    "label": "Item Group",
-   "options": "Item Group"
+   "options": "Item Group",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_37",
    "fieldtype": "Column Break"
   },
   {
+   "default": "10 - Spa - KC",
    "fieldname": "cost_center",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
+   "hidden": 1,
    "label": "Cost Center",
+   "options": "Cost Center",
    "read_only": 1
   },
   {
@@ -305,11 +303,18 @@
    "fieldname": "no_member_discount",
    "fieldtype": "Check",
    "label": "Do not offer Member Discount"
+  },
+  {
+   "default": "40100001 - Massage&Body Services - KC",
+   "fieldname": "revenue_account",
+   "fieldtype": "Select",
+   "label": "Revenue Account",
+   "options": "\n40100001 - Massage&Body Services - KC\n40100002 - Skin Care Services - KC\n40100003 - Hair Care Services - KC\n40100004 - Nail Care Services - KC"
   }
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-03-01 14:33:12.065435",
+ "modified": "2021-03-10 23:07:09.705373",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Services",

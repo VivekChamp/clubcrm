@@ -103,7 +103,7 @@
    "fieldname": "fitness_category",
    "fieldtype": "Link",
    "label": "Fitness Training Category",
-   "options": "Fitness Training Category"
+   "options": "Fitness Services Category"
   },
   {
    "default": "1 month",
@@ -133,7 +133,7 @@
   }
  ],
  "links": [],
- "modified": "2020-12-12 00:50:26.315667",
+ "modified": "2021-03-11 13:24:20.826530",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Package",

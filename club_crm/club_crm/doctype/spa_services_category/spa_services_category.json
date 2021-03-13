@@ -1,7 +1,6 @@
 {
  "actions": [],
  "allow_import": 1,
- "allow_rename": 1,
  "autoname": "field:spa_category_name",
  "creation": "2020-10-28 09:15:06.651190",
  "description": "This doctype manages the categories of spa services",
@@ -73,12 +72,13 @@
   {
    "fieldname": "item_category",
    "fieldtype": "Data",
-   "label": "Item Category"
+   "label": "Item Category",
+   "read_only": 1
   }
  ],
  "image_field": "category_image",
  "links": [],
- "modified": "2021-02-28 17:49:25.985735",
+ "modified": "2021-03-10 19:17:13.788614",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Services Category",

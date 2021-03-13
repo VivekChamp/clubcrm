@@ -75,3 +75,41 @@ class FitnessTrainingAppointment(Document):
 				indicator: 'red',
 				message: __('Document updated successfully')
 				});
+
+
+@frappe.whitelist()
+def get_trainer_resources():
+	trainers= frappe.get_all('Fitness Trainer',fields=['employee_name'])
+	resource=[]
+	if trainers:
+		for trainer in trainers:
+			resource.append({
+				'id' : trainer.employee_name,
+				'title' : trainer.employee_name
+			})
+	return resource
+
+@frappe.whitelist()
+def get_events(start, end, filters=None):
+
+	from frappe.desk.calendar import get_event_conditions
+	conditions = get_event_conditions('Fitness Training Appointment', filters)
+
+	data = frappe.db.sql("""
+		select
+		`tabFitness Training Appointment`.name, `tabFitness Training Appointment`.client_name,
+		`tabFitness Training Appointment`.title, `tabFitness Training Appointment`.fitness_trainer,
+		`tabFitness Training Appointment`.appointment_status,
+		`tabFitness Training Appointment`.total_duration,
+		`tabFitness Training Appointment`.notes,
+		`tabFitness Training Appointment`.start_time,
+		`tabFitness Training Appointment`.end_time,
+		`tabFitness Training Appointment`.color
+		from
+		`tabFitness Training Appointment`
+		where
+		(`tabFitness Training Appointment`.appointment_date between %(start)s and %(end)s)
+		and `tabFitness Training Appointment`.appointment_status != 'Cancelled' {conditions}""".format(conditions=conditions),
+		{"start": start, "end": end}, as_dict=True, update={"textColor": '#fff'})
+
+	return data

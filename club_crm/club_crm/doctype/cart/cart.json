@@ -1,0 +1,272 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2021-03-07 22:17:45.346133",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "general_information_section",
+  "date",
+  "time",
+  "appointments_check",
+  "sessions_check",
+  "products_check",
+  "column_break_3",
+  "client_id",
+  "client_name",
+  "column_break_10",
+  "membership_status",
+  "mobile_no",
+  "section_break_5",
+  "cart_appointment",
+  "section_break_11",
+  "quantity_appoinments",
+  "column_break_12",
+  "net_total_appoinments",
+  "section_break_14",
+  "cart_session",
+  "section_break_19",
+  "quantity_sessions",
+  "column_break_20",
+  "net_total_sessions",
+  "section_break_22",
+  "cart_product",
+  "section_break_10",
+  "quantity_product",
+  "column_break_25",
+  "net_total_products",
+  "section_break_27",
+  "grand_total",
+  "amended_from",
+  "naming_series"
+ ],
+ "fields": [
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Link",
+   "label": "Client ID",
+   "options": "Client"
+  },
+  {
+   "fetch_from": "client_id.client_name",
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "label": "Client Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break",
+   "label": "Billing Details"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Cart",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "read_only": 1
+  },
+  {
+   "default": "Now",
+   "fieldname": "time",
+   "fieldtype": "Time",
+   "label": "Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "client_id.mobile_no",
+   "fieldname": "mobile_no",
+   "fieldtype": "Data",
+   "label": "Mobile Number",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.products_check==\"1\"",
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "grand_total",
+   "fieldtype": "Currency",
+   "label": "Grand Total"
+  },
+  {
+   "depends_on": "eval:doc.sessions_check==\"1\"",
+   "fieldname": "cart_session",
+   "fieldtype": "Table",
+   "label": "Sessions",
+   "options": "Cart Session"
+  },
+  {
+   "fieldname": "general_information_section",
+   "fieldtype": "Section Break",
+   "label": "General Information"
+  },
+  {
+   "fetch_from": "client_id.membership_status",
+   "fieldname": "membership_status",
+   "fieldtype": "Data",
+   "label": "Membership Status",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.appointments_check==\"1\"",
+   "fieldname": "section_break_11",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.appointments_check==\"1\"",
+   "fieldname": "column_break_12",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.appointments_check==\"1\"",
+   "fieldname": "net_total_appoinments",
+   "fieldtype": "Currency",
+   "label": "Net Total (Appoinments)"
+  },
+  {
+   "depends_on": "eval:doc.sessions_check==\"1\"",
+   "fieldname": "section_break_14",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.products_check==\"1\"",
+   "fieldname": "cart_product",
+   "fieldtype": "Table",
+   "label": "Products",
+   "options": "Cart Product"
+  },
+  {
+   "depends_on": "eval:doc.sessions_check==\"1\"",
+   "fieldname": "net_total_sessions",
+   "fieldtype": "Currency",
+   "label": "Net Total (Sessions)"
+  },
+  {
+   "depends_on": "eval:doc.products_check==\"1\"",
+   "fieldname": "net_total_products",
+   "fieldtype": "Currency",
+   "label": "Net Total (Products)"
+  },
+  {
+   "depends_on": "eval:doc.sessions_check==\"1\"",
+   "fieldname": "section_break_19",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.sessions_check==\"1\"",
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.products_check==\"1\"",
+   "fieldname": "section_break_22",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.products_check==\"1\"",
+   "fieldname": "column_break_25",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_27",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.appointments_check==\"1\"",
+   "fieldname": "quantity_appoinments",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Quantity (Appoinments)"
+  },
+  {
+   "depends_on": "eval:doc.sessions_check==\"1\"",
+   "fieldname": "quantity_sessions",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Quantity (Sessions)"
+  },
+  {
+   "depends_on": "eval:doc.products_check==\"1\"",
+   "fieldname": "quantity_product",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Quantity (Product)"
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "appointments_check",
+   "fieldtype": "Check",
+   "label": "Appointments"
+  },
+  {
+   "default": "0",
+   "fieldname": "sessions_check",
+   "fieldtype": "Check",
+   "label": "Sessions"
+  },
+  {
+   "default": "0",
+   "fieldname": "products_check",
+   "fieldtype": "Check",
+   "label": "Products"
+  },
+  {
+   "depends_on": "eval:doc.appointments_check==\"1\"",
+   "fieldname": "cart_appointment",
+   "fieldtype": "Table",
+   "label": "Appointments",
+   "options": "Cart Appointment"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "CART-.YYYY.-"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2021-03-13 01:51:52.495530",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Cart",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

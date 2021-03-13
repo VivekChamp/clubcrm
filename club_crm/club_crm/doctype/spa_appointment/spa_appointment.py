@@ -13,15 +13,23 @@ from club_crm.api.wallet import get_balance
 class SpaAppointment(Document):
 	def validate(self):
 		self.set_appointment_date_time()
+		self.validate_past_days()
 		self.set_addons_and_durations()
 		self.set_total_duration()
 		self.validate_overlaps()
+		self.validate_room_overlaps()
 		self.check_discount()
 		self.set_status()
 		self.set_color()
 		self.set_title()
-		# if self.club_room:
-		#  	self.create_room_schedule()
+
+	def after_insert(self):
+		if self.club_room:
+			self.create_room_schedule()
+
+	def on_update(self):
+		if self.club_room:
+			self.create_room_schedule()
 
 	def set_title(self):
 		self.title = _('{0} for {1}').format(self.client_name,
@@ -86,37 +94,17 @@ class SpaAppointment(Document):
 
 	def set_color(self):
 		if self.appointment_status=="Scheduled":
-			self.color="yellow"
+			self.color="#55ea55"
 		elif self.appointment_status=="Open":
-			self.color="orange"
+			self.color="#9370db"
 		elif self.appointment_status=="Checked-in":
-			self.color="lightblue"
+			self.color="#7eb2ec"
 		elif self.appointment_status=="Complete":
-			self.color="green"
-		elif self.appointment_status=="No show":
-			self.color="grey"
+			self.color="#20b2aa"
+		elif self.appointment_status=="No Show":
+			self.color="#808080"
 		else:
-			self.color="red"
-
-	def create_room_schedule(self):
-			room= frappe.get_all('Club Room Schedule', filters={'spa_booking': self.name,}, fields=["*"])
-			if room:
-				for d in room:
-					schedule= frappe.get_doc('Club Room Schedule', d.name)
-					schedule.room_name=self.club_room
-					schedule.save()
-			else:
-				doc= frappe.get_doc({
-					"doctype": 'Club Room Schedule',
-					"room_name": self.club_room,
-					"date": self.appointment_date,
-					"from_time": self.start_time,
-					"to_time": self.end_time,
-					"booking_type": 'Spa',
-					"spa_booking": self.name
-					})
-				doc.insert()
-				doc.save()
+			self.color="#b22222"
 				
 	def before_submit(self):
 		if self.payment_method=="Wallet":
@@ -179,7 +167,7 @@ class SpaAppointment(Document):
 		from
 			`tabSpa Appointment`
 		where
-			appointment_date=%s and name!=%s and status NOT IN ("Complete", "Cancelled")
+			appointment_date=%s and name!=%s and appointment_status NOT IN ("Cancelled", "No Show")
 			and (spa_therapist=%s or client_name=%s) and
 			((appointment_time<%s and appointment_end_time>%s) or
 			(appointment_time>%s and appointment_time<%s) or
@@ -197,11 +185,64 @@ class SpaAppointment(Document):
 			overlapping_details += _('<b>{0}</b> has appointment scheduled with <b>{1}</b> at {2} until {4}.').format(
 				overlaps[0][1], overlaps[0][2], overlaps[0][3], overlaps[0][4], overlaps[0][5])
 			frappe.throw(overlapping_details, title=_('Appointments Overlapping'))
+	
+	def validate_room_overlaps(self):
+		overlaps = frappe.db.sql("""
+		select
+			name,room_name, from_time, to_time
+		from
+			`tabClub Room Schedule`
+		where
+			room_name=%s and name=!%s and
+			((from_time<%s and to_time>%s) or
+			(from_time>%s and from_time<%s) or
+			(from_time>%s and to_time<%s) or
+			(from_time=%s))
+		""", (self.club_room, self.name,
+		self.start_time, self.start_time,
+		self.start_time, self.end_time, 
+		self.start_time, self.end_time,
+		self.start_time))
+
+		if overlaps:
+			overlapping_details = _('This spa room is already booked for another appointment from ')
+			overlapping_details += _('<b>{0}</b> to <b>{1}</b>').format(
+				overlaps[0][1], overlaps[0][2])
+			frappe.throw(overlapping_details, title=_('Room Overlap'))
+
+	def validate_past_days(self):
+		today = date.today()
+		if self.appointment_date < today:
+			past_day = _('Appointments cannot be created for a past date')
+			frappe.throw(past_day, title=_('Appointment Date Error'))
+	
+	def create_room_schedule(self):
+		room= frappe.get_all('Club Room Schedule', filters={'spa_booking': self.name,}, fields=["*"])
+		if room:
+			for d in room:
+				schedule= frappe.get_doc('Club Room Schedule', d.name)
+				schedule.room_name=self.club_room
+				schedule.from_time=self.start_time
+				schedule.to_time=self.end_time
+				schedule.booking_type= "Spa"
+				schedule.spa_booking= self.name
+				schedule.save()
+		else:
+			doc= frappe.get_doc({
+				"doctype": 'Club Room Schedule',
+				"room_name": self.club_room,
+				"from_time": self.start_time,
+				"to_time": self.end_time,
+				"booking_type": 'Spa',
+				"spa_booking": self.name
+			})
+			doc.insert()
+			doc.save()
 
 def update_appointment_status():
 	# update the status of appointments daily
 	appointments = frappe.get_all('Spa Appointment', {
-		'status': ('not in', ['Draft', 'Complete', 'Cancelled', 'Checked in'])
+		'status': ('not in', ['Draft', 'Complete', 'Cancelled', 'Checked in', 'No Show'])
 	}, as_dict=1)
 
 	for appointment in appointments:
@@ -243,6 +284,16 @@ def cancel_appointment(appointment_id):
 	appointment = frappe.get_doc('Spa Appointment', appointment_id)
 	if appointment.payment_status == "Not Paid":
 		frappe.db.set_value("Spa Appointment",appointment_id,"appointment_status","Cancelled")
+		frappe.db.set_value("Spa Appointment",appointment_id,"color","#b22222")
+		frappe.db.set_value("Spa Appointment",appointment_id,"docstatus",2)
+
+@frappe.whitelist()
+def no_show(appointment_id):
+	appointment = frappe.get_doc('Spa Appointment', appointment_id)
+	if appointment.payment_status == "Not Paid":
+		frappe.db.set_value("Spa Appointment",appointment_id,"appointment_status","No Show")
+		frappe.db.set_value("Spa Appointment",appointment_id,"color","#808080")
+		frappe.db.set_value("Spa Appointment",appointment_id,"docstatus",2)
 
 	#For cancellation
 	# if appointment.invoiced:
@@ -291,7 +342,7 @@ def get_events(start, end, filters=None):
 		`tabSpa Appointment`
 		where
 		(`tabSpa Appointment`.appointment_date between %(start)s and %(end)s)
-		and `tabSpa Appointment`.appointment_status != 'Cancelled' and `tabSpa Appointment`.docstatus < 2 {conditions}""".format(conditions=conditions),
-		{"start": start, "end": end}, as_dict=True)
+		and `tabSpa Appointment`.appointment_status != 'Cancelled' {conditions}""".format(conditions=conditions),
+		{"start": start, "end": end}, as_dict=True, update={"textColor": '#fff'})
 
 	return data

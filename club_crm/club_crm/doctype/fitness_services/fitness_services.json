@@ -2,7 +2,7 @@
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "field:fitness_service_name",
+ "autoname": "field:fitness_name",
  "creation": "2021-03-05 00:19:37.865143",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -12,7 +12,7 @@
   "column_break_1",
   "on_app",
   "section_break_2",
-  "fitness_service_name",
+  "fitness_name",
   "fitness_category",
   "column_break_3",
   "duration",
@@ -26,14 +26,15 @@
   "column_break_17",
   "validity",
   "no_member_discount",
+  "column_break_19",
+  "cost_center",
+  "revenue_account",
   "item_details_section",
   "item",
-  "item_code",
   "column_break_20",
   "item_name",
   "item_group",
   "column_break_37",
-  "cost_center",
   "section_break_39",
   "image",
   "color"
@@ -64,19 +65,12 @@
    "label": "Details"
   },
   {
-   "fieldname": "fitness_service_name",
-   "fieldtype": "Data",
-   "label": "Name",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
    "fetch_from": "spa_group.spa_category",
    "fieldname": "fitness_category",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Category",
-   "options": "Fitness Training Category",
+   "options": "Fitness Services Category",
    "read_only": 1
   },
   {
@@ -107,7 +101,6 @@
   },
   {
    "default": "Multiple",
-   "depends_on": "eval:doc.is_addon==0",
    "fieldname": "session_type",
    "fieldtype": "Select",
    "label": "Session Type",
@@ -115,7 +108,7 @@
    "reqd": 1
   },
   {
-   "depends_on": "eval:doc.is_addon==0 && doc.session_type==\"Multiple\"",
+   "depends_on": "eval:doc.session_type==\"Multiple\"",
    "fieldname": "no_of_sessions",
    "fieldtype": "Data",
    "label": "No. of Sessions",
@@ -136,7 +129,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval:doc.is_addon==0 && doc.session_type==\"Multiple\"",
+   "depends_on": "eval:doc.session_type==\"Multiple\"",
    "fieldname": "validity",
    "fieldtype": "Duration",
    "hide_seconds": 1,
@@ -161,13 +154,6 @@
    "fieldtype": "Link",
    "label": "Item",
    "options": "Item"
-  },
-  {
-   "fetch_from": "item.item_code",
-   "fieldname": "item_code",
-   "fieldtype": "Data",
-   "label": "Item Code",
-   "set_only_once": 1
   },
   {
    "fieldname": "column_break_20",
@@ -214,14 +200,32 @@
    "label": "Color"
   },
   {
+   "depends_on": "eval:doc.session_type==\"Multiple\"",
    "fieldname": "sessions_per_week",
    "fieldtype": "Data",
    "label": "Sessions per week"
+  },
+  {
+   "fieldname": "column_break_19",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "revenue_account",
+   "fieldtype": "Select",
+   "label": "Revenue Account",
+   "options": "\n40100005 - Fitness Services - KC"
+  },
+  {
+   "fieldname": "fitness_name",
+   "fieldtype": "Data",
+   "label": "Name",
+   "reqd": 1,
+   "unique": 1
   }
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-03-05 00:22:42.822441",
+ "modified": "2021-03-11 15:17:58.876415",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Services",
@@ -241,6 +245,6 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "title_field": "fitness_service_name",
+ "title_field": "fitness_name",
  "track_changes": 1
 }
