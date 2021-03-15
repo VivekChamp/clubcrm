@@ -40,7 +40,7 @@ app_license = "MIT"
 # ----------
 
 # application home page (will override Website Settings)
-# home_page = "login"
+home_page = "login"
 
 # website user home page (by Role)
 # role_home_page = {
@@ -147,3 +147,14 @@ fixtures = [
     }
 ]}
 ]
+
+email_brand_image = "assets/club_crm/images/katara-club.jpg"
+
+default_mail_footer = """
+	<span>
+		Sent by
+		<a class="text-muted" href="https://katara.club" target="_blank">
+			Katara Club
+		</a>
+	</span>
+"""

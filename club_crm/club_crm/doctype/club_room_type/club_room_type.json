@@ -2,57 +2,41 @@
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "field:room_type",
+ "autoname": "field:room_type_name",
  "creation": "2020-12-10 17:10:22.874754",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "disabled",
-  "room_type",
-  "allow_appointments",
-  "overlap_appointments",
+  "enabled",
+  "room_type_name",
   "description"
  ],
  "fields": [
   {
-   "default": "0",
-   "fieldname": "disabled",
-   "fieldtype": "Check",
-   "label": "Disabled",
-   "no_copy": 1
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
   },
   {
-   "fieldname": "room_type",
+   "fieldname": "room_type_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Room Type",
+   "label": "Room Type Name",
    "no_copy": 1,
    "unique": 1
   },
   {
-   "bold": 1,
-   "default": "0",
-   "fieldname": "allow_appointments",
+   "default": "1",
+   "description": "Uncheck to disable selection of this room type.",
+   "fieldname": "enabled",
    "fieldtype": "Check",
-   "label": "Allow Appointments"
-  },
-  {
-   "bold": 1,
-   "default": "0",
-   "depends_on": "eval:doc.allow_appointments == 1",
-   "fieldname": "overlap_appointments",
-   "fieldtype": "Check",
-   "label": "Allow Overlap"
-  },
-  {
-   "fieldname": "description",
-   "fieldtype": "Small Text",
-   "label": "Description"
+   "label": "Enabled",
+   "no_copy": 1
   }
  ],
  "links": [],
- "modified": "2021-01-04 11:37:44.459348",
+ "modified": "2021-03-09 14:43:54.763943",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club Room Type",
@@ -71,9 +55,8 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "Retail",
  "sort_field": "modified",
  "sort_order": "DESC",
- "title_field": "room_type",
+ "title_field": "room_type_name",
  "track_changes": 1
 }

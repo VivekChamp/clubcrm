@@ -17,7 +17,7 @@ frappe.views.calendar["Spa Appointment"] = {
 		        header: {
 		            left: 'title',
 		            center: 'prev,today,next',
-		            right: 'listOneWeek,listOneDay agendaOneDay'
+		            right: 'listOneWeek,listOneDay agendaOneDay,agendaOneWeek timelineOneDay'
 		        },
 				views: {
 					listOneDay: {
@@ -36,9 +36,25 @@ frappe.views.calendar["Spa Appointment"] = {
 					  type: 'agendaDay',
 					  duration: { days: 1 },
 					  buttonText: 'Day Overview',
-					  minTime: "05:00:00",
-					  maxTime: "23:00:00"
-					}
+					  slotDuration: "01:00:00",
+					  minTime: "08:00:00",
+					  maxTime: "22:00:00"
+					},
+					agendaOneWeek: {
+						type: 'agendaDay',
+						duration: { days: 7 },
+						buttonText: 'Week Overview',
+						slotDuration: "01:00:00",
+						minTime: "08:00:00",
+						maxTime: "22:00:00"
+					},
+					timelineOneDay: {
+						type: 'timeline',
+						duration: { days: 1 },
+						buttonText: 'Day Timeline',
+						minTime: "08:00:00",
+						maxTime: "22:00:00"
+					  }
 				},
 				resources: function(callback) {
 					return frappe.call({
@@ -54,15 +70,17 @@ frappe.views.calendar["Spa Appointment"] = {
 				defaultView: 'agendaOneDay',
 				allDaySlot:false,
 				slotEventOverlap:false,
-				eventRender: function(eventObj, $el) {
-					$el.popover({
-					  title: "Notes",
-					  content: eventObj.description,
-					  trigger: 'hover',
-					  placement: 'top',
-					  container: 'body'
-					});
-				  },
+				eventTextColor : '#ffffff',
+				// eventRender: function(eventObj, $el) {
+				// 	$el.popover({
+				// 	  title: "Notes",
+				// 	  html: true,
+				// 	  content: eventObj.description,
+				// 	  trigger: 'hover',
+				// 	  placement: 'top',
+				// 	  container: 'body'
+				// 	});
+				//   },
 		    },
 	get_events_method: "club_crm.club_crm.doctype.spa_appointment.spa_appointment.get_events"
 };

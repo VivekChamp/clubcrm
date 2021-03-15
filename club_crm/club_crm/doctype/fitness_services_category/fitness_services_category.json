@@ -1,0 +1,97 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "autoname": "field:fitness_category_name",
+ "creation": "2020-12-02 21:48:59.968102",
+ "description": "This doctype manages the categories of fitness services",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "fitness_category_name",
+  "additional_options_section",
+  "on_app",
+  "column_break_5",
+  "complimentary",
+  "category_image",
+  "section_break_8",
+  "item_category"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "fieldname": "on_app",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Show on App"
+  },
+  {
+   "fieldname": "category_image",
+   "fieldtype": "Attach Image",
+   "label": "Category Image"
+  },
+  {
+   "default": "1",
+   "description": "Uncheck to disable this category from all forms.",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "fitness_category_name",
+   "fieldtype": "Data",
+   "label": "Category Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "additional_options_section",
+   "fieldtype": "Section Break",
+   "label": "Additional Options"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "complimentary",
+   "fieldtype": "Check",
+   "label": "Complimentary"
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "item_category",
+   "fieldtype": "Data",
+   "label": "Item Category"
+  }
+ ],
+ "image_field": "category_image",
+ "links": [],
+ "modified": "2021-03-11 13:28:32.973773",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Fitness Services Category",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

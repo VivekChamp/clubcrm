@@ -10,27 +10,38 @@ frappe.ui.form.on("Spa Appointment", "onload", function(frm){
             ]
         }
     });
-    // cur_frm.set_query("addon_table","addon_service", function(){
-    //         return {
-    //             "filters" : {
-    //                 "is_addon": 1,
-    //                 "enabled": 1
+    cur_frm.fields_dict["addon_table"].grid.get_field("addon_service").get_query = function(){
+        return {
+                filters:{
+                        "is_addon": 1
+                }
+        }
+    }
+    cur_frm.set_query("club_room", function(){
+        return {
+            "filters": [
+                ["Club Room", "is_group", "=", "0"],
+                ["Club Room", "gender_preference", "in", [frm.doc.gender, "Mixed"]]
+            ]
+        }
+    });
+    
+    // cur_frm.set_query("club_room", function(doc){
+    //     return function(callback) {
+    //         frappe.call({
+    //             method:"club_crm.club_crm.doctype.club_room.club_room.display_service_room",
+    //             args: {spa_service: frm.doc.spa_service},
+    //             type: "GET",
+    //             callback: function(r) {
+    //                  var resources = r.message || [];
+    //                  callback(resources);
     //             }
-    //         }
-    //     });
+    //         })
+    //     }
+    // });
+    
 })
 
-// frappe.ui.form.on('Spa Addons', {
-// 	refresh(frm) {
-// 	    cur_frm.set_query("addon_service", function(){
-//         return {
-//             "filters": [
-//                 ["Spa Services", "is_addon", "=", "1"]
-//             ]
-//         }
-//     });
-// 	}
-// })
 
 frappe.ui.form.on("Spa Appointment", {
     refresh: function(frm) {
@@ -59,6 +70,23 @@ frappe.ui.form.on("Spa Appointment", {
             });
         }
 
+        if(!frm.is_new() && frm.doc.appointment_status == "Open") {
+			frm.add_custom_button(__('No Show'), function() {
+                frappe.call({
+                    method: 'club_crm.club_crm.doctype.spa_appointment.spa_appointment.no_show',
+                    args: {appointment_id:frm.doc.name},
+                    callback: function(r) {
+                        cur_frm.reload_doc();
+                    }
+                });
+                frappe.msgprint({
+                    title: __('Notification'),
+                    indicator: 'green',
+                    message: __("Appointment has been marked as 'No Show'")
+                });
+			});
+		}
+
         if(!frm.is_new() && (frm.doc.appointment_status=="Scheduled" || frm.doc.appointment_status=="Open" || frm.doc.appointment_status=="Draft")) {
 			frm.add_custom_button(__('Cancel'), function() {
                 frappe.call({
@@ -76,7 +104,7 @@ frappe.ui.form.on("Spa Appointment", {
 			});
 		}
 
-        if (frm.doc.appointment_status=="Cancelled") {
+        if (frm.doc.appointment_status=="Cancelled" || frm.doc.appointment_status=="No Show") {
 			frm.disable_save();
 		}
 
@@ -115,32 +143,33 @@ frappe.ui.form.on("Spa Appointment", {
                                  }
                             })
                             d.show();
-            
                         })
                     }
                 }
             })
+        }
+
+        if(!frm.is_new() && (frm.doc.appointment_status=="Scheduled" || frm.doc.appointment_status=="Open" || frm.doc.appointment_status=="Checked-in") && frm.doc.payment_status=="Not Paid") {
+			frm.add_custom_button(__('Add to Cart'), function() {
+                frappe.call({
+                    method: 'club_crm.club_crm.doctype.cart.cart.add_cart_from_spa',
+                    args: {client_id: frm.doc.client_id, appointment_id:frm.doc.name},
+                    callback: function(r) {
+                        cur_frm.reload_doc();
+                    }
+                });
+                frappe.msgprint({
+                    title: __('Notification'),
+                    indicator: 'green',
+                    message: __('Added to cart')
+                });
+			});
 		}
 
+        if(!frm.is_new() && frm.doc.payment_status=="Added to cart") {
+			frm.add_custom_button(__('Go to Cart'), function() {
+                frappe.set_route("Form", "Cart", frm.doc.cart);
+			});
+		}
     }
 })
-
-// frappe.ui.form.on("Spa Addons", {
-//     onload: function(frm){
-//         frm.set_query("addon_service", function(){
-//             return {
-//                 "filters": {
-//                     "is_addon": 1
-//                 }
-//             }
-//         });
-//     }
-// })
-
-// frappe.ui.form.on("Spa Addons", "treatment_duration", function (frm, cdt, cdn) {
-//     var total = 0;
-//     $.each(frm.doc.addon_table || [], function (i, d) {
-//         total += flt(d.treatment_duration);
-//     });
-//     frm.set_value("addon_total_duration", total);
-// });
