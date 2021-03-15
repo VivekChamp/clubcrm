@@ -28,30 +28,29 @@
    "label": "Discount"
   },
   {
-   "columns": 1,
-   "fetch_from": "appointment_id.default_price",
+   "columns": 2,
    "fieldname": "unit_price",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Unit Price (in QAR)"
+   "label": "Price (in QAR)"
   },
   {
-   "columns": 1,
+   "columns": 2,
    "fieldname": "total_price",
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Total Price (in QAR)"
   },
   {
-   "columns": 1,
    "fieldname": "appointment_type",
    "fieldtype": "Link",
+   "hidden": 1,
    "in_list_view": 1,
    "label": "Appointment Type",
    "options": "DocType"
   },
   {
-   "columns": 1,
+   "columns": 2,
    "fieldname": "appointment_id",
    "fieldtype": "Dynamic Link",
    "in_list_view": 1,
@@ -62,7 +61,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-03-13 13:07:04.939692",
+ "modified": "2021-03-15 03:12:40.067529",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Cart Appointment",

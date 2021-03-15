@@ -9,6 +9,7 @@ from datetime import datetime, timedelta, date, time
 from frappe import _
 from frappe.model.document import Document
 from club_crm.api.wallet import get_balance
+from frappe.model.mapper import get_mapped_doc
 
 class SpaAppointment(Document):
 	def validate(self):
@@ -18,6 +19,7 @@ class SpaAppointment(Document):
 		self.set_total_duration()
 		self.validate_overlaps()
 		self.validate_room_overlaps()
+		self.set_prices()
 		self.check_discount()
 		self.set_status()
 		self.set_color()
@@ -54,19 +56,23 @@ class SpaAppointment(Document):
 		self.total_service_duration = self.service_duration + self.service_turnover
 		self.total_addon_duration = self.addon_duration + self.addon_turnover
 		self.total_duration = self.total_service_duration + self.total_addon_duration
-		self.net_total = self.default_price + self.addon_total_price
+		#self.net_total = self.default_price + self.addon_total_price
 	
 	def set_total_duration(self):
 		start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
 		self.end_time = start_datetime + timedelta(seconds=self.total_duration)
 		self.appointment_end_time = datetime.strftime(self.end_time, "%H:%M:%S")
 	
+	def set_prices(self):
+		self.service_amount = self.default_price
+		self.addon_amount = self.addon_total_price
+		self.net_total = self.service_amount + self.addon_amount
+
 	def check_discount(self):
 		self.member_discount = float(0)
-		if self.member_discount_check==1:
-			if self.membership_status=='Member':
-				member_discount = self.default_price * 0.25
-				self.member_discount = float(member_discount//0.5*0.5)
+		if self.membership_status=='Member':
+			member_discount = self.net_total * 0.25
+			self.member_discount = float(member_discount//0.5*0.5)
 				# doc = frappe.get_all('Member Benefits', filters={'client_id': self.client_id, 'benefit_status': 'Active'}, fields=['*'])
 				# if doc:
 				# 	doc_1= doc[0]
@@ -79,30 +85,30 @@ class SpaAppointment(Document):
 				# else:
 				# 	self.member_discount = int(0)
 
-		if self.apply_discount=="Amount":
-			self.discount_percentage = 0
-		elif self.apply_discount=="Percentage on Net Total":
-			self.discount_amount =  (self.net_total * self.discount_percentage) / 100
-		elif self.apply_discount=="Percentage on Net Total after member discount":
-			discounted_total = self.net_total - self.member_discount
-			self.discount_amount = (discounted_total * self.discount_percentage) / 100
-		else:
-			self.discount_percentage = 0
-			self.discount_amount = 0
-		self.grand_total = self.net_total - self.member_discount - self.discount_amount
+		# if self.apply_discount=="Amount":
+		# 	self.discount_percentage = 0
+		# elif self.apply_discount=="Percentage on Net Total":
+		# 	self.discount_amount =  (self.net_total * self.discount_percentage) / 100
+		# elif self.apply_discount=="Percentage on Net Total after member discount":
+		# 	discounted_total = self.net_total - self.member_discount
+		# 	self.discount_amount = (discounted_total * self.discount_percentage) / 100
+		# else:
+		# 	self.discount_percentage = 0
+		# 	self.discount_amount = 0
+		self.grand_total = self.net_total - self.member_discount
 		return self.member_discount
 
 	def set_color(self):
 		if self.appointment_status=="Scheduled":
-			self.color="#55ea55"
+			self.color="#39ff9f"
 		elif self.appointment_status=="Open":
-			self.color="#9370db"
+			self.color="#8549ff"
 		elif self.appointment_status=="Checked-in":
-			self.color="#7eb2ec"
+			self.color="#ffc107"
 		elif self.appointment_status=="Complete":
-			self.color="#20b2aa"
+			self.color="#20a7ff"
 		elif self.appointment_status=="No Show":
-			self.color="#808080"
+			self.color="#ff8a8a"
 		else:
 			self.color="#b22222"
 				
@@ -346,3 +352,29 @@ def get_events(start, end, filters=None):
 		{"start": start, "end": end}, as_dict=True, update={"textColor": '#fff'})
 
 	return data
+
+# @frappe.whitelist()
+# def add_to_cart(source_name, target_doc=None):
+# 	# def set_missing_values(source, target):
+# 	# 	target.appointment_type = "Spa Appointment"
+# 	# 	# target.appointment_id = appointment_id
+
+# 	doc = get_mapped_doc('Spa Appointment', source_name, {
+# 			'Spa Appointment': {
+# 				'doctype': 'Cart',
+# 				'field_map': [
+# 					['client_id', 'client_id']
+# 				]
+# 			}
+# 			# 'Spa Appointment': {
+# 			# 	'doctype': 'Cart Appointment',
+# 			# 	'field_map': {
+# 			# 		'appointment_id': source_name
+# 			# 	}
+# 			# },
+
+# 		# }, target_doc, set_missing_values)
+# 		}, target_doc)
+# 	# doc.insert()
+
+

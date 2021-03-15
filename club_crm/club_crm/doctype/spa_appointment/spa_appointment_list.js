@@ -15,7 +15,7 @@ frappe.listview_settings['Spa Appointment'] = {
 		}
 		else if (doc.appointment_status === "Checked-in") {
 			// Open
-			return [__("Checked-in"), "lightblue", "appointment_status,=,Checked-in"];
+			return [__("Checked-in"), "yellow", "appointment_status,=,Checked-in"];
 		}
 		else if (doc.appointment_status === "Complete") {
 			// Complete
@@ -23,7 +23,7 @@ frappe.listview_settings['Spa Appointment'] = {
 		}
 		else if (doc.appointment_status === "No Show") {
 			// No Show
-			return [__("No Show"), "darkgrey", "appointment_status,=,No Show"];
+			return [__("No Show"), "light red", "appointment_status,=,No Show"];
 		}
 		else if (doc.appointment_status === "Cancelled") {
 			// Cancelled

@@ -6,8 +6,7 @@ frappe.views.calendar["Spa Appointment"] = {
 		"allDay": "allDay",
 		"description": "notes",
 		"resourceId": "spa_therapist",
-		"color": "color",
-		"eventTextColor": "textcolor"
+		"color": "color"
 		// "description": "description",
         // "name": "name",
 		// "rendering": "rendering"
@@ -18,7 +17,7 @@ frappe.views.calendar["Spa Appointment"] = {
 		        header: {
 		            left: 'title',
 		            center: 'prev,today,next',
-		            right: 'listOneWeek,listOneDay agendaOneDay'
+		            right: 'listOneWeek,listOneDay agendaOneDay,agendaOneWeek timelineOneDay'
 		        },
 				views: {
 					listOneDay: {
@@ -37,9 +36,25 @@ frappe.views.calendar["Spa Appointment"] = {
 					  type: 'agendaDay',
 					  duration: { days: 1 },
 					  buttonText: 'Day Overview',
+					  slotDuration: "01:00:00",
 					  minTime: "08:00:00",
 					  maxTime: "22:00:00"
-					}
+					},
+					agendaOneWeek: {
+						type: 'agendaDay',
+						duration: { days: 7 },
+						buttonText: 'Week Overview',
+						slotDuration: "01:00:00",
+						minTime: "08:00:00",
+						maxTime: "22:00:00"
+					},
+					timelineOneDay: {
+						type: 'timeline',
+						duration: { days: 1 },
+						buttonText: 'Day Timeline',
+						minTime: "08:00:00",
+						maxTime: "22:00:00"
+					  }
 				},
 				resources: function(callback) {
 					return frappe.call({
@@ -56,16 +71,16 @@ frappe.views.calendar["Spa Appointment"] = {
 				allDaySlot:false,
 				slotEventOverlap:false,
 				eventTextColor : '#ffffff',
-				eventRender: function(eventObj, $el) {
-					$el.popover({
-					  title: "Notes",
-					  html: true,
-					  content: eventObj.description,
-					  trigger: 'hover',
-					  placement: 'top',
-					  container: 'body'
-					});
-				  },
+				// eventRender: function(eventObj, $el) {
+				// 	$el.popover({
+				// 	  title: "Notes",
+				// 	  html: true,
+				// 	  content: eventObj.description,
+				// 	  trigger: 'hover',
+				// 	  placement: 'top',
+				// 	  container: 'body'
+				// 	});
+				//   },
 		    },
 	get_events_method: "club_crm.club_crm.doctype.spa_appointment.spa_appointment.get_events"
 };

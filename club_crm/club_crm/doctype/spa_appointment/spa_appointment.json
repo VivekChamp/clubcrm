@@ -10,6 +10,8 @@
  "field_order": [
   "title",
   "online",
+  "column_break_3",
+  "session",
   "section_break_2",
   "naming_series",
   "booking_date",
@@ -47,23 +49,21 @@
   "addon_total_price",
   "addon_duration",
   "addon_turnover",
-  "section_break_24",
+  "section_break_42",
+  "notes",
+  "column_break_44",
+  "any_surgeries",
+  "section_break_46",
   "total_service_duration",
   "total_addon_duration",
   "total_duration",
   "column_break_26",
+  "service_amount",
+  "addon_amount",
   "net_total",
-  "member_discount",
-  "member_discount_check",
   "column_break_40",
-  "apply_discount",
-  "discount_percentage",
-  "discount_amount",
+  "member_discount",
   "grand_total",
-  "section_break_51",
-  "notes",
-  "column_break_53",
-  "any_surgeries",
   "more_info_section",
   "payment_method",
   "paid_amount",
@@ -74,7 +74,8 @@
   "card_type",
   "amended_from",
   "color",
-  "progress_notes"
+  "progress_notes",
+  "cart"
  ],
  "fields": [
   {
@@ -112,7 +113,8 @@
   },
   {
    "fieldname": "appointment_details_section",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Service Details"
   },
   {
    "collapsible": 1,
@@ -191,7 +193,7 @@
    "fieldtype": "Duration",
    "hide_days": 1,
    "hide_seconds": 1,
-   "label": "Total Duration (including turnover time)",
+   "label": "Total Appointment Duration",
    "read_only": 1
   },
   {
@@ -200,10 +202,6 @@
    "label": "Member Discount Amount",
    "precision": "2",
    "read_only": 1
-  },
-  {
-   "fieldname": "section_break_24",
-   "fieldtype": "Section Break"
   },
   {
    "fieldname": "column_break_26",
@@ -235,14 +233,13 @@
   {
    "fieldname": "any_surgeries",
    "fieldtype": "Small Text",
-   "label": "Any recent surgeries"
+   "label": "Recent surgeries"
   },
   {
    "fieldname": "color",
-   "fieldtype": "Color",
+   "fieldtype": "Data",
    "hidden": 1,
-   "label": "Color",
-   "read_only": 1
+   "label": "Color"
   },
   {
    "allow_on_submit": 1,
@@ -295,7 +292,7 @@
   {
    "fieldname": "section_break_2",
    "fieldtype": "Section Break",
-   "label": "Appointment Details"
+   "label": "Client Details"
   },
   {
    "default": "Today",
@@ -376,7 +373,8 @@
   },
   {
    "fieldname": "addon_section",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Add-ons"
   },
   {
    "description": "Add or delete add-on services and click save to calculate the total duration and total price.",
@@ -417,7 +415,7 @@
    "fieldtype": "Duration",
    "hide_days": 1,
    "hide_seconds": 1,
-   "label": "Total Service Duration (including turnover)",
+   "label": "Total Service Duration",
    "read_only": 1
   },
   {
@@ -455,16 +453,18 @@
    "fieldtype": "Duration",
    "hide_days": 1,
    "hide_seconds": 1,
-   "label": "Total Addon Duration (including turnover)",
+   "label": "Total Addon Duration",
    "read_only": 1
   },
   {
+   "bold": 1,
    "fieldname": "net_total",
    "fieldtype": "Currency",
    "label": "Net Total",
    "read_only": 1
   },
   {
+   "bold": 1,
    "fieldname": "grand_total",
    "fieldtype": "Currency",
    "label": "Grand Total",
@@ -472,47 +472,9 @@
    "read_only": 1
   },
   {
-   "default": "1",
-   "depends_on": "eval:doc.membership_status==\"Member\"",
-   "description": "Uncheck this option and save if you need to remove the member discount.",
-   "fieldname": "member_discount_check",
-   "fieldtype": "Check",
-   "label": "Member Discount"
-  },
-  {
-   "default": "None",
-   "fieldname": "apply_discount",
-   "fieldtype": "Select",
-   "label": "Apply additional discount",
-   "options": "None\nAmount\nPercentage on Net Total\nPercentage on Net Total after member discount"
-  },
-  {
-   "depends_on": "eval:doc.apply_discount!=\"None\"",
-   "fieldname": "discount_amount",
-   "fieldtype": "Currency",
-   "label": "Additional Discount Amount",
-   "mandatory_depends_on": "eval:doc.apply_discount==\"Amount\"",
-   "read_only_depends_on": "eval:doc.apply_discount!=\"Amount\""
-  },
-  {
-   "depends_on": "eval:doc.apply_discount==\"Percentage on Net Total\" || doc.apply_discount==\"Percentage on Net Total after member discount\"",
-   "fieldname": "discount_percentage",
-   "fieldtype": "Int",
-   "label": "Additional Discount Percentage",
-   "mandatory_depends_on": "eval:doc.apply_discount==\"Percentage on Net Total\" || doc.apply_discount==\"Percentage on Net Total after member discount\""
-  },
-  {
-   "fieldname": "section_break_51",
-   "fieldtype": "Section Break"
-  },
-  {
    "fieldname": "notes",
    "fieldtype": "Small Text",
-   "label": "Notes"
-  },
-  {
-   "fieldname": "column_break_53",
-   "fieldtype": "Column Break"
+   "label": "Staff Notes"
   },
   {
    "fieldname": "appointment_end_time",
@@ -536,10 +498,57 @@
    "hidden": 1,
    "label": "Progress Notes",
    "read_only": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "This checkbox implies that this booking is part of paid sessions/packages.",
+   "fieldname": "session",
+   "fieldtype": "Check",
+   "label": "Session Booking",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_42",
+   "fieldtype": "Section Break",
+   "label": "Other Details"
+  },
+  {
+   "fieldname": "column_break_44",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_46",
+   "fieldtype": "Section Break",
+   "label": "Billing Details"
+  },
+  {
+   "fetch_from": "spa_service.price",
+   "fieldname": "service_amount",
+   "fieldtype": "Currency",
+   "label": "Service Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "addon_amount",
+   "fieldtype": "Currency",
+   "label": "Total Add-on Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cart",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Cart",
+   "options": "Cart",
+   "read_only": 1
   }
  ],
  "links": [],
- "modified": "2021-03-09 17:19:45.015866",
+ "modified": "2021-03-15 11:28:38.020047",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Appointment",

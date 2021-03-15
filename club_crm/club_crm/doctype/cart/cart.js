@@ -27,10 +27,20 @@ frappe.ui.form.on("Cart", "onload", function(frm){
     }
 });
 
-frappe.ui.form.on("Cart Appointment", "discount", function(frm, cdt, cdn) {
-	var item = locals[cdt][cdn];
-    var total = unit_price * discount;
-    item.total_price = total;
+// frappe.ui.form.on("Cart Appointment", "discount", function(frm, cdt, cdn) {
+// 	var item = locals[cdt][cdn];
+//     var total = unit_price * discount;
+//     item.total_price = total;
+// });
+
+frappe.ui.form.on("Cart Appointment", {
+	discount: function(frm, cdt, cdn) {
+		var d = locals[cdt][cdn];
+		var total = 0;
+		frappe.model.set_value(d.doctype, d.name, "total_price", d.unit_price - (d.unit_price * d.discount/100));
+        frm.doc.cart_appointment.forEach(function(d) { total += d.total_price; });
+        frm.set_value('net_total_appointments', total);
+	}
 });
 
 frappe.ui.form.on('Cart Appointment', 'appointment_id', function(frm, cdt, cdn){
