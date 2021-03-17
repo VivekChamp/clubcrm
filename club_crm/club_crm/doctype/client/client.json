@@ -32,9 +32,10 @@
   "other_details_section",
   "email",
   "nationality",
+  "marital_status",
   "column_break_25",
   "occupation",
-  "marital_status",
+  "sector",
   "column_break_17",
   "reg_on_app",
   "notification_preference",
@@ -59,8 +60,12 @@
   "column_break_41",
   "more_info",
   "client_details",
-  "amended_from",
-  "checkin_document"
+  "checkin_document",
+  "staff_notes_section",
+  "alerts",
+  "alert_type",
+  "column_break_57",
+  "notes"
  ],
  "fields": [
   {
@@ -308,15 +313,6 @@
    "label": "Qatar ID"
   },
   {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Client",
-   "print_hide": 1,
-   "read_only": 1
-  },
-  {
    "allow_in_quick_entry": 1,
    "fieldname": "gender",
    "fieldtype": "Link",
@@ -420,13 +416,48 @@
   {
    "fieldname": "column_break_41",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sector",
+   "fieldtype": "Link",
+   "label": "Occupation Sector",
+   "options": "Industry List"
+  },
+  {
+   "fieldname": "staff_notes_section",
+   "fieldtype": "Section Break",
+   "label": "Staff Notes"
+  },
+  {
+   "description": "To create pop-up alerts, keep notes in this sections.",
+   "fieldname": "alerts",
+   "fieldtype": "Small Text",
+   "label": "Alerts"
+  },
+  {
+   "fieldname": "column_break_57",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "General notes",
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "default": "Everytime the client profile is opened",
+   "depends_on": "eval:doc.alerts",
+   "fieldname": "alert_type",
+   "fieldtype": "Select",
+   "label": "Alert Type",
+   "options": "Everytime the client profile is opened\nDuring client check-in only"
   }
  ],
  "icon": "fa fa-user",
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2021-03-13 17:19:15.174178",
+ "modified": "2021-03-17 15:52:45.836046",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",

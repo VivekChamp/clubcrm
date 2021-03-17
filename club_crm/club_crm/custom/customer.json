@@ -40,6 +40,7 @@
    "modified_by": "Administrator",
    "name": "Customer-client_type",
    "no_copy": 0,
+   "non_negative": 0,
    "options": "Club Client\nRetail Client",
    "owner": "Administrator",
    "parent": null,
@@ -84,7 +85,7 @@
    "hide_border": 0,
    "hide_days": 0,
    "hide_seconds": 0,
-   "idx": 12,
+   "idx": 14,
    "ignore_user_permissions": 0,
    "ignore_xss_filter": 0,
    "in_global_search": 0,
@@ -99,6 +100,7 @@
    "modified_by": "Administrator",
    "name": "Customer-client_id",
    "no_copy": 0,
+   "non_negative": 0,
    "options": null,
    "owner": "Administrator",
    "parent": null,
@@ -114,7 +116,7 @@
    "report_hide": 0,
    "reqd": 0,
    "search_index": 0,
-   "translatable": 1,
+   "translatable": 0,
    "unique": 0,
    "width": null
   }
@@ -148,6 +150,7 @@
    "read": 1,
    "report": 1,
    "role": "Sales Master Manager",
+   "select": 0,
    "set_user_permissions": 1,
    "share": 1,
    "submit": 0,
@@ -181,6 +184,7 @@
    "read": 1,
    "report": 1,
    "role": "Sales User",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 1,
    "submit": 0,
@@ -214,6 +218,7 @@
    "read": 1,
    "report": 0,
    "role": "Sales Master Manager",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 0,
    "submit": 0,
@@ -247,6 +252,7 @@
    "read": 1,
    "report": 1,
    "role": "Accounts User",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 0,
    "submit": 0,
@@ -280,6 +286,7 @@
    "read": 1,
    "report": 0,
    "role": "Sales User",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 0,
    "submit": 0,
@@ -313,6 +320,7 @@
    "read": 1,
    "report": 1,
    "role": "Accounts Manager",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 0,
    "submit": 0,
@@ -346,6 +354,7 @@
    "read": 1,
    "report": 1,
    "role": "Stock User",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 0,
    "submit": 0,
@@ -379,6 +388,7 @@
    "read": 1,
    "report": 1,
    "role": "Sales Manager",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 0,
    "submit": 0,
@@ -412,6 +422,7 @@
    "read": 1,
    "report": 1,
    "role": "Stock Manager",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 0,
    "submit": 0,
@@ -445,6 +456,7 @@
    "read": 1,
    "report": 0,
    "role": "Customer",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 0,
    "submit": 0,
@@ -478,6 +490,7 @@
    "read": 1,
    "report": 0,
    "role": "Guest",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 0,
    "submit": 0,
@@ -507,6 +520,7 @@
    "parenttype": null,
    "property": "search_fields",
    "property_type": "Data",
+   "row_name": null,
    "value": "customer_name,customer_group,territory, mobile_no,primary_address,client_id"
   },
   {
@@ -530,6 +544,7 @@
    "parenttype": null,
    "property": "hidden",
    "property_type": "Check",
+   "row_name": null,
    "value": "1"
   },
   {
@@ -553,6 +568,7 @@
    "parenttype": null,
    "property": "hidden",
    "property_type": "Check",
+   "row_name": null,
    "value": "1"
   },
   {
@@ -576,6 +592,7 @@
    "parenttype": null,
    "property": "hidden",
    "property_type": "Check",
+   "row_name": null,
    "value": "1"
   },
   {
@@ -599,6 +616,7 @@
    "parenttype": null,
    "property": "hidden",
    "property_type": "Check",
+   "row_name": null,
    "value": "1"
   },
   {
@@ -622,6 +640,7 @@
    "parenttype": null,
    "property": "reqd",
    "property_type": "Check",
+   "row_name": null,
    "value": "0"
   }
  ],

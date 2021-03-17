@@ -20,7 +20,7 @@ class SpaAppointment(Document):
 		self.validate_overlaps()
 		self.validate_room_overlaps()
 		self.set_prices()
-		self.check_discount()
+		#self.check_discount()
 		self.set_status()
 		self.set_color()
 		self.set_title()
@@ -43,17 +43,22 @@ class SpaAppointment(Document):
 		self.appointment_time = datetime.strftime(start_datetime, "%H:%M:%S")
 
 	def set_addons_and_durations(self):
-		self.addon_duration=0
-		self.addon_turnover=0
-		self.addon_total_price=0
-		self.addon_duration_total=0
+		self.addon_duration = 0.0
+		self.addon_turnover = 0.0
+		self.addon_total_price = 0.0
+		self.addon_duration_total = 0.0
 
 		for addon in self.addon_table:
 			self.addon_duration += addon.service_duration
 			self.addon_turnover += addon.service_turnover
 			self.addon_total_price += addon.addon_price
 
+		if self.zero_turnover == 1:
+			self.service_turnover = 0.0
 		self.total_service_duration = self.service_duration + self.service_turnover
+
+		if self.zero_turnover_addon == 1:
+			self.addon_turnover = 0.0
 		self.total_addon_duration = self.addon_duration + self.addon_turnover
 		self.total_duration = self.total_service_duration + self.total_addon_duration
 		#self.net_total = self.default_price + self.addon_total_price
@@ -68,35 +73,35 @@ class SpaAppointment(Document):
 		self.addon_amount = self.addon_total_price
 		self.net_total = self.service_amount + self.addon_amount
 
-	def check_discount(self):
-		self.member_discount = float(0)
-		if self.membership_status=='Member':
-			member_discount = self.net_total * 0.25
-			self.member_discount = float(member_discount//0.5*0.5)
-				# doc = frappe.get_all('Member Benefits', filters={'client_id': self.client_id, 'benefit_status': 'Active'}, fields=['*'])
-				# if doc:
-				# 	doc_1= doc[0]
-				# 	if doc_1.spa_treatments and float(doc_1.spa_treatments) > 0:
-				# 		d = float(doc_1.spa_treatments)
-				# 		member_discount = float(self.default_price) * d/100.0
-				# 		self.member_discount = int(member_discount//5*5)
-				# 	else:
-				# 		self.member_discount = int(0)
-				# else:
-				# 	self.member_discount = int(0)
+	# def check_discount(self):
+	# 	self.member_discount = float(0)
+	# 	if self.membership_status=='Member':
+	# 		member_discount = self.net_total * 0.25
+	# 		self.member_discount = float(member_discount//0.5*0.5)
+	# 			# doc = frappe.get_all('Member Benefits', filters={'client_id': self.client_id, 'benefit_status': 'Active'}, fields=['*'])
+	# 			# if doc:
+	# 			# 	doc_1= doc[0]
+	# 			# 	if doc_1.spa_treatments and float(doc_1.spa_treatments) > 0:
+	# 			# 		d = float(doc_1.spa_treatments)
+	# 			# 		member_discount = float(self.default_price) * d/100.0
+	# 			# 		self.member_discount = int(member_discount//5*5)
+	# 			# 	else:
+	# 			# 		self.member_discount = int(0)
+	# 			# else:
+	# 			# 	self.member_discount = int(0)
 
-		# if self.apply_discount=="Amount":
-		# 	self.discount_percentage = 0
-		# elif self.apply_discount=="Percentage on Net Total":
-		# 	self.discount_amount =  (self.net_total * self.discount_percentage) / 100
-		# elif self.apply_discount=="Percentage on Net Total after member discount":
-		# 	discounted_total = self.net_total - self.member_discount
-		# 	self.discount_amount = (discounted_total * self.discount_percentage) / 100
-		# else:
-		# 	self.discount_percentage = 0
-		# 	self.discount_amount = 0
-		self.grand_total = self.net_total - self.member_discount
-		return self.member_discount
+	# 	# if self.apply_discount=="Amount":
+	# 	# 	self.discount_percentage = 0
+	# 	# elif self.apply_discount=="Percentage on Net Total":
+	# 	# 	self.discount_amount =  (self.net_total * self.discount_percentage) / 100
+	# 	# elif self.apply_discount=="Percentage on Net Total after member discount":
+	# 	# 	discounted_total = self.net_total - self.member_discount
+	# 	# 	self.discount_amount = (discounted_total * self.discount_percentage) / 100
+	# 	# else:
+	# 	# 	self.discount_percentage = 0
+	# 	# 	self.discount_amount = 0
+	# 	self.grand_total = self.net_total - self.member_discount
+	# 	return self.member_discount
 
 	def set_color(self):
 		if self.appointment_status=="Scheduled":
@@ -131,7 +136,7 @@ class SpaAppointment(Document):
 			doc.submit()
 	
 	def on_cancel(self):
-		self.db_set('status', 'Cancelled')
+		self.db_set('appointment_status', 'Cancelled')
 		if self.payment_method=="Wallet":
 			doc= frappe.get_doc({
 				"doctype": 'Wallet Transaction',
@@ -248,7 +253,7 @@ class SpaAppointment(Document):
 def update_appointment_status():
 	# update the status of appointments daily
 	appointments = frappe.get_all('Spa Appointment', {
-		'status': ('not in', ['Draft', 'Complete', 'Cancelled', 'Checked in', 'No Show'])
+		'appointment_status': ('not in', ['Draft', 'Complete', 'Cancelled', 'Checked-in', 'No Show'])
 	}, as_dict=1)
 
 	for appointment in appointments:
@@ -282,7 +287,7 @@ def update_appointment_status():
 
 @frappe.whitelist()
 def update_status(appointment_id, status):
-	frappe.db.set_value('Spa Appointment', appointment_id, 'status', status)
+	frappe.db.set_value('Spa Appointment', appointment_id, 'appointment_status', status)
 	cancel_appointment(appointment_id)
 
 @frappe.whitelist()
@@ -352,29 +357,5 @@ def get_events(start, end, filters=None):
 		{"start": start, "end": end}, as_dict=True, update={"textColor": '#fff'})
 
 	return data
-
-# @frappe.whitelist()
-# def add_to_cart(source_name, target_doc=None):
-# 	# def set_missing_values(source, target):
-# 	# 	target.appointment_type = "Spa Appointment"
-# 	# 	# target.appointment_id = appointment_id
-
-# 	doc = get_mapped_doc('Spa Appointment', source_name, {
-# 			'Spa Appointment': {
-# 				'doctype': 'Cart',
-# 				'field_map': [
-# 					['client_id', 'client_id']
-# 				]
-# 			}
-# 			# 'Spa Appointment': {
-# 			# 	'doctype': 'Cart Appointment',
-# 			# 	'field_map': {
-# 			# 		'appointment_id': source_name
-# 			# 	}
-# 			# },
-
-# 		# }, target_doc, set_missing_values)
-# 		}, target_doc)
-# 	# doc.insert()
 
 

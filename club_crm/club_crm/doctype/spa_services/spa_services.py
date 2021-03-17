@@ -12,6 +12,8 @@ class SpaServices(Document):
 		self.set_item()
 
 	def set_total_duration(self):
+		if not self.turn_over_time:
+			self.turn_over_time = 0.0
 		self.total_duration = self.duration + self.turn_over_time
 
 	def set_item(self):

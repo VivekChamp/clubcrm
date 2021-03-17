@@ -36,10 +36,33 @@ frappe.ui.form.on("Cart", "onload", function(frm){
 frappe.ui.form.on("Cart Appointment", {
 	discount: function(frm, cdt, cdn) {
 		var d = locals[cdt][cdn];
-		var total = 0;
+        var net_total =0;
+		var total_appointments = 0;
+        var total_sessions = 0;
+        var total_products = 0;
 		frappe.model.set_value(d.doctype, d.name, "total_price", d.unit_price - (d.unit_price * d.discount/100));
-        frm.doc.cart_appointment.forEach(function(d) { total += d.total_price; });
-        frm.set_value('net_total_appointments', total);
+        //frappe.model.set_value(d.doctype, d.name, "total_price", d.unit_price * d.discount/100);
+        frm.doc.cart_appointment.forEach(function(d) { total_appointments += d.total_price; });
+        frm.set_value('net_total_appointments', total_appointments);
+        frm.set_value('net_total_sessions', total_sessions);
+        frm.set_value('net_total_products', total_products);
+        net_total = total_appointments + total_sessions + total_products;
+        frm.set_value('net_total', net_total);
+	},
+    validate: function(frm, cdt, cdn) {
+		var d = locals[cdt][cdn];
+        var net_total =0;
+		var total_appointments = 0;
+        var total_sessions = 0;
+        var total_products = 0;
+		frappe.model.set_value(d.doctype, d.name, "total_price", d.unit_price - (d.unit_price * d.discount/100));
+        //frappe.model.set_value(d.doctype, d.name, "total_price", d.unit_price * d.discount/100);
+        frm.doc.cart_appointment.forEach(function(d) { total_appointments += d.total_price; });
+        frm.set_value('net_total_appointments', total_appointments);
+        frm.set_value('net_total_sessions', total_sessions);
+        frm.set_value('net_total_products', total_products);
+        net_total = total_appointments + total_sessions + total_products;
+        frm.set_value('net_total', net_total);
 	}
 });
 

@@ -101,7 +101,8 @@ scheduler_events = {
 # 		"club_crm.tasks.all"
 # 	],
  	"daily": [
- 		"club_crm.doctype.spa_appointment.spa_appointment.update_appointment_status"
+ 		"club_crm.club_crm.doctype.spa_appointment.spa_appointment.update_appointment_status",
+        "club_crm.club_crm.doctype.client.client.auto_checkout"
  	]
 # 	"hourly": [
 # 		"club_crm.tasks.hourly"
