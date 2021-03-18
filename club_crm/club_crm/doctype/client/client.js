@@ -45,25 +45,13 @@ frappe.ui.form.on('Client', {
 					}, () => {
 						// action to perform if No is selected
 					})
-				// frappe.call({
-				// 	method: 'club_crm.club_crm.doctype.client.client.disable_client',
-				// 	args: {client_id: frm.doc.name},
-				// 	callback: function(r) {
-				// 		cur_frm.reload_doc();
-				// 	}
-				// });
-				// frappe.msgprint({
-				// 	title: __('Notification'),
-				// 	indicator: 'red',
-				// 	message: __('This client has been disabled.')
-				// });
 			});
 		}
 
 		//Enable a client
 		if (frm.doc.status=="Disabled") {
 			frm.add_custom_button(__('Enable'), function() {
-				frappe.confirm('Disable this client?',
+				frappe.confirm('Enable this client?',
 					() => {
 						// action to perform if Yes is selected
 						frm.set_value('status', 'Active')
@@ -79,21 +67,10 @@ frappe.ui.form.on('Client', {
 					}, () => {
 						// action to perform if No is selected
 					})
-				// frappe.call({
-				// 	method: 'club_crm.club_crm.doctype.client.client.enable_client',
-				// 	args: {client_id: frm.doc.name},
-				// 	callback: function(r) {
-				// 		cur_frm.reload_doc();
-				// 	}
-				// });
-				// frappe.msgprint({
-				// 	title: __('Notification'),
-				// 	indicator: 'green',
-				// 	message: __('This client has been enabled.')
-				// });
 			});
 		}
 
+		// Check in with alert pop-up during client check-in with the message from Alert section 	
 		if (frm.doc.status=="Active") {
 			frm.add_custom_button(__('Check-in'), function(){
 				if (frm.doc.alerts && frm.doc.alert_type=="During client check-in only") {
@@ -132,6 +109,7 @@ frappe.ui.form.on('Client', {
 			});
 		}
 
+		//Check out
 		if (frm.doc.status=="Checked-in") {
 		 	frm.add_custom_button(__('Check out'), function(){
 				frappe.call({
@@ -148,6 +126,7 @@ frappe.ui.form.on('Client', {
 				});
 		 	});
 		}
+		
 	}
 });
 

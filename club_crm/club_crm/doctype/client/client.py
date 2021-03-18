@@ -95,14 +95,14 @@ def auto_checkout():
         for client in client_list:
             frappe.db.set_value("Client", client.name, "status", "Active")
 
-@frappe.whitelist()
-def disable_client(client_id):
-    client = frappe.get_doc('Client', client_id)
-    client.status = "Disabled"
-    client.save()
+# @frappe.whitelist()
+# def disable_client(client_id):
+#     client = frappe.get_doc('Client', client_id)
+#     client.status = "Disabled"
+#     client.save()
 
-@frappe.whitelist()
-def enable_client(client_id):
-    client = frappe.get_doc('Client', client_id)
-    client.status = "Active"
-    client.save()
+# @frappe.whitelist()
+# def enable_client(client_id):
+#     client = frappe.get_doc('Client', client_id)
+#     client.status = "Active"
+#     client.save()

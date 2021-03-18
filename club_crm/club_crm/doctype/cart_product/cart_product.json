@@ -13,7 +13,7 @@
  ],
  "fields": [
   {
-   "columns": 5,
+   "columns": 4,
    "fieldname": "cart_item",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -28,29 +28,35 @@
    "label": "Qty"
   },
   {
-   "columns": 1,
+   "columns": 2,
+   "fetch_from": "cart_item.standard_rate",
    "fieldname": "unit_price",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Unit Price"
+   "label": "Unit Price",
+   "read_only": 1
   },
   {
-   "columns": 1,
+   "columns": 2,
    "fieldname": "total_price",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Total Price"
+   "label": "Total Price",
+   "read_only": 1
   },
   {
+   "columns": 1,
+   "default": "0",
    "fieldname": "discount",
    "fieldtype": "Percent",
+   "in_list_view": 1,
    "label": "Discount"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-03-11 00:01:19.405662",
+ "modified": "2021-03-18 01:44:40.558017",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Cart Product",

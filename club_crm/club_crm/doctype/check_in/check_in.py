@@ -47,9 +47,11 @@ def gc_checkin(source_name, target_doc=None):
 
 @frappe.whitelist()
 def club_checkin(client_id):
+	user = frappe.get_doc('User',frappe.session.user)
 	doc = frappe.get_doc({
         'doctype': 'Check In',
-        'client_id': client_id
+        'client_id': client_id,
+		'checked_in_by': user.full_name
         })
 	doc.insert()
 	doc.submit()

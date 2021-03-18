@@ -32,14 +32,16 @@
    "fieldname": "unit_price",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Price (in QAR)"
+   "label": "Price (in QAR)",
+   "read_only": 1
   },
   {
    "columns": 2,
    "fieldname": "total_price",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Total Price (in QAR)"
+   "label": "Total Price (in QAR)",
+   "read_only": 1
   },
   {
    "fieldname": "appointment_type",
@@ -61,7 +63,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-03-15 03:12:40.067529",
+ "modified": "2021-03-18 00:56:45.998509",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Cart Appointment",

@@ -323,13 +323,13 @@ def no_show(appointment_id):
 
 @frappe.whitelist()
 def get_therapist_resources():
-	therapists= frappe.get_all('Spa Therapist',fields=['employee_name'])
+	therapists= frappe.get_all('Spa Therapist',fields=['display_name'])
 	resource=[]
 	if therapists:
 		for therapist in therapists:
 			resource.append({
-				'id' : therapist.employee_name,
-				'title' : therapist.employee_name
+				'id' : therapist.display_name,
+				'title' : therapist.display_name
 			})
 	return resource
 

@@ -105,13 +105,15 @@
    "fieldname": "grand_total",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Grand Total"
+   "label": "Grand Total",
+   "read_only": 1
   },
   {
    "depends_on": "eval:doc.sessions_check==\"1\"",
    "fieldname": "cart_session",
    "fieldtype": "Table",
    "label": "Sessions",
+   "mandatory_depends_on": "eval:doc.sessions_check==\"1\"",
    "options": "Cart Session"
   },
   {
@@ -146,6 +148,7 @@
    "fieldname": "cart_product",
    "fieldtype": "Table",
    "label": "Products",
+   "mandatory_depends_on": "eval:doc.products_check==\"1\"",
    "options": "Cart Product"
   },
   {
@@ -209,6 +212,7 @@
    "fieldname": "cart_appointment",
    "fieldtype": "Table",
    "label": "Appointments",
+   "mandatory_depends_on": "eval:doc.appointments_check==\"1\"",
    "options": "Cart Appointment"
   },
   {
@@ -285,14 +289,14 @@
    "fieldname": "payment_status",
    "fieldtype": "Select",
    "label": "Payment Status",
-   "options": "Not Paid\nAdded to Cart\nPaid",
+   "options": "Not Paid\nPaid\nCancelled",
    "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-03-15 11:16:56.992096",
+ "modified": "2021-03-18 01:27:48.205899",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Cart",
