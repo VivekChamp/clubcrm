@@ -76,7 +76,7 @@ def check_spa_bookings(session_name):
 		if sessions:
 			booked = len(sessions)
 			frappe.db.set_value('Client Sessions', session_name, 'booked_sessions', booked)
-		sessions = frappe.get_all('Spa Appointment', filters={'session_name': session_name,'appointment_status': ['in',{'Completed', 'No Show'}]})
+		sessions = frappe.get_all('Spa Appointment', filters={'session_name': session_name,'appointment_status': ['in',{'Complete', 'No Show'}]})
 		if sessions:
 			used = len(sessions)
 			frappe.db.set_value('Client Sessions', session_name, 'used_sessions', used)
