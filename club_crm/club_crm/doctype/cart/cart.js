@@ -193,9 +193,12 @@ frappe.ui.form.on("Cart Appointment", {
     unit_price: function(frm, cdt, cdn) {
 		var d = locals[cdt][cdn];
 		var total_appointments = 0.0;
+        var quantity_appointments = 0;
 		frappe.model.set_value(d.doctype, d.name, "total_price", d.unit_price - (d.unit_price * d.discount/100));
         frm.doc.cart_appointment.forEach(function(d) { total_appointments += d.total_price; });
+        frm.doc.cart_appointment.forEach(function(d) { quantity_appointments += 1 });
         frm.set_value('net_total_appointments', total_appointments);
+        frm.set_value('quantity_appointments', quantity_appointments);
 	},
 	discount: function(frm, cdt, cdn) {
 		var d = locals[cdt][cdn];
@@ -210,9 +213,12 @@ frappe.ui.form.on("Cart Product", {
     unit_price: function(frm, cdt, cdn) {
         var d = locals[cdt][cdn];
         var total_products = 0.0;
+        var quantity_products = 0;
 		frappe.model.set_value(d.doctype, d.name, "total_price", (d.unit_price * d.qty) - ((d.unit_price * d.qty) * d.discount/100));
         frm.doc.cart_product.forEach(function(d) { total_products += d.total_price; });
+        frm.doc.cart_product.forEach(function(d) { quantity_products += 1 });
         frm.set_value('net_total_products', total_products);
+        frm.set_value('quantity_products', quantity_products);
     },
 	qty: function(frm, cdt, cdn) {
 		var d = locals[cdt][cdn];
@@ -243,9 +249,12 @@ frappe.ui.form.on("Cart Session", {
     unit_price: function(frm, cdt, cdn) {
         var d = locals[cdt][cdn];
         var total_sessions = 0.0;
+        var quantity_sessions = 0;
         frappe.model.set_value(d.doctype, d.name, "total_price", d.unit_price - (d.unit_price * d.discount/100));
         frm.doc.cart_session.forEach(function(d) { total_sessions += d.total_price; });
+        frm.doc.cart_session.forEach(function(d) { quantity_sessions += 1 });
         frm.set_value('net_total_sessions', total_sessions);
+        frm.set_value('quantity_sessions', quantity_sessions);
     },
     discount: function(frm, cdt, cdn) {
         var d = locals[cdt][cdn];
@@ -263,7 +272,7 @@ frappe.ui.form.on('Cart Session', 'package_type', function(frm, cdt, cdn){
     var d = locals[cdt][cdn];
     frappe.model.set_value(d.doctype, d.name, "package_name", "");
     frappe.model.set_value(d.doctype, d.name, "unit_price", "");
-    frappe.model.set_value(d.doctype, d.name, "discount", "");
+    frappe.model.set_value(d.doctype, d.name, "discount", 0.0);
 });
 
 frappe.ui.form.on("Cart Payment", {

@@ -11,6 +11,8 @@
   "enabled",
   "column_break_1",
   "on_app",
+  "column_break_4",
+  "members_only_check",
   "section_break_2",
   "fitness_name",
   "fitness_category",
@@ -36,8 +38,7 @@
   "item_group",
   "column_break_37",
   "section_break_39",
-  "image",
-  "color"
+  "image"
  ],
  "fields": [
   {
@@ -65,13 +66,11 @@
    "label": "Details"
   },
   {
-   "fetch_from": "spa_group.spa_category",
    "fieldname": "fitness_category",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Category",
-   "options": "Fitness Services Category",
-   "read_only": 1
+   "options": "Fitness Services Category"
   },
   {
    "fieldname": "column_break_3",
@@ -100,17 +99,17 @@
    "label": "Other Details"
   },
   {
-   "default": "Multiple",
+   "default": "Single",
    "fieldname": "session_type",
    "fieldtype": "Select",
    "label": "Session Type",
-   "options": "Single\nMultiple\nUnlimited",
+   "options": "Single",
    "reqd": 1
   },
   {
-   "depends_on": "eval:doc.session_type==\"Multiple\"",
    "fieldname": "no_of_sessions",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "No. of Sessions",
    "mandatory_depends_on": "eval:doc.session_type==\"Multiple\""
   },
@@ -129,12 +128,11 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval:doc.session_type==\"Multiple\"",
    "fieldname": "validity",
    "fieldtype": "Duration",
+   "hidden": 1,
    "hide_seconds": 1,
-   "label": "Validity",
-   "mandatory_depends_on": "eval:doc.session_type==\"Multiple\""
+   "label": "Validity"
   },
   {
    "default": "0",
@@ -193,13 +191,6 @@
    "label": "Image"
   },
   {
-   "fetch_from": "spa_menu_group.color",
-   "fieldname": "color",
-   "fieldtype": "Color",
-   "hidden": 1,
-   "label": "Color"
-  },
-  {
    "depends_on": "eval:doc.session_type==\"Multiple\"",
    "fieldname": "sessions_per_week",
    "fieldtype": "Data",
@@ -221,11 +212,21 @@
    "label": "Name",
    "reqd": 1,
    "unique": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "members_only_check",
+   "fieldtype": "Check",
+   "label": "Members Only"
   }
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-03-11 15:17:58.876415",
+ "modified": "2021-03-22 01:45:50.414487",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Services",

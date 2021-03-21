@@ -6,20 +6,16 @@ def get_data():
 		'fieldname': 'client_id',
 		'transactions': [
 			{
-				'label': _('Appointments'),
-				'items': ['Spa Appointment','Group Class Attendees','Fitness Training Appointment','Grams Reservation','Club Tour']
+				'label': _(''),
+				'items': ['Check In', 'Client Sessions', 'Spa Appointment','Fitness Training Appointment', 'Group Class Attendees']
 			},
 			{
-				'label': _('Membership'),
- 				'items': ['Memberships','Member Benefits','Memberships Application','Fitness Training Session']
+				'label': _(''),
+ 				'items': ['Memberships','Member Benefits','Memberships Application']
 			},
             {
-				'label': _('Others'),
-				'items': ['Check In','Rating','Valet Parking','Online Order','Food Order Entry']
-			},
-			{
-				'label': _('Transactions'),
-				'items': ['Wallet Transaction']
+				'label': _(''),
+				'items': ['Rating','Valet Parking','Online Order','Food Order Entry']
 			}
 		]	
 	}

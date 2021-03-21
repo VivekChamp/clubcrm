@@ -19,7 +19,8 @@ frappe.ui.form.on("Spa Appointment", "onload", function(frm){
         return {
             "filters": [
                 ["Client Sessions", "client_id", "=", frm.doc.client_id],
-                ["Client Sessions", "session_status", "=", "Active"]
+                ["Client Sessions", "session_status", "=", "Active"],
+                ["Client Sessions", "service_type", "=", "Spa Services"],
             ]
         }
     });

@@ -9,7 +9,7 @@ from frappe.model.document import Document
 class SpaServices(Document):
 	def validate(self):
 		self.set_total_duration()
-		self.set_item()
+		#self.set_item()
 
 	def set_total_duration(self):
 		if not self.turn_over_time:
