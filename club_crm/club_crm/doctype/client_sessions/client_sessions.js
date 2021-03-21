@@ -60,7 +60,7 @@ frappe.ui.form.on("Client Sessions", {
 	},
 	start_date: function(frm){
 		frm.save('Update');
-		frm.refresh_field('session_status');
+		// frm.refresh_field('session_status');
 	}
 	// session_status: function(frm){
 	// 	frm.refresh_field('session_status');

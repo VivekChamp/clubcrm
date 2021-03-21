@@ -104,6 +104,23 @@ frappe.ui.form.on("Spa Appointment", {
 			});
 		}
 
+        if(frm.doc.payment_status=="Paid" && frm.doc.appointment_status == "Checked-in") {
+			frm.add_custom_button(__('Complete'), function() {
+                frappe.call({
+                    method: 'club_crm.club_crm.doctype.spa_appointment.spa_appointment.complete',
+                    args: {appointment_id:frm.doc.name},
+                    callback: function(r) {
+                        cur_frm.reload_doc();
+                    }
+                });
+                frappe.msgprint({
+                    title: __('Notification'),
+                    indicator: 'green',
+                    message: __("Appointment has been marked as 'Completed'")
+                });
+			});
+		}
+
         if(!frm.is_new() && (frm.doc.appointment_status=="Scheduled" || frm.doc.appointment_status=="Open" || frm.doc.appointment_status=="Draft")) {
 			frm.add_custom_button(__('Cancel'), function() {
                 frappe.call({

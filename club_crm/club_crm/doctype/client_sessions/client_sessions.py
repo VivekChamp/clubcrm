@@ -14,13 +14,15 @@ class ClientSessions(Document):
 		self.set_expiry_date()
 		self.set_title()
 		self.set_remaining_sessions()
+		self.check_session_booking
 
 	def after_insert(self):
 		self.submit()
 
 	def on_update_after_submit(self):
-		#self.set_status()
-		self.set_expiry_date()		
+		self.set_expiry_date()
+		self.set_status()
+		self.check_session_booking	
 
 	def set_expiry_date(self):
 		if self.start_date:
@@ -50,12 +52,12 @@ class ClientSessions(Document):
 		today = getdate()
 		expiry= datetime.strptime(self.expiry_date, "%Y-%m-%d")
 		expiry_date = expiry.date()
-		# If today is less than expiry date change the status to expired.
+		# If expiry date is less than today, change the status to expired.
 		if self.session_status=="Active" or self.session_status=="On Hold" :
 			if expiry_date < today:
 				self.session_status = 'Expired'
 		if self.session_status=="Expired":
-			if expiry_date > today:
+			if expiry_date >= today:
 				self.session_status = 'Active'
 
 def create_session(client_id, service_type, service_name, no_of_sessions, validity):
@@ -68,3 +70,13 @@ def create_session(client_id, service_type, service_name, no_of_sessions, validi
 		"validity": validity
 	})
 	doc.submit()
+
+def check_spa_bookings(session_name):
+		sessions = frappe.get_all('Spa Appointment', filters={'session_name': session_name,'appointment_status':['not in',{'Cancelled'}]})
+		if sessions:
+			booked = len(sessions)
+			frappe.db.set_value('Client Sessions', session_name, 'booked_sessions', booked)
+		sessions = frappe.get_all('Spa Appointment', filters={'session_name': session_name,'appointment_status': ['in',{'Completed', 'No Show'}]})
+		if sessions:
+			used = len(sessions)
+			frappe.db.set_value('Client Sessions', session_name, 'used_sessions', used)

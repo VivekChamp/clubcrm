@@ -21,6 +21,8 @@ class Cart(Document):
 		self.set_status()
 
 	def on_submit(self):
+		if self.cart_appointment:
+			self.make_paid()
 		if self.cart_session:
 			self.create_session()
 
@@ -92,6 +94,13 @@ class Cart(Document):
 			if club_package.package_table:
 				for item in club_package.package_table:
 					create_session(self.client_id,service_type,item.service_name,item.no_of_sessions,item.validity)
+
+	def make_paid(self):
+		for row in self.cart_appointment:
+			if row.appointment_type == "Spa Appointment":
+				frappe.db.set_value('Spa Appointment', row.appointment_id, 'payment_status', 'Paid')
+			if row.appointment_type == "Fitness Appointment":
+				frappe.db.set_value('Fitness Appointment', row.appointment_id, 'payment_status', 'Paid')
 
 					# doc= frappe.get_doc({
 					# 	"doctype": 'Client Sessions',

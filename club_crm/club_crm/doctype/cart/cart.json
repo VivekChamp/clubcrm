@@ -226,6 +226,7 @@
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Series",
    "options": "CART-.YYYY.-"
   },
@@ -324,12 +325,14 @@
    "fieldtype": "Column Break"
   },
   {
+   "default": "0.0",
    "fieldname": "paid_amount",
    "fieldtype": "Currency",
    "label": "Paid Amount",
    "read_only": 1
   },
   {
+   "default": "0.0",
    "fieldname": "balance_amount",
    "fieldtype": "Currency",
    "label": "Balance Amount",
@@ -339,7 +342,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-03-20 18:39:56.116014",
+ "modified": "2021-03-21 04:10:54.262893",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Cart",
