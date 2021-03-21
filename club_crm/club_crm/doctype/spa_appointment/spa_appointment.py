@@ -24,6 +24,8 @@ class SpaAppointment(Document):
 		self.set_status()
 		self.set_color()
 		self.set_title()
+		if self.session==1:
+			self.check_session_booking()
 
 	def after_insert(self):
 		if self.club_room:
@@ -168,6 +170,11 @@ class SpaAppointment(Document):
 						self.appointment_status = 'Scheduled'
 				else:
 					self.appointment_status = 'Draft'
+
+	def check_session_booking(self):
+		session = frappe.get_doc('Client Sessions', self.session_name)
+		session.booked_sessions += 1
+		session.save()
 
 	def validate_overlaps(self):
 		start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")

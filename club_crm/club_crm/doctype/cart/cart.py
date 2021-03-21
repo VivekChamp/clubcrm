@@ -7,34 +7,52 @@ import frappe
 from frappe import _
 from frappe.utils import getdate, get_time, flt
 from datetime import datetime, timedelta, date, time
+from club_crm.club_crm.doctype.client_sessions.client_sessions import create_session
 from frappe.model.document import Document
 
 class Cart(Document):
 	def validate(self):
 		self.set_net_price()
 		self.set_discount_and_grand_total()
+		self.set_payment_details()
+
+	def before_submit(self):
+		self.check_payment()
+		self.set_status()
+
+	def on_submit(self):
+		if self.cart_session:
+			self.create_session()
 
 	def set_net_price(self):
 		self.net_total_appointments = 0.0
-		self.quantity_appointments = 0
+		self.net_total_sessions = 0.0
 		self.net_total_products = 0.0
+		self.quantity_appointments = 0
+		self.quantity_sessions = 0
 		self.quantity_products = 0
 
 		if self.appointments_check==1:
 			for row in self.cart_appointment:
-				row.total_price = row.unit_price - (row.unit_price * row.discount/100)
+				row.total_price = float(row.unit_price) - (float(row.unit_price) * float(row.discount)/100)
 				self.quantity_appointments += 1
 				self.net_total_appointments += row.total_price
 
+		if self.sessions_check==1:
+			for row in self.cart_session:
+				row.total_price = float(row.unit_price) - (float(row.unit_price) * float(row.discount)/100)
+				self.quantity_sessions += 1
+				self.net_total_sessions += row.total_price
+
 		if self.products_check==1:
 			for row in self.cart_product:
-				p_total = row.qty * row.unit_price
-				row.total_price = p_total - (p_total * row.discount/100)
+				p_total = float(row.qty) * row.unit_price
+				row.total_price = float(p_total) - (float(p_total) * float(row.discount)/100)
 				self.quantity_products += 1
 				self.net_total_products += row.total_price
 		
-		self.net_total = self.net_total_appointments + self.net_total_products
-		self.total_quantity = self.quantity_appointments + self.quantity_products
+		self.net_total = self.net_total_appointments + self.net_total_sessions + self.net_total_products
+		self.total_quantity = self.quantity_appointments + self.quantity_sessions + self.quantity_products
 
 	def set_discount_and_grand_total(self):
 		if self.apply_discount=="Amount":
@@ -47,24 +65,45 @@ class Cart(Document):
 			self.discount_amount = 0.0
 		self.grand_total = self.net_total - self.discount_amount
 
-	def set_session_qty_and_total(self):
-		self.net_total_sessions="0"
-		self.quantity_sessions="0"
+	def set_payment_details(self):
+		self.paid_amount = 0.0
+		self.total_to_be_paid = self.grand_total
+		if self.payment_table:
+			for row in self.payment_table:
+				self.paid_amount += row.paid_amount
+		self.balance_amount = self.total_to_be_paid - self.paid_amount
+		if self.balance_amount == 0.0:
+			frappe.db.set_value("Cart", self.name, "payment_status", "Paid")
+		
+	def check_payment(self):
+		if self.balance_amount != 0.0:
+			frappe.throw("The Payment is not complete.")
 
-		for row in self.cart_sessions:
-			self.net_total_sessions += row.total_price
-			self.quantity_sessions += 1
+	def set_status(self):
+		self.payment_status = "Paid"
 
-	def set_product_qty_and_total(self):
-		self.net_total_products="0"
-		self.quantity_products="0"
+	def create_session(self):
+		for row in self.cart_session:
+			if row.package_type == "Spa":
+				service_type = "Spa Services"
+			if row.package_type == "Fitness":
+				service_type = "Fitness Services"
+			club_package = frappe.get_doc('Club Packages', row.package_name)
+			if club_package.package_table:
+				for item in club_package.package_table:
+					create_session(self.client_id,service_type,item.service_name,item.no_of_sessions,item.validity)
 
-		for row in self.cart_product:
-			self.net_total_products += row.total_price
-			self.quantity_products += 1
+					# doc= frappe.get_doc({
+					# 	"doctype": 'Client Sessions',
+					# 	"client_id": self.client_id,
+					# 	"service_type": service_type,
+					# 	"service_name": item.service_name,
+					# 	"total_sessions": item.no_of_sessions,
+					# 	"validity": item.validity
+					# })
+					# doc.submit()
 
-
-@frappe.whitelist(allow_guest=True)
+@frappe.whitelist()
 def add_cart_from_spa(client_id, appointment_id):
 	today = getdate()
 	client= frappe.get_doc('Client', client_id)
@@ -77,6 +116,7 @@ def add_cart_from_spa(client_id, appointment_id):
 	if not client_cart:
 		doc= frappe.get_doc({
 				"doctype": 'Cart',
+				"appointments_check": 1,
 				"client_id": client_id
 			})
 		doc.append('cart_appointment', {
@@ -119,10 +159,3 @@ def add_cart_from_spa(client_id, appointment_id):
 		cart_update.save()
 		frappe.db.set_value("Spa Appointment",appointment_id,"cart", cart.name)
 	frappe.db.set_value("Spa Appointment",appointment_id,"payment_status", "Added to cart")
-
-
-
-
-
-
-		

@@ -1,0 +1,57 @@
+{
+ "actions": [],
+ "creation": "2021-03-18 11:24:27.275389",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "package_name",
+  "total_sessions",
+  "used_sessions",
+  "remaining_sessions",
+  "booked_sessions"
+ ],
+ "fields": [
+  {
+   "fieldname": "package_name",
+   "fieldtype": "Data",
+   "label": "Package Name"
+  },
+  {
+   "fieldname": "total_sessions",
+   "fieldtype": "Int",
+   "label": "Total Sessions",
+   "read_only": 1
+  },
+  {
+   "fieldname": "used_sessions",
+   "fieldtype": "Int",
+   "label": "Used Sessions",
+   "read_only": 1
+  },
+  {
+   "fieldname": "remaining_sessions",
+   "fieldtype": "Int",
+   "label": "Remaining Sessions",
+   "read_only": 1
+  },
+  {
+   "fieldname": "booked_sessions",
+   "fieldtype": "Int",
+   "label": "Booked Sessions",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2021-03-18 11:24:27.275389",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Client Session Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

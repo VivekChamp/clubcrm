@@ -1,5 +1,13 @@
 // For license information, please see license.txt
 
+rappe.ui.form.on("Fitness Training Appointment", "onload", function(frm){
+    frm.set_query("client_id", function(){
+		return {
+			"filters": [["Client", "status", "not in", "Disabled"]]
+		}
+	});
+}
+
 frappe.ui.form.on('Fitness Training Appointment', {
     refresh: function(frm) {
 		if(frm.doc.status=="Open"){
