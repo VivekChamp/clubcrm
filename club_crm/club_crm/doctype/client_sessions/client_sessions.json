@@ -99,7 +99,6 @@
   },
   {
    "allow_on_submit": 1,
-   "columns": 2,
    "default": "Active",
    "fieldname": "session_status",
    "fieldtype": "Select",
@@ -135,7 +134,6 @@
   },
   {
    "allow_on_submit": 1,
-   "columns": 1,
    "default": "0",
    "fieldname": "used_sessions",
    "fieldtype": "Int",
@@ -146,7 +144,6 @@
   },
   {
    "allow_on_submit": 1,
-   "columns": 1,
    "fieldname": "remaining_sessions",
    "fieldtype": "Int",
    "in_list_view": 1,
@@ -156,7 +153,6 @@
   },
   {
    "allow_on_submit": 1,
-   "columns": 1,
    "default": "0",
    "fieldname": "booked_sessions",
    "fieldtype": "Int",
@@ -185,7 +181,6 @@
    "read_only": 1
   },
   {
-   "columns": 4,
    "fieldname": "title",
    "fieldtype": "Data",
    "hidden": 1,
@@ -257,7 +252,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-03-21 03:31:47.825760",
+ "modified": "2021-03-21 15:02:36.442880",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client Sessions",

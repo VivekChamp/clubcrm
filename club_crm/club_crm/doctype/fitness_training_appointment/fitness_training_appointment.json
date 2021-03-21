@@ -6,40 +6,49 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "title",
+  "online",
+  "column_break_3",
+  "session",
   "client_details",
-  "date",
+  "naming_series",
+  "booking_date",
+  "booking_time",
   "client_id",
+  "session_name",
+  "column_break_9",
   "client_name",
   "member_id",
-  "column_break_4",
-  "appointment_status",
-  "membership_status",
   "mobile_number",
+  "column_break_4",
+  "membership_status",
+  "gender",
+  "appointment_status",
   "payment_status",
-  "trainer_details",
-  "fitness_trainer",
-  "appointment_details",
-  "fitness_session",
-  "package_name",
-  "color",
-  "column_break_15",
+  "service_details_section",
+  "appointment_date",
+  "appointment_time",
+  "appointment_end_time",
   "start_time",
   "end_time",
-  "section_break_notes",
-  "customer_remarks",
+  "column_break_15",
+  "fitness_service",
+  "fitness_service_category",
+  "service_duration",
   "column_break_21",
+  "fitness_trainer",
+  "default_price",
+  "other_notes",
   "section_break_14",
-  "amended_from",
-  "naming_series"
+  "column_break_35",
+  "customer_remarks",
+  "billing_details_section",
+  "total_duration",
+  "column_break_40",
+  "net_total",
+  "color"
  ],
  "fields": [
-  {
-   "allow_on_submit": 1,
-   "default": "Today",
-   "fieldname": "date",
-   "fieldtype": "Date",
-   "label": "Date"
-  },
   {
    "fieldname": "client_id",
    "fieldtype": "Link",
@@ -82,21 +91,12 @@
    "label": "Client Details"
   },
   {
+   "default": "Not Paid",
    "fieldname": "payment_status",
    "fieldtype": "Select",
-   "hidden": 1,
    "label": "Payment Status",
-   "options": "Paid\nNot Paid"
-  },
-  {
-   "fieldname": "trainer_details",
-   "fieldtype": "Section Break",
-   "label": "Trainer Details"
-  },
-  {
-   "fieldname": "appointment_details",
-   "fieldtype": "Section Break",
-   "label": "Appointment Details"
+   "options": "Paid\nAdded to cart\nNot Paid",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_15",
@@ -105,7 +105,8 @@
   {
    "fieldname": "end_time",
    "fieldtype": "Datetime",
-   "label": "End Time"
+   "label": "End Time",
+   "read_only": 1
   },
   {
    "fetch_from": "client_id.mobile_no",
@@ -117,34 +118,6 @@
   {
    "fieldname": "column_break_21",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "fitness_session",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Fitness Session",
-   "options": "Fitness Training Session"
-  },
-  {
-   "fetch_from": "fitness_session.package_name",
-   "fieldname": "package_name",
-   "fieldtype": "Data",
-   "label": "Package Name",
-   "read_only": 1
-  },
-  {
-   "fieldname": "section_break_notes",
-   "fieldtype": "Section Break",
-   "label": "Notes"
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Fitness Training Appointment",
-   "print_hide": 1,
-   "read_only": 1
   },
   {
    "fetch_from": "fitness_session.color",
@@ -181,27 +154,173 @@
    "fieldname": "fitness_trainer",
    "fieldtype": "Link",
    "in_standard_filter": 1,
-   "label": "Trainer",
+   "label": "Fitness Trainer",
    "options": "Fitness Trainer"
   },
   {
    "allow_on_submit": 1,
+   "default": "Scheduled",
+   "depends_on": "eval:doc.is_new==0",
    "fieldname": "appointment_status",
    "fieldtype": "Select",
    "label": "Appointment Status",
-   "options": "Scheduled\nOpen\nCompleted\nCancelled\nNo show"
+   "options": "Scheduled\nOpen\nChecked-in\nComplete\nNo Show\nCancelled",
+   "read_only": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Title",
+   "no_copy": 1,
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "description": "This checkbox implies that this booking is made using web/mobile app.",
+   "fieldname": "online",
+   "fieldtype": "Check",
+   "label": "Online Booking",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "This checkbox implies that this booking is part of paid sessions/packages.",
+   "fieldname": "session",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Session Booking"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Today",
+   "fieldname": "booking_date",
+   "fieldtype": "Date",
+   "label": "Booking Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "booking_time",
+   "fieldtype": "Time",
+   "label": "Booking Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "client_id.gender",
+   "fieldname": "gender",
+   "fieldtype": "Data",
+   "label": "Gender",
+   "read_only": 1
+  },
+  {
+   "fieldname": "session_name",
+   "fieldtype": "Link",
+   "label": "Session Name",
+   "options": "Client Sessions"
+  },
+  {
+   "fieldname": "service_details_section",
+   "fieldtype": "Section Break",
+   "label": "Service Details"
+  },
+  {
+   "fieldname": "appointment_date",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Appointment Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "appointment_time",
+   "fieldtype": "Time",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Appointment Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "appointment_end_time",
+   "fieldtype": "Time",
+   "hidden": 1,
+   "label": "Appointment End Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "fitness_service",
+   "fieldtype": "Link",
+   "label": "Fitness Service",
+   "options": "Fitness Services"
+  },
+  {
+   "fetch_from": "fitness_service.fitness_category",
+   "fieldname": "fitness_service_category",
+   "fieldtype": "Data",
+   "label": "Fitness Service Category",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "fitness_service.duration",
+   "fieldname": "service_duration",
+   "fieldtype": "Duration",
+   "label": "Service Duration",
+   "read_only": 1
+  },
+  {
+   "fieldname": "other_notes",
+   "fieldtype": "Section Break",
+   "label": "Other Details"
+  },
+  {
+   "fieldname": "billing_details_section",
+   "fieldtype": "Section Break",
+   "label": "Billing Details"
+  },
+  {
+   "fieldname": "total_duration",
+   "fieldtype": "Duration",
+   "label": "Total Duration",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "fitness_service.price",
+   "fieldname": "default_price",
+   "fieldtype": "Currency",
+   "label": "Price (in QAR)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "net_total",
+   "fieldtype": "Currency",
+   "label": "Net Total",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_35",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_40",
+   "fieldtype": "Column Break"
   }
  ],
- "is_submittable": 1,
  "links": [],
- "modified": "2021-03-11 13:22:31.344264",
+ "modified": "2021-03-22 02:42:25.902003",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Appointment",
  "owner": "Administrator",
  "permissions": [
   {
-   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -211,21 +330,6 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
-   "submit": 1,
-   "write": 1
-  },
-  {
-   "cancel": 1,
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "All",
-   "share": 1,
-   "submit": 1,
    "write": 1
   }
  ],

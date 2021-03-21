@@ -14,15 +14,15 @@ frappe.ui.form.on("Client Sessions", "onload", function(frm){
 			]
 		}
 	});
-	frm.set_query("service_name", function(){
-		if(frm.doc.session_type == "Spa Services"){
-			return {
-				"filters": [
-					["Spa Services", "session_type", "in", "Multiple"]
-				]
-			}
-		}
-	});
+	// frm.set_query("service_name", function(){
+	// 	if(frm.doc.session_type == "Spa Services"){
+	// 		return {
+	// 			"filters": [
+	// 				["Spa Services", "session_type", "in", "Multiple"]
+	// 			]
+	// 		}
+	// 	}
+	// });
 });
 
 frappe.ui.form.on("Client Sessions", {

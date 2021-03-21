@@ -14,7 +14,7 @@ class ClientSessions(Document):
 		self.set_expiry_date()
 		self.set_title()
 		self.set_remaining_sessions()
-		self.check_session_booking
+		# self.check_spa_bookings()
 
 	def after_insert(self):
 		self.submit()
@@ -22,7 +22,7 @@ class ClientSessions(Document):
 	def on_update_after_submit(self):
 		self.set_expiry_date()
 		self.set_status()
-		self.check_session_booking	
+		# self.check_spa_bookings()	
 
 	def set_expiry_date(self):
 		if self.start_date:
