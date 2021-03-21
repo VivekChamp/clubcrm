@@ -29,7 +29,7 @@
   "column_break_17",
   "validity",
   "column_break_21",
-  "price",
+  "rate",
   "dependencies_section",
   "male_rooms",
   "female_rooms",
@@ -246,16 +246,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "default": "0.00",
-   "fieldname": "price",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Price",
-   "non_negative": 1,
-   "precision": "2",
-   "reqd": 1
-  },
-  {
    "fieldname": "male_rooms",
    "fieldtype": "Table MultiSelect",
    "label": "Male Rooms",
@@ -290,11 +280,21 @@
    "fieldname": "enabled",
    "fieldtype": "Check",
    "label": "Enabled"
+  },
+  {
+   "default": "0.00",
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Price",
+   "non_negative": 1,
+   "precision": "2",
+   "reqd": 1
   }
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-02-25 11:58:35.318630",
+ "modified": "2021-03-15 16:13:31.104561",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Menu",

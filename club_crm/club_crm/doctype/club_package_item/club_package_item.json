@@ -1,0 +1,62 @@
+{
+ "actions": [],
+ "creation": "2021-03-18 12:55:34.700875",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "service_type",
+  "service_name",
+  "no_of_sessions",
+  "validity",
+  "price"
+ ],
+ "fields": [
+  {
+   "fieldname": "service_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Service Type",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "service_name",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "label": "Service Name",
+   "options": "service_type"
+  },
+  {
+   "fieldname": "no_of_sessions",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "No. of sessions",
+   "precision": "0"
+  },
+  {
+   "fieldname": "validity",
+   "fieldtype": "Duration",
+   "hide_seconds": 1,
+   "in_list_view": 1,
+   "label": "Validity"
+  },
+  {
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Price (in QAR)"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2021-03-20 18:21:39.534885",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Club Package Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

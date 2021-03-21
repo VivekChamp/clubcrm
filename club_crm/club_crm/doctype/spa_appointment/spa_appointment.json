@@ -17,6 +17,7 @@
   "booking_date",
   "booking_time",
   "client_id",
+  "session_name",
   "column_break_6",
   "client_name",
   "member_id",
@@ -38,6 +39,7 @@
   "spa_category",
   "service_duration",
   "service_turnover",
+  "zero_turnover",
   "column_break_spa",
   "spa_therapist",
   "therapist_requested",
@@ -49,6 +51,7 @@
   "addon_total_price",
   "addon_duration",
   "addon_turnover",
+  "zero_turnover_addon",
   "section_break_42",
   "notes",
   "column_break_44",
@@ -60,8 +63,8 @@
   "column_break_26",
   "service_amount",
   "addon_amount",
-  "net_total",
   "column_break_40",
+  "net_total",
   "member_discount",
   "grand_total",
   "more_info_section",
@@ -173,7 +176,7 @@
    "fieldname": "payment_status",
    "fieldtype": "Select",
    "label": "Payment Status",
-   "options": "Paid\nNot Paid",
+   "options": "Paid\nAdded to cart\nNot Paid",
    "read_only": 1
   },
   {
@@ -199,6 +202,7 @@
   {
    "fieldname": "member_discount",
    "fieldtype": "Currency",
+   "hidden": 1,
    "label": "Member Discount Amount",
    "precision": "2",
    "read_only": 1
@@ -326,11 +330,14 @@
    "fieldtype": "Column Break"
   },
   {
+   "fetch_from": "session_name.service_name",
+   "fetch_if_empty": 1,
    "fieldname": "spa_service",
    "fieldtype": "Link",
    "label": "Spa Service",
+   "mandatory_depends_on": "eval:doc.session==0",
    "options": "Spa Services",
-   "reqd": 1
+   "read_only_depends_on": "eval:doc.session==1"
   },
   {
    "fetch_from": "spa_service.spa_group",
@@ -432,6 +439,7 @@
    "read_only": 1
   },
   {
+   "depends_on": "eval:doc.zero_turnover==0",
    "fetch_from": "spa_service.turn_over_time",
    "fetch_if_empty": 1,
    "fieldname": "service_turnover",
@@ -441,6 +449,7 @@
    "label": "Service Turnover time"
   },
   {
+   "depends_on": "eval:doc.zero_turnover_addon==0",
    "fieldname": "addon_turnover",
    "fieldtype": "Duration",
    "hide_days": 1,
@@ -467,6 +476,7 @@
    "bold": 1,
    "fieldname": "grand_total",
    "fieldtype": "Currency",
+   "hidden": 1,
    "label": "Grand Total",
    "precision": "2",
    "read_only": 1
@@ -508,8 +518,7 @@
    "description": "This checkbox implies that this booking is part of paid sessions/packages.",
    "fieldname": "session",
    "fieldtype": "Check",
-   "label": "Session Booking",
-   "read_only": 1
+   "label": "Session Booking"
   },
   {
    "fieldname": "section_break_42",
@@ -545,10 +554,29 @@
    "label": "Cart",
    "options": "Cart",
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "zero_turnover",
+   "fieldtype": "Check",
+   "label": "Zero Service Turnover"
+  },
+  {
+   "default": "0",
+   "fieldname": "zero_turnover_addon",
+   "fieldtype": "Check",
+   "label": "Zero Add-on Turnover"
+  },
+  {
+   "fieldname": "session_name",
+   "fieldtype": "Link",
+   "label": "Session Name",
+   "mandatory_depends_on": "eval:doc.session==1",
+   "options": "Client Sessions"
   }
  ],
  "links": [],
- "modified": "2021-03-15 11:28:38.020047",
+ "modified": "2021-03-21 02:40:08.461896",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Appointment",
@@ -567,7 +595,6 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "search_fields": "client_name, spa_therapist, spa_service, appointment_date, appointment_time",
  "show_name_in_global_search": 1,
  "sort_field": "appointment_date",

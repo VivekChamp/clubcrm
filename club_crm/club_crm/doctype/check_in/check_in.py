@@ -47,9 +47,11 @@ def gc_checkin(source_name, target_doc=None):
 
 @frappe.whitelist()
 def club_checkin(client_id):
+	user = frappe.get_doc('User',frappe.session.user)
 	doc = frappe.get_doc({
         'doctype': 'Check In',
-        'client_id': client_id
+        'client_id': client_id,
+		'checked_in_by': user.full_name
         })
 	doc.insert()
 	doc.submit()
@@ -83,3 +85,7 @@ def spa_checkin(client_id, appointment_id):
 	doc.submit()
 	
 	frappe.db.set_value("Spa Appointment",appointment_id,"appointment_status","Checked-in")
+	appointment = frappe.get_doc('Spa Appointment', appointment_id)
+	if appointment.session==1:
+		client_session = frappe.get_doc('Client Sessions', appointment.session_name)
+		client_session.used_sessions += 1

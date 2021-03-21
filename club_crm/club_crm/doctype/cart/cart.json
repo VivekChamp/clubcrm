@@ -42,8 +42,14 @@
   "discount_percentage",
   "discount_amount",
   "grand_total",
-  "amended_from",
-  "naming_series"
+  "payment_details_section",
+  "payment_table",
+  "column_break_42",
+  "total_to_be_paid",
+  "paid_amount",
+  "balance_amount",
+  "naming_series",
+  "amended_from"
  ],
  "fields": [
   {
@@ -105,13 +111,15 @@
    "fieldname": "grand_total",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Grand Total"
+   "label": "Grand Total",
+   "read_only": 1
   },
   {
    "depends_on": "eval:doc.sessions_check==\"1\"",
    "fieldname": "cart_session",
    "fieldtype": "Table",
    "label": "Sessions",
+   "mandatory_depends_on": "eval:doc.sessions_check==\"1\"",
    "options": "Cart Session"
   },
   {
@@ -146,9 +154,11 @@
    "fieldname": "cart_product",
    "fieldtype": "Table",
    "label": "Products",
+   "mandatory_depends_on": "eval:doc.products_check==\"1\"",
    "options": "Cart Product"
   },
   {
+   "default": "0.0",
    "depends_on": "eval:doc.sessions_check==\"1\"",
    "fieldname": "net_total_sessions",
    "fieldtype": "Currency",
@@ -156,6 +166,7 @@
    "read_only": 1
   },
   {
+   "default": "0.0",
    "depends_on": "eval:doc.products_check==\"1\"",
    "fieldname": "net_total_products",
    "fieldtype": "Currency",
@@ -184,7 +195,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "default": "1",
+   "default": "0",
    "description": "Enable billing for appointments",
    "fieldname": "appointments_check",
    "fieldtype": "Check",
@@ -209,11 +220,13 @@
    "fieldname": "cart_appointment",
    "fieldtype": "Table",
    "label": "Appointments",
+   "mandatory_depends_on": "eval:doc.appointments_check==\"1\"",
    "options": "Cart Appointment"
   },
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Series",
    "options": "CART-.YYYY.-"
   },
@@ -233,6 +246,7 @@
    "precision": "2"
   },
   {
+   "default": "0.0",
    "fieldname": "discount_amount",
    "fieldtype": "Currency",
    "label": "Additional Discount Amount",
@@ -268,6 +282,7 @@
    "read_only": 1
   },
   {
+   "default": "0.0",
    "depends_on": "eval:doc.appointments_check==\"1\"",
    "fieldname": "net_total_appointments",
    "fieldtype": "Currency",
@@ -284,15 +299,50 @@
    "default": "Not Paid",
    "fieldname": "payment_status",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Payment Status",
-   "options": "Not Paid\nAdded to Cart\nPaid",
+   "options": "Not Paid\nPaid\nCancelled",
+   "read_only": 1
+  },
+  {
+   "fieldname": "payment_details_section",
+   "fieldtype": "Section Break",
+   "label": "Payment Details"
+  },
+  {
+   "fieldname": "payment_table",
+   "fieldtype": "Table",
+   "options": "Cart Payment"
+  },
+  {
+   "fieldname": "total_to_be_paid",
+   "fieldtype": "Currency",
+   "label": "Total to be Paid",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_42",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0.0",
+   "fieldname": "paid_amount",
+   "fieldtype": "Currency",
+   "label": "Paid Amount",
+   "read_only": 1
+  },
+  {
+   "default": "0.0",
+   "fieldname": "balance_amount",
+   "fieldtype": "Currency",
+   "label": "Balance Amount",
    "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-03-15 11:16:56.992096",
+ "modified": "2021-03-21 04:10:54.262893",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Cart",

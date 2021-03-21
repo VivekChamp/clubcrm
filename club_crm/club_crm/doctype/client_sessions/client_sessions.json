@@ -1,23 +1,263 @@
 {
  "actions": [],
+ "autoname": "naming_series:",
  "creation": "2021-02-28 23:22:22.758001",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "client_id"
+  "title",
+  "session_details_section",
+  "date",
+  "client_id",
+  "client_name",
+  "column_break_3",
+  "membership_status",
+  "member_id",
+  "mobile_number",
+  "column_break_8",
+  "session_status",
+  "start_date",
+  "expiry_date",
+  "extension",
+  "sessions_section",
+  "service_type",
+  "service_name",
+  "validity",
+  "column_break_16",
+  "total_sessions",
+  "used_sessions",
+  "column_break_18",
+  "remaining_sessions",
+  "booked_sessions",
+  "naming_series",
+  "staff_notes_section",
+  "notes",
+  "column_break_26",
+  "amended_from",
+  "extension_notes"
  ],
  "fields": [
   {
    "fieldname": "client_id",
    "fieldtype": "Link",
    "label": "Client ID",
-   "options": "Client"
+   "options": "Client",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "client_id.client_name",
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Client Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "client_id.mobile_no",
+   "fieldname": "mobile_number",
+   "fieldtype": "Data",
+   "label": "Mobile Number",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "client_id.membership_status",
+   "fieldname": "membership_status",
+   "fieldtype": "Data",
+   "label": "Membership Status",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sessions_section",
+   "fieldtype": "Section Break",
+   "label": "Service Details"
+  },
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.membership_status==\"Member\"",
+   "fetch_from": "client_id.member_id",
+   "fieldname": "member_id",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Member ID",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "columns": 2,
+   "default": "Active",
+   "fieldname": "session_status",
+   "fieldtype": "Select",
+   "label": "Session Status",
+   "options": "Active\nExpired\nComplete\nOn Hold",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Today",
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "expiry_date",
+   "fieldtype": "Date",
+   "label": "Expiry Date",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "session_name.no_of_sessions",
+   "fieldname": "total_sessions",
+   "fieldtype": "Int",
+   "label": "Total Sessions",
+   "precision": "0",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "columns": 1,
+   "default": "0",
+   "fieldname": "used_sessions",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Used",
+   "precision": "0",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "columns": 1,
+   "fieldname": "remaining_sessions",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Remaining",
+   "precision": "0",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "columns": 1,
+   "default": "0",
+   "fieldname": "booked_sessions",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Booked",
+   "precision": "0",
+   "read_only": 1
+  },
+  {
+   "default": "SESS-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "SESS-.YYYY.-"
+  },
+  {
+   "fieldname": "column_break_18",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "session_name.validity",
+   "fieldname": "validity",
+   "fieldtype": "Duration",
+   "label": "Validity",
+   "read_only": 1
+  },
+  {
+   "columns": 4,
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Title",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "staff_notes_section",
+   "fieldtype": "Section Break",
+   "label": "Staff Notes"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "column_break_26",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "session_details_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "service_type",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Service Type",
+   "options": "DocType",
+   "reqd": 1
+  },
+  {
+   "fieldname": "service_name",
+   "fieldtype": "Dynamic Link",
+   "label": "Service Name",
+   "options": "service_type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Client Sessions",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "extension_notes",
+   "fieldtype": "Small Text",
+   "label": "Validity Extension Notes",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "extension",
+   "fieldtype": "Duration",
+   "hidden": 1,
+   "hide_seconds": 1,
+   "label": "Extension",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2021-02-28 23:22:36.866667",
+ "modified": "2021-03-21 03:31:47.825760",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client Sessions",
@@ -38,5 +278,6 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "title",
  "track_changes": 1
 }

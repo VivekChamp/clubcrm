@@ -2,7 +2,12 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Spa Appointment", "onload", function(frm){
-    cur_frm.set_query("spa_service", function(){
+    frm.set_query("client_id", function(){
+		return {
+			"filters": [["Client", "status", "not in", "Disabled"]]
+		}
+	});
+    frm.set_query("spa_service", function(){
         return {
             "filters": [
                 ["Spa Services", "is_addon", "=", "0"],
@@ -10,14 +15,22 @@ frappe.ui.form.on("Spa Appointment", "onload", function(frm){
             ]
         }
     });
-    cur_frm.fields_dict["addon_table"].grid.get_field("addon_service").get_query = function(){
+    frm.set_query("session_name", function(){
+        return {
+            "filters": [
+                ["Client Sessions", "client_id", "=", frm.doc.client_id],
+                ["Client Sessions", "session_status", "=", "Active"]
+            ]
+        }
+    });
+    frm.fields_dict["addon_table"].grid.get_field("addon_service").get_query = function(){
         return {
                 filters:{
                         "is_addon": 1
                 }
         }
     }
-    cur_frm.set_query("club_room", function(){
+    frm.set_query("club_room", function(){
         return {
             "filters": [
                 ["Club Room", "is_group", "=", "0"],
@@ -42,9 +55,13 @@ frappe.ui.form.on("Spa Appointment", "onload", function(frm){
     
 })
 
-
 frappe.ui.form.on("Spa Appointment", {
     refresh: function(frm) {
+        // use the is_new method of frm, to check if the doc is saved or not
+        frm.set_df_property("session", "read_only", frm.is_new() ? 0 : 1);
+        if (frm.doc.session==0) {
+            frm.set_df_property('session_name', 'hidden', 1);
+        }
         if(!frm.is_new() && frm.doc.appointment_status == "Open") {
             frappe.call({
                 method: 'club_crm.club_crm.doctype.client.client.check_status',
@@ -83,6 +100,23 @@ frappe.ui.form.on("Spa Appointment", {
                     title: __('Notification'),
                     indicator: 'green',
                     message: __("Appointment has been marked as 'No Show'")
+                });
+			});
+		}
+
+        if(frm.doc.payment_status=="Paid" && frm.doc.appointment_status == "Checked-in") {
+			frm.add_custom_button(__('Complete'), function() {
+                frappe.call({
+                    method: 'club_crm.club_crm.doctype.spa_appointment.spa_appointment.complete',
+                    args: {appointment_id:frm.doc.name},
+                    callback: function(r) {
+                        cur_frm.reload_doc();
+                    }
+                });
+                frappe.msgprint({
+                    title: __('Notification'),
+                    indicator: 'green',
+                    message: __("Appointment has been marked as 'Completed'")
                 });
 			});
 		}
@@ -171,5 +205,19 @@ frappe.ui.form.on("Spa Appointment", {
                 frappe.set_route("Form", "Cart", frm.doc.cart);
 			});
 		}
+    },
+    client_id: function(frm) {
+        if (frm.doc.session==1) {
+            frm.set_df_property('session_name', 'hidden', 0);
+        }
+        else {
+            frm.set_df_property('session_name', 'hidden', 1);
+        }
+    },
+    session: function(frm){
+        if (!frm.doc.client_id) {
+            frm.set_df_property('session_name', 'hidden', 1);
+        }
+        frm.set_value("client_id", "");
     }
 })

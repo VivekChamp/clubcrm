@@ -87,3 +87,22 @@ def create_customer_client(doc, method=None):
 def check_status(client_id):
     client = frappe.get_doc('Client', client_id)
     return client.status
+
+@frappe.whitelist()
+def auto_checkout():
+    client_list = frappe.get_all('Client', filters = {status:'Checked-in'})
+    if client_list:
+        for client in client_list:
+            frappe.db.set_value("Client", client.name, "status", "Active")
+
+# @frappe.whitelist()
+# def disable_client(client_id):
+#     client = frappe.get_doc('Client', client_id)
+#     client.status = "Disabled"
+#     client.save()
+
+# @frappe.whitelist()
+# def enable_client(client_id):
+#     client = frappe.get_doc('Client', client_id)
+#     client.status = "Active"
+#     client.save()

@@ -40,6 +40,7 @@
    "modified_by": "Administrator",
    "name": "Customer-client_type",
    "no_copy": 0,
+   "non_negative": 0,
    "options": "Club Client\nRetail Client",
    "owner": "Administrator",
    "parent": null,
@@ -89,6 +90,7 @@
    "read": 1,
    "report": 1,
    "role": "Sales Master Manager",
+   "select": 0,
    "set_user_permissions": 1,
    "share": 1,
    "submit": 0,
@@ -122,6 +124,7 @@
    "read": 1,
    "report": 1,
    "role": "Sales User",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 1,
    "submit": 0,
@@ -155,6 +158,7 @@
    "read": 1,
    "report": 0,
    "role": "Sales Master Manager",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 0,
    "submit": 0,
@@ -188,6 +192,7 @@
    "read": 1,
    "report": 1,
    "role": "Accounts User",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 0,
    "submit": 0,
@@ -221,6 +226,7 @@
    "read": 1,
    "report": 0,
    "role": "Sales User",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 0,
    "submit": 0,
@@ -254,6 +260,7 @@
    "read": 1,
    "report": 1,
    "role": "Accounts Manager",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 0,
    "submit": 0,
@@ -287,6 +294,7 @@
    "read": 1,
    "report": 1,
    "role": "Stock User",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 0,
    "submit": 0,
@@ -320,6 +328,7 @@
    "read": 1,
    "report": 1,
    "role": "Sales Manager",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 0,
    "submit": 0,
@@ -353,6 +362,7 @@
    "read": 1,
    "report": 1,
    "role": "Stock Manager",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 0,
    "submit": 0,
@@ -386,6 +396,7 @@
    "read": 1,
    "report": 0,
    "role": "Customer",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 0,
    "submit": 0,
@@ -419,6 +430,7 @@
    "read": 1,
    "report": 0,
    "role": "Guest",
+   "select": 0,
    "set_user_permissions": 0,
    "share": 0,
    "submit": 0,
@@ -481,6 +493,7 @@
    "parenttype": null,
    "property": "hidden",
    "property_type": "Check",
+   "row_name": null,
    "value": "1"
   },
   {
@@ -504,6 +517,7 @@
    "parenttype": null,
    "property": "hidden",
    "property_type": "Check",
+   "row_name": null,
    "value": "1"
   },
   {
@@ -527,6 +541,7 @@
    "parenttype": null,
    "property": "hidden",
    "property_type": "Check",
+   "row_name": null,
    "value": "1"
   },
   {
@@ -550,6 +565,7 @@
    "parenttype": null,
    "property": "hidden",
    "property_type": "Check",
+   "row_name": null,
    "value": "1"
   },
   {
@@ -573,6 +589,7 @@
    "parenttype": null,
    "property": "reqd",
    "property_type": "Check",
+   "row_name": null,
    "value": "0"
   }
  ],

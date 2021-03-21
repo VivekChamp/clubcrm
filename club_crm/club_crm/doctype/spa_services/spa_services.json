@@ -142,27 +142,25 @@
    "fieldname": "session_type",
    "fieldtype": "Select",
    "label": "Session Type",
-   "options": "Single\nMultiple",
+   "options": "Single",
    "reqd": 1
   },
   {
-   "depends_on": "eval:doc.is_addon==0 && doc.session_type==\"Multiple\"",
    "fieldname": "no_of_sessions",
    "fieldtype": "Data",
-   "label": "No. of Sessions",
-   "mandatory_depends_on": "eval:doc.session_type==\"Multiple\""
+   "hidden": 1,
+   "label": "No. of Sessions"
   },
   {
    "fieldname": "column_break_17",
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval:doc.is_addon==0 && doc.session_type==\"Multiple\"",
    "fieldname": "validity",
    "fieldtype": "Duration",
+   "hidden": 1,
    "hide_seconds": 1,
-   "label": "Validity",
-   "mandatory_depends_on": "eval:doc.session_type==\"Multiple\""
+   "label": "Validity"
   },
   {
    "fieldname": "column_break_21",
@@ -257,7 +255,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "default": "10 - Spa - KC",
    "fieldname": "cost_center",
    "fieldtype": "Link",
    "hidden": 1,
@@ -314,7 +311,7 @@
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-03-10 23:07:09.705373",
+ "modified": "2021-03-18 13:35:36.350721",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Services",
