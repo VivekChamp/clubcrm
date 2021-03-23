@@ -18,7 +18,8 @@
    "fieldname": "description",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Description"
+   "label": "Description",
+   "read_only": 1
   },
   {
    "columns": 1,
@@ -46,10 +47,9 @@
   {
    "fieldname": "appointment_type",
    "fieldtype": "Link",
-   "hidden": 1,
-   "in_list_view": 1,
    "label": "Appointment Type",
-   "options": "DocType"
+   "options": "DocType",
+   "read_only": 1
   },
   {
    "columns": 2,
@@ -57,13 +57,14 @@
    "fieldtype": "Dynamic Link",
    "in_list_view": 1,
    "label": "Appointment ID",
-   "options": "appointment_type"
+   "options": "appointment_type",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-03-18 00:56:45.998509",
+ "modified": "2021-03-23 02:53:07.068908",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Cart Appointment",

@@ -34,7 +34,6 @@
   "staff_notes_section",
   "notes",
   "column_break_26",
-  "amended_from",
   "extension_notes"
  ],
  "fields": [
@@ -43,7 +42,8 @@
    "fieldtype": "Link",
    "label": "Client ID",
    "options": "Client",
-   "reqd": 1
+   "reqd": 1,
+   "set_only_once": 1
   },
   {
    "fetch_from": "client_id.client_name",
@@ -125,6 +125,7 @@
    "fieldname": "total_sessions",
    "fieldtype": "Int",
    "label": "Total Sessions",
+   "non_negative": 1,
    "precision": "0",
    "read_only": 1
   },
@@ -139,8 +140,8 @@
    "fieldtype": "Int",
    "in_list_view": 1,
    "label": "Used",
-   "precision": "0",
-   "read_only": 1
+   "non_negative": 1,
+   "precision": "0"
   },
   {
    "allow_on_submit": 1,
@@ -148,6 +149,7 @@
    "fieldtype": "Int",
    "in_list_view": 1,
    "label": "Remaining",
+   "non_negative": 1,
    "precision": "0",
    "read_only": 1
   },
@@ -158,6 +160,7 @@
    "fieldtype": "Int",
    "in_list_view": 1,
    "label": "Booked",
+   "non_negative": 1,
    "precision": "0",
    "read_only": 1
   },
@@ -213,6 +216,7 @@
    "in_standard_filter": 1,
    "label": "Service Type",
    "options": "DocType",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -220,16 +224,8 @@
    "fieldtype": "Dynamic Link",
    "label": "Service Name",
    "options": "service_type",
+   "read_only": 1,
    "reqd": 1
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Client Sessions",
-   "print_hide": 1,
-   "read_only": 1
   },
   {
    "allow_on_submit": 1,
@@ -250,9 +246,8 @@
   }
  ],
  "index_web_pages_for_search": 1,
- "is_submittable": 1,
  "links": [],
- "modified": "2021-03-21 15:02:36.442880",
+ "modified": "2021-03-23 19:44:28.669111",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client Sessions",

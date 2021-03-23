@@ -1,5 +1,7 @@
 {
  "actions": [],
+ "allow_copy": 1,
+ "allow_import": 1,
  "autoname": "naming_series:",
  "creation": "2020-12-08 03:33:38.422144",
  "doctype": "DocType",
@@ -38,21 +40,22 @@
   "column_break_21",
   "fitness_trainer",
   "default_price",
-  "other_notes",
-  "section_break_14",
+  "section_break_33",
+  "notes",
   "column_break_35",
   "customer_remarks",
   "billing_details_section",
   "total_duration",
   "column_break_40",
   "net_total",
-  "color"
+  "color",
+  "cart",
+  "checkin_document"
  ],
  "fields": [
   {
    "fieldname": "client_id",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Client ID",
    "options": "Client"
@@ -70,11 +73,6 @@
    "fieldtype": "Data",
    "label": "Membership Status",
    "read_only": 1
-  },
-  {
-   "fieldname": "section_break_14",
-   "fieldtype": "Small Text",
-   "label": "Staff Notes"
   },
   {
    "fieldname": "customer_remarks",
@@ -147,7 +145,6 @@
   {
    "fieldname": "start_time",
    "fieldtype": "Datetime",
-   "in_list_view": 1,
    "label": "Start Time"
   },
   {
@@ -193,7 +190,6 @@
    "description": "This checkbox implies that this booking is part of paid sessions/packages.",
    "fieldname": "session",
    "fieldtype": "Check",
-   "hidden": 1,
    "label": "Session Booking"
   },
   {
@@ -222,9 +218,11 @@
    "read_only": 1
   },
   {
+   "depends_on": "eval:doc.session==1",
    "fieldname": "session_name",
    "fieldtype": "Link",
    "label": "Session Name",
+   "mandatory_depends_on": "eval:doc.session==1",
    "options": "Client Sessions"
   },
   {
@@ -256,10 +254,14 @@
    "read_only": 1
   },
   {
+   "fetch_from": "session_name.service_name",
+   "fetch_if_empty": 1,
    "fieldname": "fitness_service",
    "fieldtype": "Link",
    "label": "Fitness Service",
-   "options": "Fitness Services"
+   "mandatory_depends_on": "eval:doc.session==0",
+   "options": "Fitness Services",
+   "read_only_depends_on": "eval:doc.session==1"
   },
   {
    "fetch_from": "fitness_service.fitness_category",
@@ -274,11 +276,6 @@
    "fieldtype": "Duration",
    "label": "Service Duration",
    "read_only": 1
-  },
-  {
-   "fieldname": "other_notes",
-   "fieldtype": "Section Break",
-   "label": "Other Details"
   },
   {
    "fieldname": "billing_details_section",
@@ -311,10 +308,36 @@
   {
    "fieldname": "column_break_40",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_33",
+   "fieldtype": "Section Break",
+   "label": "Other Details"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Staff Notes"
+  },
+  {
+   "fieldname": "cart",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Cart",
+   "options": "Cart",
+   "read_only": 1
+  },
+  {
+   "fieldname": "checkin_document",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Checkin Document",
+   "options": "Check In",
+   "read_only": 1
   }
  ],
  "links": [],
- "modified": "2021-03-22 02:42:25.902003",
+ "modified": "2021-03-23 17:48:51.251444",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Appointment",
@@ -333,8 +356,10 @@
    "write": 1
   }
  ],
- "sort_field": "modified",
+ "search_fields": "client_name, fitness_trainer, fitness_service, appointment_date, appointment_time",
+ "show_name_in_global_search": 1,
+ "sort_field": "appointment_date",
  "sort_order": "DESC",
- "title_field": "client_name",
+ "title_field": "title",
  "track_changes": 1
 }

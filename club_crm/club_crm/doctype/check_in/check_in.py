@@ -84,8 +84,21 @@ def spa_checkin(client_id, appointment_id):
 	doc.insert()
 	doc.submit()
 	
-	frappe.db.set_value("Spa Appointment",appointment_id,"appointment_status","Checked-in")
-	appointment = frappe.get_doc('Spa Appointment', appointment_id)
-	if appointment.session==1:
-		client_session = frappe.get_doc('Client Sessions', appointment.session_name)
-		client_session.used_sessions += 1
+	frappe.db.set_value("Spa Appointment", appointment_id, "appointment_status", "Checked-in")
+	frappe.db.set_value("Spa Appointment", appointment_id, "checkin_document", doc.name)
+
+@frappe.whitelist()
+def fitness_checkin(client_id, appointment_id):
+	client = frappe.get_doc('Client', client_id)
+	doc = frappe.get_doc({
+        'doctype': 'Check In',
+        'client_id': client_id,
+		'check_in_type' : 'Fitness',
+		'naming_series' : 'CHK-.YYYY.-FITNESS.-',
+		'fitness_booking': appointment_id
+        })
+	doc.insert()
+	doc.submit()
+	
+	frappe.db.set_value("Fitness Training Appointment", appointment_id, "appointment_status", "Checked-in")
+	frappe.db.set_value("Fitness Training Appointment", appointment_id, "checkin_document", doc.name)

@@ -161,11 +161,11 @@
    "options": "\nEmail\nSMS\nBoth"
   },
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "email",
    "fieldtype": "Data",
    "label": "Email",
    "options": "Email",
-   "reqd": 1,
    "set_only_once": 1
   },
   {
@@ -458,7 +458,7 @@
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2021-03-21 12:51:39.250069",
+ "modified": "2021-03-22 02:51:31.521170",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",

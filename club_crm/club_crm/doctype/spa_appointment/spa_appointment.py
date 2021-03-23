@@ -4,7 +4,7 @@
 
 from __future__ import unicode_literals
 import frappe
-from frappe.utils import getdate, get_time, flt
+from frappe.utils import getdate, get_time, flt, now_datetime
 from datetime import datetime, timedelta, date, time
 from frappe import _
 from frappe.model.document import Document
@@ -21,20 +21,20 @@ class SpaAppointment(Document):
 		self.validate_overlaps()
 		self.validate_room_overlaps()
 		self.set_prices()
-		#self.check_discount()
 		self.set_status()
 		self.set_color()
 		self.set_title()
 		if self.session==1:
+			self.set_paid_and_net_total()
 			self.set_session_count()
 
 	def after_insert(self):
 		if self.club_room:
 			self.create_room_schedule()
 
-	def on_update(self):
-		if self.club_room:
-			self.create_room_schedule()
+	# def on_update(self):
+	# 	if self.club_room:
+	# 		self.create_room_schedule()
 
 	def set_title(self):
 		self.title = _('{0} for {1}').format(self.client_name,
@@ -78,35 +78,6 @@ class SpaAppointment(Document):
 
 	def set_session_count(self):
 		check_spa_bookings(self.session_name)
-	# def check_discount(self):
-	# 	self.member_discount = float(0)
-	# 	if self.membership_status=='Member':
-	# 		member_discount = self.net_total * 0.25
-	# 		self.member_discount = float(member_discount//0.5*0.5)
-	# 			# doc = frappe.get_all('Member Benefits', filters={'client_id': self.client_id, 'benefit_status': 'Active'}, fields=['*'])
-	# 			# if doc:
-	# 			# 	doc_1= doc[0]
-	# 			# 	if doc_1.spa_treatments and float(doc_1.spa_treatments) > 0:
-	# 			# 		d = float(doc_1.spa_treatments)
-	# 			# 		member_discount = float(self.default_price) * d/100.0
-	# 			# 		self.member_discount = int(member_discount//5*5)
-	# 			# 	else:
-	# 			# 		self.member_discount = int(0)
-	# 			# else:
-	# 			# 	self.member_discount = int(0)
-
-	# 	# if self.apply_discount=="Amount":
-	# 	# 	self.discount_percentage = 0
-	# 	# elif self.apply_discount=="Percentage on Net Total":
-	# 	# 	self.discount_amount =  (self.net_total * self.discount_percentage) / 100
-	# 	# elif self.apply_discount=="Percentage on Net Total after member discount":
-	# 	# 	discounted_total = self.net_total - self.member_discount
-	# 	# 	self.discount_amount = (discounted_total * self.discount_percentage) / 100
-	# 	# else:
-	# 	# 	self.discount_percentage = 0
-	# 	# 	self.discount_amount = 0
-	# 	self.grand_total = self.net_total - self.member_discount
-	# 	return self.member_discount
 
 	def set_color(self):
 		if self.appointment_status=="Scheduled":
@@ -153,6 +124,10 @@ class SpaAppointment(Document):
 			doc.insert()
 			doc.submit()
 		self.reload()
+
+	def set_paid_and_net_total(self):
+		self.payment_status = "Paid"
+		self.default_price = 0.0
 
 	def set_status(self):
 		today = getdate()
@@ -301,18 +276,16 @@ def update_status(appointment_id, status):
 @frappe.whitelist()
 def cancel_appointment(appointment_id):
 	appointment = frappe.get_doc('Spa Appointment', appointment_id)
-	if appointment.payment_status == "Not Paid":
-		frappe.db.set_value("Spa Appointment",appointment_id,"appointment_status","Cancelled")
-		frappe.db.set_value("Spa Appointment",appointment_id,"color","#b22222")
-		frappe.db.set_value("Spa Appointment",appointment_id,"docstatus",2)
+	frappe.db.set_value("Spa Appointment",appointment_id,"appointment_status","Cancelled")
+	frappe.db.set_value("Spa Appointment",appointment_id,"color","#b22222")
+	frappe.db.set_value("Spa Appointment",appointment_id,"docstatus",2)
 
 @frappe.whitelist()
 def no_show(appointment_id):
 	appointment = frappe.get_doc('Spa Appointment', appointment_id)
-	if appointment.payment_status == "Not Paid":
-		frappe.db.set_value("Spa Appointment",appointment_id,"appointment_status","No Show")
-		frappe.db.set_value("Spa Appointment",appointment_id,"color","#ff8a8a")
-		frappe.db.set_value("Spa Appointment",appointment_id,"docstatus",2)
+	frappe.db.set_value("Spa Appointment",appointment_id,"appointment_status","No Show")
+	frappe.db.set_value("Spa Appointment",appointment_id,"color","#ff8a8a")
+	frappe.db.set_value("Spa Appointment",appointment_id,"docstatus",2)
 
 @frappe.whitelist()
 def complete(appointment_id):
@@ -320,6 +293,9 @@ def complete(appointment_id):
 	frappe.db.set_value("Spa Appointment",appointment_id,"appointment_status","Complete")
 	frappe.db.set_value("Spa Appointment",appointment_id,"color","#20a7ff")
 	frappe.db.set_value("Spa Appointment",appointment_id,"docstatus",1)
+	doc = frappe.get_doc('Check In', appointment.checkin_document)
+	doc.check_out_time = now_datetime()
+	doc.save()
 
 	#For cancellation
 	# if appointment.invoiced:
@@ -369,7 +345,7 @@ def get_events(start, end, filters=None):
 		where
 		(`tabSpa Appointment`.appointment_date between %(start)s and %(end)s)
 		and `tabSpa Appointment`.appointment_status != 'Cancelled' {conditions}""".format(conditions=conditions),
-		{"start": start, "end": end}, as_dict=True, update={"textColor": '#fff'})
+		{"start": start, "end": end}, as_dict=True, update={"textColor": '#ffffff'})
 
 	return data
 

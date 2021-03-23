@@ -99,18 +99,10 @@ class Cart(Document):
 		for row in self.cart_appointment:
 			if row.appointment_type == "Spa Appointment":
 				frappe.db.set_value('Spa Appointment', row.appointment_id, 'payment_status', 'Paid')
-			if row.appointment_type == "Fitness Appointment":
-				frappe.db.set_value('Fitness Appointment', row.appointment_id, 'payment_status', 'Paid')
-
-					# doc= frappe.get_doc({
-					# 	"doctype": 'Client Sessions',
-					# 	"client_id": self.client_id,
-					# 	"service_type": service_type,
-					# 	"service_name": item.service_name,
-					# 	"total_sessions": item.no_of_sessions,
-					# 	"validity": item.validity
-					# })
-					# doc.submit()
+				frappe.db.commit()
+			if row.appointment_type == "Fitness Training Appointment":
+				frappe.db.set_value('Fitness Training Appointment', row.appointment_id, 'payment_status', 'Paid')
+				frappe.db.commit()
 
 @frappe.whitelist()
 def add_cart_from_spa(client_id, appointment_id):
@@ -168,3 +160,42 @@ def add_cart_from_spa(client_id, appointment_id):
 		cart_update.save()
 		frappe.db.set_value("Spa Appointment",appointment_id,"cart", cart.name)
 	frappe.db.set_value("Spa Appointment",appointment_id,"payment_status", "Added to cart")
+
+@frappe.whitelist()
+def add_cart_from_fitness(client_id, appointment_id):
+	today = getdate()
+	client= frappe.get_doc('Client', client_id)
+	if client.membership_status=="Member":
+		discount_amount="25.0"
+	else:
+		discount_amount="0.0"
+	client_cart = frappe.get_all('Cart', filters={'client_id': client_id, 'payment_status':'Not Paid', 'date': today}, fields=["*"])
+	appointment = frappe.get_doc('Fitness Training Appointment', appointment_id)
+	if not client_cart:
+		doc= frappe.get_doc({
+				"doctype": 'Cart',
+				"appointments_check": 1,
+				"client_id": client_id
+			})
+		doc.append('cart_appointment', {
+			"appointment_type": "Fitness Training Appointment",
+			"appointment_id": appointment_id,
+			"description": appointment.fitness_service,
+			"unit_price": appointment.default_price,
+			"discount": discount_amount
+		})
+		doc.save()
+		frappe.db.set_value("Fitness Training Appointment",appointment_id,"cart", doc.name)
+	else:
+		cart =client_cart[0]
+		cart_update = frappe.get_doc('Cart', cart.name)
+		cart_update.append('cart_appointment', {
+			"appointment_type": "Fitness Training Appointment",
+			"appointment_id": appointment_id,
+			"description": appointment.fitness_service,
+			"unit_price": appointment.default_price,
+			"discount": discount_amount
+		})
+		cart_update.save()
+		frappe.db.set_value("Fitness Training Appointment",appointment_id,"cart", cart.name)
+	frappe.db.set_value("Fitness Training Appointment",appointment_id,"payment_status", "Added to cart")

@@ -14,55 +14,65 @@ frappe.ui.form.on("Client Sessions", "onload", function(frm){
 			]
 		}
 	});
-	// frm.set_query("service_name", function(){
-	// 	if(frm.doc.session_type == "Spa Services"){
-	// 		return {
-	// 			"filters": [
-	// 				["Spa Services", "session_type", "in", "Multiple"]
-	// 			]
-	// 		}
-	// 	}
-	// });
 });
 
 frappe.ui.form.on("Client Sessions", {
+	onload: function(frm) {
+		frm.disable_save();
+	},
     refresh(frm) {
-		if(frm.doc.docstatus==1) {
-            frm.add_custom_button(__("Extend Validity"), function() {
-				let d = new frappe.ui.Dialog ({
-					title: 'Extend Validity',
-					fields: [
-						{
-							label: 'Extend the session (from start date) for',
-							fieldname: 'extension',
-							fieldtype: 'Duration',
-							default: frm.doc.expiry_date
-						},
-						{
-							label: 'Reason for extension',
-							fieldname: 'extension_reason',
-							fieldtype: 'Small Text'
-						}
-					],
-					primary_action_label: ('Submit'),
-                    primary_action: function() {
-                            d.hide();
-                            // let row = frappe.model.add_child(frm.doc, 'Cart Payment', 'payment_table'); 
-                            frm.set_value('extension', d.get_value('extension'));
-							frm.set_value('extension_notes', d.get_value('extension_reason'));
-							frm.save('Update');
-                            //frappe.model.set_value(row.doctype, row.name, 'paid_amount', d.get_value('amount_paid')); 
-                        }
-                    });
-                d.show();
-			});
+		if (frm.doc.session_status=="Expired") {
+			frm.set_df_property("session_status", "read_only", 1);
 		}
+
+        frm.add_custom_button(__("Extend Validity"), function() {
+			let d = new frappe.ui.Dialog ({
+				title: 'Extend Validity',
+				fields: [
+					{
+						label: 'Extend the session (from start date) for',
+						fieldname: 'extension',
+						fieldtype: 'Duration',
+						default: frm.doc.expiry_date
+					},
+					{
+						label: 'Reason for extension',
+						fieldname: 'extension_reason',
+						fieldtype: 'Small Text'
+					}
+				],
+				primary_action_label: ('Submit'),
+                primary_action: function() {
+                    d.hide(); 
+                        frm.set_value('extension', d.get_value('extension'));
+						frm.set_value('extension_notes', d.get_value('extension_reason'));
+						frm.save();
+                }
+            });
+            d.show();
+		});
 	},
 	start_date: function(frm){
-		frm.save('Update');
-		// frm.refresh_field('session_status');
+		frm.save();
+	},
+	used_sessions: function(frm) {
+		var remaining = 0;
+		if (frm.doc.used_sessions > frm.doc.total_sessions) {
+			frappe.throw(__('Number of used sessions cannot be greated than total sessions'))
+		}
+		else if (frm.doc.used_sessions < 0) {
+			frappe.throw(__('Number of used sessions cannot be less than 0'))
+		}
+		else {
+        	remaining = frm.doc.total_sessions - frm.doc.used_sessions;
+        	frm.set_value('remaining_sessions', remaining);
+		}
+		if (remaining == 0) {
+			frm.set_value('session_status', 'Complete');
+		}
+		else if (remaining > 0) {
+			frm.set_value('session_status', 'Active');
+		}
+		frm.save()
 	}
-	// session_status: function(frm){
-	// 	frm.refresh_field('session_status');
-	// }
 });

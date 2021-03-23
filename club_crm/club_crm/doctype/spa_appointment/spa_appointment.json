@@ -35,6 +35,7 @@
   "end_time",
   "column_break_20",
   "spa_service",
+  "addon_service_check",
   "spa_group",
   "spa_category",
   "service_duration",
@@ -76,9 +77,12 @@
   "transaction_reference",
   "card_type",
   "amended_from",
+  "section_break_70",
   "color",
   "progress_notes",
-  "cart"
+  "cart",
+  "checkin_document",
+  "progress_notes_id"
  ],
  "fields": [
   {
@@ -123,6 +127,7 @@
    "collapsible": 1,
    "fieldname": "more_info_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Payment Details"
   },
   {
@@ -243,7 +248,8 @@
    "fieldname": "color",
    "fieldtype": "Data",
    "hidden": 1,
-   "label": "Color"
+   "label": "Color",
+   "read_only": 1
   },
   {
    "allow_on_submit": 1,
@@ -379,6 +385,7 @@
    "read_only": 1
   },
   {
+   "depends_on": "eval:doc.session==0",
    "fieldname": "addon_section",
    "fieldtype": "Section Break",
    "label": "Add-ons"
@@ -568,15 +575,42 @@
    "label": "Zero Add-on Turnover"
   },
   {
+   "depends_on": "eval:doc.session==1",
    "fieldname": "session_name",
    "fieldtype": "Link",
    "label": "Session Name",
    "mandatory_depends_on": "eval:doc.session==1",
    "options": "Client Sessions"
+  },
+  {
+   "fieldname": "checkin_document",
+   "fieldtype": "Link",
+   "label": "Checkin Document",
+   "options": "Check In",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.session==0",
+   "fieldname": "addon_service_check",
+   "fieldtype": "Check",
+   "label": "Add-on Service only"
+  },
+  {
+   "fieldname": "progress_notes_id",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Progress Notes ID",
+   "options": "Spa Progress Notes",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_70",
+   "fieldtype": "Section Break"
   }
  ],
  "links": [],
- "modified": "2021-03-21 02:40:08.461896",
+ "modified": "2021-03-23 16:47:26.353056",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Appointment",
