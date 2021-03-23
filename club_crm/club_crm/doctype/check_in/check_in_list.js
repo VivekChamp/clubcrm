@@ -7,15 +7,15 @@ frappe.listview_settings['Check In'] = {
 		}
         else if (doc.check_in_type === "Spa") {
 			// Draft
-			return [__("Spa"), "blue", "check_in_type,=,Spa"];
+			return [__("Spa"), "yellow", "check_in_type,=,Spa"];
         }
-        else if (doc.check_in_type === "Gym") {
+        else if (doc.check_in_type === "Fitness") {
 			// Draft
-			return [__("Gym"), "blue", "check_in_type,=,Gym"];
+			return [__("Fitness"), "blue", "check_in_type,=,Fitness"];
         }
         else if (doc.check_in_type === "Group Class") {
 			// Draft
-			return [__("Group Class"), "blue", "check_in_type,=,Group Class"];
+			return [__("Group Class"), "green", "check_in_type,=,Group Class"];
         }
 	}
 };

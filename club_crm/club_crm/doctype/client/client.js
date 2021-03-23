@@ -24,7 +24,7 @@ frappe.ui.form.on('Client', {
 		//Display accounts receivable button	
 		frm.add_custom_button(__('Accounts Receivable'), function() {
 			frappe.set_route('query-report', 'Accounts Receivable', {customer:frm.doc.customer});
-		});
+		},__("Create"));
 		
 		//Disable a client
 		if (frm.doc.status!="Disabled") {

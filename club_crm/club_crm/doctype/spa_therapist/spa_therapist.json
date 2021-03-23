@@ -22,7 +22,7 @@
   "description",
   "image",
   "section_break_19",
-  "spa_menu_assignment",
+  "spa_service_assignment",
   "schedule_section",
   "spa_therapist_schedule"
  ],
@@ -86,11 +86,6 @@
    "label": "Show on App"
   },
   {
-   "fieldname": "spa_menu_assignment",
-   "fieldtype": "Table",
-   "options": "Spa Therapist Assignment"
-  },
-  {
    "fieldname": "therapist_details_section",
    "fieldtype": "Section Break",
    "label": "Therapist Details"
@@ -132,11 +127,16 @@
    "fieldtype": "Data",
    "label": "Display Name",
    "unique": 1
+  },
+  {
+   "fieldname": "spa_service_assignment",
+   "fieldtype": "Table",
+   "options": "Spa Therapist Assignment"
   }
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-03-18 00:14:17.769534",
+ "modified": "2021-03-23 01:30:52.902333",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Therapist",
@@ -161,8 +161,8 @@
    "read": 1,
    "report": 1,
    "role": "Customer",
-   "share": 1,
-   "write": 1
+   "select": 1,
+   "share": 1
   }
  ],
  "sort_field": "modified",

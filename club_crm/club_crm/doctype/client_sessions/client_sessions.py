@@ -14,15 +14,14 @@ class ClientSessions(Document):
 		self.set_expiry_date()
 		self.set_title()
 		self.set_remaining_sessions()
-		# self.check_spa_bookings()
-
-	def after_insert(self):
-		self.submit()
-
-	def on_update_after_submit(self):
-		self.set_expiry_date()
 		self.set_status()
-		# self.check_spa_bookings()	
+		#self.check_spa_bookings()
+
+	# def on_update_after_submit(self):
+	# 	self.set_remaining_sessions()
+	# 	self.set_expiry_date()
+	# 	self.set_status()
+	# 	#self.check_spa_bookings()	
 
 	def set_expiry_date(self):
 		if self.start_date:
@@ -59,7 +58,10 @@ class ClientSessions(Document):
 		if self.session_status=="Expired":
 			if expiry_date >= today:
 				self.session_status = 'Active'
+		if self.remaining_sessions == 0:
+			self.session_status = 'Complete'
 
+@frappe.whitelist()
 def create_session(client_id, service_type, service_name, no_of_sessions, validity):
 	doc= frappe.get_doc({
 		"doctype": 'Client Sessions',
@@ -69,14 +71,42 @@ def create_session(client_id, service_type, service_name, no_of_sessions, validi
 		"total_sessions": no_of_sessions,
 		"validity": validity
 	})
-	doc.submit()
+	doc.save()
 
+@frappe.whitelist()
 def check_spa_bookings(session_name):
-		sessions = frappe.get_all('Spa Appointment', filters={'session_name': session_name,'appointment_status':['not in',{'Cancelled'}]})
-		if sessions:
-			booked = len(sessions)
-			frappe.db.set_value('Client Sessions', session_name, 'booked_sessions', booked)
-		sessions = frappe.get_all('Spa Appointment', filters={'session_name': session_name,'appointment_status': ['in',{'Completed', 'No Show'}]})
-		if sessions:
-			used = len(sessions)
-			frappe.db.set_value('Client Sessions', session_name, 'used_sessions', used)
+	client_session = frappe.get_doc('Client Sessions', session_name)
+	booked_sessions = frappe.get_all('Spa Appointment', filters={'session_name': session_name,'appointment_status':['in',{'Scheduled', 'Open'}]})
+	if booked_sessions:
+		booked = len(booked_sessions)
+		frappe.db.set_value('Client Sessions', session_name, 'booked_sessions', booked)
+	else:
+		booked = 0
+		frappe.db.set_value('Client Sessions', session_name, 'booked_sessions', 0)
+	used_sessions = frappe.get_all('Spa Appointment', filters={'session_name': session_name,'appointment_status': ['in',{'Complete', 'No Show'}]})
+	if used_sessions:
+		used = len(used_sessions)
+		frappe.db.set_value('Client Sessions', session_name, 'used_sessions', used)
+	else:
+		used = 0
+		frappe.db.set_value('Client Sessions', session_name, 'used_sessions', 0)
+	# client_session.save()
+
+@frappe.whitelist()
+def check_fitness_bookings(session_name):
+	client_session = frappe.get_doc('Client Sessions', session_name)
+	booked_sessions = frappe.get_all('Fitness Training Appointment', filters={'session_name': session_name,'appointment_status':['in',{'Scheduled', 'Open'}]})
+	if booked_sessions:
+		booked = len(booked_sessions)
+		frappe.db.set_value('Client Sessions', session_name, 'booked_sessions', booked)
+	else:
+		booked = 0
+		frappe.db.set_value('Client Sessions', session_name, 'booked_sessions', 0)
+	used_sessions = frappe.get_all('Fitness Training Appointment', filters={'session_name': session_name,'appointment_status': ['in',{'Complete', 'No Show'}]})
+	if used_sessions:
+		used = len(used_sessions)
+		frappe.db.set_value('Client Sessions', session_name, 'used_sessions', used)
+	else:
+		used = 0
+		frappe.db.set_value('Client Sessions', session_name, 'used_sessions', 0)
+	# client_session.save()

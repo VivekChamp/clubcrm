@@ -20,6 +20,7 @@ def progress_notes(appointment_id,notes):
 				})
 	progress.insert()
 	progress.submit()
+	frappe.db.set_value("Spa Appointment", appointment_id, "progress_notes_id", progress.name)
 
 @frappe.whitelist()
 def check_if_exists(appointment_id):

@@ -15,7 +15,7 @@
  "is_standard": 1,
  "label": "Club CRM",
  "links": [],
- "modified": "2021-03-17 11:47:42.366906",
+ "modified": "2021-03-22 13:43:26.980451",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club CRM",
@@ -29,8 +29,9 @@
    "type": "DocType"
   },
   {
-   "label": "Check-ins",
-   "link_to": "Check In",
+   "doc_view": "",
+   "label": "Cart",
+   "link_to": "Cart",
    "type": "DocType"
   },
   {

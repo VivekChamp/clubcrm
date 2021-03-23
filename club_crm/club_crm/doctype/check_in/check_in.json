@@ -11,7 +11,7 @@
   "column_break",
   "check_in_type",
   "spa_booking",
-  "gym_booking",
+  "fitness_booking",
   "class_attendee_id",
   "group_class_id",
   "section_break",
@@ -80,7 +80,7 @@
    "fieldtype": "Select",
    "in_standard_filter": 1,
    "label": "Check-in Type",
-   "options": "Club Check-in\nSpa\nGym\nGroup Class",
+   "options": "Club Check-in\nSpa\nFitness\nGroup Class",
    "reqd": 1
   },
   {
@@ -89,7 +89,7 @@
    "fieldtype": "Select",
    "hidden": 1,
    "label": "Series",
-   "options": "CHK-.YYYY.-CLUB.-\nCHK-.YYYY.-SPA.-\nCHK-.YYYY.-GYM.-\nCHK-.YYYY.-SOCIAL.-\nCHK-.YYYY.-GC.-"
+   "options": "CHK-.YYYY.-CLUB.-\nCHK-.YYYY.-SPA.-\nCHK-.YYYY.-FITNESS.-\nCHK-.YYYY.-SOCIAL.-\nCHK-.YYYY.-GC.-"
   },
   {
    "fieldname": "column_break",
@@ -106,14 +106,6 @@
    "fieldtype": "Link",
    "label": "Spa Booking ID",
    "options": "Spa Appointment"
-  },
-  {
-   "depends_on": "eval:doc.check_in_type==\"Gym\"",
-   "fetch_from": "appointment.appointment_department",
-   "fieldname": "gym_booking",
-   "fieldtype": "Link",
-   "label": "Gym Booking ID",
-   "options": "Fitness Training Appointment"
   },
   {
    "fetch_from": "class_attendee_id.group_class",
@@ -149,11 +141,19 @@
    "fieldname": "checked_in_by",
    "fieldtype": "Data",
    "label": "Checked in by"
+  },
+  {
+   "depends_on": "eval:doc.check_in_type==\"Fitness\"",
+   "fetch_from": "appointment.appointment_department",
+   "fieldname": "fitness_booking",
+   "fieldtype": "Link",
+   "label": "Fitness Booking ID",
+   "options": "Fitness Training Appointment"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-03-17 23:14:01.198489",
+ "modified": "2021-03-23 17:43:37.163529",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Check In",
