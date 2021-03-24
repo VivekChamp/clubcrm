@@ -7,8 +7,11 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "membership_type_name",
-  "on_app"
+  "enabled",
+  "column_break_2",
+  "on_app",
+  "section_break_4",
+  "membership_type_name"
  ],
  "fields": [
   {
@@ -18,15 +21,31 @@
    "unique": 1
   },
   {
-   "default": "0",
+   "default": "1",
+   "description": "Uncheck to hide this service from client web/mobile apps",
    "fieldname": "on_app",
    "fieldtype": "Check",
    "in_list_view": 1,
    "label": "Show on App"
+  },
+  {
+   "default": "1",
+   "description": "Uncheck to disable this membership type from all forms.",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break"
   }
  ],
  "links": [],
- "modified": "2020-11-17 13:33:38.266975",
+ "modified": "2021-03-25 01:06:03.759819",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Type",
@@ -45,7 +64,6 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "title_field": "membership_type_name",
