@@ -15,30 +15,19 @@ class ClientSessions(Document):
 		self.set_title()
 		self.set_remaining_sessions()
 		self.set_status()
-		#self.check_spa_bookings()
-
-	# def on_update_after_submit(self):
-	# 	self.set_remaining_sessions()
-	# 	self.set_expiry_date()
-	# 	self.set_status()
-	# 	#self.check_spa_bookings()	
+		# self.check_spa_bookings()
+		# self.check_fitness_bookings()	
 
 	def set_expiry_date(self):
 		if self.start_date:
-			start_datetime= datetime.strptime(self.start_date, "%Y-%m-%d")
-			#start_datetime= datetime.strptime(self.start_date, "%Y-%m-%d").date()
+			if type(self.start_date) == str:
+				start_datetime = datetime.strptime(self.start_date, "%Y-%m-%d")
+			else:
+				start_datetime = self.start_date
 			expiry_date = start_datetime + timedelta(seconds=float(self.validity)) + timedelta(seconds=float(self.extension))
 			self.expiry_date = datetime.strftime(expiry_date, "%Y-%m-%d")
 		else:
 			frappe.throw("Please set the start date")
-	
-	# def set_expiry_date_self(self):
-	# 	if self.start_date:
-	# 		#start_datetime= datetime.strptime(self.start_date, "%Y-%m-%d")
-	# 		expiry_datetime = self.start_date + timedelta(seconds=self.validity) + timedelta(seconds=self.extension)
-	# 		self.expiry_date = datetime.strftime(expiry_datetime, "%Y-%m-%d")
-	# 	else:
-	# 		frappe.throw("Please set the start date")
 
 	def set_title(self):
 		self.title = _('{0} for {1}').format(self.client_name,
@@ -46,10 +35,15 @@ class ClientSessions(Document):
 
 	def set_remaining_sessions(self):
 		self.remaining_sessions = self.total_sessions - self.used_sessions
+		self.remaining_session_text = _('{0}/{1}').format(self.remaining_sessions,self.total_sessions)
 
 	def set_status(self):
 		today = getdate()
-		expiry= datetime.strptime(self.expiry_date, "%Y-%m-%d")
+		if type(self.expiry_date) == str:
+			expiry = datetime.strptime(self.expiry_date, "%Y-%m-%d")
+		else:
+			expiry = self.expiry_date
+
 		expiry_date = expiry.date()
 		# If expiry date is less than today, change the status to expired.
 		if self.session_status=="Active" or self.session_status=="On Hold" :
@@ -90,6 +84,7 @@ def check_spa_bookings(session_name):
 	else:
 		used = 0
 		frappe.db.set_value('Client Sessions', session_name, 'used_sessions', 0)
+	frappe.db.commit()
 	# client_session.save()
 
 @frappe.whitelist()
@@ -109,4 +104,5 @@ def check_fitness_bookings(session_name):
 	else:
 		used = 0
 		frappe.db.set_value('Client Sessions', session_name, 'used_sessions', 0)
+	frappe.db.commit()
 	# client_session.save()

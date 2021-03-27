@@ -8,3 +8,8 @@ from frappe.model.document import Document
 
 class MembershipsPlan(Document):
 	pass
+	# def validate(self):
+	# 	self.set_title()
+
+	# def set_title(self):
+

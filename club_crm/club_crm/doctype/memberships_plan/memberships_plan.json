@@ -1,32 +1,45 @@
 {
  "actions": [],
+ "allow_rename": 1,
  "autoname": "field:membership_plan_name",
  "creation": "2020-10-29 02:03:21.358570",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "plan_details_section",
+  "enabled",
+  "column_break_2",
+  "on_app",
+  "section_break_2",
+  "title",
   "membership_plan_name",
   "membership_type",
   "column_break_3",
+  "membership_category",
   "duration",
-  "on_app",
   "amount_section",
-  "maximum_number_of_members",
+  "max_members",
   "max_adults",
-  "max_kids",
+  "max_childs",
   "column_break_10",
-  "joining_fee",
-  "mem_fee_adult",
-  "mem_fee_kid",
-  "benefits_item"
+  "joining_fee_adult",
+  "membership_fee_adult",
+  "membership_fee_child",
+  "benefits_item",
+  "corporate_details_section",
+  "company_name",
+  "company_initials",
+  "column_break_22",
+  "discount_type",
+  "discount_percentage",
+  "discount_amount"
  ],
  "fields": [
   {
    "fieldname": "membership_plan_name",
    "fieldtype": "Data",
    "label": "Membership Plan Name",
+   "reqd": 1,
    "unique": 1
   },
   {
@@ -48,20 +61,14 @@
   {
    "fieldname": "amount_section",
    "fieldtype": "Section Break",
-   "label": "Amount"
-  },
-  {
-   "fieldname": "joining_fee",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Joining Fee (per Adult)"
+   "label": "Pricing"
   },
   {
    "fieldname": "duration",
    "fieldtype": "Duration",
    "hide_seconds": 1,
    "in_list_view": 1,
-   "label": "Duration (in Days)",
+   "label": "Membership Duration",
    "reqd": 1
   },
   {
@@ -72,55 +79,131 @@
   },
   {
    "default": "0",
+   "description": "Uncheck to hide this service from client web/mobile apps.",
    "fieldname": "on_app",
    "fieldtype": "Check",
    "in_list_view": 1,
    "label": "Show on App"
   },
   {
-   "fieldname": "plan_details_section",
-   "fieldtype": "Section Break",
-   "label": "Plan Details"
-  },
-  {
    "fieldname": "column_break_10",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "maximum_number_of_members",
+   "default": "0",
+   "fieldname": "max_adults",
+   "fieldtype": "Int",
+   "label": "Maximum number of Adult(s)"
+  },
+  {
+   "default": "0",
+   "description": "Uncheck to disable this membership plan from all forms.",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break",
+   "label": "Plan Details"
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Title"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "membership_category",
+   "fieldtype": "Link",
+   "label": "Membership Category",
+   "options": "Memberships Category",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "max_members",
    "fieldtype": "Int",
    "label": "Maximum number of Member(s)"
   },
   {
-   "default": "1",
-   "fieldname": "max_adults",
-   "fieldtype": "Select",
-   "label": "Maximum number of Adult(s)",
-   "options": "1\n2\n3\n4"
-  },
-  {
    "default": "0",
-   "fieldname": "max_kids",
-   "fieldtype": "Select",
-   "label": "Maximum number of Kid(s)",
-   "options": "0\n1\n2\n3\n4"
+   "depends_on": "eval:doc.membership_type==\"Family Membership\"",
+   "fieldname": "max_childs",
+   "fieldtype": "Int",
+   "label": "Maximum number of Child(s)"
   },
   {
-   "fieldname": "mem_fee_adult",
+   "default": "0.0",
+   "fieldname": "joining_fee_adult",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Joining Fee (per Adult)"
+  },
+  {
+   "default": "0.0",
+   "fieldname": "membership_fee_adult",
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Membership Fee (per Adult)",
    "precision": "2"
   },
   {
-   "fieldname": "mem_fee_kid",
+   "default": "0.0",
+   "depends_on": "eval:doc.membership_type==\"Family Membership\"",
+   "fieldname": "membership_fee_child",
    "fieldtype": "Currency",
-   "label": "Membership Fee (per Kid)",
+   "label": "Membership Fee (per Child)",
    "precision": "2"
+  },
+  {
+   "depends_on": "eval:doc.membership_category==\"Corporate\"",
+   "fieldname": "corporate_details_section",
+   "fieldtype": "Section Break",
+   "label": "Corporate Details"
+  },
+  {
+   "fieldname": "company_name",
+   "fieldtype": "Link",
+   "label": "Company Name",
+   "mandatory_depends_on": "eval:doc.membership_category==\"Corporate\"",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "column_break_22",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "discount_type",
+   "fieldtype": "Select",
+   "label": "Discount Type",
+   "options": "\nPercentage\nAmount"
+  },
+  {
+   "depends_on": "eval:doc.discount_type==\"Percentage\"",
+   "fieldname": "discount_percentage",
+   "fieldtype": "Percent",
+   "label": "Discount Percentage"
+  },
+  {
+   "depends_on": "eval:doc.discount_type==\"Amount\"",
+   "fieldname": "discount_amount",
+   "fieldtype": "Float",
+   "label": "Discount Amount"
+  },
+  {
+   "fieldname": "company_initials",
+   "fieldtype": "Data",
+   "label": "Company Initials",
+   "mandatory_depends_on": "eval:doc.membership_category==\"Corporate\""
   }
  ],
  "links": [],
- "modified": "2020-12-31 02:56:35.815100",
+ "modified": "2021-03-27 01:42:06.793261",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Plan",
@@ -140,7 +223,6 @@
   }
  ],
  "show_name_in_global_search": 1,
- "show_preview_popup": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "timeline_field": "membership_type",

@@ -1,0 +1,189 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Workflow",
+  "document_type": "Memberships Application",
+  "is_active": 1,
+  "modified": "2021-03-26 22:30:21.305425",
+  "name": "Membership Application Workflow",
+  "override_status": 0,
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "send_email_alert": 0,
+  "states": [
+   {
+    "allow_edit": "CE Staff",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Membership Application Workflow",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Pending",
+    "update_field": null,
+    "update_value": null
+   },
+   {
+    "allow_edit": "CE Manager",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Membership Application Workflow",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Pending Approval by CE Manager",
+    "update_field": null,
+    "update_value": null
+   },
+   {
+    "allow_edit": "General Manager",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Membership Application Workflow",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Pending Approval by GM",
+    "update_field": null,
+    "update_value": null
+   },
+   {
+    "allow_edit": "Managing Director",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Membership Application Workflow",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Pending Approval by MD",
+    "update_field": null,
+    "update_value": null
+   },
+   {
+    "allow_edit": "Managing Director",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Membership Application Workflow",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Approved by MD",
+    "update_field": "application_status",
+    "update_value": "Approved"
+   },
+   {
+    "allow_edit": "Managing Director",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Membership Application Workflow",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Rejected",
+    "update_field": "application_status",
+    "update_value": "Rejected"
+   },
+   {
+    "allow_edit": "General Manager",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Membership Application Workflow",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Rejected",
+    "update_field": "application_status",
+    "update_value": "Rejected"
+   }
+  ],
+  "transitions": [
+   {
+    "action": "Submit for Approval",
+    "allow_self_approval": 1,
+    "allowed": "CE Staff",
+    "condition": null,
+    "next_state": "Pending Approval by CE Manager",
+    "parent": "Membership Application Workflow",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Pending"
+   },
+   {
+    "action": "Reject",
+    "allow_self_approval": 1,
+    "allowed": "CE Manager",
+    "condition": null,
+    "next_state": "Pending",
+    "parent": "Membership Application Workflow",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Pending Approval by CE Manager"
+   },
+   {
+    "action": "Approve",
+    "allow_self_approval": 1,
+    "allowed": "CE Manager",
+    "condition": null,
+    "next_state": "Pending Approval by GM",
+    "parent": "Membership Application Workflow",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Pending Approval by CE Manager"
+   },
+   {
+    "action": "Reject",
+    "allow_self_approval": 1,
+    "allowed": "General Manager",
+    "condition": null,
+    "next_state": "Rejected",
+    "parent": "Membership Application Workflow",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Pending Approval by GM"
+   },
+   {
+    "action": "Approve",
+    "allow_self_approval": 1,
+    "allowed": "General Manager",
+    "condition": null,
+    "next_state": "Pending Approval by MD",
+    "parent": "Membership Application Workflow",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Pending Approval by GM"
+   },
+   {
+    "action": "Reject",
+    "allow_self_approval": 1,
+    "allowed": "Managing Director",
+    "condition": null,
+    "next_state": "Rejected",
+    "parent": "Membership Application Workflow",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Pending Approval by MD"
+   },
+   {
+    "action": "Approve",
+    "allow_self_approval": 1,
+    "allowed": "Managing Director",
+    "condition": null,
+    "next_state": "Approved by MD",
+    "parent": "Membership Application Workflow",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Pending Approval by MD"
+   }
+  ],
+  "workflow_name": "Membership Application Workflow",
+  "workflow_state_field": "workflow_status"
+ }
+]
