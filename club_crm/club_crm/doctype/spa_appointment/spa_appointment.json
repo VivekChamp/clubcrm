@@ -365,6 +365,7 @@
    "fieldtype": "Date",
    "hidden": 1,
    "in_list_view": 1,
+   "in_preview": 1,
    "label": "Appointment Date",
    "read_only": 1
   },
@@ -373,6 +374,7 @@
    "fieldtype": "Time",
    "hidden": 1,
    "in_list_view": 1,
+   "in_preview": 1,
    "label": "Appointment Time",
    "read_only": 1
   },
@@ -436,6 +438,7 @@
    "default": "0",
    "fieldname": "therapist_requested",
    "fieldtype": "Check",
+   "in_preview": 1,
    "label": "Requested by Customer"
   },
   {
@@ -491,6 +494,7 @@
   {
    "fieldname": "notes",
    "fieldtype": "Small Text",
+   "in_preview": 1,
    "label": "Staff Notes"
   },
   {
@@ -504,6 +508,7 @@
    "fieldname": "title",
    "fieldtype": "Data",
    "hidden": 1,
+   "in_preview": 1,
    "label": "Title",
    "no_copy": 1,
    "print_hide": 1,
@@ -610,7 +615,7 @@
   }
  ],
  "links": [],
- "modified": "2021-03-23 16:47:26.353056",
+ "modified": "2021-03-25 00:52:43.738636",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Appointment",
@@ -631,6 +636,7 @@
  ],
  "search_fields": "client_name, spa_therapist, spa_service, appointment_date, appointment_time",
  "show_name_in_global_search": 1,
+ "show_preview_popup": 1,
  "sort_field": "appointment_date",
  "sort_order": "DESC",
  "title_field": "title",

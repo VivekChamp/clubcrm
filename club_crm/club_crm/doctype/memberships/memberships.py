@@ -11,14 +11,16 @@ from frappe.model.document import Document
 
 class Memberships(Document):
 	def validate(self):
-		self.calculate_expiry()
-		self.set_member_number()
+		self.set_expiry()
+		# self.set_member_number()
 		
-	def calculate_expiry(self):
-		if not self.end_date:
-			start_date= datetime.strptime(self.start_date, "%Y-%m-%d")
-			expiry_date= start_date + timedelta(days=int(self.duration))
-			self.end_date= expiry_date.strftime("%Y-%m-%d")
+	def set_expiry(self):
+		if type(self.start_date) == str:
+			start_date = datetime.strptime(self.start_date, "%Y-%m-%d")
+		else:
+			start_date = self.start_date
+		expiry_date = start_date + timedelta(seconds=float(self.duration))
+		self.end_date = expiry_date.strftime("%Y-%m-%d")
 
 	def set_member_number(self):
 		if self.client_id_1:

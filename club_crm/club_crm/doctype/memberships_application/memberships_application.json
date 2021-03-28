@@ -6,93 +6,94 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "submitted_by_staff",
-  "section_break_2",
-  "gm_date",
+  "title",
   "naming_series",
-  "membership_id",
-  "client_id",
-  "client_name",
+  "online_application",
+  "section_break_2",
+  "application_date",
+  "application_time",
+  "membership_category",
   "column_break_2",
-  "member_type",
-  "membership_application",
+  "application_type",
   "application_status",
-  "payment_status",
-  "type",
-  "notes",
-  "memberships_details_section",
-  "no_adults",
   "membership_plan",
   "membership_type",
-  "benefits_plan",
-  "discount_amount",
-  "payment_details_column",
-  "no_kids",
-  "calculate_fee",
-  "membership_fee",
-  "membership_fee_child",
-  "joining_fee",
-  "net_total",
-  "grand_total",
-  "section_break_26",
-  "memeber_adult",
-  "member_kids",
+  "column_break_14",
+  "payment_status",
+  "no_of_adults",
+  "no_of_children",
   "section_break_3",
+  "existing_client_1",
+  "client_id",
   "first_name_1",
   "last_name_1",
-  "mobile_no_1",
-  "email_1",
   "occupation_1",
+  "company_1",
   "column_break_28",
   "birth_date_1",
+  "email_1",
   "gender_1",
   "nationality_1",
-  "company_1",
-  "qatar_id_1",
   "column_break_11",
-  "client_id_1",
+  "mobile_no_1",
+  "qatar_id_1",
   "em_contact_name",
   "em_contact_no",
+  "column_break_35",
   "front_qid_1",
   "back_qid_1",
+  "photo_1",
+  "image_photo_1",
   "details_of_second_member_section",
+  "existing_client_2",
+  "client_id_2",
   "first_name_2",
   "last_name_2",
-  "mobile_no_2",
-  "email_2",
   "occupation_2",
+  "company_2",
   "column_break_47",
   "birth_date_2",
+  "email_2",
   "gender_2",
   "nationality_2",
-  "company_2",
+  "column_break_51",
+  "mobile_no_2",
   "qatar_id_2",
-  "1_column",
-  "client_id_2",
   "relation_2",
+  "1_column",
   "front_qid_2",
   "back_qid_2",
-  "section_break_61",
-  "sadaul",
-  "ddd",
-  "additional_member_details_section",
+  "photo_2",
+  "image_photo_2",
+  "additional_member_section",
   "additional_members",
   "section_break_62",
   "how_did",
+  "column_break_64",
+  "billing_details_section",
+  "joining_fee",
+  "membership_fee_adult",
+  "membership_fee_child",
+  "total_membership_fee",
+  "column_break_70",
+  "net_total",
+  "discount_type",
+  "apply_discount",
+  "discount_percentage",
+  "column_break_73",
+  "discount_amount",
+  "grand_total",
   "payment_details_section",
-  "payment_method",
-  "paid_amount",
-  "sales_invoice",
+  "membership_payment",
   "column_break_94",
-  "transaction_date",
-  "transaction_reference",
-  "section_break_81",
-  "start_date",
-  "end_date",
-  "section_break_87",
-  "memberships",
-  "membership_tables",
-  "amended_from"
+  "total_to_be_paid",
+  "paid_amount",
+  "balance_amount",
+  "sales_invoice",
+  "staff_notes_section",
+  "notes",
+  "data_87",
+  "membership_document"
  ],
  "fields": [
   {
@@ -110,7 +111,7 @@
   {
    "fieldname": "section_break_3",
    "fieldtype": "Section Break",
-   "label": "Details of Primary Member"
+   "label": "Primary Member"
   },
   {
    "fieldname": "column_break_11",
@@ -121,27 +122,11 @@
    "depends_on": "eval: in_list([\"Couple Membership\", \"Family Membership\"], doc.membership_type)",
    "fieldname": "details_of_second_member_section",
    "fieldtype": "Section Break",
-   "label": "Details of Second Member"
+   "label": "Second Member"
   },
   {
    "fieldname": "1_column",
    "fieldtype": "Column Break"
-  },
-  {
-   "default": "Today",
-   "fieldname": "gm_date",
-   "fieldtype": "Date",
-   "label": "Date",
-   "read_only": 1
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Memberships Application",
-   "print_hide": 1,
-   "read_only": 1
   },
   {
    "fieldname": "membership_plan",
@@ -149,27 +134,15 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Membership Plan",
-   "options": "Memberships Plan"
+   "options": "Memberships Plan",
+   "reqd": 1
   },
   {
+   "default": "0.0",
    "fetch_from": "membership_plan.joining_fee",
    "fieldname": "joining_fee",
    "fieldtype": "Currency",
-   "label": "Joining Fee (per adult)",
-   "read_only": 1
-  },
-  {
-   "fetch_from": "membership_plan.benefits_item",
-   "fieldname": "benefits_plan",
-   "fieldtype": "Link",
-   "label": "Benefits Plan",
-   "options": "Benefits Plan",
-   "read_only": 1
-  },
-  {
-   "fieldname": "membership_id",
-   "fieldtype": "Data",
-   "label": "Membership ID",
+   "label": "Joining Fee",
    "read_only": 1
   },
   {
@@ -177,49 +150,27 @@
    "default": "Pending",
    "fieldname": "application_status",
    "fieldtype": "Select",
-   "in_list_view": 1,
+   "hidden": 1,
    "label": "Application Status",
-   "options": "\nPending\nApproved\nRejected\nActive"
+   "options": "Pending\nApproved\nRejected\nComplete"
   },
   {
-   "depends_on": "eval:doc.submitted_by_staff==0",
-   "fetch_from": "client_id.client_name",
-   "fieldname": "client_name",
-   "fieldtype": "Data",
-   "label": "Client Name",
-   "read_only": 1
-  },
-  {
-   "fieldname": "memberships_details_section",
-   "fieldtype": "Section Break",
-   "label": "Memberships Details"
-  },
-  {
-   "fieldname": "payment_details_column",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "0",
+   "default": "0.0",
+   "depends_on": "eval:doc.discount_type",
    "fieldname": "discount_amount",
    "fieldtype": "Currency",
-   "label": "Discount (in QAR)",
-   "permlevel": 1
+   "label": "Discount Amount",
+   "read_only_depends_on": "eval:doc.discount_type==\"Percentage\""
   },
   {
+   "default": "0.0",
    "fieldname": "grand_total",
    "fieldtype": "Currency",
    "label": "Grand Total",
    "read_only": 1
   },
   {
-   "default": "Individual",
-   "fieldname": "type",
-   "fieldtype": "Select",
-   "label": "Type",
-   "options": "Individual\nCorporate"
-  },
-  {
-   "depends_on": "eval:doc.submitted_by_staff==0",
+   "depends_on": "eval:doc.existing_client_1==1",
    "fieldname": "client_id",
    "fieldtype": "Link",
    "label": "Client ID",
@@ -230,29 +181,26 @@
    "fieldtype": "Section Break"
   },
   {
-   "fetch_from": "membership_plan.membership_type",
-   "fieldname": "membership_type",
-   "fieldtype": "Data",
-   "label": "Membership Type",
-   "read_only": 1
-  },
-  {
    "fetch_from": "client_id.first_name",
    "fieldname": "first_name_1",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "First Name",
+   "read_only_depends_on": "eval:doc.existing_client_1==1",
    "reqd": 1
   },
   {
    "fetch_from": "client_id.last_name",
    "fieldname": "last_name_1",
    "fieldtype": "Data",
-   "label": "Last Name"
+   "label": "Last Name",
+   "read_only_depends_on": "eval:doc.existing_client_1==1",
+   "reqd": 1
   },
   {
-   "fetch_from": "membership_application.birth_date_1",
    "fieldname": "birth_date_1",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "Date Of Birth",
    "reqd": 1
   },
@@ -265,9 +213,11 @@
   },
   {
    "fetch_from": "client_id.qatar_id",
+   "fetch_if_empty": 1,
    "fieldname": "qatar_id_1",
    "fieldtype": "Data",
-   "label": "QID Number",
+   "label": "Qatar ID #",
+   "length": 11,
    "reqd": 1
   },
   {
@@ -294,18 +244,20 @@
    "fieldtype": "Link",
    "label": "Gender",
    "options": "Gender",
+   "read_only_depends_on": "eval:doc.existing_client_1==1",
    "reqd": 1
   },
   {
-   "fetch_from": "membership_application.mobile_no_1",
+   "fetch_from": "client_id.mobile_no",
    "fieldname": "mobile_no_1",
    "fieldtype": "Data",
-   "label": "Mobile Number",
+   "label": "Mobile #",
    "length": 8,
+   "read_only_depends_on": "eval:doc.existing_client_1==1",
    "reqd": 1
   },
   {
-   "fetch_from": "membership_application.email_1",
+   "fetch_from": "client_id.email",
    "fieldname": "email_1",
    "fieldtype": "Data",
    "label": "Email Address",
@@ -325,19 +277,20 @@
    "label": "Emergency Contact Name"
   },
   {
-   "fetch_from": "membership_application.first_name_2",
+   "fetch_from": "client_id_2.first_name",
    "fieldname": "first_name_2",
    "fieldtype": "Data",
-   "label": "First Name"
+   "label": "First Name",
+   "read_only_depends_on": "eval:doc.existing_client_2==1"
   },
   {
-   "fetch_from": "membership_application.last_name_2",
+   "fetch_from": "client_id_2.last_name",
    "fieldname": "last_name_2",
    "fieldtype": "Data",
-   "label": "Last Name"
+   "label": "Last Name",
+   "read_only_depends_on": "eval:doc.existing_client_2==1"
   },
   {
-   "fetch_from": "membership_application.birth_date_2",
    "fieldname": "birth_date_2",
    "fieldtype": "Date",
    "label": "Date Of Birth"
@@ -352,7 +305,8 @@
   {
    "fieldname": "qatar_id_2",
    "fieldtype": "Data",
-   "label": "QID Number"
+   "label": "Qatar ID #",
+   "length": 11
   },
   {
    "fieldname": "occupation_2",
@@ -370,16 +324,20 @@
    "label": "Qatar ID Back"
   },
   {
+   "fetch_from": "client_id_2.gender",
    "fieldname": "gender_2",
    "fieldtype": "Link",
    "label": "Gender",
-   "options": "Gender"
+   "options": "Gender",
+   "read_only_depends_on": "eval:doc.existing_client_2==1"
   },
   {
+   "fetch_from": "client_id_2.mobile_no",
    "fieldname": "mobile_no_2",
    "fieldtype": "Data",
-   "label": "Mobile Number",
-   "length": 8
+   "label": "Mobile #",
+   "length": 8,
+   "read_only_depends_on": "eval:doc.existing_client_2==1"
   },
   {
    "fieldname": "email_2",
@@ -388,24 +346,10 @@
    "options": "Email"
   },
   {
-   "fetch_from": "membership_application.client_id_1",
-   "fieldname": "client_id_1",
-   "fieldtype": "Link",
-   "label": "Client ID",
-   "options": "Client",
-   "read_only": 1
-  },
-  {
    "fieldname": "client_id_2",
    "fieldtype": "Data",
    "label": "Client ID",
    "read_only": 1
-  },
-  {
-   "default": "0",
-   "fieldname": "submitted_by_staff",
-   "fieldtype": "Check",
-   "label": "Submitted by Staff"
   },
   {
    "fetch_from": "membership_application.company_1",
@@ -421,11 +365,11 @@
   },
   {
    "allow_on_submit": 1,
-   "default": "Not Paid",
    "fieldname": "payment_status",
    "fieldtype": "Select",
    "label": "Payment Status",
-   "options": "Not Paid\nPaid"
+   "options": "Not Paid\nPaid",
+   "read_only": 1
   },
   {
    "fieldname": "how_did",
@@ -438,24 +382,11 @@
    "label": "Payment Details"
   },
   {
-   "allow_on_submit": 1,
-   "fieldname": "transaction_reference",
-   "fieldtype": "Data",
-   "label": "Transaction Reference",
-   "read_only": 1
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "transaction_date",
-   "fieldtype": "Data",
-   "label": "Transaction Date",
-   "read_only": 1
-  },
-  {
    "fieldname": "relation_2",
    "fieldtype": "Select",
    "label": "Relation to Primary Member",
-   "options": "Spouse\nSon\nDaughter\nBrother\nSister\nFather\nMother"
+   "options": "Spouse\nSon\nDaughter\nBrother\nSister\nFather\nMother",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_28",
@@ -475,38 +406,13 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval: doc.membership_type==\"Family Membership\"",
-   "fetch_from": "membership_application.no_adults",
-   "fieldname": "no_adults",
-   "fieldtype": "Data",
-   "label": "Number of Adults"
-  },
-  {
-   "depends_on": "eval: doc.membership_type==\"Family Membership\"",
-   "fetch_from": "membership_application.no_kids",
-   "fieldname": "no_kids",
-   "fieldtype": "Data",
-   "label": "Number of Kids"
-  },
-  {
-   "depends_on": "eval:doc.membership_type==\"Family Membership\"",
-   "fieldname": "additional_member_details_section",
-   "fieldtype": "Section Break",
-   "label": "Additional Member Details"
-  },
-  {
    "fieldname": "additional_members",
    "fieldtype": "Table",
    "label": "Additional Members",
    "options": "Additional Members"
   },
   {
-   "depends_on": "eval:doc.membership_type==\"Family Membership\"",
-   "fieldname": "calculate_fee",
-   "fieldtype": "Button",
-   "label": "Calculate Fee"
-  },
-  {
+   "collapsible": 1,
    "fieldname": "section_break_62",
    "fieldtype": "Section Break",
    "label": "Other Details"
@@ -517,34 +423,12 @@
    "label": "Notes"
   },
   {
-   "fieldname": "section_break_61",
-   "fieldtype": "Section Break",
-   "hidden": 1
-  },
-  {
-   "default": "2",
-   "fieldname": "sadaul",
-   "fieldtype": "Data",
-   "label": "SAdaul"
-  },
-  {
-   "fieldname": "ddd",
-   "fieldtype": "Data",
-   "label": "ddd"
-  },
-  {
    "allow_on_submit": 1,
-   "fieldname": "payment_method",
-   "fieldtype": "Select",
-   "label": "Payment Method",
-   "options": "\nCredit Card\nWallet\nCash\nComplimentary",
-   "read_only": 1
-  },
-  {
-   "allow_on_submit": 1,
+   "default": "0.0",
    "fieldname": "paid_amount",
    "fieldtype": "Currency",
    "label": "Paid Amount",
+   "precision": "2",
    "read_only": 1
   },
   {
@@ -556,85 +440,226 @@
    "read_only": 1
   },
   {
-   "fieldname": "section_break_26",
-   "fieldtype": "Section Break",
-   "hidden": 1
-  },
-  {
-   "fetch_from": "membership_plan.mem_fee_adult",
-   "fieldname": "memeber_adult",
-   "fieldtype": "Currency",
-   "label": "MEMEBER ADULT"
-  },
-  {
-   "fetch_from": "membership_plan.mem_fee_kid",
-   "fieldname": "member_kids",
-   "fieldtype": "Currency",
-   "label": "MEMBER KIDS"
-  },
-  {
-   "fetch_from": "membership_plan.mem_fee_adult",
-   "fieldname": "membership_fee",
-   "fieldtype": "Currency",
-   "label": "Membership Fee (per adult)",
-   "read_only": 1
-  },
-  {
+   "default": "0.0",
    "fetch_from": "membership_plan.mem_fee_kid",
    "fieldname": "membership_fee_child",
    "fieldtype": "Currency",
-   "label": "Membership Fee (per child)",
+   "label": "Membership Fee (Child)",
    "read_only": 1
   },
   {
-   "fieldname": "member_type",
-   "fieldtype": "Select",
-   "label": "Member Type",
-   "options": "New\nReNew",
+   "default": "0",
+   "description": "This checkbox implies that this booking is made using web/mobile app.",
+   "fieldname": "online_application",
+   "fieldtype": "Check",
+   "label": "Online Application",
    "read_only": 1
-  },
-  {
-   "fieldname": "membership_application",
-   "fieldtype": "Link",
-   "label": "Membership Application",
-   "options": "Memberships Application"
-  },
-  {
-   "fieldname": "section_break_81",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "membership_tables",
-   "fieldtype": "Table",
-   "label": "Membership Tables",
-   "options": "Membership Table"
   },
   {
    "default": "Today",
-   "fieldname": "start_date",
+   "fieldname": "application_date",
    "fieldtype": "Date",
-   "label": "Start Date"
+   "label": "Application Date",
+   "read_only": 1
   },
   {
-   "fieldname": "end_date",
-   "fieldtype": "Date",
-   "label": "End Date"
+   "fieldname": "column_break_14",
+   "fieldtype": "Column Break"
   },
   {
-   "fieldname": "section_break_87",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "memberships",
+   "fieldname": "membership_category",
    "fieldtype": "Link",
-   "label": "Memberships",
+   "in_list_view": 1,
+   "label": "Membership Category",
+   "options": "Memberships Category",
+   "reqd": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Title",
+   "read_only": 1
+  },
+  {
+   "fieldname": "application_time",
+   "fieldtype": "Time",
+   "label": "Application Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "application_type",
+   "fieldtype": "Select",
+   "label": "Application Type",
+   "options": "New\nRenew",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "membership_plan.membership_type",
+   "fieldname": "membership_type",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Membership Type",
+   "options": "Memberships Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "no_of_adults",
+   "fieldtype": "Int",
+   "label": "Number of Adults",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_35",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "existing_client_1",
+   "fieldtype": "Check",
+   "label": "Existing Client"
+  },
+  {
+   "fieldname": "photo_1",
+   "fieldtype": "Attach",
+   "label": "Applicant Photo"
+  },
+  {
+   "default": "0",
+   "fieldname": "existing_client_2",
+   "fieldtype": "Check",
+   "label": "Existing Client"
+  },
+  {
+   "fieldname": "column_break_51",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "image_photo_1",
+   "fieldtype": "Image",
+   "options": "photo_1"
+  },
+  {
+   "fieldname": "photo_2",
+   "fieldtype": "Attach Image",
+   "label": "Applicant Photo"
+  },
+  {
+   "fieldname": "image_photo_2",
+   "fieldtype": "Image",
+   "options": "photo_2"
+  },
+  {
+   "collapsible": 1,
+   "depends_on": "eval:doc.membership_type==\"Family Membership\"",
+   "fieldname": "additional_member_section",
+   "fieldtype": "Section Break",
+   "label": "Additional Members"
+  },
+  {
+   "fieldname": "billing_details_section",
+   "fieldtype": "Section Break",
+   "label": "Billing Details"
+  },
+  {
+   "fieldname": "column_break_64",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_70",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0.0",
+   "fieldname": "total_membership_fee",
+   "fieldtype": "Currency",
+   "label": "Total Membership Fee",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_73",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0.0",
+   "fetch_from": "membership_plan.mem_fee_adult",
+   "fieldname": "membership_fee_adult",
+   "fieldtype": "Currency",
+   "label": "Membership Fee (Adult)",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval: doc.membership_type==\"Family Membership\"",
+   "fieldname": "no_of_children",
+   "fieldtype": "Int",
+   "label": "Number of Children",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.discount_type==\"Percentage\"",
+   "fieldname": "apply_discount",
+   "fieldtype": "Select",
+   "label": "Apply Discount",
+   "options": "\nOn Joining Fee\nOn Membership Fee (Adult)\nOn Membership Fee (Child)\nOn Total Membership Fee\nOn Net Total"
+  },
+  {
+   "depends_on": "eval:doc.membership_category!=\"Complimentary\"",
+   "fieldname": "discount_type",
+   "fieldtype": "Select",
+   "label": "Discount Type",
+   "options": "\nAmount\nPercentage"
+  },
+  {
+   "default": "0.0",
+   "depends_on": "eval:doc.discount_type==\"Percentage\"",
+   "fieldname": "discount_percentage",
+   "fieldtype": "Percent",
+   "label": "Discount Percentage",
+   "precision": "2"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "membership_payment",
+   "fieldtype": "Table",
+   "options": "Cart Payment"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0.0",
+   "fieldname": "total_to_be_paid",
+   "fieldtype": "Currency",
+   "label": "Total to be paid",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "staff_notes_section",
+   "fieldtype": "Section Break",
+   "label": "Staff Notes"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0.0",
+   "fieldname": "balance_amount",
+   "fieldtype": "Currency",
+   "label": "Balance Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "membership_document",
+   "fieldtype": "Link",
+   "label": "Membership Document",
    "options": "Memberships"
+  },
+  {
+   "fieldname": "data_87",
+   "fieldtype": "Data"
   }
  ],
- "is_submittable": 1,
  "links": [],
- "modified": "2021-02-06 09:36:57.636624",
- "modified_by": "suba@bluelynx.com",
+ "modified": "2021-03-27 21:05:48.678231",
+ "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",
  "owner": "Administrator",
@@ -654,6 +679,6 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "title_field": "client_name",
+ "title_field": "title",
  "track_changes": 1
 }

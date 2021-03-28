@@ -108,6 +108,7 @@
    "read_only": 1
   },
   {
+   "default": "0.0",
    "fieldname": "grand_total",
    "fieldtype": "Currency",
    "in_list_view": 1,
@@ -269,6 +270,7 @@
    "read_only": 1
   },
   {
+   "default": "0.0",
    "fieldname": "net_total",
    "fieldtype": "Currency",
    "label": "Net Total",
@@ -342,7 +344,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-03-21 04:10:54.262893",
+ "modified": "2021-03-26 19:01:44.499188",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Cart",

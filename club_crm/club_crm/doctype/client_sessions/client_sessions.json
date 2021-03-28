@@ -27,6 +27,7 @@
   "column_break_16",
   "total_sessions",
   "used_sessions",
+  "remaining_session_text",
   "column_break_18",
   "remaining_sessions",
   "booked_sessions",
@@ -138,7 +139,6 @@
    "default": "0",
    "fieldname": "used_sessions",
    "fieldtype": "Int",
-   "in_list_view": 1,
    "label": "Used",
    "non_negative": 1,
    "precision": "0"
@@ -158,7 +158,6 @@
    "default": "0",
    "fieldname": "booked_sessions",
    "fieldtype": "Int",
-   "in_list_view": 1,
    "label": "Booked",
    "non_negative": 1,
    "precision": "0",
@@ -243,11 +242,17 @@
    "hide_seconds": 1,
    "label": "Extension",
    "read_only": 1
+  },
+  {
+   "fieldname": "remaining_session_text",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Remaining Session"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-03-23 19:44:28.669111",
+ "modified": "2021-03-27 20:26:22.688177",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client Sessions",

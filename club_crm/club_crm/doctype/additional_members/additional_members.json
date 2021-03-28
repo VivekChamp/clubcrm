@@ -5,23 +5,24 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "existing_client",
+  "client_id",
   "first_name",
   "last_name",
-  "mobile_number",
-  "email_address",
+  "column_break_4",
+  "birth_date",
+  "email",
+  "gender",
   "nationality",
   "column_break_6",
-  "dob",
-  "age_html",
+  "mobile_no",
+  "qatar_id",
+  "relation",
   "column_break_9",
-  "client_id",
-  "qid_number",
-  "qatar_id_front",
-  "qatar_id_back",
-  "section_break_14",
-  "ads",
-  "adtal",
-  "date"
+  "front_qid",
+  "back_qid",
+  "photo",
+  "category"
  ],
  "fields": [
   {
@@ -33,23 +34,12 @@
   {
    "fieldname": "last_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Last Name"
-  },
-  {
-   "fieldname": "mobile_number",
-   "fieldtype": "Data",
-   "label": "Mobile Number",
-   "length": 8
-  },
-  {
-   "fieldname": "email_address",
-   "fieldtype": "Data",
-   "label": "Email Address"
   },
   {
    "fieldname": "nationality",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Nationality"
   },
   {
@@ -57,67 +47,90 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "dob",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "DOB"
-  },
-  {
    "fieldname": "column_break_9",
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.existing_client==1",
    "fieldname": "client_id",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "label": "Client ID",
    "options": "Client"
   },
   {
-   "fieldname": "qid_number",
+   "fieldname": "mobile_no",
    "fieldtype": "Data",
-   "label": "QID Number"
+   "label": "Mobile #",
+   "length": 8
   },
   {
-   "fieldname": "qatar_id_front",
-   "fieldtype": "Attach Image",
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email Address"
+  },
+  {
+   "fieldname": "birth_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date of Birth"
+  },
+  {
+   "fieldname": "qatar_id",
+   "fieldtype": "Data",
+   "label": "Qatar ID #",
+   "length": 11
+  },
+  {
+   "fieldname": "front_qid",
+   "fieldtype": "Attach",
    "label": "Qatar ID Front"
   },
   {
-   "fieldname": "qatar_id_back",
-   "fieldtype": "Attach Image",
+   "fieldname": "back_qid",
+   "fieldtype": "Attach",
    "label": "Qatar ID Back"
   },
   {
-   "fieldname": "age_html",
-   "fieldtype": "Data",
-   "label": "Age"
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
   },
   {
-   "default": "Today",
-   "fieldname": "date",
-   "fieldtype": "Date",
-   "label": "date"
+   "fieldname": "gender",
+   "fieldtype": "Link",
+   "label": "Gender",
+   "options": "Gender"
   },
   {
-   "fieldname": "section_break_14",
-   "fieldtype": "Section Break",
-   "hidden": 1
+   "fieldname": "relation",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Relation to Primary Member",
+   "options": "Spouse\nSon\nDaughter\nBrother\nSister\nFather\nMother",
+   "reqd": 1
   },
   {
-   "fieldname": "adtal",
-   "fieldtype": "Data",
-   "label": "Adtal"
+   "fieldname": "photo",
+   "fieldtype": "Attach",
+   "label": "Applicant Photo"
   },
   {
-   "fieldname": "ads",
-   "fieldtype": "Data",
-   "label": "ads"
+   "default": "0",
+   "fieldname": "existing_client",
+   "fieldtype": "Check",
+   "label": "Existing Client"
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Category",
+   "options": "Adult\nChild",
+   "read_only": 1
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2021-01-31 09:34:03.343306",
+ "modified": "2021-03-26 15:57:19.315620",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Additional Members",

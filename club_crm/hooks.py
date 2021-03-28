@@ -138,15 +138,8 @@ scheduler_events = {
 #
 # auto_cancel_exempted_doctypes = ["Auto Repeat"]
 fixtures = [
-{"dt": "Custom Field",
-"filters": [
-    {"name": ["in", [
-        "User-is_employee",
-        "User-qatar_id"
-        ]
-    ]
-    }
-]}
+    "Workflow",
+    {"dt": "Role", "filters": [["disabled", "=", 0]]}
 ]
 
 email_brand_image = "assets/club_crm/images/katara-club.jpg"
