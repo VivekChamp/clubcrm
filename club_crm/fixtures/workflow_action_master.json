@@ -1,0 +1,52 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2021-02-22 00:32:15.758444",
+  "name": "Approve",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "workflow_action_name": "Approve"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2021-02-22 00:32:15.761419",
+  "name": "Reject",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "workflow_action_name": "Reject"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2021-02-22 00:32:15.764176",
+  "name": "Review",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "workflow_action_name": "Review"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2021-03-26 22:20:17.436249",
+  "name": "Submit for Approval",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "workflow_action_name": "Submit for Approval"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2021-03-26 23:38:27.654885",
+  "name": "Submit",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "workflow_action_name": "Submit"
+ }
+]

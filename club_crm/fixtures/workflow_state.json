@@ -1,0 +1,110 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "question-sign",
+  "modified": "2021-03-26 22:20:32.567433",
+  "name": "Pending",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "style": "Warning",
+  "workflow_state_name": "Pending"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "ok-sign",
+  "modified": "2021-02-22 00:32:15.734223",
+  "name": "Approved",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "style": "Success",
+  "workflow_state_name": "Approved"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "remove",
+  "modified": "2021-02-22 00:32:15.741454",
+  "name": "Rejected",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "style": "Danger",
+  "workflow_state_name": "Rejected"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2021-03-26 21:43:12.425386",
+  "name": "Draft",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "style": "",
+  "workflow_state_name": "Draft"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2021-03-26 22:21:49.381876",
+  "name": "Pending Approval by CE Manager",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "style": "Warning",
+  "workflow_state_name": "Pending Approval by CE Manager"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2021-03-27 01:45:29.963865",
+  "name": "Pending Approval by GM",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "style": "Primary",
+  "workflow_state_name": "Pending Approval by GM"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2021-03-26 23:33:08.124732",
+  "name": "Pending Approval by MD",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "style": "Primary",
+  "workflow_state_name": "Pending Approval by MD"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2021-03-26 23:33:14.442055",
+  "name": "Approved by MD",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "style": "Success",
+  "workflow_state_name": "Approved by MD"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2021-03-28 13:11:23.627465",
+  "name": "Complete",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "style": "Success",
+  "workflow_state_name": "Complete"
+ }
+]

@@ -9,7 +9,7 @@ from club_crm.api.wallet import get_balance
 
 @frappe.whitelist()
 def get_spa_category(client_id):
-    spa_category = frappe.get_all('Spa Menu Category', filters={'on_app': '1', 'complimentary':'0'}, fields=['spa_category_name','category_image'])
+    spa_category = frappe.get_all('Spa Services Category', filters={'on_app': '1', 'complimentary':'0'}, fields=['spa_category_name','category_image'])
 
     client= frappe.get_doc('Client', client_id)
     if client.membership_status=="Member":
@@ -41,16 +41,16 @@ def get_spa_category(client_id):
 
 @frappe.whitelist()
 def get_spa_item(spa_category):
-    spa_item = frappe.get_all('Spa Menu', filters={'spa_menu_category':spa_category,'on_app': 1,'disabled':0},fields=['spa_item_name','spa_menu_group','spa_menu_category','duration','rate','has_addon','description','image'])
+    spa_item = frappe.get_all('Spa Services', filters={'spa_category':spa_category,'on_app': 1,'enabled':1},fields=['spa_name','spa_group','spa_category','duration','price','description','image'])
     frappe.response["message"] = {
         "Spa Items": spa_item
         }
 
 @frappe.whitelist()
 def get_therapist(spa_item,client_id):
-    doc= frappe.get_doc('Spa Menu',spa_item)
-    client= frappe.get_doc('Client', client_id)
-    spa_therapist= frappe.get_all('Spa Therapist Assignment', filters={'spa_group':doc.spa_menu_group, 'on_app':1}, fields=['name','parent','parenttype','parentfield','spa_group'])
+    doc = frappe.get_doc('Spa Services',spa_item)
+    client = frappe.get_doc('Client', client_id)
+    spa_therapist = frappe.get_all('Spa Therapist Assignment', filters={'spa_group':doc.spa_menu_group, 'on_app':1}, fields=['name','parent','parenttype','parentfield','spa_group'])
     therapist=[]
     for name in spa_therapist:
         doc_1= frappe.get_doc('Spa Therapist', name.parent)
