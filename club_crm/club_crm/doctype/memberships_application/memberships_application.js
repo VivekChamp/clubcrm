@@ -97,7 +97,7 @@ frappe.ui.form.on('Memberships Application', {
             frm.fields_dict['membership_payment'].grid.wrapper.find('.grid-remove-rows').hide();
         }
         //Show payment button
-        if(frm.doc.workflow_status=="Approved" && !frm.doc.balance_amount==0.0) {
+        if(frm.doc.workflow_status=="Approved by MD" && !frm.doc.balance_amount==0.0) {
             frm.add_custom_button(__('Offline Payment'), function() {
                 let d = new frappe.ui.Dialog ({
                     title: 'Offline Payment',

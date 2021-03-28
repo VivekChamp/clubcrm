@@ -11,7 +11,7 @@
   "membership_details_section",
   "naming_series",
   "created_date",
-  "client_id",
+  "primary_client_id",
   "client_name",
   "column_break_7",
   "membership_plan",
@@ -59,15 +59,6 @@
    "fieldtype": "Link",
    "label": "Membership Plan",
    "options": "Memberships Plan"
-  },
-  {
-   "fetch_from": "membership_application.client_id",
-   "fieldname": "client_id",
-   "fieldtype": "Link",
-   "label": "Primary Client ID",
-   "options": "Client",
-   "reqd": 1,
-   "set_only_once": 1
   },
   {
    "default": "Today",
@@ -292,11 +283,20 @@
    "label": "Membership Category",
    "options": "Memberships Category",
    "read_only": 1
+  },
+  {
+   "fetch_from": "membership_application.client_id",
+   "fieldname": "primary_client_id",
+   "fieldtype": "Link",
+   "label": "Primary Client ID",
+   "options": "Client",
+   "reqd": 1,
+   "set_only_once": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-03-27 15:29:06.179180",
+ "modified": "2021-03-28 22:28:31.478750",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships",

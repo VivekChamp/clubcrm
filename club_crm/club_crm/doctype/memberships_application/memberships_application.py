@@ -24,6 +24,9 @@ class MembershipsApplication(Document):
 	def before_submit(self):
 		self.check_payment()
 
+	def on_submit(self):
+		self.create_clients()
+
 	def check_existing_application(self):
 		mem_app = frappe.get_all('Memberships Application', filters={'qatar_id_1':self.qatar_id_1,'application_status':"Pending"})
 		if mem_app:
@@ -60,26 +63,10 @@ class MembershipsApplication(Document):
 		self.no_of_adults = 0
 		self.no_of_children = 0
 		if self.birth_date_1:
-			if type(self.birth_date_1) == str:
-				dob_1 = datetime.strptime(self.birth_date_1, "%Y-%m-%d")
-			else:
-				dob_1 = self.birth_date_1
-			age = today.year - dob_1.year - ((today.month, today.day) < (dob_1.month, dob_1.day))
-			# if age >= 18:
 			self.no_of_adults += 1
-			# else:
-				# self.no_of_children += 1
 
 		if self.birth_date_2:
-			if type(self.birth_date_1) == str:
-				dob_2 = datetime.strptime(self.birth_date_2, "%Y-%m-%d")
-			else:
-				dob_2 = self.birth_date_2
-			age = today.year - dob_2.year - ((today.month, today.day) < (dob_2.month, dob_2.day))
-			# if age >= 18:
 			self.no_of_adults += 1
-			# else:
-			# 	self.no_of_children += 1
 
 		if self.additional_members:
 			for row in self.additional_members:
@@ -143,66 +130,42 @@ class MembershipsApplication(Document):
 	def set_title(self):
 		self.title = _('{0} for {1}').format(self.first_name_1,self.membership_plan)
 
+	def create_clients(self):
+		if self.membership_type == "Single Membership":
+			if not self.client_id:
+				client_1 = create_client(self.first_name_1,self.last_name_1,self.gender_1,self.birth_date_1,self.qatar_id_1,self.mobile_no_1,self.email_1)
+				frappe.db.set_value("Memberships Application", self.name, "client_id", client_1, update_modified=False)
+				# self.client_id = client_1
+
+		if self.membership_type == "Couple Membership":
+			if not self.client_id:
+				client_1 = create_client(self.first_name_1,self.last_name_1,self.gender_1,self.birth_date_1,self.qatar_id_1,self.mobile_no_1,self.email_1)
+				frappe.db.set_value("Memberships Application", self.name, "client_id", client_1, update_modified=False)
+				# self.client_id = client_1
+
+			if not self.client_id_2:
+				client_2 = create_client(self.first_name_2,self.last_name_2,self.gender_2,self.birth_date_2,self.qatar_id_2,self.mobile_no_2,self.email_2)
+				frappe.db.set_value("Memberships Application", self.name, "client_id_2", client_2, update_modified=False)
+				# self.client_id_2 = client_2
+
+		if self.membership_type == "Family Membership":
+			if not self.client_id:
+				client_1 = create_client(self.first_name_1,self.last_name_1,self.gender_1,self.birth_date_1,self.qatar_id_1,self.mobile_no_1,self.email_1)
+				frappe.db.set_value("Memberships Application", self.name, "client_id", client_1, update_modified=False)
+				# self.client_id = client_1
+
+			if not self.client_id_2:
+				client_2 = create_client(self.first_name_2,self.last_name_2,self.gender_2,self.birth_date_2,self.qatar_id_2,self.mobile_no_2,self.email_2)
+				frappe.db.set_value("Memberships Application", self.name, "client_id_2", client_2, update_modified=False)
+				# self.client_id_2 = client_2
+			
+			if self.additional_members:
+				for row in self.additional_members:
+					if not row.client_id:
+						client = create_client(row.first_name,row.last_name,row.gender,row.birth_date,row.qatar_id,row.mobile_no,row.email)
+						frappe.db.set_value(row.doctype, row.name, "client_id", client, update_modified=False)
+
 @frappe.whitelist()
-def create_memberships(mem_application_id):
-	mem_app = frappe.get_doc('Memberships Application', mem_application_id)
-	if not mem_app.client_id:
-		doc_1 = frappe.get_doc({
-			'doctype': 'Client',
-			'first_name': mem_app.first_name_1,
-			'last_name' : mem_app.last_name_1,
-			'gender' : mem_app.gender_1,
-			'status' : 'Active',
-			'membership_status' : 'Non-Member',
-			'birth_date' : mem_app.birth_date_1,
-			'qatar_id' : mem_app.qatar_id_1,
-			'mobile_no' : mem_app.mobile_no_1,
-			'email': mem_app.email_1,
-			'default_currency' : 'QAR'
-		})
-		doc_1.save()
-		# create_client(mem_app.first_name_1,mem_app.last_name_1,mem_app.gender_1,mem_app.birth_date_1,mem_app.qatar_id_1,mem_app.mobile_no_1,mem_app.email_1)
-		frappe.db.set_value("Memberships Application", mem_application_id, "client_id", doc_1.name)
-
-	# if not mem_app.client_id_2:
-	# 	doc_2 = frappe.get_doc({
-	# 		'doctype': 'Client',
-	# 		'first_name': mem_app.first_name_2,
-	# 		'last_name' : mem_app.last_name_2,
-	# 		'gender' : mem_app.gender_2,
-	# 		'status' : 'Active',
-	# 		'membership_status' : 'Non-Member',
-	# 		'birth_date' : mem_app.birth_date_2,
-	# 		'qatar_id' : mem_app.qatar_id_2,
-	# 		'mobile_no' : mem_app.mobile_no_2,
-	# 		'email': mem_app.email_2,
-	# 		'default_currency' : 'QAR'
-	# 	})
-	# 	doc_2.save()
-	# 	# create_client(mem_app.first_name_2,mem_app.last_name_2,mem_app.gender_2,mem_app.birth_date_2,mem_app.qatar_id_2,mem_app.mobile_no_2,mem_app.email_2)
-	# 	frappe.db.set_value("Memberships Application", mem_application_id, "client_id_2", doc_2.name)
-
-	# if mem_app.additional_members:
-	# 	for row in mem_app.additional_members:
-	# 		if not row.client_id:
-	# 			doc = frappe.get_doc({
-	# 				'doctype': 'Client',
-	# 				'first_name': row.first_name,
-	# 				'last_name' : row.last_name,
-	# 				'gender' : row.gender,
-	# 				'status' : 'Active',
-	# 				'membership_status' : 'Non-Member',
-	# 				'birth_date' : row.birth_date,
-	# 				'qatar_id' : row.qatar_id,
-	# 				'mobile_no' : row.mobile_no,
-	# 				'email': row.email,
-	# 				'default_currency' : 'QAR'
-	# 			})
-	# 			doc.save()
-	# 			# create_client(row.first_name,row.last_name,row.gender,row.birth_date,row.qatar_id,row.mobile_no,row.email)
-	# 			row.client_id = doc.name
-
-@frappe.whitelist(allow_guest=True)
 def create_client(first_name,last_name,gender,birth_date,qatar_id,mobile_no,email):
 	doc = frappe.get_doc({
 		'doctype': 'Client',
@@ -219,26 +182,22 @@ def create_client(first_name,last_name,gender,birth_date,qatar_id,mobile_no,emai
 	})
 	doc.save()
 	return doc.name
-                
 
-	# 	def create_session(self):
-	# 	for row in self.cart_session:
-	# 		if row.package_type == "Spa":
-	# 			service_type = "Spa Services"
-	# 		if row.package_type == "Fitness":
-	# 			service_type = "Fitness Services"
-	# 		club_package = frappe.get_doc('Club Packages', row.package_name)
-	# 		if club_package.package_table:
-	# 			for item in club_package.package_table:
-	# 				create_session(self.client_id,service_type,item.service_name,item.no_of_sessions,item.validity)
+# @frappe.whitelist()
+# def create_membership(self):
+# 	doc = frappe.get_doc({
+# 		'doctype': 'Memberships',
+# 		'primary_client_id': self.client_id,
+# 		'membership_plan' : self.membership_plan,
+# 		'client_id_1' : self.client_id,
+# 		'client_id_2' : self.client_id_2,
+
+@frappe.whitelist(allow_guest=True)
+def mem_app(id):
+	mem_app = frappe.get_doc("Memberships Application", id)
+	return mem_app
 
 
-	# def on_update_after_submit(self):
-	# 	if self.payment_status=="Paid":
-	# 		# self.create_invoice()
-	# 		self.create_membership()
-
-	# def create_membership(self):
 	# 	plan= frappe.get_doc('Memberships Plan', self.membership_plan)
 	# 	today = getdate()
 	# 	expiry = today + timedelta(seconds=plan.duration)
