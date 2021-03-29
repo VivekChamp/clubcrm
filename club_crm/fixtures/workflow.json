@@ -4,7 +4,7 @@
   "doctype": "Workflow",
   "document_type": "Memberships Application",
   "is_active": 1,
-  "modified": "2021-03-26 22:30:21.305425",
+  "modified": "2021-03-28 17:48:09.127491",
   "name": "Membership Application Workflow",
   "override_status": 0,
   "parent": null,
@@ -102,6 +102,19 @@
     "state": "Rejected",
     "update_field": "application_status",
     "update_value": "Rejected"
+   },
+   {
+    "allow_edit": "CE Manager",
+    "doc_status": "1",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Membership Application Workflow",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Complete",
+    "update_field": "payment_status",
+    "update_value": "Paid"
    }
   ],
   "transitions": [
@@ -181,6 +194,28 @@
     "parentfield": "transitions",
     "parenttype": "Workflow",
     "state": "Pending Approval by MD"
+   },
+   {
+    "action": "Submit",
+    "allow_self_approval": 1,
+    "allowed": "CE Manager",
+    "condition": null,
+    "next_state": "Complete",
+    "parent": "Membership Application Workflow",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Approved by MD"
+   },
+   {
+    "action": "Submit",
+    "allow_self_approval": 1,
+    "allowed": "General Manager",
+    "condition": null,
+    "next_state": "Complete",
+    "parent": "Membership Application Workflow",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Approved by MD"
    }
   ],
   "workflow_name": "Membership Application Workflow",
