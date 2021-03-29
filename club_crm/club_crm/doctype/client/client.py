@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 import frappe
+import string
 import dateutil
 from frappe.utils import getdate
 from frappe.model.document import Document
@@ -11,9 +12,11 @@ class Client(Document):
 
     def set_full_name(self):
         if self.last_name:
-            self.client_name = ' '.join(filter(None, [self.first_name, self.last_name]))
+            client_name = ' '.join(filter(None, [self.first_name, self.last_name]))
+            self.client_name = string.capwords(client_name)
         else:
-            self.client_name = self.first_name
+            client_name = self.first_name
+            self.client_name = string.capwords(client_name)
     
     def get_age(self):
         if self.birth_date:
@@ -26,18 +29,6 @@ class Client(Document):
         customer = frappe.get_all('Customer', filters={'mobile_no':self.mobile_no})
         if not customer:
             self.create_customer()
-
-    # def on_update(self):
-    #     user = frappe.get_doc('User', self.email)
-    #     user.first_name= self.first_name
-    #     user.last_name= self.last_name
-    #     user.mobile_no = self.mobile_no
-    #     user.gender= self.gender
-    #     user.save()
-    
-    def on_trash(self):
-        user= frappe.get_doc('User', self.email)
-        user.delete()
 
     def create_customer(self):
         customer = frappe.get_doc({

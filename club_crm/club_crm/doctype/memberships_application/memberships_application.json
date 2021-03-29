@@ -92,8 +92,8 @@
   "sales_invoice",
   "staff_notes_section",
   "notes",
-  "data_87",
-  "membership_document"
+  "membership_document",
+  "amended_from"
  ],
  "fields": [
   {
@@ -143,6 +143,7 @@
    "fieldname": "joining_fee",
    "fieldtype": "Currency",
    "label": "Joining Fee",
+   "non_negative": 1,
    "read_only": 1
   },
   {
@@ -160,6 +161,7 @@
    "fieldname": "discount_amount",
    "fieldtype": "Currency",
    "label": "Discount Amount",
+   "non_negative": 1,
    "read_only_depends_on": "eval:doc.discount_type==\"Percentage\""
   },
   {
@@ -167,6 +169,7 @@
    "fieldname": "grand_total",
    "fieldtype": "Currency",
    "label": "Grand Total",
+   "non_negative": 1,
    "read_only": 1
   },
   {
@@ -258,6 +261,7 @@
   },
   {
    "fetch_from": "client_id.email",
+   "fetch_if_empty": 1,
    "fieldname": "email_1",
    "fieldtype": "Data",
    "label": "Email Address",
@@ -340,6 +344,8 @@
    "read_only_depends_on": "eval:doc.existing_client_2==1"
   },
   {
+   "fetch_from": "client_id_2.email",
+   "fetch_if_empty": 1,
    "fieldname": "email_2",
    "fieldtype": "Data",
    "label": "Email Address",
@@ -358,9 +364,11 @@
    "label": "Company"
   },
   {
+   "default": "0.0",
    "fieldname": "net_total",
    "fieldtype": "Currency",
    "label": "Net Total",
+   "non_negative": 1,
    "read_only": 1
   },
   {
@@ -428,6 +436,7 @@
    "fieldname": "paid_amount",
    "fieldtype": "Currency",
    "label": "Paid Amount",
+   "non_negative": 1,
    "precision": "2",
    "read_only": 1
   },
@@ -445,6 +454,7 @@
    "fieldname": "membership_fee_child",
    "fieldtype": "Currency",
    "label": "Membership Fee (Child)",
+   "non_negative": 1,
    "read_only": 1
   },
   {
@@ -574,6 +584,7 @@
    "fieldname": "total_membership_fee",
    "fieldtype": "Currency",
    "label": "Total Membership Fee",
+   "non_negative": 1,
    "read_only": 1
   },
   {
@@ -586,6 +597,7 @@
    "fieldname": "membership_fee_adult",
    "fieldtype": "Currency",
    "label": "Membership Fee (Adult)",
+   "non_negative": 1,
    "read_only": 1
   },
   {
@@ -629,6 +641,7 @@
    "fieldname": "total_to_be_paid",
    "fieldtype": "Currency",
    "label": "Total to be paid",
+   "non_negative": 1,
    "precision": "2",
    "read_only": 1
   },
@@ -643,6 +656,7 @@
    "fieldname": "balance_amount",
    "fieldtype": "Currency",
    "label": "Balance Amount",
+   "non_negative": 1,
    "precision": "2",
    "read_only": 1
   },
@@ -653,12 +667,18 @@
    "options": "Memberships"
   },
   {
-   "fieldname": "data_87",
-   "fieldtype": "Data"
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Memberships Application",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
+ "is_submittable": 1,
  "links": [],
- "modified": "2021-03-27 21:05:48.678231",
+ "modified": "2021-03-29 02:34:23.559180",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",

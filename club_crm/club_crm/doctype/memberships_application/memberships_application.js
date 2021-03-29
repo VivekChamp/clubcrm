@@ -11,7 +11,6 @@ frappe.ui.form.on("Memberships Application", "onload", function(frm){
 	});
 });
 
-
 frappe.ui.form.on('Memberships Application', {
     membership_category: function(frm){
         frm.set_value('membership_plan', "");
@@ -97,7 +96,7 @@ frappe.ui.form.on('Memberships Application', {
             frm.fields_dict['membership_payment'].grid.wrapper.find('.grid-remove-rows').hide();
         }
         //Show payment button
-        if(frm.doc.workflow_status=="Approved" && !frm.doc.balance_amount==0.0) {
+        if(frm.doc.workflow_status=="Approved by MD" && !frm.doc.balance_amount==0.0) {
             frm.add_custom_button(__('Offline Payment'), function() {
                 let d = new frappe.ui.Dialog ({
                     title: 'Offline Payment',
@@ -167,10 +166,10 @@ frappe.ui.form.on('Memberships Application', {
                 d.show();
             });
         }
-        if (frm.doc.payment_status=="Paid") {
+        if (frm.doc.payment_status=="Paid" && !frm.doc.membership_document) {
             frm.add_custom_button(__('Create Membership'), function(){
                 frappe.call({
-                    method: 'club_crm.club_crm.doctype.memberships_application.memberships_application.create_memberships',
+                    method: 'club_crm.club_crm.doctype.memberships_application.memberships_application.create_membership',
                     args: {mem_application_id: frm.doc.name},
                     callback: function(r) {
                         cur_frm.reload_doc();
@@ -181,7 +180,11 @@ frappe.ui.form.on('Memberships Application', {
                     indicator: 'green',
                     message: __('Membership Created successfully')
                 });
-
+            });
+        }
+        if (frm.doc.membership_document) {
+            frm.add_custom_button(__('View Membership'), function(){
+                frappe.set_route("Form", "Memberships", frm.doc.membership_document);
             });
         }
     }

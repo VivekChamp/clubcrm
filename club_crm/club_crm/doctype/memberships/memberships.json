@@ -8,44 +8,49 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "title",
   "membership_details_section",
   "naming_series",
   "created_date",
-  "client_id",
-  "client_name",
+  "primary_client_id",
+  "primary_client_name",
   "column_break_7",
   "membership_plan",
   "membership_type",
   "membership_category",
+  "total_amount",
   "membership_status",
   "duration",
   "column_break_15",
   "membership_id",
   "start_date",
-  "end_date",
+  "actual_expiry_date",
   "expiry_date",
+  "extended",
   "reason_for_extension",
   "member_details_section",
   "client_id_1",
   "client_name_1",
-  "assigned_to",
-  "name1",
+  "column_break_23",
+  "assigned_to_1",
+  "staff_name_1",
   "column_break_11",
   "member_no_1",
   "card_no_1",
   "member_benefits_1",
   "second_member_section",
-  "client_2",
+  "client_id_2",
   "client_name_2",
-  "contact_to",
-  "contact_to_name",
+  "column_break_33",
+  "assigned_to_2",
+  "staff_name_2",
   "column_break_24",
   "member_no_2",
   "card_no_2",
   "member_benefits_2",
   "additional_member_details_section",
   "additional_members_item",
-  "amended_from",
+  "section_break_38",
   "notes",
   "membership_application"
  ],
@@ -58,22 +63,15 @@
    "fieldname": "membership_plan",
    "fieldtype": "Link",
    "label": "Membership Plan",
-   "options": "Memberships Plan"
-  },
-  {
-   "fetch_from": "membership_application.client_id",
-   "fieldname": "client_id",
-   "fieldtype": "Link",
-   "label": "Primary Client ID",
-   "options": "Client",
-   "reqd": 1,
-   "set_only_once": 1
+   "options": "Memberships Plan",
+   "read_only": 1
   },
   {
    "default": "Today",
    "fieldname": "start_date",
    "fieldtype": "Date",
-   "label": "Membership Start Date"
+   "label": "Membership Start Date",
+   "read_only": 1
   },
   {
    "fetch_from": "membership_plan.duration",
@@ -84,32 +82,24 @@
    "read_only": 1
   },
   {
-   "allow_on_submit": 1,
-   "fieldname": "end_date",
-   "fieldtype": "Date",
-   "label": "Membership Expiry Date(As Per Contract)"
-  },
-  {
    "fieldname": "column_break_11",
    "fieldtype": "Column Break"
   },
   {
    "fieldname": "membership_id",
-   "fieldtype": "Data",
-   "label": "Membership ID"
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Membership ID",
+   "length": 6,
+   "read_only": 1
   },
   {
    "fieldname": "membership_application",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Membership Application",
-   "options": "Memberships Application"
-  },
-  {
-   "fetch_from": "client_id.client_name",
-   "fieldname": "client_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Client Name",
+   "options": "Memberships Application",
    "read_only": 1
   },
   {
@@ -125,15 +115,6 @@
    "options": "MEM-.YYYY.-"
   },
   {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Memberships",
-   "print_hide": 1,
-   "read_only": 1
-  },
-  {
    "fieldname": "membership_details_section",
    "fieldtype": "Section Break",
    "label": "Membership Details"
@@ -142,9 +123,11 @@
    "fieldname": "client_id_1",
    "fieldtype": "Link",
    "label": "Client ID",
-   "options": "Client"
+   "options": "Client",
+   "read_only": 1
   },
   {
+   "fetch_from": "client_id_1.client_name",
    "fieldname": "client_name_1",
    "fieldtype": "Data",
    "label": "Client Name",
@@ -164,7 +147,8 @@
    "fieldname": "member_benefits_1",
    "fieldtype": "Link",
    "label": "Member Benefits",
-   "options": "Member Benefits"
+   "options": "Member Benefits",
+   "read_only": 1
   },
   {
    "depends_on": "eval:(doc.membership_type ==\"Couple Membership\" || doc.membership_type==\"Family Membership\")",
@@ -173,12 +157,7 @@
    "label": "Second Member"
   },
   {
-   "fieldname": "client_2",
-   "fieldtype": "Link",
-   "label": "Client ID",
-   "options": "Client"
-  },
-  {
+   "fetch_from": "client_id_2.client_name",
    "fieldname": "client_name_2",
    "fieldtype": "Data",
    "label": "Client Name",
@@ -198,7 +177,8 @@
    "fieldname": "member_benefits_2",
    "fieldtype": "Link",
    "label": "Member Benefits",
-   "options": "Member Benefits"
+   "options": "Member Benefits",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_24",
@@ -217,7 +197,7 @@
    "depends_on": "eval:doc.membership_type==\"Family Membership\"",
    "fieldname": "additional_member_details_section",
    "fieldtype": "Section Break",
-   "label": "Additional Member Details"
+   "label": "Additional Members"
   },
   {
    "fieldname": "additional_members_item",
@@ -228,34 +208,7 @@
   {
    "allow_on_submit": 1,
    "fieldname": "notes",
-   "fieldtype": "Small Text",
-   "label": "Notes",
-   "read_only": 1
-  },
-  {
-   "fieldname": "assigned_to",
-   "fieldtype": "Link",
-   "label": "Assigned To",
-   "options": "Employee"
-  },
-  {
-   "fetch_from": "assigned_to.employee_name",
-   "fieldname": "name1",
-   "fieldtype": "Data",
-   "label": "Name",
-   "read_only": 1
-  },
-  {
-   "fieldname": "contact_to",
-   "fieldtype": "Link",
-   "label": "Assigned To",
-   "options": "Employee"
-  },
-  {
-   "fetch_from": "contact_to.employee_name",
-   "fieldname": "contact_to_name",
-   "fieldtype": "Data",
-   "label": "Name"
+   "fieldtype": "Small Text"
   },
   {
    "fieldname": "reason_for_extension",
@@ -264,15 +217,19 @@
    "read_only": 1
   },
   {
+   "depends_on": "eval:doc.extended==1",
    "fieldname": "expiry_date",
    "fieldtype": "Date",
-   "label": "Expiry Date"
+   "label": "Expiry Date",
+   "read_only": 1
   },
   {
    "fieldname": "membership_status",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Membership Status",
-   "options": "Draft\nActive\nExpired\nFreezed\nCancelled"
+   "options": "Draft\nActive\nExpired\nFrozen\nSuspended\nCancelled",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_15",
@@ -292,11 +249,101 @@
    "label": "Membership Category",
    "options": "Memberships Category",
    "read_only": 1
+  },
+  {
+   "fetch_from": "membership_application.client_id",
+   "fieldname": "primary_client_id",
+   "fieldtype": "Link",
+   "label": "Primary Client ID",
+   "options": "Client",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fetch_from": "primary_client_id.client_name",
+   "fieldname": "primary_client_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Client Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "client_id_2",
+   "fieldtype": "Link",
+   "label": "Client ID",
+   "options": "Client",
+   "read_only": 1
+  },
+  {
+   "fieldname": "assigned_to_1",
+   "fieldtype": "Link",
+   "label": "Assigned To",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "assigned_to_1.employee_name",
+   "fieldname": "staff_name_1",
+   "fieldtype": "Data",
+   "label": "Staff Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "assigned_to_2",
+   "fieldtype": "Link",
+   "label": "Assigned To",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "assigned_to_2.employee_name",
+   "fieldname": "staff_name_2",
+   "fieldtype": "Data",
+   "label": "Staff Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_38",
+   "fieldtype": "Section Break",
+   "label": "Staff Notes"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "actual_expiry_date",
+   "fieldtype": "Date",
+   "label": "Membership Expiry Date (As Per Contract)",
+   "read_only": 1
+  },
+  {
+   "default": "0.0",
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Total Membership Amount ",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "extended",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Extended"
+  },
+  {
+   "fieldname": "column_break_23",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_33",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Title",
+   "read_only": 1
   }
  ],
- "is_submittable": 1,
  "links": [],
- "modified": "2021-03-27 15:29:06.179180",
+ "modified": "2021-03-29 10:22:11.878027",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships",
@@ -318,5 +365,6 @@
  "show_preview_popup": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "title",
  "track_changes": 1
 }
