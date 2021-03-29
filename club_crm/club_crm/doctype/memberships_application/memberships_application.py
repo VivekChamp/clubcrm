@@ -183,57 +183,22 @@ def create_client(first_name,last_name,gender,birth_date,qatar_id,mobile_no,emai
 	doc.save()
 	return doc.name
 
-# @frappe.whitelist()
-# def create_membership(self):
-# 	doc = frappe.get_doc({
-# 		'doctype': 'Memberships',
-# 		'primary_client_id': self.client_id,
-# 		'membership_plan' : self.membership_plan,
-# 		'client_id_1' : self.client_id,
-# 		'client_id_2' : self.client_id_2,
+@frappe.whitelist()
+def create_membership(mem_application_id):
+	mem_app = frappe.get_doc('Memberships Application', mem_application_id)
 
-@frappe.whitelist(allow_guest=True)
-def mem_app(id):
-	mem_app = frappe.get_doc("Memberships Application", id)
-	return mem_app
-
-
-	# 	plan= frappe.get_doc('Memberships Plan', self.membership_plan)
-	# 	today = getdate()
-	# 	expiry = today + timedelta(seconds=plan.duration)
-	# 	if self.membership_type=="Single Membership":
-	# 		if self.client_id_1:
-	# 			doc = frappe.get_doc({
-	# 				'doctype': 'Memberships',
-	# 				'membership_application': self.name,
-	# 				'client_id': self.client_id,
-	# 				'start_date': today,
-	# 				'end_date': expiry,
-	# 				'client_id_1': self.client_id,
-	# 				})
-	# 			doc.insert()
-	# 		else:
-	# 			d = frappe.get_doc({
-	# 				'doctype': 'Client',
-	# 				'first_name': self.first_name_1,
-	# 				'last_name': self.last_name_1,
-	# 				'gender': self.gender_1,
-	# 				'birth_date': self.birth_date_1,
-	# 				'status': "Active",
-	# 				'membership_status': "Member",
-	# 				'reg_on_app': "No",
-	# 				'qatar_id' : self.qatar_id_1,
-	# 				'mobile_no': self.mobile_no_1,
-	# 				'email': self.email_1,
-	# 				'default_currency': 'QAR'
-	# 				})
-	# 			d.insert()
-	# 			doc = frappe.get_doc({
-	# 				'doctype': 'Memberships',
-	# 				'membership_application': self.name,
-	# 				'client_id': d.client_id,
-	# 				'start_date': today,
-	# 				'end_date': expiry,
-	# 				'client_id_1': self.client_id,
-	# 				})
-	# 			doc.insert()
+	doc = frappe.new_doc("Memberships")
+	doc.primary_client_id = mem_app.client_id
+	doc.membership_plan = mem_app.membership_plan
+	doc.client_id_1 = mem_app.client_id
+	if mem_app.membership_type == "Couple Membership":
+		doc.client_id_2 = mem_app.client_id_2
+	if mem_app.membership_type == "Family Membership":
+		doc.client_id_2 = mem_app.client_id_2
+		for row in mem_app.additional_members:
+			child = doc.append("additional_members_item", {})
+			child.client_id = row.client_id
+	doc.membership_application = mem_application_id
+	# doc.total_amount = mem_app.grand_total
+	doc.insert()
+	frappe.db.set_value("Memberships Application", mem_application_id, "membership_document", doc.name, update_modified=False)
