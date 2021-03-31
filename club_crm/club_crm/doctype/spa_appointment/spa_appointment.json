@@ -111,7 +111,7 @@
    "in_standard_filter": 1,
    "label": "Spa Therapist",
    "no_copy": 1,
-   "options": "Spa Therapist",
+   "options": "Service Staff",
    "reqd": 1
   },
   {
@@ -615,7 +615,7 @@
   }
  ],
  "links": [],
- "modified": "2021-03-25 00:52:43.738636",
+ "modified": "2021-03-31 14:49:26.408652",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Appointment",

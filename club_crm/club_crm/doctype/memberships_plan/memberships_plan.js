@@ -12,6 +12,11 @@ frappe.ui.form.on("Memberships Plan", "onload", function(frm){
 			"filters": [["Memberships Category", "enabled", "=", "1"]]
 		}
 	});
+	frm.set_query("benefits_item", function(){
+		return {
+			"filters": [["Club Packages", "package_type", "=", "Club"]]
+		}
+	});
 });
 
 frappe.ui.form.on('Memberships Plan', {

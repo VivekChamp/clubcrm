@@ -152,7 +152,7 @@
    "fieldtype": "Link",
    "in_standard_filter": 1,
    "label": "Fitness Trainer",
-   "options": "Fitness Trainer"
+   "options": "Service Staff"
   },
   {
    "allow_on_submit": 1,
@@ -186,7 +186,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "default": "0",
+   "default": "1",
    "description": "This checkbox implies that this booking is part of paid sessions/packages.",
    "fieldname": "session",
    "fieldtype": "Check",
@@ -337,7 +337,7 @@
   }
  ],
  "links": [],
- "modified": "2021-03-23 17:48:51.251444",
+ "modified": "2021-03-31 14:59:13.365688",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Appointment",

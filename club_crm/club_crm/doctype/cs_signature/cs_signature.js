@@ -1,7 +1,7 @@
-// Copyright (c) 2020, Blue Lynx and contributors
+// Copyright (c) 2021, Blue Lynx and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on('Spa Therapist', {
+frappe.ui.form.on('CS Signature', {
 	// refresh: function(frm) {
 
 	// }

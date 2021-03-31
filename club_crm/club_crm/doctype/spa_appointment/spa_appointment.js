@@ -2,13 +2,19 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Spa Appointment", "onload", function(frm){
-    //Hide disabled clients in Client ID field 
+    // Hide disabled clients in Client ID field 
     frm.set_query("client_id", function(){
 		return {
 			"filters": [["Client", "status", "not in", "Disabled"]]
 		}
 	});
-    //Filter Spa Services based on Add-on service check
+    // Filter service staff for spa appointment
+    frm.set_query("spa_therapist", function(){
+		return {
+			"filters": [["Service Staff", "spa_check", "=", "1"]]
+		}
+	});
+    // Filter Spa Services based on Add-on service check
     frm.set_query("spa_service", function(){
         if (frm.doc.addon_service_check==0) {
             return {
@@ -27,18 +33,17 @@ frappe.ui.form.on("Spa Appointment", "onload", function(frm){
             }
         }
     });
-    //Filter Session Name based on Client ID, client active session and spa services
+    // Filter Session Name based on Client ID, client active session and spa services
     frm.set_query("session_name", function(){
         return {
             "filters": [
                 ["Client Sessions", "client_id", "=", frm.doc.client_id],
                 ["Client Sessions", "session_status", "=", "Active"],
-                ["Client Sessions", "service_type", "=", "Spa Services"],
-                ["Client Sessions", "remaining_sessions", "!=", 0]
+                ["Client Sessions", "service_type", "=", "Spa Services"]
             ]
         }
     });
-    //Filter add-on table for add-on services only
+    // Filter add-on table for add-on services only
     frm.fields_dict["addon_table"].grid.get_field("addon_service").get_query = function(){
         return {
                 filters:{
@@ -46,7 +51,7 @@ frappe.ui.form.on("Spa Appointment", "onload", function(frm){
                 }
         }
     }
-    //Filter club-room based on client gender
+    // Filter club-room based on client gender
     frm.set_query("club_room", function(){
         return {
             "filters": [
@@ -55,19 +60,6 @@ frappe.ui.form.on("Spa Appointment", "onload", function(frm){
             ]
         }
     });
-    // frm.set_query("club_room", function(doc){
-    //     return function(callback) {
-    //         frappe.call({
-    //             method:"club_crm.club_crm.doctype.club_room.club_room.display_service_room",
-    //             args: {spa_service: frm.doc.spa_service},
-    //             type: "GET",
-    //             callback: function(r) {
-    //                  var resources = r.message || [];
-    //                  callback(resources);
-    //             }
-    //         })
-    //     }
-    // });
 })
 
 frappe.ui.form.on("Spa Appointment", {

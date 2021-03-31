@@ -36,6 +36,11 @@ frappe.ui.form.on("Cart", "onload", function(frm){
                 filters: [["Club Packages", "package_type", "in", "Fitness"]]
             }
         }
+        if(locals[cdt][cdn].package_type == "Club"){
+            return {
+                filters: [["Club Packages", "package_type", "in", "Club"]]
+            }
+        }
 	}
     frm.fields_dict.cart_product.grid.get_field("cart_item").get_query = function(){
         return {

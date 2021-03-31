@@ -10,7 +10,7 @@ frappe.ui.form.on("Client Sessions", "onload", function(frm){
 	frm.set_query("service_type", function(){
 		return {
 			"filters": [
-				["DocType", "name", "in", ["Spa Services", "Fitness Services"]]
+				["DocType", "name", "in", ["Spa Services", "Fitness Services", "Club Services"]]
 			]
 		}
 	});
@@ -67,10 +67,12 @@ frappe.ui.form.on("Client Sessions", {
         	remaining = frm.doc.total_sessions - frm.doc.used_sessions;
         	frm.set_value('remaining_sessions', remaining);
 		}
-		if (remaining == 0) {
+	},
+	remaining_sessions:function(frm){
+		if (frm.doc.remaining_sessions == 0) {
 			frm.set_value('session_status', 'Complete');
 		}
-		else if (remaining > 0) {
+		else if (frm.doc.remaining_sessions > 0) {
 			frm.set_value('session_status', 'Active');
 		}
 		frm.save()

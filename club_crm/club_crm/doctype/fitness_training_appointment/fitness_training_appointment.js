@@ -8,14 +8,19 @@ frappe.ui.form.on("Fitness Training Appointment", "onload", function(frm){
 			"filters": [["Client", "status", "not in", "Disabled"]]
 		}
 	});
+    // Filter service staff for fitness appointment
+    frm.set_query("fitness_trainer", function(){
+	    return {
+			"filters": [["Service Staff", "fitness_check", "=", "1"]]
+		}
+	});
     //Filter Session Name based on Client ID, client active session and fitness services
 	frm.set_query("session_name", function(){
         return {
             "filters": [
                 ["Client Sessions", "client_id", "=", frm.doc.client_id],
                 ["Client Sessions", "session_status", "=", "Active"],
-                ["Client Sessions", "service_type", "=", "Fitness Services"],
-				["Client Sessions", "remaining_sessions", "!=", 0]
+                ["Client Sessions", "service_type", "=", "Fitness Services"]
             ]
         }
     });

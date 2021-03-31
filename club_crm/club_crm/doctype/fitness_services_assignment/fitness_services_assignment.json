@@ -1,15 +1,22 @@
 {
  "actions": [],
- "creation": "2020-12-05 02:02:29.185648",
+ "creation": "2020-12-09 19:36:33.502229",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "spa_group",
+  "fitness_package",
   "on_app",
   "commission"
  ],
  "fields": [
+  {
+   "default": "0",
+   "fieldname": "on_app",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Show on App"
+  },
   {
    "fieldname": "commission",
    "fieldtype": "Percent",
@@ -17,26 +24,19 @@
    "label": "Commission %"
   },
   {
-   "fieldname": "spa_group",
+   "fieldname": "fitness_package",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Spa Group",
-   "options": "Spa Services Group"
-  },
-  {
-   "default": "0",
-   "fieldname": "on_app",
-   "fieldtype": "Check",
-   "in_list_view": 1,
-   "label": "Show on App"
+   "label": "Fitness Package",
+   "options": "Fitness Services"
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2021-02-25 11:49:05.347804",
+ "modified": "2021-03-31 14:26:02.687871",
  "modified_by": "Administrator",
  "module": "Club CRM",
- "name": "Spa Therapist Assignment",
+ "name": "Fitness Services Assignment",
  "owner": "Administrator",
  "permissions": [],
  "sort_field": "modified",

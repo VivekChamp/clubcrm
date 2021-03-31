@@ -93,7 +93,7 @@ class Cart(Document):
 			club_package = frappe.get_doc('Club Packages', row.package_name)
 			if club_package.package_table:
 				for item in club_package.package_table:
-					create_session(self.client_id,service_type,item.service_name,item.no_of_sessions,item.validity)
+					create_session(self.client_id,row.package_name,service_type,item.service_name,item.no_of_sessions,item.validity)
 
 	def make_paid(self):
 		for row in self.cart_appointment:

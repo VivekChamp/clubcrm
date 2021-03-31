@@ -1,0 +1,178 @@
+{
+ "actions": [],
+ "creation": "2021-03-31 17:18:24.166258",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "staff_name",
+  "column_break_3",
+  "month",
+  "column_break_5",
+  "year",
+  "scheduler_section",
+  "start_date",
+  "end_date",
+  "column_break_11",
+  "from_time",
+  "to_time",
+  "column_break_14",
+  "day",
+  "add_schedule",
+  "section_break_5",
+  "week_1",
+  "week_2",
+  "week_3",
+  "week_4",
+  "week_5",
+  "week_6"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Title"
+  },
+  {
+   "fieldname": "staff_name",
+   "fieldtype": "Link",
+   "label": "Staff Name",
+   "options": "Service Staff",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "month",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Month",
+   "options": "\nJanuary\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "year",
+   "fieldtype": "Link",
+   "label": "Year",
+   "options": "Fiscal Year"
+  },
+  {
+   "fieldname": "scheduler_section",
+   "fieldtype": "Section Break",
+   "label": "Scheduler"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date"
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "from_time",
+   "fieldtype": "Time",
+   "label": "From Time"
+  },
+  {
+   "fieldname": "to_time",
+   "fieldtype": "Time",
+   "label": "To Time"
+  },
+  {
+   "fieldname": "column_break_14",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "day",
+   "fieldtype": "Select",
+   "label": "Day",
+   "options": "\nSunday\nMonday\nTuesday\nWednesday\nThursday\nFriday\nSaturday"
+  },
+  {
+   "fieldname": "add_schedule",
+   "fieldtype": "Button",
+   "label": "Add Schedule",
+   "options": "add_schedule"
+  },
+  {
+   "fieldname": "week_1",
+   "fieldtype": "Table",
+   "label": "Week 1",
+   "options": "Day Schedule"
+  },
+  {
+   "fieldname": "week_2",
+   "fieldtype": "Table",
+   "label": "Week 2",
+   "options": "Day Schedule"
+  },
+  {
+   "fieldname": "week_3",
+   "fieldtype": "Table",
+   "label": "Week 3",
+   "options": "Day Schedule"
+  },
+  {
+   "fieldname": "week_4",
+   "fieldtype": "Table",
+   "label": "Week 4",
+   "options": "Day Schedule"
+  },
+  {
+   "fieldname": "week_5",
+   "fieldtype": "Table",
+   "label": "Week 5",
+   "options": "Day Schedule"
+  },
+  {
+   "fieldname": "week_6",
+   "fieldtype": "Table",
+   "label": "Week 6",
+   "options": "Day Schedule"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2021-03-31 21:14:48.451556",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Service Staff Availability",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "title",
+ "track_changes": 1
+}

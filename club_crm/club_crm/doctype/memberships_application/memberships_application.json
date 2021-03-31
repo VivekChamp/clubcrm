@@ -352,10 +352,10 @@
    "options": "Email"
   },
   {
+   "depends_on": "eval:doc.existing_client_2==1",
    "fieldname": "client_id_2",
    "fieldtype": "Data",
-   "label": "Client ID",
-   "read_only": 1
+   "label": "Client ID"
   },
   {
    "fetch_from": "membership_application.company_1",
@@ -678,7 +678,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-03-29 02:34:23.559180",
+ "modified": "2021-03-30 02:21:17.735514",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",

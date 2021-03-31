@@ -211,7 +211,7 @@ class SpaAppointment(Document):
 			frappe.throw(past_day, title=_('Appointment Date Error'))
 	
 	def create_room_schedule(self):
-		room= frappe.get_all('Club Room Schedule', filters={'spa_booking': self.name,}, fields=["*"])
+		room= frappe.get_all('Club Room Schedule', filters={'spa_booking': self.name}, fields=["*"])
 		if room:
 			for d in room:
 				schedule= frappe.get_doc('Club Room Schedule', d.name)
@@ -314,7 +314,7 @@ def complete(appointment_id):
 
 @frappe.whitelist()
 def get_therapist_resources():
-	therapists= frappe.get_all('Spa Therapist',fields=['display_name'])
+	therapists = frappe.get_all('Service Staff', filters={'spa_check':1}, fields=['display_name'])
 	resource=[]
 	if therapists:
 		for therapist in therapists:
