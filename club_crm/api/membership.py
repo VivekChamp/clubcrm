@@ -12,9 +12,17 @@ def membership_type():
 
 @frappe.whitelist()
 def membership_plan(membership_type):
-    membership_plan = frappe.get_all('Memberships Plan', filters={'membership_type':membership_type,'on_app': 1}, fields=['membership_plan_name','joining_fee','mem_fee_adult','mem_fee_kid'])
+    membership_plan = frappe.get_all('Memberships Plan', filters={'membership_type':membership_type,'on_app': 1}, fields=['membership_plan_name','joining_fee_adult','membership_fee_adult','membership_fee_child'])
+    mem_plan = []
+    for plan in membership_plan:
+        mem_plan.append({
+            "membership_plan_name" : plan.membership_plan_name,
+            "joining_fee" : plan.joining_fee_adult,
+            "mem_fee_adult" : plan.membership_fee_adult,
+            "mem_fee_kid" : plan.membership_fee_child
+        })
     frappe.response["message"] = {
-            "Membership Plans": membership_plan
+            "Membership Plans": mem_plan
             }
 
 @frappe.whitelist()

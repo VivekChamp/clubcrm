@@ -1,27 +1,21 @@
 {
  "actions": [],
- "autoname": "prompt",
+ "autoname": "field:menu_name",
  "creation": "2020-12-16 18:17:06.231710",
  "doctype": "DocType",
  "document_type": "Setup",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "restaurant",
   "enabled",
+  "section_break_2",
+  "menu_name",
   "column_break_3",
   "price_list",
   "items_section",
   "items"
  ],
  "fields": [
-  {
-   "fieldname": "restaurant",
-   "fieldtype": "Link",
-   "label": "Restaurant",
-   "options": "Restaurant",
-   "reqd": 1
-  },
   {
    "default": "1",
    "fieldname": "enabled",
@@ -51,10 +45,20 @@
    "label": "Items",
    "options": "Restaurant Food Menu Item",
    "reqd": 1
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "menu_name",
+   "fieldtype": "Data",
+   "label": "Menu Name",
+   "unique": 1
   }
  ],
  "links": [],
- "modified": "2020-12-16 18:28:04.683123",
+ "modified": "2021-04-01 13:34:15.075432",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Restaurant Food Menu",
@@ -83,8 +87,8 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "Hospitality",
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "menu_name",
  "track_changes": 1
 }

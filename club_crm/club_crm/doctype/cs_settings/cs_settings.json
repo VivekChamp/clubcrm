@@ -1,0 +1,59 @@
+{
+ "actions": [],
+ "creation": "2021-03-31 23:18:52.724400",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "access_key",
+  "profile_id",
+  "column_break_3",
+  "token_url",
+  "transaction_url"
+ ],
+ "fields": [
+  {
+   "fieldname": "access_key",
+   "fieldtype": "Data",
+   "label": "Access Key"
+  },
+  {
+   "fieldname": "profile_id",
+   "fieldtype": "Data",
+   "label": "Profile ID"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "token_url",
+   "fieldtype": "Data",
+   "label": "Payment Token URL"
+  },
+  {
+   "fieldname": "transaction_url",
+   "fieldtype": "Data",
+   "label": "Transaction URL"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2021-03-31 23:19:10.485006",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "CS Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "role": "System Manager",
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

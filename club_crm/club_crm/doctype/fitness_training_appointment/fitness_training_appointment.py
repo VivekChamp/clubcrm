@@ -148,7 +148,7 @@ def cancel_appointment(appointment_id):
 
 @frappe.whitelist()
 def get_trainer_resources():
-	trainers= frappe.get_all('Fitness Trainer',fields=['display_name'])
+	trainers = frappe.get_all('Service Staff', filters={'fitness_check':1}, fields=['display_name'])
 	resource=[]
 	if trainers:
 		for trainer in trainers:

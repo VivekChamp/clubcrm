@@ -32,7 +32,13 @@
   "column_break_22",
   "discount_type",
   "discount_percentage",
-  "discount_amount"
+  "discount_amount",
+  "discount_benefits",
+  "spa_discount",
+  "column_break_29",
+  "retail_discount",
+  "column_break_31",
+  "grams_discount"
  ],
  "fields": [
   {
@@ -75,7 +81,7 @@
    "fieldname": "benefits_item",
    "fieldtype": "Link",
    "label": "Benefits Plan",
-   "options": "Benefits Plan"
+   "options": "Club Packages"
   },
   {
    "default": "0",
@@ -200,10 +206,38 @@
    "fieldtype": "Data",
    "label": "Company Initials",
    "mandatory_depends_on": "eval:doc.membership_category==\"Corporate\""
+  },
+  {
+   "fieldname": "discount_benefits",
+   "fieldtype": "Section Break",
+   "label": "Discount Benefits"
+  },
+  {
+   "fieldname": "spa_discount",
+   "fieldtype": "Percent",
+   "label": "Spa Discount (%)"
+  },
+  {
+   "fieldname": "column_break_29",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "retail_discount",
+   "fieldtype": "Percent",
+   "label": "Retail Discount (%)"
+  },
+  {
+   "fieldname": "column_break_31",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "grams_discount",
+   "fieldtype": "Percent",
+   "label": "Grams Discount (%)"
   }
  ],
  "links": [],
- "modified": "2021-03-27 01:42:06.793261",
+ "modified": "2021-03-31 13:14:16.362013",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Plan",

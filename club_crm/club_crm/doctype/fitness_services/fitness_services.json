@@ -103,7 +103,7 @@
    "fieldname": "session_type",
    "fieldtype": "Select",
    "label": "Session Type",
-   "options": "Single",
+   "options": "Single\nComplimentary",
    "reqd": 1
   },
   {
@@ -226,7 +226,7 @@
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-03-22 01:45:50.414487",
+ "modified": "2021-04-01 23:40:35.529246",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Services",

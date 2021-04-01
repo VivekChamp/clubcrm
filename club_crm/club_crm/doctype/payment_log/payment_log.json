@@ -1,0 +1,240 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2021-04-01 18:03:21.237460",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "date_time",
+  "generated_hash",
+  "payment_gateway_hash",
+  "signature_verified",
+  "section_break_6",
+  "req_bill_to_forename",
+  "req_bill_to_surname",
+  "req_customer_ip_address",
+  "column_break_8",
+  "req_reference_number",
+  "req_transaction_type",
+  "req_transaction_uuid",
+  "column_break_11",
+  "decision",
+  "message",
+  "section_break_14",
+  "req_amount",
+  "auth_amount",
+  "column_break_10",
+  "req_card_number",
+  "card_type_name",
+  "column_break_19",
+  "reason_code",
+  "signed_date_time",
+  "transaction_id",
+  "section_break_24",
+  "response_data",
+  "signed_field_names",
+  "title",
+  "naming_series"
+ ],
+ "fields": [
+  {
+   "fieldname": "response_data",
+   "fieldtype": "Text",
+   "hidden": 1,
+   "label": "Response Data",
+   "read_only": 1
+  },
+  {
+   "fieldname": "generated_hash",
+   "fieldtype": "Data",
+   "label": "Generated Hash",
+   "read_only": 1
+  },
+  {
+   "fieldname": "payment_gateway_hash",
+   "fieldtype": "Data",
+   "label": "Payment Gateway Hash",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "signature_verified",
+   "fieldtype": "Check",
+   "label": "Signature Verified",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_time",
+   "fieldtype": "Datetime",
+   "label": "Creation Date and Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_6",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "decision",
+   "fieldtype": "Data",
+   "label": "Decision",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "message",
+   "fieldtype": "Small Text",
+   "label": "Message",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "reason_code",
+   "fieldtype": "Data",
+   "label": "Reason Code",
+   "read_only": 1
+  },
+  {
+   "fieldname": "req_reference_number",
+   "fieldtype": "Data",
+   "label": "Reference Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "req_amount",
+   "fieldtype": "Data",
+   "label": "Requested Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "auth_amount",
+   "fieldtype": "Data",
+   "label": "Authorized Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "req_card_number",
+   "fieldtype": "Data",
+   "label": "Card Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "card_type_name",
+   "fieldtype": "Data",
+   "label": "Card Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "req_bill_to_forename",
+   "fieldtype": "Data",
+   "label": "First Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "req_bill_to_surname",
+   "fieldtype": "Data",
+   "label": "Last Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "req_customer_ip_address",
+   "fieldtype": "Data",
+   "label": "Customer IP",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_14",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_19",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "signed_date_time",
+   "fieldtype": "Data",
+   "label": "Transaction Date and Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "req_transaction_type",
+   "fieldtype": "Data",
+   "label": "Transaction Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_24",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "signed_field_names",
+   "fieldtype": "Text",
+   "hidden": 1,
+   "label": "Signed Fields",
+   "read_only": 1
+  },
+  {
+   "fieldname": "req_transaction_uuid",
+   "fieldtype": "Data",
+   "label": "Transaction UUID",
+   "read_only": 1
+  },
+  {
+   "fieldname": "transaction_id",
+   "fieldtype": "Data",
+   "label": "Transaction Reference ID",
+   "read_only": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Title",
+   "read_only": 1
+  },
+  {
+   "default": "PAY-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "PAY-.YYYY.-",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2021-04-01 19:25:04.258622",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Payment Log",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "title",
+ "track_changes": 1
+}

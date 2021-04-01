@@ -7,6 +7,7 @@ import frappe
 from frappe import _
 from frappe.utils import getdate, get_time, flt
 from datetime import datetime, timedelta
+from club_crm.club_crm.doctype.client_sessions.client_sessions import create_session
 from frappe.model.document import Document
 
 class MembershipsApplication(Document):
@@ -186,6 +187,7 @@ def create_client(first_name,last_name,gender,birth_date,qatar_id,mobile_no,emai
 @frappe.whitelist()
 def create_membership(mem_application_id):
 	mem_app = frappe.get_doc('Memberships Application', mem_application_id)
+	mem_plan = frappe.get_doc('Memberships Plan', mem_app.membership_plan)
 
 	doc = frappe.new_doc("Memberships")
 	doc.primary_client_id = mem_app.client_id
@@ -199,6 +201,19 @@ def create_membership(mem_application_id):
 			child = doc.append("additional_members_item", {})
 			child.client_id = row.client_id
 	doc.membership_application = mem_application_id
-	# doc.total_amount = mem_app.grand_total
+	doc.total_amount = float(mem_app.grand_total)
 	doc.insert()
 	frappe.db.set_value("Memberships Application", mem_application_id, "membership_document", doc.name, update_modified=False)
+
+	club_package = frappe.get_doc('Club Packages', mem_plan.benefits_item)
+	if club_package.package_table:
+		for item in club_package.package_table:
+			create_session(mem_app.client_id,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+			if mem_app.membership_type == "Couple Membership":
+				create_session(mem_app.client_id_2,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+			if mem_app.membership_type == "Family Membership":
+				create_session(mem_app.client_id_2,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+				for row in mem_app.additional_members:
+					if row.category == "Adult":
+						create_session(row.client_id,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+

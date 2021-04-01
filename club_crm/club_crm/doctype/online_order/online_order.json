@@ -1,6 +1,6 @@
 {
  "actions": [],
- "autoname": "ON-.YYYY.-#####",
+ "autoname": "naming_series:",
  "creation": "2020-11-13 19:39:52.243136",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -8,16 +8,15 @@
  "field_order": [
   "created_date",
   "created_time",
+  "client_id",
+  "data_3",
+  "client_name",
+  "mobile_number",
+  "membership_status",
   "column_break_3",
   "cart_status",
   "payment_status",
   "payment_method",
-  "section_break_6",
-  "client_id",
-  "client_name",
-  "data_3",
-  "membership_status",
-  "mobile_number",
   "section_break_5",
   "item",
   "section_break_8",
@@ -29,7 +28,8 @@
   "column_break_20",
   "transaction_number",
   "transaction_date",
-  "amended_from"
+  "amended_from",
+  "naming_series"
  ],
  "fields": [
   {
@@ -52,7 +52,8 @@
   {
    "fieldname": "total_amount",
    "fieldtype": "Currency",
-   "label": "Total Amount"
+   "label": "Total Amount",
+   "read_only": 1
   },
   {
    "fieldname": "data_3",
@@ -71,7 +72,8 @@
    "fieldname": "payment_status",
    "fieldtype": "Select",
    "label": "Payment Status",
-   "options": "Not Paid\nPaid"
+   "options": "Not Paid\nPaid",
+   "read_only": 1
   },
   {
    "fieldname": "client_id",
@@ -82,7 +84,8 @@
   {
    "fieldname": "total_quantity",
    "fieldtype": "Int",
-   "label": "Total Quantity"
+   "label": "Total Quantity",
+   "read_only": 1
   },
   {
    "default": "Today",
@@ -108,10 +111,6 @@
    "fieldtype": "Select",
    "label": "Cart Status",
    "options": "Cart\nOrdered\nDelivered\nCancelled"
-  },
-  {
-   "fieldname": "section_break_6",
-   "fieldtype": "Section Break"
   },
   {
    "fetch_from": "client_id.client_name",
@@ -169,12 +168,22 @@
    "fieldname": "payment_method",
    "fieldtype": "Select",
    "label": "Payment Method",
-   "options": "Credit Card\nWallet\nCash"
+   "options": "Credit Card\nWallet\nCash",
+   "read_only": 1
+  },
+  {
+   "default": "ON-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "ON-.YYYY.-",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-29 04:40:03.878387",
+ "modified": "2021-04-01 14:01:41.717193",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Online Order",

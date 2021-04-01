@@ -6,26 +6,26 @@ from club_crm.api.wallet import get_balance
 
 @frappe.whitelist()
 def get_fitness_category(client_id):
-    doc= frappe.get_list('Fitness Training Request', filters={'client_id':client_id, 'request_status':['in', {'Pending','Scheduled'}], 'docstatus':1}, fields=['*'])
+    doc = frappe.get_list('Fitness Training Request', filters={'client_id':client_id, 'request_status':['in', {'Pending','Scheduled'}], 'docstatus':1}, fields=['*'])
     if doc:
-        doc_1=doc[0]
-        if doc_1.request_status=="Pending":
-            frappe.response["message"] = {
-            "Status":0,
-            "Status Message": "A pending request exists",
-            "Document ID" : doc_1.name
-            }
-        else:
-            schedule=frappe.get_list('Fitness Training Trainer Scheduler', filters={'parent':doc_1.name,'parentfield':'table_schedule'}, fields=['day','date','from_time','to_time'], order_by="date asc")
-            frappe.response["message"] = {
-                "Status":1,
-                "Status Message": "Training has been scheduled",
-                "Document ID": doc_1.name,
-                "rate": doc_1.price,
-                "package_name": doc_1.fitness_package,
-                "Number of Sessions": doc_1.number_of_sessions,
-                "Schedule": schedule
+        for doc_1 in doc:
+            if doc_1.request_status=="Pending":
+                frappe.response["message"] = {
+                "Status":0,
+                "Status Message": "A pending request exists",
+                "Document ID" : doc_1.name
                 }
+            else:
+                schedule=frappe.get_list('Fitness Training Trainer Scheduler', filters={'parent':doc_1.name,'parentfield':'table_schedule'}, fields=['day','date','from_time','to_time'], order_by="date asc")
+                frappe.response["message"] = {
+                    "Status":1,
+                    "Status Message": "Training has been scheduled",
+                    "Document ID": doc_1.name,
+                    "rate": doc_1.price,
+                    "package_name": doc_1.fitness_package,
+                    "Number of Sessions": doc_1.number_of_sessions,
+                    "Schedule": schedule
+                    }
     else:
         fitness_category = frappe.get_all('Fitness Training Category', filters={'on_app': 1}, fields=['category_name','category_image'])
         frappe.response["message"] = {

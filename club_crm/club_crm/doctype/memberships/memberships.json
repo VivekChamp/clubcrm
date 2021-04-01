@@ -33,7 +33,6 @@
   "client_name_1",
   "column_break_23",
   "assigned_to_1",
-  "staff_name_1",
   "column_break_11",
   "member_no_1",
   "card_no_1",
@@ -43,13 +42,18 @@
   "client_name_2",
   "column_break_33",
   "assigned_to_2",
-  "staff_name_2",
   "column_break_24",
   "member_no_2",
   "card_no_2",
   "member_benefits_2",
   "additional_member_details_section",
   "additional_members_item",
+  "discount_benefits_section",
+  "spa_discount",
+  "column_break_45",
+  "retail_discount",
+  "column_break_47",
+  "grams_discount",
   "section_break_38",
   "notes",
   "membership_application"
@@ -63,8 +67,7 @@
    "fieldname": "membership_plan",
    "fieldtype": "Link",
    "label": "Membership Plan",
-   "options": "Memberships Plan",
-   "read_only": 1
+   "options": "Memberships Plan"
   },
   {
    "default": "Today",
@@ -123,8 +126,7 @@
    "fieldname": "client_id_1",
    "fieldtype": "Link",
    "label": "Client ID",
-   "options": "Client",
-   "read_only": 1
+   "options": "Client"
   },
   {
    "fetch_from": "client_id_1.client_name",
@@ -271,34 +273,19 @@
    "fieldname": "client_id_2",
    "fieldtype": "Link",
    "label": "Client ID",
-   "options": "Client",
-   "read_only": 1
+   "options": "Client"
   },
   {
    "fieldname": "assigned_to_1",
    "fieldtype": "Link",
    "label": "Assigned To",
-   "options": "Employee"
-  },
-  {
-   "fetch_from": "assigned_to_1.employee_name",
-   "fieldname": "staff_name_1",
-   "fieldtype": "Data",
-   "label": "Staff Name",
-   "read_only": 1
+   "options": "Service Staff"
   },
   {
    "fieldname": "assigned_to_2",
    "fieldtype": "Link",
    "label": "Assigned To",
-   "options": "Employee"
-  },
-  {
-   "fetch_from": "assigned_to_2.employee_name",
-   "fieldname": "staff_name_2",
-   "fieldtype": "Data",
-   "label": "Staff Name",
-   "read_only": 1
+   "options": "Service Staff"
   },
   {
    "fieldname": "section_break_38",
@@ -340,10 +327,44 @@
    "hidden": 1,
    "label": "Title",
    "read_only": 1
+  },
+  {
+   "fieldname": "discount_benefits_section",
+   "fieldtype": "Section Break",
+   "label": "Discount Benefits"
+  },
+  {
+   "fetch_from": "membership_plan.spa_discount",
+   "fetch_if_empty": 1,
+   "fieldname": "spa_discount",
+   "fieldtype": "Percent",
+   "label": "Spa Discount"
+  },
+  {
+   "fetch_from": "membership_plan.retail_discount",
+   "fetch_if_empty": 1,
+   "fieldname": "retail_discount",
+   "fieldtype": "Percent",
+   "label": "Retail Discount"
+  },
+  {
+   "fetch_from": "membership_plan.grams_discount",
+   "fetch_if_empty": 1,
+   "fieldname": "grams_discount",
+   "fieldtype": "Percent",
+   "label": "Grams Discount"
+  },
+  {
+   "fieldname": "column_break_45",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_47",
+   "fieldtype": "Column Break"
   }
  ],
  "links": [],
- "modified": "2021-03-29 10:22:11.878027",
+ "modified": "2021-04-01 23:01:22.502372",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships",

@@ -12,7 +12,7 @@
   "card_no",
   "member_benefits",
   "assigned_to",
-  "staff_name"
+  "birth_date"
  ],
  "fields": [
   {
@@ -20,8 +20,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Client ID",
-   "options": "Client",
-   "read_only": 1
+   "options": "Client"
   },
   {
    "fetch_from": "client_id.client_name",
@@ -47,14 +46,7 @@
    "fieldname": "assigned_to",
    "fieldtype": "Link",
    "label": "Assigned To",
-   "options": "Employee"
-  },
-  {
-   "fetch_from": "assigned_to.employee_name",
-   "fieldname": "staff_name",
-   "fieldtype": "Data",
-   "label": "Staff Name",
-   "read_only": 1
+   "options": "Service Staff"
   },
   {
    "fieldname": "member_no",
@@ -67,11 +59,17 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Card Number"
+  },
+  {
+   "fetch_from": "client_id.birth_date",
+   "fieldname": "birth_date",
+   "fieldtype": "Data",
+   "label": "Date of Birth"
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2021-03-29 02:26:09.545706",
+ "modified": "2021-04-01 23:12:50.635662",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Additional Members Item",

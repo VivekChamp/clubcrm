@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2020, Blue Lynx and Contributors
+# Copyright (c) 2021, Blue Lynx and Contributors
 # See license.txt
 from __future__ import unicode_literals
 
 # import frappe
 import unittest
 
-class TestSpaTherapist(unittest.TestCase):
+class TestClubServicesCategory(unittest.TestCase):
 	pass
