@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import frappe
 from frappe.website.utils import is_signup_enabled
 from club_crm.api.wallet import get_balance
@@ -19,9 +20,9 @@ def login(usr,pwd):
             "message":"Authentication Failed"
             }
         return
-    api_generate=generate_keys(frappe.session.user)
+    api_generate = generate_keys(frappe.session.user)
     user = frappe.get_doc('User',frappe.session.user)
-    # pg = frappe.get_doc('CS Settings')
+    pg = frappe.get_doc('CS Settings')
     client_details = frappe.get_all('Client', filters={'mobile_no': usr}, fields=['name','first_name','last_name','client_name','gender','birth_date','nationality','qatar_id','email','mobile_no','apply_membership','mem_application','membership_status','status','customer_group','territory','marital_status','image'])
     if client_details:
         d = client_details[0]
@@ -32,9 +33,9 @@ def login(usr,pwd):
             "api_key":user.api_key,
             "api secret": api_generate,
             "wallet_balance": wallet,
-            # "access_key": pg.access_key,
-            # "profile_id": pg.profile_id,
-            # "transaction_url": pg.transaction_url
+            "access_key": pg.access_key,
+            "profile_id": pg.profile_id,
+            "transaction_url": pg.transaction_url
             }
     else:
         frappe.response["message"] =	{
@@ -43,7 +44,6 @@ def login(usr,pwd):
             "api_key":user.api_key,
             "api secret": api_generate
             }
-
         return
 
 def generate_keys(user):
@@ -123,13 +123,14 @@ def check_user(email, mobile_no):
 def forgot_password(mobile_no, new_password):
     doc = frappe.get_all('User', filters={'mobile_no':mobile_no}, fields=["*"])
     if doc:
-        user = doc[0]
-        frappe.db.set_value("User",user.name,"new_password",new_password)
-        user.save()
-        frappe.response["message"] = {
-            "Status": "1",
-            "Description":"Password reset success"
-        }
+        for d in doc:
+            user = frappe.get_doc('User', d.email)
+            user.new_password = new_password
+            user.save()
+            frappe.response["message"] = {
+                "Status": "1",
+                "Description":"Password reset success"
+            }
     else:
         frappe.response["message"] = {
             "Status": "0",

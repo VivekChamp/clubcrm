@@ -48,6 +48,7 @@ def get_spa_item(spa_category):
             "spa_menu_group" : item.spa_group,
             "spa_menu_category" : item.spa_category,
             "duration" : item.duration,
+            "has_addon" : 0,
             "rate" : item.price,
             "description" : item.description,
             "image" : item.image
@@ -69,13 +70,13 @@ def get_therapist(spa_item, client_id):
             if client.membership_status == "Non-Member":
                 if staff.gender == client.gender:
                     therapist.append({
-                        # 'Document Name': doc_1.name,
+                        'Document Name': staff.name,
                         'Therapist Name': staff.display_name,
                         'Gender': staff.gender
                         })
             else:
                 therapist.append({
-                    # 'Document Name': doc_1.name,
+                    'Document Name': staff.name,
                     'Therapist Name': staff.display_name,
                     'Gender': staff.gender
                     })

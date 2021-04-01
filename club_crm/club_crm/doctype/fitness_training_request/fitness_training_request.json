@@ -8,20 +8,19 @@
  "field_order": [
   "naming_series",
   "date",
-  "column_break_6",
-  "request_status",
-  "payment_status",
-  "client_details_section",
   "client_id",
   "client_name",
-  "column_break_8",
+  "column_break_5",
   "gender",
   "mobile_number",
   "membership_status",
+  "column_break_6",
+  "request_status",
+  "payment_status",
   "trainer_and_session_details_section",
   "trainer",
-  "fitness_package",
   "column_break_12",
+  "fitness_package",
   "number_of_sessions",
   "sessions_per_week",
   "price",
@@ -70,8 +69,8 @@
   {
    "fieldname": "trainer",
    "fieldtype": "Link",
-   "label": "Trainer",
-   "options": "Fitness Trainer"
+   "label": "Fitness Trainer",
+   "options": "Service Staff"
   },
   {
    "fieldname": "column_break_6",
@@ -87,11 +86,6 @@
    "fieldname": "customer_remarks",
    "fieldtype": "Small Text",
    "label": "Customer Remarks"
-  },
-  {
-   "fieldname": "client_details_section",
-   "fieldtype": "Section Break",
-   "label": "Client Details"
   },
   {
    "fetch_from": "client_id.mobile_no",
@@ -110,28 +104,25 @@
   {
    "collapsible": 1,
    "fieldname": "trainer_and_session_details_section",
-   "fieldtype": "Section Break",
-   "label": "Trainer and Session Details"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "fitness_package",
    "fieldtype": "Link",
    "label": "Fitness Training Package",
-   "options": "Fitness Training Package"
+   "options": "Club Packages"
   },
   {
    "fieldname": "column_break_12",
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "fitness_package.no_of_session",
    "fieldname": "number_of_sessions",
    "fieldtype": "Data",
    "label": "Number of Sessions",
    "read_only": 1
   },
   {
-   "fetch_from": "fitness_package.sessions_per_week",
    "fieldname": "sessions_per_week",
    "fieldtype": "Data",
    "label": "Session(s) per week",
@@ -147,7 +138,6 @@
    "read_only": 1
   },
   {
-   "fetch_from": "fitness_package.price",
    "fieldname": "price",
    "fieldtype": "Currency",
    "label": "Price",
@@ -183,10 +173,6 @@
    "label": "Payment Status",
    "options": "Paid\nNot Paid",
    "read_only": 1
-  },
-  {
-   "fieldname": "column_break_8",
-   "fieldtype": "Column Break"
   },
   {
    "collapsible_depends_on": "eval:doc.status==1",
@@ -242,11 +228,15 @@
    "fieldtype": "Data",
    "label": "Transaction Reference",
    "read_only": 1
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-31 01:17:04.005105",
+ "modified": "2021-04-01 12:31:24.273778",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Request",

@@ -142,7 +142,7 @@
    "fieldname": "session_type",
    "fieldtype": "Select",
    "label": "Session Type",
-   "options": "Single",
+   "options": "Single\nComplimentary",
    "reqd": 1
   },
   {
@@ -311,7 +311,7 @@
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-03-18 13:35:36.350721",
+ "modified": "2021-04-01 23:40:24.827590",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Services",

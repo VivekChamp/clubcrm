@@ -8,9 +8,14 @@ import datetime
 from frappe import _
 from datetime import datetime, timedelta
 from frappe.utils import getdate, get_time, flt
+from club_crm.club_crm.doctype.client_sessions.client_sessions import create_session
 from frappe.model.document import Document
 
 class Memberships(Document):
+	# Remove after membership data upload
+	def after_insert(self):
+		self.create_client_sessions()
+
 	def validate(self):
 		self.set_expiry()
 		self.set_membership_number()
@@ -56,6 +61,26 @@ class Memberships(Document):
 				frappe.db.set_value('Client', row.client_id, 'card_no', row.card_no)
 				frappe.db.set_value('Client', row.client_id, 'membership_id', self.membership_id)
 
+	# Remove after membership data upload
+	def create_client_sessions(self):
+		mem_plan = frappe.get_doc('Memberships Plan', self.membership_plan)
+		club_package = frappe.get_doc('Club Packages', mem_plan.benefits_item)
+		today = getdate()
+		if club_package.package_table:
+			for item in club_package.package_table:
+				create_session(self.client_id_1,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+				if self.membership_type == "Couple Membership":
+					create_session(self.client_id_2,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+				if self.membership_type == "Family Membership":
+					create_session(self.client_id_2,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+					for row in self.additional_members_item:
+						if type(row.birth_date) == str:
+							dob = datetime.strptime(row.birth_date, "%Y-%m-%d")
+						else:
+							dob = row.birth_date
+						age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
+						if age >= 18:
+							create_session(row.client_id,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
 		
 @frappe.whitelist()
 def activate_membership(appointment_id):
@@ -69,4 +94,9 @@ def activate_membership(appointment_id):
 		for row in mem.additional_members_item:
 			frappe.db.set_value('Client', row.client_id, 'membership_status', 'Member')
 
+# def update_membership_status():
+# 	# update the status of membership daily
+# 	memberships = frappe.get_all('Memberships', filters={'membership_status': ('in', 'Active')})
 
+# 	for membership in memberships:
+# 		frappe.get_doc('Spa Appointment', appointment.name).set_status()

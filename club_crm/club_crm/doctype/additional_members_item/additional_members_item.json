@@ -11,7 +11,8 @@
   "member_no",
   "card_no",
   "member_benefits",
-  "assigned_to"
+  "assigned_to",
+  "birth_date"
  ],
  "fields": [
   {
@@ -19,8 +20,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Client ID",
-   "options": "Client",
-   "read_only": 1
+   "options": "Client"
   },
   {
    "fetch_from": "client_id.client_name",
@@ -59,11 +59,17 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Card Number"
+  },
+  {
+   "fetch_from": "client_id.birth_date",
+   "fieldname": "birth_date",
+   "fieldtype": "Data",
+   "label": "Date of Birth"
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2021-03-31 15:17:43.464346",
+ "modified": "2021-04-01 23:12:50.635662",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Additional Members Item",

@@ -67,8 +67,7 @@
    "fieldname": "membership_plan",
    "fieldtype": "Link",
    "label": "Membership Plan",
-   "options": "Memberships Plan",
-   "read_only": 1
+   "options": "Memberships Plan"
   },
   {
    "default": "Today",
@@ -127,8 +126,7 @@
    "fieldname": "client_id_1",
    "fieldtype": "Link",
    "label": "Client ID",
-   "options": "Client",
-   "read_only": 1
+   "options": "Client"
   },
   {
    "fetch_from": "client_id_1.client_name",
@@ -275,8 +273,7 @@
    "fieldname": "client_id_2",
    "fieldtype": "Link",
    "label": "Client ID",
-   "options": "Client",
-   "read_only": 1
+   "options": "Client"
   },
   {
    "fieldname": "assigned_to_1",
@@ -367,7 +364,7 @@
   }
  ],
  "links": [],
- "modified": "2021-03-31 15:16:54.690944",
+ "modified": "2021-04-01 23:01:22.502372",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships",

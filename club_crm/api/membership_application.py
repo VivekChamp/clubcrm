@@ -50,8 +50,8 @@ def upload_image(docname,filename,isprivate,filedata):
 
 @frappe.whitelist()
 def check_status(mem_application):
-    doc= frappe.get_doc('Memberships Application', mem_application)
-    if doc.application_status=="Pending":
+    doc = frappe.get_doc('Memberships Application', mem_application)
+    if doc.application_status == "Pending":
         frappe.response["message"] = {
             "status": 0,
             "status_message":"Pending approval"
