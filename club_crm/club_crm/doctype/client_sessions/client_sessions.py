@@ -25,7 +25,8 @@ class ClientSessions(Document):
 				start_datetime = datetime.strptime(self.start_date, "%Y-%m-%d")
 			else:
 				start_datetime = self.start_date
-			expiry_date = start_datetime + timedelta(seconds=float(self.validity)) + timedelta(seconds=float(self.extension))
+			# expiry_date = start_datetime + timedelta(seconds=float(self.validity)) + timedelta(seconds=float(self.extension))
+			expiry_date = start_datetime + timedelta(seconds=float(self.validity))
 			self.expiry_date = datetime.strftime(expiry_date, "%Y-%m-%d")
 		else:
 			frappe.throw("Please set the start date")
