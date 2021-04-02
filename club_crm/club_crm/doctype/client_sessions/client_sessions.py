@@ -105,6 +105,20 @@ def create_session(client_id, package_name, service_type, service_name, no_of_se
 	doc.save()
 
 @frappe.whitelist()
+def create_sessions(client_id, package_name, start_date,service_type, service_name, no_of_sessions, validity):
+	doc= frappe.get_doc({
+		"doctype": 'Client Sessions',
+		"client_id": client_id,
+		"package_name": package_name,
+		"start_date" : start_date,
+		"service_type": service_type,
+		"service_name": service_name,
+		"total_sessions": no_of_sessions,
+		"validity": validity
+	})
+	doc.save()
+
+@frappe.whitelist()
 def check_spa_bookings(session_name):
 	client_session = frappe.get_doc('Client Sessions', session_name)
 	client_session.save()

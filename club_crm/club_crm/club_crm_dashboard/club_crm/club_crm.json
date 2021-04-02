@@ -1,14 +1,8 @@
 {
- "cards": [
-  {
-   "card": "Check Ins Today"
-  },
-  {
-   "card": "Bookings Today"
-  }
- ],
+ "cards": [],
  "charts": [
   {
+   "chart": "Spa Bookings Today",
    "width": "Half"
   }
  ],
@@ -19,7 +13,7 @@
  "idx": 0,
  "is_default": 1,
  "is_standard": 1,
- "modified": "2021-01-06 12:16:49.572395",
+ "modified": "2021-04-02 12:29:41.407947",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club CRM",
