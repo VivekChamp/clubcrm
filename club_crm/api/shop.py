@@ -22,7 +22,7 @@ def get_product(client_id,category):
         memberships = frappe.get_all('Memberships', filters={'membership_id': client.membership_id, 'membership_status':'Active'}, fields=['*'])
         if memberships:
             for mem in memberships:
-                discount = int(mem.retail_discount)
+                discount = mem.retail_discount
             
                 items = frappe.get_all('Item', filters={'item_group':category, 'disabled': 0}, fields=['*'])
                 if items:
@@ -32,7 +32,7 @@ def get_product(client_id,category):
                         if price:
                             price_1 = price[0]
                             description = re.sub("<.*?>", "", price_1.item_description)
-                            reg_price = int(price_1.price_list_rate)
+                            reg_price = price_1.price_list_rate
                             member_price = reg_price - (reg_price * discount/100.0)
                             product.append({
                                 "item_code": item.item_code,
@@ -63,7 +63,7 @@ def get_product(client_id,category):
                 if price:
                     price_1 = price[0]
                     description = re.sub("<.*?>", "", price_1.item_description)
-                    reg_price= int(price_1.price_list_rate)
+                    reg_price= price_1.price_list_rate
                     product.append({
                         "item_code": item.item_code,
                         "item_name": item.item_name,

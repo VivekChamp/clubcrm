@@ -31,12 +31,12 @@ def spa_rating(client_id,booking_id,rating,comments):
 @frappe.whitelist()
 def check_status(booking_id):
     doc= frappe.get_all('Rating', filters={'document_id':booking_id, 'docstatus':1}, fields=["*"])
-    doc_1= doc[0]
     if not doc:
         frappe.response["message"] = {
         "Rating": -1
         }
     else:
+        doc_1= doc[0]
         frappe.response["message"] = {
         "Rating":doc_1.rating_point
         }
