@@ -1,0 +1,22 @@
+{
+ "color": "#449CF0",
+ "creation": "2021-04-02 14:25:22.463166",
+ "docstatus": 0,
+ "doctype": "Number Card",
+ "document_type": "Spa Appointment",
+ "filters_json": "[[\"Spa Appointment\",\"appointment_date\",\"Timespan\",\"this month\",false]]",
+ "function": "Count",
+ "idx": 0,
+ "is_public": 0,
+ "is_standard": 1,
+ "label": "Total Appointments (This Month)",
+ "modified": "2021-04-02 15:39:43.321490",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Total Appointments",
+ "owner": "Administrator",
+ "report_function": "Sum",
+ "show_percentage_stats": 1,
+ "stats_time_interval": "Monthly",
+ "type": "Document Type"
+}

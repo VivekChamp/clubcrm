@@ -8,7 +8,7 @@ import datetime
 from frappe import _
 from datetime import datetime, timedelta
 from frappe.utils import getdate, get_time, flt
-from club_crm.club_crm.doctype.client_sessions.client_sessions import create_session
+from club_crm.club_crm.doctype.client_sessions.client_sessions import create_sessions
 from frappe.model.document import Document
 
 class Memberships(Document):
@@ -79,11 +79,11 @@ class Memberships(Document):
 		today = getdate()
 		if club_package.package_table:
 			for item in club_package.package_table:
-				create_session(self.client_id_1,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+				create_session(self.client_id_1,mem_plan.benefits_item,self.start_date,item.service_type,item.service_name,item.no_of_sessions,item.validity)
 				if self.membership_type == "Couple Membership":
-					create_session(self.client_id_2,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+					create_session(self.client_id_2,mem_plan.benefits_item,self.start_date,item.service_type,item.service_name,item.no_of_sessions,item.validity)
 				if self.membership_type == "Family Membership":
-					create_session(self.client_id_2,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+					create_session(self.client_id_2,mem_plan.benefits_item,self.start_date,item.service_type,item.service_name,item.no_of_sessions,item.validity)
 					for row in self.additional_members_item:
 						if type(row.birth_date) == str:
 							dob = datetime.strptime(row.birth_date, "%Y-%m-%d")
@@ -91,7 +91,7 @@ class Memberships(Document):
 							dob = row.birth_date
 						age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
 						if age >= 18:
-							create_session(row.client_id,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+							create_session(row.client_id,mem_plan.benefits_item,self.start_date,item.service_type,item.service_name,item.no_of_sessions,item.validity)
 		
 @frappe.whitelist()
 def activate_membership(appointment_id):
