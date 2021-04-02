@@ -67,15 +67,13 @@
    "fieldname": "membership_plan",
    "fieldtype": "Link",
    "label": "Membership Plan",
-   "options": "Memberships Plan",
-   "read_only": 1
+   "options": "Memberships Plan"
   },
   {
    "default": "Today",
    "fieldname": "start_date",
    "fieldtype": "Date",
-   "label": "Membership Start Date",
-   "read_only": 1
+   "label": "Membership Start Date"
   },
   {
    "fetch_from": "membership_plan.duration",
@@ -127,8 +125,7 @@
    "fieldname": "client_id_1",
    "fieldtype": "Link",
    "label": "Client ID",
-   "options": "Client",
-   "read_only": 1
+   "options": "Client"
   },
   {
    "fetch_from": "client_id_1.client_name",
@@ -367,7 +364,7 @@
   }
  ],
  "links": [],
- "modified": "2021-04-02 01:33:39.892802",
+ "modified": "2021-04-02 16:44:13.942629",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships",
