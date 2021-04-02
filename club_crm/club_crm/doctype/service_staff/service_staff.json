@@ -156,17 +156,17 @@
   },
   {
    "fieldname": "spa_check",
-   "fieldtype": "Data",
+   "fieldtype": "Check",
    "label": "Spa"
   },
   {
    "fieldname": "fitness_check",
-   "fieldtype": "Data",
+   "fieldtype": "Check",
    "label": "Fitness"
   },
   {
    "fieldname": "cec_check",
-   "fieldtype": "Data",
+   "fieldtype": "Check",
    "label": "CEC"
   }
  ],
