@@ -20,6 +20,7 @@ class Memberships(Document):
 		self.set_expiry()
 		self.set_membership_number()
 		self.set_title()
+		self.set_status()
 		self.set_member_number()
 
 	def set_expiry(self):
@@ -43,6 +44,16 @@ class Memberships(Document):
 
 	def set_title(self):
 		self.title = _('{0} - {1}').format(self.client_name_1,self.membership_id)
+
+	def set_status(self):
+		today = getdate()
+		expiry_date = getdate(self.expiry_date)
+
+		# If expiry date is past, set membership status as expired
+		if expiry_date < today:
+			self.membership_status = 'Expired'
+		elif expiry_date >= today and self.membership_status != "Draft":
+			self.membership_status = 'Active'
 
 	def set_member_number(self):
 		frappe.db.set_value('Client', self.client_id_1, 'member_id', self.member_no_1)
@@ -94,9 +105,10 @@ def activate_membership(appointment_id):
 		for row in mem.additional_members_item:
 			frappe.db.set_value('Client', row.client_id, 'membership_status', 'Member')
 
-# def update_membership_status():
-# 	# update the status of membership daily
-# 	memberships = frappe.get_all('Memberships', filters={'membership_status': ('in', 'Active')})
+@frappe.whitelist()
+def update_membership_status():
+	# update the status of membership daily
+	memberships = frappe.get_all('Memberships', filters={'membership_status': 'Active'})
 
-# 	for membership in memberships:
-# 		frappe.get_doc('Spa Appointment', appointment.name).set_status()
+	for membership in memberships:
+		frappe.get_doc('Memberships', membership.name).set_status()

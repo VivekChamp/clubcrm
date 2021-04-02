@@ -590,6 +590,7 @@
   {
    "fieldname": "checkin_document",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Checkin Document",
    "options": "Check In",
    "read_only": 1
@@ -615,7 +616,7 @@
   }
  ],
  "links": [],
- "modified": "2021-04-01 12:55:42.597452",
+ "modified": "2021-04-02 03:39:38.967915",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Appointment",

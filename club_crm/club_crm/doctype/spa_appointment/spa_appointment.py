@@ -4,6 +4,7 @@
 
 from __future__ import unicode_literals
 import frappe
+import json
 from frappe.utils import getdate, get_time, flt, now_datetime
 from datetime import datetime, timedelta, date, time
 from frappe import _
@@ -15,7 +16,7 @@ from frappe.model.mapper import get_mapped_doc
 class SpaAppointment(Document):
 	def validate(self):
 		self.set_appointment_date_time()
-		self.validate_past_days()
+		# self.validate_past_days()
 		self.set_addons_and_durations()
 		self.set_total_duration()
 		self.validate_overlaps()
@@ -41,7 +42,10 @@ class SpaAppointment(Document):
 			self.spa_service)
 
 	def set_appointment_date_time(self):
-		start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
+		if type(self.start_time) == str:
+			start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
+		else:
+			start_datetime = self.start_time
 		self.appointment_date = start_datetime.date()
 		self.appointment_time = datetime.strftime(start_datetime, "%H:%M:%S")
 
@@ -67,7 +71,10 @@ class SpaAppointment(Document):
 		#self.net_total = self.default_price + self.addon_total_price
 	
 	def set_total_duration(self):
-		start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
+		if type(self.start_time) == str:
+			start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
+		else:
+			start_datetime = self.start_time
 		self.end_time = start_datetime + timedelta(seconds=self.total_duration)
 		self.appointment_end_time = datetime.strftime(self.end_time, "%H:%M:%S")
 	
@@ -131,29 +138,32 @@ class SpaAppointment(Document):
 
 	def set_status(self):
 		today = getdate()
-		#appointment_date = getdate(self.appointment_date)
+		appointment_date = getdate(self.appointment_date)
 		# If appointment is created for today set status as Open else Scheduled (only for offline booking)
 		if self.appointment_status=="Scheduled" or self.appointment_status =="Open":
 			if self.online==0:
-				if self.appointment_date == today:
+				if appointment_date == today:
 					self.appointment_status = 'Open'
-				elif self.appointment_date > today:
+				elif appointment_date > today:
 					self.appointment_status = 'Scheduled'
-				elif self.appointment_date < today:
+				elif appointment_date < today:
 					self.appointment_status = 'No Show'
 			elif self.online==1:
 				if self.payment_status=="Paid":
-					if self.appointment_date == today:
+					if appointment_date == today:
 						self.appointment_status = 'Open'
-					elif self.appointment_date > today:
+					elif appointment_date > today:
 						self.appointment_status = 'Scheduled'
-					elif self.appointment_date < today:
+					elif appointment_date < today:
 						self.appointment_status = 'No Show'
 				else:
 					self.appointment_status = 'Draft'
 
 	def validate_overlaps(self):
-		start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
+		if type(self.start_time) == str:
+			start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
+		else:
+			start_datetime = self.start_time
 		end_time = start_datetime + timedelta(seconds=self.total_duration)
 		overlaps = frappe.db.sql("""
 		select
@@ -204,11 +214,11 @@ class SpaAppointment(Document):
 				overlaps[0][1], overlaps[0][2])
 			frappe.throw(overlapping_details, title=_('Room Overlap'))
 
-	def validate_past_days(self):
-		today = date.today()
-		if self.appointment_date < today:
-			past_day = _('Appointments cannot be created for a past date')
-			frappe.throw(past_day, title=_('Appointment Date Error'))
+	# def validate_past_days(self):
+	# 	today = date.today()
+	# 	if self.appointment_date < today:
+	# 		past_day = _('Appointments cannot be created for a past date')
+	# 		frappe.throw(past_day, title=_('Appointment Date Error'))
 	
 	def create_room_schedule(self):
 		room= frappe.get_all('Club Room Schedule', filters={'spa_booking': self.name}, fields=["*"])
@@ -233,14 +243,35 @@ class SpaAppointment(Document):
 			doc.insert()
 			doc.save()
 
+@frappe.whitelist()
 def update_appointment_status():
 	# update the status of appointments daily
-	appointments = frappe.get_all('Spa Appointment', {
-		'appointment_status': ('not in', ['Draft', 'Complete', 'Cancelled', 'Checked-in', 'No Show'])
-	}, as_dict=1)
+	today = getdate()
+	appointments = frappe.get_all('Spa Appointment', filters={'appointment_status': ('not in', ['Draft', 'Complete', 'Cancelled', 'Checked-in', 'No Show']), 'docstatus': 0})
 
 	for appointment in appointments:
-		frappe.get_doc('Spa Appointment', appointment.name).set_status()
+		spa_app = frappe.get_doc('Spa Appointment', appointment.name)
+		appointment_date = getdate(spa_app.appointment_date)
+		# If appointment is created for today set status as Open else Scheduled (only for offline booking)
+		if spa_app.appointment_status=="Scheduled" or spa_app.appointment_status =="Open":
+			if spa_app.online==0:
+				if appointment_date == today:
+					spa_app.appointment_status = 'Open'
+				elif appointment_date > today:
+					spa_app.appointment_status = 'Scheduled'
+				elif appointment_date < today:
+					spa_app.appointment_status = 'No Show'
+			elif appointment.online==1:
+				if spa_app.payment_status=="Paid":
+					if appointment_date == today:
+						spa_app.appointment_status = 'Open'
+					elif appointment_date > today:
+						spa_app.appointment_status = 'Scheduled'
+					elif appointment_date < today:
+						spa_app.appointment_status = 'No Show'
+				else:
+					spa_app.appointment_status = 'Draft'
+			spa_app.save()
 
 # def invoice_appointment(appointment_doc):
 # 	if appointment_doc.payment_status=="Paid":
