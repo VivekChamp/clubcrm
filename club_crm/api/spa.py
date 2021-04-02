@@ -171,8 +171,10 @@ def get_room(gender):
 
 @frappe.whitelist()
 def get_slots(date, spa_item, therapist_name):
-    doc = frappe.get_doc('Spa Menu', spa_item)
+    doc = frappe.get_doc('Spa Services', spa_item)
 
+    month = date.month
+    return month
     # Find the number of 30 minutes interval in the total duration of spa menu. Total duration is in seconds.
     b= int(doc.total_duration/1800)
 

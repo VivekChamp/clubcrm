@@ -177,9 +177,10 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "session_name.validity",
+   "default": "0.0",
    "fieldname": "validity",
    "fieldtype": "Duration",
+   "hide_seconds": 1,
    "label": "Validity",
    "read_only": 1
   },
@@ -236,7 +237,7 @@
   },
   {
    "allow_on_submit": 1,
-   "default": "0",
+   "default": "0.0",
    "fieldname": "extension",
    "fieldtype": "Duration",
    "hidden": 1,
@@ -259,7 +260,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-04-01 13:01:39.247633",
+ "modified": "2021-04-02 21:21:59.702646",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client Sessions",

@@ -28,7 +28,7 @@ frappe.ui.form.on('Memberships', {
             },__("View"));
         }
         //if (frm.doc.membership_application && frm.doc.membership_status=="Draft") {
-        if frm.doc.membership_status=="Draft") {
+        if (frm.doc.membership_status=="Draft") {
             frm.add_custom_button(__('Active'), function(){
                 frappe.call({
                     method: 'club_crm.club_crm.doctype.memberships.memberships.activate_membership',

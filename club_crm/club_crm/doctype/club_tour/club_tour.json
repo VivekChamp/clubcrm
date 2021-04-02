@@ -27,8 +27,7 @@
   "more_information_section",
   "note",
   "column_break_21",
-  "staff_remarks",
-  "amended_from"
+  "staff_remarks"
  ],
  "fields": [
   {
@@ -121,8 +120,8 @@
   {
    "fieldname": "assign_cec",
    "fieldtype": "Link",
-   "label": "Staff To Attend",
-   "options": "Employee"
+   "label": "Assigned Staff",
+   "options": "Service Staff"
   },
   {
    "fetch_from": "assign_cec.employee_name",
@@ -146,15 +145,6 @@
    "label": "Time to"
   },
   {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Club Tour",
-   "print_hide": 1,
-   "read_only": 1
-  },
-  {
    "allow_on_submit": 1,
    "default": "Pending",
    "fieldname": "tour_status",
@@ -173,10 +163,9 @@
    "label": "Staff Remarks"
   }
  ],
- "is_submittable": 1,
  "links": [],
- "modified": "2020-12-07 15:07:03.920545",
- "modified_by": "mithleena@bluelynx.qa",
+ "modified": "2021-04-02 18:15:15.547594",
+ "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club Tour",
  "owner": "Administrator",

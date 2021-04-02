@@ -36,7 +36,7 @@
    "fieldname": "trainer",
    "fieldtype": "Link",
    "label": "Trainer",
-   "options": "Fitness Trainer",
+   "options": "Service Staff",
    "reqd": 1
   },
   {
@@ -192,7 +192,7 @@
  "image_field": "image",
  "is_submittable": 1,
  "links": [],
- "modified": "2021-01-21 16:51:29.072474",
+ "modified": "2021-04-02 18:27:04.588921",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class",
