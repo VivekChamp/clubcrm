@@ -8,9 +8,9 @@ from frappe import throw, msgprint, _
 def apply_single(client_id,membership_plan,qatar_id,nationality,occupation,company,front_qid_filedata,back_qid_filedata,how_did):
     doc = frappe.get_doc({
         'doctype': 'Memberships Application',
-        'submitted_by_staff':0,
+        'online_application': 1,
         'client_id': client_id,
-        'membership_type': "Single Membership",
+        'membership_category' : 'Standard',
         'membership_plan': membership_plan,
         'qatar_id_1': qatar_id,
         'nationality_1': nationality,
@@ -79,10 +79,9 @@ def check_status(mem_application):
 def apply_couple(client_id,membership_plan,qatar_id_1,nationality_1,occupation_1,company_1,how_did,first_name_2,last_name_2,mobile_no_2,email_2,occupation_2,birth_date_2,gender_2,nationality_2,company_2,qatar_id_2,relation_2,front_qid_1,back_qid_1,front_qid_2,back_qid_2):
     doc = frappe.get_doc({
         'doctype': 'Memberships Application',
-        'submitted_by_staff':0,
-        'no_adults': '2',
+        'online_application': 1,
         'client_id': client_id,
-        'membership_type': "Couple Membership",
+        'membership_category' : 'Standard',
         'membership_plan': membership_plan,
         'qatar_id_1': qatar_id_1,
         'nationality_1': nationality_1,

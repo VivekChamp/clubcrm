@@ -29,7 +29,9 @@ class ServiceStaffAvailability(Document):
 			item.idx = i
 		
 	def set_title(self):
-		self.title = _('{0} for {1} {2}').format(self.staff_name, self.month, self.year)
+		month_name = ['January','February','March','April','May','June','July','August','September','October','November','December']
+		month = month_name[int(self.month) -1]
+		self.title = _('{0} for {1} {2}').format(self.staff_name, month, self.year)
 
 	def add_schedule(self):
 		self.validate_values()

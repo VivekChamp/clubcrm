@@ -22,6 +22,7 @@
   "extension",
   "sessions_section",
   "package_name",
+  "package_type",
   "service_type",
   "service_name",
   "validity",
@@ -256,11 +257,19 @@
    "fieldtype": "Data",
    "label": "Package Name",
    "read_only": 1
+  },
+  {
+   "fetch_from": "package_name.package_type",
+   "fieldname": "package_type",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Package Type",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-04-02 21:21:59.702646",
+ "modified": "2021-04-03 03:53:39.631195",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client Sessions",
