@@ -112,23 +112,93 @@ def create_session(client_id, package_name, service_type, service_name, no_of_se
 	})
 	doc.save()
 
+# @frappe.whitelist()
+# def create_sessions(client_id,package_name,start_date,service_type,service_name,no_of_sessions,validity):
+# 	if type(start_date) == str:
+# 		new_start_date = datetime.strptime(start_date, "%Y-%m-%d")
+# 	else:
+# 		new_start_date = start_date
+# 	doc= frappe.get_doc({
+# 		"doctype": 'Client Sessions',
+# 		"client_id": client_id,
+# 		"package_name": package_name,
+# 		"start_date" : new_start_date,
+# 		"service_type": service_type,
+# 		"service_name": service_name,
+# 		"total_sessions": no_of_sessions,
+# 		"validity": validity
+# 	})
+# 	doc.save()
+
 @frappe.whitelist()
-def create_sessions(client_id,package_name,start_date,service_type,service_name,no_of_sessions,validity):
-	if type(start_date) == str:
-		new_start_date = datetime.strptime(start_date, "%Y-%m-%d")
+def create_sessions(doc, method=None):
+	if type(doc.start_date) == str:
+		new_start_date = datetime.strptime(doc.start_date, "%Y-%m-%d")
 	else:
-		new_start_date = start_date
-	doc= frappe.get_doc({
-		"doctype": 'Client Sessions',
-		"client_id": client_id,
-		"package_name": package_name,
-		"start_date" : new_start_date,
-		"service_type": service_type,
-		"service_name": service_name,
-		"total_sessions": no_of_sessions,
-		"validity": validity
-	})
-	doc.save()
+		new_start_date = doc.start_date
+
+	mem_plan = frappe.get_doc('Memberships Plan', doc.membership_plan)
+	club_package = frappe.get_doc('Club Packages', mem_plan.benefits_item)
+
+	today = getdate()
+	if club_package.package_table:
+		for item in club_package.package_table:
+			cs_1 = frappe.get_doc({
+				"doctype": 'Client Sessions',
+				"client_id": doc.client_id_1,
+				"package_name": mem_plan.benefits_item,
+				"start_date" : new_start_date,
+				"service_type": item.service_type,
+				"service_name": item.service_name,
+				"total_sessions": item.no_of_sessions,
+				"validity": item.validity
+			})
+			cs_1.save()
+
+			if doc.membership_type == "Couple Membership":
+				cs_2 = frappe.get_doc({
+					"doctype": 'Client Sessions',
+					"client_id": doc.client_id_2,
+					"package_name": mem_plan.benefits_item,
+					"start_date" : new_start_date,
+					"service_type": item.service_type,
+					"service_name": item.service_name,
+					"total_sessions": item.no_of_sessions,
+					"validity": item.validity
+				})
+				cs_2.save()
+
+			if doc.membership_type == "Family Membership":
+				cs_2 = frappe.get_doc({
+					"doctype": 'Client Sessions',
+					"client_id": doc.client_id_2,
+					"package_name": mem_plan.benefits_item,
+					"start_date" : new_start_date,
+					"service_type": item.service_type,
+					"service_name": item.service_name,
+					"total_sessions": item.no_of_sessions,
+					"validity": item.validity
+				})
+				cs_2.save()
+
+				for row in doc.additional_members_item:
+					if type(row.birth_date) == str:
+						dob = datetime.strptime(row.birth_date, "%Y-%m-%d")
+					else:
+						dob = row.birth_date
+					age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
+					if age >= 18:
+						cs = frappe.get_doc({
+							"doctype": 'Client Sessions',
+							"client_id": row.client_id,
+							"package_name": mem_plan.benefits_item,
+							"start_date" : new_start_date,
+							"service_type": item.service_type,
+							"service_name": item.service_name,
+							"total_sessions": item.no_of_sessions,
+							"validity": item.validity
+						})
+						cs.save()
 
 @frappe.whitelist()
 def check_spa_bookings(session_name):
