@@ -86,8 +86,11 @@ home_page = "login"
 
 doc_events = {
  	"User": {
-                "after_insert": "club_crm.core.doctype.user.user.create_client_user"
-                }
+    	"after_insert": "club_crm.core.doctype.user.user.create_client_user"
+    },
+	"Memberships": {
+		"after_insert": "club_crm.club_crm.doctype.client_sessions.client_sessions.create_sessions"
+	}
     # "Client": {
     #              "after_insert": "club_crm.club_crm.doctype.client.client.create_customer_client"
     #              }

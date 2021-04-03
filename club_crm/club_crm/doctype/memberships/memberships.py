@@ -13,8 +13,8 @@ from frappe.model.document import Document
 
 class Memberships(Document):
 	# Remove after membership data upload
-	def after_insert(self):
-		self.create_client_sessions()
+	# def after_insert(self):
+	# 	self.create_client_sessions()
 
 	def validate(self):
 		self.set_expiry()
@@ -78,6 +78,7 @@ class Memberships(Document):
 			start_date = datetime.strptime(self.start_date, "%Y-%m-%d")
 		else:
 			start_date = self.start_date
+		return start_date
 
 		mem_plan = frappe.get_doc('Memberships Plan', self.membership_plan)
 		club_package = frappe.get_doc('Club Packages', mem_plan.benefits_item)
