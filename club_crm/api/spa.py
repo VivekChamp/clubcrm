@@ -172,11 +172,12 @@ def get_room(gender):
 def get_slots(date, spa_item, therapist_name):
     doc = frappe.get_doc('Spa Services', spa_item)
 
-    date_original = datetime.strptime(date,"%d-%m-%Y")
-    month = datetime.strftime(date_original, "%m")
-    year = datetime.strftime(date_original, "%Y")
-    date_string = datetime.strftime(date_original, "%Y-%m-%d")
-    date_converted = getdate(date_string)
+    # date_converted = datetime.strptime(date,"%Y-%m-%d")
+    date_converted = getdate(date)
+    month = datetime.strftime(date_converted, "%m")
+    year = datetime.strftime(date_converted, "%Y")
+    # date_string = datetime.strftime(date_original, "%Y-%m-%d")
+    
 
     # Fetch therapist schedule from therapist name
     staff_availability = frappe.get_all('Service Staff Availability', filters={'staff_name': therapist_name,  'month': month, 'year': year})
