@@ -83,7 +83,7 @@ class ClientSessions(Document):
 
 		expiry_date = expiry.date()
 		# If expiry date is less than today, change the status to expired.
-		if self.session_status=="Active" or self.session_status=="On Hold" :
+		if self.session_status=="Active" or self.session_status=="On Hold":
 			if expiry_date < today:
 				self.session_status = 'Expired'
 		if self.session_status=="Expired":
@@ -106,7 +106,7 @@ def create_session(client_id, package_name, service_type, service_name, no_of_se
 	doc.save()
 
 @frappe.whitelist()
-def create_sessions(client_id, package_name, start_date,service_type, service_name, no_of_sessions, validity):
+def create_sessions(client_id,package_name,start_date,service_type,service_name,no_of_sessions,validity):
 	doc= frappe.get_doc({
 		"doctype": 'Client Sessions',
 		"client_id": client_id,

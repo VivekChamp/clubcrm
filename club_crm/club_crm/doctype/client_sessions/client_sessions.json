@@ -129,8 +129,7 @@
    "fieldtype": "Int",
    "label": "Total Sessions",
    "non_negative": 1,
-   "precision": "0",
-   "read_only": 1
+   "precision": "0"
   },
   {
    "fieldname": "column_break_16",
@@ -269,7 +268,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-04-03 03:53:39.631195",
+ "modified": "2021-04-03 14:30:56.241240",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client Sessions",
