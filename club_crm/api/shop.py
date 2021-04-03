@@ -176,7 +176,6 @@ def checkout(client_id, payment_method):
         cart_1=cart[0]
         doc = frappe.get_doc('Online Order', cart_1.name)
         doc.payment_method = payment_method
-        doc.submit()
         wallet= get_balance(client_id)
     frappe.response["message"] = {
         "status": 1,

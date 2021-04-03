@@ -51,7 +51,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Month",
-   "options": "\nJanuary\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember",
+   "options": "\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12",
    "reqd": 1
   },
   {
@@ -152,7 +152,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-03-31 21:14:48.451556",
+ "modified": "2021-04-02 23:09:32.523991",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Service Staff Availability",

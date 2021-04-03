@@ -201,6 +201,8 @@
    "reqd": 1
   },
   {
+   "fetch_from": "client_id.birth_date",
+   "fetch_if_empty": 1,
    "fieldname": "birth_date_1",
    "fieldtype": "Date",
    "in_list_view": 1,
@@ -295,6 +297,8 @@
    "read_only_depends_on": "eval:doc.existing_client_2==1"
   },
   {
+   "fetch_from": "client_id_2.birth_date",
+   "fetch_if_empty": 1,
    "fieldname": "birth_date_2",
    "fieldtype": "Date",
    "label": "Date Of Birth"
@@ -678,7 +682,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-03-30 02:21:17.735514",
+ "modified": "2021-04-03 02:15:28.213296",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",

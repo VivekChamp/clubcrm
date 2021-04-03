@@ -10,7 +10,7 @@ from club_crm.api.wallet import get_balance
 
 @frappe.whitelist()
 def reservation(client_id,no_of_people,date,start_time):
-    dt= date+" "+start_time
+    dt = date+" "+start_time
     starttime = datetime.strptime(dt, "%d-%m-%Y %H:%M")
     endtime= starttime + timedelta(minutes=60)
     doc = frappe.get_doc({
@@ -31,7 +31,7 @@ def reservation(client_id,no_of_people,date,start_time):
 
 @frappe.whitelist()         
 def get_status(client_id):
-    doc= frappe.get_all('Grams Reservation', filters={'client_id':client_id,'status': "Pending"}, fields=["*"])
+    doc = frappe.get_all('Grams Reservation', filters={'client_id':client_id,'status': "Pending"}, fields=["*"])
     if doc:
         frappe.response["message"] = {
             "Status": 0,
@@ -50,13 +50,13 @@ def get_status(client_id):
 
 @frappe.whitelist()         
 def get_time(date):
-    date_1=str(date)
-    day_name= ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
-    day_1 = datetime.strptime(date_1, '%d-%m-%Y').weekday()
-    day= day_name[day_1]
+    date_1 = str(date)
+    day_name = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+    day = day_name[datetime.strptime(date_1, '%d-%m-%Y').weekday()]
 
-    doc= frappe.get_doc('Grams Schedule')
+    doc = frappe.get_doc('Grams Schedule')
     slots = doc.time_slots
+
     time_slot=[]
     for days in slots:
         if days.day==day and days.disabled==0:
@@ -198,7 +198,6 @@ def checkout(client_id, payment_method):
         cart_1=cart[0]
         doc= frappe.get_doc('Food Order Entry', cart_1.name)
         doc.payment_method = payment_method
-        doc.submit()
     wallet= get_balance(client_id)
     frappe.response["message"] = {
         "status": 1,

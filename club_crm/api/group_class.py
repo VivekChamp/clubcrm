@@ -5,7 +5,7 @@ from frappe import throw, msgprint, _
 
 @frappe.whitelist()
 def get_group_class():
-    group_class = frappe.get_all('Group Class', filters={'on_app':1,'docstatus':1,'booking_status':"Available"}, fields=['name','date','group_class_name','image','class_type','class_category','trainer_name','capacity','remaining','from_time','to_time','members_only'])
+    group_class = frappe.get_all('Group Class', filters={'on_app':1,'docstatus':1,'booking_status':"Available"}, fields=['name','date','group_class_name','image','class_type','class_category','trainer','capacity','remaining','from_time','to_time','members_only'])
     frappe.response["message"] = {
         "Group Class": group_class
          }
