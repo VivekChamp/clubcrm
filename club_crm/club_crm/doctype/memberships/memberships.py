@@ -74,7 +74,11 @@ class Memberships(Document):
 
 	# Remove after membership data upload
 	def create_client_sessions(self):
-		start_date = getdate(self.start_date)
+		if type(self.start_date) == str:
+			start_date = datetime.strptime(self.start_date, "%Y-%m-%d")
+		else:
+			start_date = self.start_date
+
 		mem_plan = frappe.get_doc('Memberships Plan', self.membership_plan)
 		club_package = frappe.get_doc('Club Packages', mem_plan.benefits_item)
 		today = getdate()
