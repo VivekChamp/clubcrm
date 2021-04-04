@@ -27,44 +27,70 @@ def get_fitness_category(client_id):
                     "Schedule": schedule
                     }
     else:
-        fitness_category = frappe.get_all('Fitness Training Category', filters={'on_app': 1}, fields=['category_name','category_image'])
+        fitness_category = frappe.get_all('Fitness Services', filters={'on_app': 1}, fields=['fitness_name','image'])
+        fitness_item = []
+        for item in fitness_category:
+            fitness_item.append({
+                "category_name" : item.fitness_name,
+            "category_image" : item.image
+            })
         frappe.response["message"] = {
             "Status":2,
-            "Fitness Categories": fitness_category
-            }
+            "Fitness Categories": fitness_item
+        }
 
 @frappe.whitelist()
 def get_fitness_package(fitness_category):
-    fitness_package = frappe.get_all('Fitness Training Package', filters={'on_app': 1, 'fitness_category':fitness_category}, fields=['name','duration','no_of_session','validity','sessions_per_week','price','fitness_category'])
+    fit_category = frappe.get_doc('Fitness Services', fitness_category)
+    all_fitness_package = frappe.get_all('Club Packages', filters={'on_app': 1, 'package_type': 'Fitness'})
+    packages = []
+    for item in all_fitness_package:
+        single_package = frappe.get_doc('Club Packages', item.name)
+        for package in single_package.package_table:
+            if package.service_name == fitness_category:
+                sessions = int(package.no_of_sessions/4)
+                if sessions == 0:
+                    sessions = 1
+                packages.append({
+                    "name": item.name,
+                    "duration": fit_category.duration,
+                    "no_of_session": package.no_of_sessions,
+                    "validity": package.validity,
+                    "sessions_per_week": sessions,
+                    "price": package.price,
+                    "fitness_category": fitness_category
+                })
+    
     frappe.response["message"] = {
-        "Fitness Categories": fitness_package
-         }
+        "Fitness Categories": packages
+    }
 
 @frappe.whitelist()
 def get_trainer(fitness_package,client_id):
-    client= frappe.get_doc('Client', client_id)
-    #spa_group= frappe.get_doc('Spa Menu Group', doc.spa_menu_group)
-    fit_trainer= frappe.get_all('Fitness Package Assignment', filters={'fitness_package':fitness_package, 'on_app':1}, fields=['name','parent','parenttype','parentfield'])
-    trainer=[]
-    for name in fit_trainer:
-        doc_1= frappe.get_doc('Fitness Trainer', name.parent)
-        if doc_1.on_app==1:
-            if client.membership_status=="Non-Member":
-                if doc_1.gender==client.gender:
-                    trainer.append({
-                        'Trainer': doc_1.employee_name,
-                        'Description': doc_1.description,
-                        'Image': doc_1.image,
-                        'Gender': doc_1.gender
+    client = frappe.get_doc('Client', client_id)
+    club_package = frappe.get_doc('Club Packages', fitness_package)
+    for package in club_package.package_table:
+        fit_trainer = frappe.get_all('Fitness Services Assignment', filters={'fitness_package': package.service_name, 'on_app':1}, fields=['name','parent','parenttype','parentfield'])
+        trainers = []
+        for trainer in fit_trainer:
+            doc_1 = frappe.get_doc('Service Staff', trainer.parent)
+            if doc_1.on_app == 1:
+                if client.membership_status == "Non-Member":
+                    if doc_1.gender == client.gender:
+                        trainers.append({
+                            'Trainer': doc_1.display_name,
+                            'Description': doc_1.description,
+                            'Image': doc_1.image,
+                            'Gender': doc_1.gender
                         })
-            else:
-                trainer.append({
-                    'Trainer': doc_1.employee_name,
-                    'Description': doc_1.description,
-                    'Image': doc_1.image,
-                    'Gender': doc_1.gender
-                    })
-    return trainer
+                else:
+                    trainers.append({
+                            "Trainer": doc_1.display_name,
+                            "Description": doc_1.description,
+                            "Image": doc_1.image,
+                            "Gender": doc_1.gender
+                        })
+        return trainers
 
 @frappe.whitelist()
 def get_appointments(client_id):

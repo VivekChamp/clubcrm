@@ -8,11 +8,15 @@ from frappe import _
 from frappe.utils import getdate, get_time, flt
 from datetime import datetime, timedelta
 from club_crm.club_crm.doctype.client_sessions.client_sessions import create_session
+from frappe.core.doctype.sms_settings.sms_settings import send_sms
 from frappe.model.document import Document
 
 class MembershipsApplication(Document):
 	def before_insert(self):
 		self.check_existing_application()
+
+	def after_insert(self):
+		self.send_notification()
 
 	def validate(self):
 		self.check_clients()
@@ -165,6 +169,13 @@ class MembershipsApplication(Document):
 					if not row.client_id:
 						client = create_client(row.first_name,row.last_name,row.gender,row.birth_date,row.qatar_id,row.mobile_no,row.email)
 						frappe.db.set_value(row.doctype, row.name, "client_id", client, update_modified=False)
+
+	def send_notification(self):
+		settings = frappe.get_doc('Memberships Settings')
+		if settings.enabled==1 and self.online_application==1:
+			msg = "New membership application has been received from "+self.first_name_1+" "+self.last_name_1+"."
+			receiver_list='"'+settings.mobile_no+'"'
+			send_sms(receiver_list,msg)
 
 @frappe.whitelist()
 def create_client(first_name,last_name,gender,birth_date,qatar_id,mobile_no,email):

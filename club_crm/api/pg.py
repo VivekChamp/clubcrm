@@ -10,6 +10,12 @@ from datetime import datetime
 import random
 import string
 
+membership_application = "^MEM-APP-[0-9]{4,4}-[0-9]{5,5}$"
+online_order = "^ON-[0-9]{4,4}-[0-9]{5,5}$"
+food_order = "^FOE-[0-9]{4,4}-[0-9]{5,5}$"
+fitness_training = "^FIT-REQ-[0-9]{4,4}-[0-9]{5,5}$"
+spa_app = "^SPA-APP-[0-9]{4,4}-[0-9]{5,5}$"
+
 @frappe.whitelist(allow_guest = True)
 def create_log(**kwargs):
     kwargs=frappe._dict(kwargs)
@@ -43,9 +49,10 @@ def create_log(**kwargs):
     doc.generated_hash = generate_hash_verifier(sample_dict)
     if doc.generated_hash == kwargs['signature']:
         doc.signature_verified = 1
-
+        if doc.decision == "ACCEPT":
+            make_status_paid(kwargs['req_reference_number'])
+    
     doc.insert(ignore_permissions=True)
-    return doc
 
 def generate_data_string(data_dict):
     test_array = []
@@ -112,11 +119,32 @@ def generate_hash(data_dict):
     hash_value = hmac.new(API_SECRET.encode(), str1.encode(), hashlib.sha256)
     # print(hash_value.digest())
     signature = base64.b64encode(hash_value.digest()).decode("utf-8")
-    default_dict['signature'] = signature  
-
-    # trial = []
-    # for key,value in default_dict.items():
-    #     trial.append(str(key)+"="+str(value))
-    # return trial
+    default_dict['signature'] = signature
 
     return default_dict
+
+def make_status_paid(docname):
+    if re.match(membership_application, docname):
+        frappe.db.set_value("Memberships Application",str(docname),"payment_status","Paid")
+        doc = frappe.get_doc("Memberships Application",str(docname))
+        doc.save()
+        
+    elif re.match(online_order, docname):
+        frappe.db.set_value("Online Order",str(docname),"payment_status","Paid")
+        doc = frappe.get_doc("Online Order",str(docname))
+        doc.save()
+        
+    elif re.match(food_order, docname):
+        frappe.db.set_value("Food Order Entry",str(docname),"payment_status","Paid")
+        doc = frappe.get_doc("Food Order Entry",str(docname))
+        doc.save()
+        
+    elif re.match(fitness_training, docname):
+        frappe.db.set_value("Fitness Training Request",str(docname),"payment_status","Paid")
+        doc = frappe.get_doc("Fitness Training Request",str(docname))
+        doc.save()
+        
+    elif re.match(spa_app, docname):
+        frappe.db.set_value("Spa Appointment",str(docname),"payment_status","Paid")
+        doc = frappe.get_doc("Spa Appointment",str(docname))
+        doc.save()

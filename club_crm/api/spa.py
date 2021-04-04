@@ -88,7 +88,7 @@ def get_details(client_id):
     if time.spa_cancel_time and int(time.spa_cancel_time) > 0:
         b = int(int(time.spa_cancel_time)/3600)
 
-    doc = frappe.get_all('Spa Appointment', filters={'client_id':client_id, 'appointment_status':['not in',{'Cancelled','No Show'}]}, fields=['name','spa_service','total_service_duration','appointment_status','payment_status','appointment_date','appointment_time', 'start_time','default_price','spa_therapist'])
+    doc = frappe.get_all('Spa Appointment', filters={'client_id':client_id, 'appointment_status':['not in',{'Cancelled','No Show'}]}, fields=['name','spa_service','total_service_duration','appointment_status','payment_status','appointment_date','appointment_time', 'start_time','default_price','spa_therapist'], order_by="appointment_date asc")
     details = []
     if doc:
         for rating in doc:

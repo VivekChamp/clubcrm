@@ -9,6 +9,8 @@
  "field_order": [
   "title",
   "enabled",
+  "column_break_3",
+  "on_app",
   "section_break_3",
   "package_name",
   "package_type",
@@ -82,11 +84,22 @@
    "fieldtype": "Currency",
    "label": "Total Price (in QAR)",
    "read_only": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "Uncheck to hide this service from client web/mobile apps",
+   "fieldname": "on_app",
+   "fieldtype": "Check",
+   "label": "Show on App"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-03-30 03:09:46.184146",
+ "modified": "2021-04-03 20:45:50.706124",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club Packages",
