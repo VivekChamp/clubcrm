@@ -177,6 +177,7 @@
    "read_only": 1
   },
   {
+   "allow_on_submit": 1,
    "collapsible_depends_on": "eval:doc.status==1",
    "fieldname": "trainer_schedule_section",
    "fieldtype": "Section Break",
@@ -249,7 +250,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-04-04 02:25:04.339332",
+ "modified": "2021-04-04 13:26:45.462745",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Request",
