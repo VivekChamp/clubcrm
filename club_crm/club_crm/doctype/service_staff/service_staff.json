@@ -17,7 +17,7 @@
   "column_break_7",
   "gender",
   "email",
-  "mobile",
+  "mobile_no",
   "column_break_6",
   "description",
   "image",
@@ -38,13 +38,6 @@
    "fieldname": "gender",
    "fieldtype": "Data",
    "label": "Gender",
-   "read_only": 1
-  },
-  {
-   "fetch_from": "employee_mobile_no",
-   "fieldname": "mobile",
-   "fieldtype": "Data",
-   "label": "Mobile",
    "read_only": 1
   },
   {
@@ -155,24 +148,34 @@
    "options": "Fitness Services Assignment"
   },
   {
+   "default": "0",
    "fieldname": "spa_check",
    "fieldtype": "Check",
    "label": "Spa"
   },
   {
+   "default": "0",
    "fieldname": "fitness_check",
    "fieldtype": "Check",
    "label": "Fitness"
   },
   {
+   "default": "0",
    "fieldname": "cec_check",
    "fieldtype": "Check",
    "label": "CEC"
+  },
+  {
+   "fetch_from": "employee.cell_number",
+   "fieldname": "mobile_no",
+   "fieldtype": "Data",
+   "label": "Mobile",
+   "read_only": 1
   }
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-03-31 14:36:49.756276",
+ "modified": "2021-04-04 02:23:17.746838",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Service Staff",

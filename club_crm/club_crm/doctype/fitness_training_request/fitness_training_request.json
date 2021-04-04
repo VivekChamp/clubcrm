@@ -19,6 +19,8 @@
   "payment_status",
   "trainer_and_session_details_section",
   "trainer",
+  "column_break_14",
+  "trainer_mobile_no",
   "column_break_12",
   "fitness_package",
   "number_of_sessions",
@@ -232,11 +234,22 @@
   {
    "fieldname": "column_break_5",
    "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "trainer.mobile_no",
+   "fieldname": "trainer_mobile_no",
+   "fieldtype": "Data",
+   "label": "Fitness Trainer Mobile #",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_14",
+   "fieldtype": "Column Break"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-04-01 12:31:24.273778",
+ "modified": "2021-04-04 02:25:04.339332",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Request",
