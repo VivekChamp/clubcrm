@@ -43,7 +43,7 @@ class SpaAppointment(Document):
 
 	def set_appointment_date_time(self):
 		if type(self.start_time) == str:
-			start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
+			start_datetime = datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
 		else:
 			start_datetime = self.start_time
 		self.appointment_date = start_datetime.date()

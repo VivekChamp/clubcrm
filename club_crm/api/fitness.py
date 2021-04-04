@@ -1,6 +1,7 @@
 import frappe
 from frappe.website.utils import is_signup_enabled
 from frappe.utils import escape_html
+from datetime import datetime, timedelta
 from frappe import throw, msgprint, _
 from club_crm.api.wallet import get_balance
 
@@ -94,21 +95,44 @@ def get_trainer(fitness_package,client_id):
 
 @frappe.whitelist()
 def get_appointments(client_id):
-    doc = frappe.get_list('Fitness Training Appointment', filters={'client_id':client_id, 'docstatus':1}, fields=['name','date','client_id','client_name','package_name','trainer_name','status','start_time','end_time','payment_status'])
+    doc = frappe.get_all('Fitness Training Appointment', filters={'client_id':client_id}, fields=['name','booking_date','client_id','client_name','fitness_service','fitness_trainer','appointment_status','start_time','end_time','payment_status'], order_by="appointment_date asc")
     details=[]
     if doc:
         for rating in doc:
-            rate=frappe.get_list('Rating', filters={'document_id':rating.name}, fields=['rating_point'])
+            rate=frappe.get_all('Rating', filters={'document_id':rating.name}, fields=['rating_point'])
+            # cancel_time = rating.start_time - timedelta(seconds=int(time.spa_cancel_time))
             if rate:
                 rate=rate[0]
                 details.append({
-                    'pt_appointment': rating,
-                    'Rating': rate.rating_point
+                    'pt_appointment': {
+                        "name": rating.name,
+                        "date": rating.booking_date,
+                        "client_id" : rating.client_id,
+                        "client_name": rating.client_name,
+                        "package_name": rating.fitness_service,
+                        "trainer_name": rating.fitness_trainer,
+                        "status": rating.appointment_status,
+                        "start_time": rating.start_time,
+                        "end_time": rating.end_time,
+                        "payment_status": rating.payment_status
+                    },
+                    'Rating': rate.rating_point,
                     })
             else:
                 details.append({
-                    'pt_appointment':rating,
-                    'Rating': -1
+                    'pt_appointment': {
+                        "name": rating.name,
+                        "date": rating.booking_date,
+                        "client_id" : rating.client_id,
+                        "client_name": rating.client_name,
+                        "package_name": rating.fitness_service,
+                        "trainer_name": rating.fitness_trainer,
+                        "status": rating.appointment_status,
+                        "start_time": rating.start_time,
+                        "end_time": rating.end_time,
+                        "payment_status": rating.payment_status
+                    },
+                    'Rating': -1,
                     })
         return details
 
