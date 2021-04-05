@@ -13,7 +13,7 @@ class ClientSessions(Document):
 	def validate(self):
 		self.set_expiry_date()
 		self.set_title()
-		self.set_session_count()
+		# self.set_session_count()
 		self.set_remaining_sessions()
 		self.set_status()
 		# self.check_spa_bookings()
@@ -25,15 +25,16 @@ class ClientSessions(Document):
 				start_datetime = datetime.strptime(self.start_date, "%Y-%m-%d")
 			else:
 				start_datetime = self.start_date
-			# expiry_date = start_datetime + timedelta(seconds=float(self.validity)) + timedelta(seconds=float(self.extension))
-			expiry_date = start_datetime + timedelta(seconds=float(self.validity))
+			if self.extension:
+				expiry_date = start_datetime + timedelta(seconds=float(self.validity)) + timedelta(seconds=float(self.extension))
+			else:
+				expiry_date = start_datetime + timedelta(seconds=float(self.validity))
 			self.expiry_date = datetime.strftime(expiry_date, "%Y-%m-%d")
 		else:
 			frappe.throw("Please set the start date")
 
 	def set_title(self):
-		self.title = _('{0} for {1}').format(self.client_name,
-			self.service_name)
+		self.title = _('{0}').format(self.service_name)
 
 	def set_session_count(self):
 		if self.service_type == "Spa Services":

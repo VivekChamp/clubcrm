@@ -299,8 +299,7 @@
    "in_standard_filter": 1,
    "label": "Membership Status",
    "no_copy": 1,
-   "options": "Non-Member\nMember",
-   "read_only": 1
+   "options": "Non-Member\nMember"
   },
   {
    "fieldname": "nationality",
@@ -361,13 +360,11 @@
    "default": "0",
    "fieldname": "apply_membership",
    "fieldtype": "Check",
-   "hidden": 1,
    "label": "Applied for Membership"
   },
   {
    "fieldname": "mem_application",
    "fieldtype": "Data",
-   "hidden": 1,
    "label": "Membership Application"
   },
   {
@@ -459,7 +456,7 @@
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2021-03-29 03:04:04.967008",
+ "modified": "2021-04-04 15:07:52.062839",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",

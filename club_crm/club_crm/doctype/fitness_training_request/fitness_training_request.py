@@ -8,11 +8,12 @@ from frappe.core.doctype.sms_settings.sms_settings import send_sms
 from frappe.model.document import Document
 
 class FitnessTrainingRequest(Document):
+	# pass
 	def after_insert(self):
 		self.send_notification()
 	
-	def validate(self):
-		self.set_no_of_sessions()
+	# # def validate(self):
+	# # 	self.set_no_of_sessions()
 
 	def send_notification(self):
 		settings = frappe.get_doc('Fitness Training Settings')
