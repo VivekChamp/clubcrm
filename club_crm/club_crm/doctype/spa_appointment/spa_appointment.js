@@ -55,6 +55,7 @@ frappe.ui.form.on("Spa Appointment", "onload", function(frm){
     frm.set_query("club_room", function(){
         return {
             "filters": [
+                ["Club Room", "club_room_type", "=", "Spa"],
                 ["Club Room", "is_group", "=", "0"],
                 ["Club Room", "gender_preference", "in", [frm.doc.gender, "Mixed"]]
             ]

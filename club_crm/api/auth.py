@@ -141,9 +141,8 @@ def forgot_password(mobile_no, new_password):
 def generate_otp(mobile_no):
     digits = "0123456789"
     OTP = "" 
-    for i in range(5): 
+    for i in range(6): 
         OTP += digits[math.floor(random.random() * 10)]
-    #return OTP
     msg = "Your verification code is "+OTP+". Do not share it with anyone."
     receiver_list='"'+mobile_no+'"'
     send_sms(receiver_list,msg)

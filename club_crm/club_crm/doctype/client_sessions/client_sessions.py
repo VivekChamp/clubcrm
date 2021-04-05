@@ -72,7 +72,7 @@ class ClientSessions(Document):
 				self.used_sessions = 0
 
 	def set_remaining_sessions(self):
-		self.remaining_sessions = self.total_sessions - self.used_sessions
+		self.remaining_sessions = int(self.total_sessions) - int(self.used_sessions)
 		self.remaining_session_text = _('{0}/{1}').format(self.remaining_sessions,self.total_sessions)
 
 	def set_status(self):
