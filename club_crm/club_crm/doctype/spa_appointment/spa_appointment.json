@@ -328,7 +328,7 @@
    "fieldname": "appointment_status",
    "fieldtype": "Select",
    "label": "Appointment Status",
-   "options": "Scheduled\nOpen\nChecked-in\nComplete\nNo Show\nCancelled",
+   "options": "Draft\nScheduled\nOpen\nChecked-in\nComplete\nNo Show\nCancelled",
    "read_only": 1
   },
   {
@@ -616,7 +616,7 @@
   }
  ],
  "links": [],
- "modified": "2021-04-02 03:39:38.967915",
+ "modified": "2021-04-05 02:24:06.284712",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Appointment",

@@ -30,15 +30,17 @@ frappe.ui.form.on("Client Sessions", {
 				title: 'Extend Validity',
 				fields: [
 					{
-						label: 'Extend the session (from start date) for',
+						label: 'Extend the session (from current expiry date) for',
 						fieldname: 'extension',
 						fieldtype: 'Duration',
-						default: frm.doc.expiry_date
+						default: frm.doc.expiry_date,
+						reqd:1
 					},
 					{
 						label: 'Reason for extension',
 						fieldname: 'extension_reason',
-						fieldtype: 'Small Text'
+						fieldtype: 'Small Text',
+						reqd:1
 					}
 				],
 				primary_action_label: ('Submit'),
