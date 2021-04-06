@@ -31,13 +31,14 @@ def get_status(client_id):
 
 @frappe.whitelist()
 def create_clubtour(client_id,date,time):
-    doc= frappe.get_doc({
-            'doctype': 'Club Tour',
-            'client_id': client_id,
-            'preferred_date': date,
-            'preferred_time_between': time
+    doc = frappe.get_doc({
+        'doctype': 'Club Tour',
+        'client_id': client_id,
+        'preferred_date': date,
+        'preferred_time_between': time
             })
-    doc.insert()
+    doc.save()
+    return doc
     frappe.response["message"] = {
             "Status":1,
             "Status Message": "Club Tour booking submitted"}

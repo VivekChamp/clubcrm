@@ -4,10 +4,8 @@
 
 from __future__ import unicode_literals
 import frappe
-
 from frappe import _, throw, msgprint
 from frappe.utils import nowdate
-
 from frappe.model.document import Document
 import six
 from six import string_types
@@ -88,8 +86,8 @@ def send_via_gateway(arg):
 	if len(success_list) > 0:
 		args.update(arg)
 		create_sms_log(args, success_list)
-		if arg.get('success_msg'):
-			frappe.msgprint(_("SMS sent to following numbers: {0}").format("\n" + "\n".join(success_list)))
+		# if arg.get('success_msg'):
+		# 	frappe.msgprint(_("SMS sent to following numbers: {0}").format("\n" + "\n".join(success_list)))
 
 def get_headers(sms_settings=None):
 	if not sms_settings:

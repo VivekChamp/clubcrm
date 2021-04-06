@@ -59,46 +59,35 @@ def generate_keys(user):
 
 @frappe.whitelist(allow_guest=True)
 def user_sign_up(email, first_name, last_name, gender, birth_date, qatar_id, mobile_no, password):
-    if not is_signup_enabled():
-        frappe.throw(_('Sign Up is disabled'), title='Not Allowed')
-        
     user = frappe.db.get("User", {"email": email})
     if user:
-        if user.disabled:
+        if user.enabled==0:
             return 0, _("Registered but disabled")
         else:
             return 0, _("Already Registered")
-    else:
-        if frappe.db.sql("""select count(*) from tabUser where HOUR(TIMEDIFF(CURRENT_TIMESTAMP, TIMESTAMP(modified)))=1""")[0][0] > 300:
-            frappe.respond_as_web_page(_('Temporarily Disabled'),
-	_('Too many users signed up recently, so the registration is disabled. Please try back in an hour'),
-        http_status_code=429)
-        
-    from frappe.utils import random_string
-    user = frappe.get_doc({
-        "doctype":"User",
-        "email": email,
-        "first_name": escape_html(first_name),
-        "last_name": escape_html(last_name),
-        "gender": escape_html(gender),
-        "birth_date": birth_date,
-        "qatar_id":qatar_id,
-        "mobile_no": mobile_no,
-        "enabled": 1,
-        "new_password": password,
-        "send_welcome_mail":0,
-        "send_password_update_notification":0,
-        "user_type": "Website User"
-        })
-    user.flags.ignore_permissions = True
-    user.flags.ignore_password_policy = True
-    user.insert()
-    user.new_password=password
-    user.save()
-    # set default signup role as per Portal Settings
-    default_role = frappe.db.get_value("Portal Settings", None, "default_role")
-    if default_role:
-        user.add_roles(default_role)
+    else:   
+        user = frappe.get_doc({
+            "doctype":"User",
+            "email": email,
+            "first_name": escape_html(first_name),
+            "last_name": escape_html(last_name),
+            "gender": escape_html(gender),
+            "birth_date": birth_date,
+            "qatar_id":qatar_id,
+            "mobile_no": mobile_no,
+            "enabled": 1,
+            "new_password": password,
+            "send_welcome_mail":0,
+            "send_password_update_notification":0,
+            "user_type": "Website User"
+            })
+        user.flags.ignore_permissions = True
+        user.flags.ignore_password_policy = True
+        user.insert()
+        # set default signup role as per Portal Settings
+        default_role = frappe.db.get_value("Portal Settings", None, "default_role")
+        if default_role:
+            user.add_roles(default_role)
         user.save()
         return 1, _("success")
 			
