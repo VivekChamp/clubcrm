@@ -1,0 +1,1 @@
+A new club tour request has been received from {{ doc.client_name }}

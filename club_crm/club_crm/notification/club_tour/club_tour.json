@@ -1,0 +1,28 @@
+{
+ "attach_print": 0,
+ "channel": "System Notification",
+ "condition": "",
+ "creation": "2021-04-07 02:48:22.156440",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Club Tour",
+ "enabled": 1,
+ "event": "New",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "Add your message here",
+ "modified": "2021-04-07 02:48:33.472332",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Club Tour",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "receiver_by_role": "Administrator"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "subject": "New Club Tour Request from {{ doc.client_name }}"
+}

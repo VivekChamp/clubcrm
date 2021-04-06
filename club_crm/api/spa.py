@@ -184,7 +184,6 @@ def get_slots(date, spa_item, therapist_name):
     if staff_availability:
         for staff in staff_availability:
             therapist_schedule = frappe.get_doc('Service Staff Availability', staff.name)
-
             time_slot = []
             for availability in therapist_schedule.week_1:
                 if availability.date == date_converted:
@@ -223,7 +222,9 @@ def get_slots(date, spa_item, therapist_name):
                         availability.from_time += timedelta(minutes = 15)
                         time_slot.append(availability.from_time)
         if time_slot==[]:
-            frappe.throw('No schedule assigned for this therapist')
+            frappe.response["message"] = {
+                    "available_slots": []
+                }
 
         # Find the number of 30 minutes interval in the total duration of spa service. Total duration is in seconds.
         b = int(doc.total_duration/900)
@@ -262,7 +263,9 @@ def get_slots(date, spa_item, therapist_name):
                     "available_slots": slot
                 }
     else:
-        frappe.throw('No schedule assigned for this therapist')
+        frappe.response["message"] = {
+                    "available_slots": []
+                }
 
 @frappe.whitelist()
 def cancel_spa(client_id,booking_id):
