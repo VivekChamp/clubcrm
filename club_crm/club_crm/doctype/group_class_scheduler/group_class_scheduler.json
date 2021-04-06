@@ -48,7 +48,7 @@
    "fieldname": "group_class_category",
    "fieldtype": "Link",
    "label": "Group Class Category",
-   "options": "Group Class Category",
+   "options": "Group Class Services Category",
    "reqd": 1
   },
   {
@@ -65,13 +65,13 @@
    "fieldname": "trainer",
    "fieldtype": "Link",
    "label": "Trainer",
-   "options": "Fitness Trainer"
+   "options": "Service Staff"
   },
   {
    "fieldname": "group_class_name",
    "fieldtype": "Link",
    "label": "Group Class Name",
-   "options": "Group Class Name",
+   "options": "Group Class Services",
    "reqd": 1,
    "unique": 1
   },
@@ -171,7 +171,7 @@
   }
  ],
  "links": [],
- "modified": "2021-02-13 23:18:21.904234",
+ "modified": "2021-04-06 01:01:05.452068",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class Scheduler",

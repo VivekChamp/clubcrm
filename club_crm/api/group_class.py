@@ -1,18 +1,38 @@
 import frappe
 from frappe.website.utils import is_signup_enabled
 from frappe.utils import escape_html
+from datetime import datetime
+from frappe.utils import getdate, get_time, flt
 from frappe import throw, msgprint, _
 
 @frappe.whitelist()
 def get_group_class():
-    group_class = frappe.get_all('Group Class', filters={'on_app':1,'docstatus':1,'booking_status':"Available"}, fields=['name','date','group_class_name','image','class_type','class_category','trainer','capacity','remaining','from_time','to_time','members_only'])
+    group_class = frappe.get_all('Group Class', filters={'on_app':1, 'enabled':1, 'booking_status':"Available"}, fields=['name','group_class_name','group_class_image','group_class_type','group_class_category','trainer_name','capacity','remaining','class_date','class_from_time','class_to_time','members_only'])
+    group_class_list = []
+    if group_class:
+        for gc_class in group_class:
+            group_class_list.append({
+                "name": gc_class.name,
+                "date": gc_class.class_date,
+                "group_class_name": gc_class.group_class_name,
+                "image": gc_class.group_class_image,
+                "class_type": gc_class.group_class_type,
+                "class_category": gc_class.group_class_category,
+                "trainer_name": gc_class.trainer_name,
+                "capacity": gc_class.capacity,
+                "remaining": gc_class.remaining,
+                "from_time": gc_class.class_from_time,
+                "to_time": gc_class.class_to_time,
+                "members_only": gc_class.members_only
+            })
+
     frappe.response["message"] = {
-        "Group Class": group_class
-         }
+        "Group Class": group_class_list
+    }
 
 @frappe.whitelist()
-def create_attendee(client_id,class_id):
-    check= frappe.get_all('Group Class Attendees', filters={'group_class':class_id, 'docstatus':'1', 'client_id':client_id})
+def create_attendee(client_id, class_id):
+    check = frappe.get_all('Group Class Attendees', filters={'group_class':class_id, 'docstatus':1, 'client_id':client_id})
     
     if check:
         frappe.response["message"] = {
@@ -23,7 +43,7 @@ def create_attendee(client_id,class_id):
     else:
         doc= frappe.get_doc({
             'doctype': 'Group Class Attendees',
-            'group_class':class_id,
+            'group_class': class_id,
             'client_id': client_id,
             'class_status': "Scheduled"
             })
@@ -36,11 +56,11 @@ def create_attendee(client_id,class_id):
 
 @frappe.whitelist()
 def get_details(client_id):
-    doc= frappe.get_all('Group Class Attendees', filters={'client_id':client_id,'docstatus':1}, fields=['name','group_class','group_class_name','trainer_name','class_status','from_time','to_time'])
+    doc = frappe.get_all('Group Class Attendees', filters={'client_id':client_id,'docstatus':1}, fields=['name','group_class','group_class_name','trainer_name','class_status','from_time','to_time'])
     details=[]
     if doc:
         for rating in doc:
-            rate=frappe.get_all('Rating', filters={'document_id':rating.group_class}, fields=['rating_point'])
+            rate = frappe.get_all('Rating', filters={'document_id':rating.group_class}, fields=['rating_point'])
             if rate:
                 rate=rate[0]
                 details.append({
@@ -53,8 +73,6 @@ def get_details(client_id):
                     'Rating': -1
                 })
         return details
-    
-
 
 @frappe.whitelist()
 def cancel_attendee(group_class_attendee_id):

@@ -21,9 +21,6 @@ frappe.ui.form.on("Client Sessions", {
 	// 	frm.disable_save();
 	// },
     refresh(frm) {
-		// if (frm.doc.session_status=="Expired") {
-		// 	frm.set_df_property("session_status", "read_only", 1);
-		// }
 
         frm.add_custom_button(__("Extend Validity"), function() {
 			let d = new frappe.ui.Dialog ({

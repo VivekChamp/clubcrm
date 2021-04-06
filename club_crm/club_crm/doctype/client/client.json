@@ -360,12 +360,14 @@
    "default": "0",
    "fieldname": "apply_membership",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Applied for Membership"
   },
   {
    "fieldname": "mem_application",
    "fieldtype": "Data",
-   "label": "Membership Application"
+   "label": "Membership Application",
+   "read_only": 1
   },
   {
    "fieldname": "other_notes",
@@ -456,7 +458,7 @@
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2021-04-04 15:07:52.062839",
+ "modified": "2021-04-06 02:34:47.214752",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",

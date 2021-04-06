@@ -139,7 +139,7 @@ def book_spa(client_id, spa_item, therapist_name, date, time, any_surgeries,paym
         'online': '1',
         'client_id': client_id,
         'spa_service': spa_item,
-        'status': "Draft",
+        'appointment_status': "Draft",
         'spa_therapist': therapist_name,
         'start_time': start_time,
         'any_surgeries': any_surgeries,
