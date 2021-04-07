@@ -1,1 +1,0 @@
-A new Membership application has been received which needs your attention

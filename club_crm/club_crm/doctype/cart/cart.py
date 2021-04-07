@@ -99,6 +99,7 @@ class Cart(Document):
 		for row in self.cart_appointment:
 			if row.appointment_type == "Spa Appointment":
 				frappe.db.set_value('Spa Appointment', row.appointment_id, 'payment_status', 'Paid')
+				frappe.db.set_value('Spa Appointment', row.appointment_id, 'color', '#20a7ff')
 				frappe.db.commit()
 			if row.appointment_type == "Fitness Training Appointment":
 				frappe.db.set_value('Fitness Training Appointment', row.appointment_id, 'payment_status', 'Paid')

@@ -87,18 +87,19 @@ class SpaAppointment(Document):
 		check_spa_bookings(self.session_name)
 
 	def set_color(self):
-		if self.appointment_status=="Scheduled":
-			self.color="#39ff9f"
-		elif self.appointment_status=="Open":
-			self.color="#8549ff"
-		elif self.appointment_status=="Checked-in":
-			self.color="#ffc107"
-		elif self.appointment_status=="Complete":
+		if self.payment_status == "Not Paid":
+			if self.appointment_status=="Scheduled":
+				self.color="#39ff9f"
+			elif self.appointment_status=="Open":
+				self.color="#8549ff"
+			elif self.appointment_status=="Checked-in":
+				self.color="#ffc107"
+			elif self.appointment_status=="No Show":
+				self.color="#ff8a8a"
+			else:
+				self.color="#b22222"
+		if self.payment_status == "Paid":
 			self.color="#20a7ff"
-		elif self.appointment_status=="No Show":
-			self.color="#ff8a8a"
-		else:
-			self.color="#b22222"
 				
 	def before_submit(self):
 		if self.payment_method=="Wallet":
