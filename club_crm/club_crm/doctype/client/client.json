@@ -165,8 +165,7 @@
    "fieldname": "email",
    "fieldtype": "Data",
    "label": "Email",
-   "options": "Email",
-   "set_only_once": 1
+   "options": "Email"
   },
   {
    "collapsible": 1,
@@ -416,7 +415,7 @@
    "fieldname": "sector",
    "fieldtype": "Link",
    "label": "Occupation Sector",
-   "options": "Industry List"
+   "options": "Industry Type"
   },
   {
    "fieldname": "staff_notes_section",
@@ -458,7 +457,7 @@
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2021-04-06 02:34:47.214752",
+ "modified": "2021-04-08 14:10:54.914043",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",
