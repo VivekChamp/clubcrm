@@ -73,7 +73,6 @@
    "fieldname": "duration",
    "fieldtype": "Duration",
    "hide_seconds": 1,
-   "in_list_view": 1,
    "label": "Membership Duration",
    "reqd": 1
   },
@@ -147,14 +146,12 @@
    "default": "0.0",
    "fieldname": "joining_fee_adult",
    "fieldtype": "Currency",
-   "in_list_view": 1,
    "label": "Joining Fee (per Adult)"
   },
   {
    "default": "0.0",
    "fieldname": "membership_fee_adult",
    "fieldtype": "Currency",
-   "in_list_view": 1,
    "label": "Membership Fee (per Adult)",
    "precision": "2"
   },
@@ -237,7 +234,7 @@
   }
  ],
  "links": [],
- "modified": "2021-03-31 13:14:16.362013",
+ "modified": "2021-04-11 20:25:53.820911",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Plan",

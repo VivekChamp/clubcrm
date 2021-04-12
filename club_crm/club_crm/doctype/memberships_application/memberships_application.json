@@ -152,8 +152,9 @@
    "fieldname": "application_status",
    "fieldtype": "Select",
    "hidden": 1,
+   "in_list_view": 1,
    "label": "Application Status",
-   "options": "Pending\nApproved\nRejected\nComplete"
+   "options": "Draft\nPending\nApproved\nRejected\nComplete"
   },
   {
    "default": "0.0",
@@ -176,6 +177,7 @@
    "depends_on": "eval:doc.existing_client_1==1",
    "fieldname": "client_id",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Client ID",
    "options": "Client"
   },
@@ -214,7 +216,8 @@
    "fieldname": "nationality_1",
    "fieldtype": "Link",
    "label": "Nationality",
-   "options": "Country"
+   "options": "Country",
+   "reqd": 1
   },
   {
    "fetch_from": "client_id.qatar_id",
@@ -229,19 +232,22 @@
    "fetch_from": "membership_application.occupation_1",
    "fieldname": "occupation_1",
    "fieldtype": "Data",
-   "label": "Occupation"
+   "label": "Occupation",
+   "reqd": 1
   },
   {
    "fetch_from": "membership_application.front_qid_1",
    "fieldname": "front_qid_1",
    "fieldtype": "Attach",
-   "label": "Qatar ID Front"
+   "label": "Qatar ID Front",
+   "reqd": 1
   },
   {
    "fetch_from": "membership_application.back_qid_1",
    "fieldname": "back_qid_1",
    "fieldtype": "Attach",
-   "label": "Qatar ID Back"
+   "label": "Qatar ID Back",
+   "reqd": 1
   },
   {
    "fetch_from": "client_id.gender",
@@ -274,19 +280,22 @@
    "fetch_from": "membership_application.em_contact_no",
    "fieldname": "em_contact_no",
    "fieldtype": "Data",
-   "label": "Emergency Contact Number"
+   "label": "Emergency Contact Number",
+   "reqd": 1
   },
   {
    "fetch_from": "membership_application.em_contact_name",
    "fieldname": "em_contact_name",
    "fieldtype": "Data",
-   "label": "Emergency Contact Name"
+   "label": "Emergency Contact Name",
+   "reqd": 1
   },
   {
    "fetch_from": "client_id_2.first_name",
    "fieldname": "first_name_2",
    "fieldtype": "Data",
    "label": "First Name",
+   "mandatory_depends_on": "eval:doc.membership_type!= \"Single Membership\"",
    "read_only_depends_on": "eval:doc.existing_client_2==1"
   },
   {
@@ -294,6 +303,7 @@
    "fieldname": "last_name_2",
    "fieldtype": "Data",
    "label": "Last Name",
+   "mandatory_depends_on": "eval:doc.membership_type!= \"Single Membership\"",
    "read_only_depends_on": "eval:doc.existing_client_2==1"
   },
   {
@@ -301,41 +311,48 @@
    "fetch_if_empty": 1,
    "fieldname": "birth_date_2",
    "fieldtype": "Date",
-   "label": "Date Of Birth"
+   "label": "Date Of Birth",
+   "mandatory_depends_on": "eval:doc.membership_type!= \"Single Membership\""
   },
   {
    "fetch_from": "membership_application.nationality",
    "fieldname": "nationality_2",
    "fieldtype": "Link",
    "label": "Nationality",
+   "mandatory_depends_on": "eval:doc.membership_type!= \"Single Membership\"",
    "options": "Country"
   },
   {
    "fieldname": "qatar_id_2",
    "fieldtype": "Data",
    "label": "Qatar ID #",
-   "length": 11
+   "length": 11,
+   "mandatory_depends_on": "eval:doc.membership_type!= \"Single Membership\""
   },
   {
    "fieldname": "occupation_2",
    "fieldtype": "Data",
-   "label": "Occupation"
+   "label": "Occupation",
+   "mandatory_depends_on": "eval:doc.membership_type!= \"Single Membership\""
   },
   {
    "fieldname": "front_qid_2",
    "fieldtype": "Attach",
-   "label": "Qatar ID Front"
+   "label": "Qatar ID Front",
+   "mandatory_depends_on": "eval:doc.membership_type!= \"Single Membership\""
   },
   {
    "fieldname": "back_qid_2",
    "fieldtype": "Attach",
-   "label": "Qatar ID Back"
+   "label": "Qatar ID Back",
+   "mandatory_depends_on": "eval:doc.membership_type!= \"Single Membership\""
   },
   {
    "fetch_from": "client_id_2.gender",
    "fieldname": "gender_2",
    "fieldtype": "Link",
    "label": "Gender",
+   "mandatory_depends_on": "eval:doc.membership_type!= \"Single Membership\"",
    "options": "Gender",
    "read_only_depends_on": "eval:doc.existing_client_2==1"
   },
@@ -345,6 +362,7 @@
    "fieldtype": "Data",
    "label": "Mobile #",
    "length": 8,
+   "mandatory_depends_on": "eval:doc.membership_type!= \"Single Membership\"",
    "read_only_depends_on": "eval:doc.existing_client_2==1"
   },
   {
@@ -353,19 +371,22 @@
    "fieldname": "email_2",
    "fieldtype": "Data",
    "label": "Email Address",
+   "mandatory_depends_on": "eval:doc.membership_type!= \"Single Membership\"",
    "options": "Email"
   },
   {
    "depends_on": "eval:doc.existing_client_2==1",
    "fieldname": "client_id_2",
-   "fieldtype": "Data",
-   "label": "Client ID"
+   "fieldtype": "Link",
+   "label": "Client ID",
+   "options": "Client"
   },
   {
    "fetch_from": "membership_application.company_1",
    "fieldname": "company_1",
    "fieldtype": "Data",
-   "label": "Company"
+   "label": "Company",
+   "reqd": 1
   },
   {
    "default": "0.0",
@@ -397,6 +418,7 @@
    "fieldname": "relation_2",
    "fieldtype": "Select",
    "label": "Relation to Primary Member",
+   "mandatory_depends_on": "eval:doc.membership_type!= \"Single Membership\"",
    "options": "Spouse\nSon\nDaughter\nBrother\nSister\nFather\nMother",
    "reqd": 1
   },
@@ -411,7 +433,8 @@
   {
    "fieldname": "company_2",
    "fieldtype": "Data",
-   "label": "Company"
+   "label": "Company",
+   "mandatory_depends_on": "eval:doc.membership_type!= \"Single Membership\""
   },
   {
    "fieldname": "column_break_94",
@@ -623,7 +646,8 @@
    "fieldname": "discount_type",
    "fieldtype": "Select",
    "label": "Discount Type",
-   "options": "\nAmount\nPercentage"
+   "options": "\nAmount\nPercentage",
+   "permlevel": 1
   },
   {
    "default": "0.0",
@@ -682,7 +706,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-04-03 02:15:28.213296",
+ "modified": "2021-04-12 15:56:53.359405",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",
@@ -699,6 +723,78 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "General Manager",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Managing Director",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "CE Manager",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "CE Manager",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "CE Staff",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "CE Staff",
+   "select": 1,
+   "share": 1
   }
  ],
  "sort_field": "modified",

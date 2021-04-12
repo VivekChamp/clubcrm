@@ -58,10 +58,9 @@
    "read_only": 1
   }
  ],
- "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-04-04 02:20:40.555700",
+ "modified": "2021-04-11 15:23:29.887266",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Settings",

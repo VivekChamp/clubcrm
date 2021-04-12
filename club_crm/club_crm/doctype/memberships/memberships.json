@@ -352,7 +352,8 @@
    "fetch_if_empty": 1,
    "fieldname": "grams_discount",
    "fieldtype": "Percent",
-   "label": "Grams Discount"
+   "hidden": 1,
+   "label": "Boho Discount"
   },
   {
    "fieldname": "column_break_45",
@@ -364,7 +365,7 @@
   }
  ],
  "links": [],
- "modified": "2021-04-02 16:44:13.942629",
+ "modified": "2021-04-12 12:39:58.248967",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships",
