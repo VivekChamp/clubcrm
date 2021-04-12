@@ -87,7 +87,10 @@ home_page = "login"
 doc_events = {
  	"User": {
     	"after_insert": "club_crm.core.doctype.user.user.create_client_user"
-    }
+    },
+	"Payment Log": {
+		"on_submit" : "club_crm.club_crm.doctype.payment_log.payment_log.make_paid"
+	}
 	# "Memberships": {
 	# 	"after_insert": "club_crm.club_crm.doctype.client_sessions.client_sessions.create_sessions"
 	# }
@@ -100,9 +103,6 @@ doc_events = {
 # ---------------
 
 scheduler_events = {
-# 	"all": [
-# 		"club_crm.tasks.all"
-# 	],
  	"daily": [
  		"club_crm.club_crm.doctype.spa_appointment.spa_appointment.update_appointment_status",
         "club_crm.club_crm.doctype.client.client.auto_checkout",

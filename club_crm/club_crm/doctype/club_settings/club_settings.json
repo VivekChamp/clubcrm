@@ -6,21 +6,16 @@
  "engine": "InnoDB",
  "field_order": [
   "club_timings_section",
-  "spa_from",
-  "spa_to",
-  "spa_settings",
-  "spa_cancel_time",
+  "start_time",
+  "end_time",
   "fitness_settings",
   "fitness_cancel_time",
   "group_class_settings",
-  "group_class_cancel_time"
+  "group_class_cancel_time",
+  "club_tour_timing_section",
+  "club_tour_schedule"
  ],
  "fields": [
-  {
-   "fieldname": "spa_settings",
-   "fieldtype": "Section Break",
-   "label": "Spa Settings"
-  },
   {
    "fieldname": "fitness_settings",
    "fieldtype": "Section Break",
@@ -30,14 +25,6 @@
    "fieldname": "group_class_settings",
    "fieldtype": "Section Break",
    "label": "Group Class Settings"
-  },
-  {
-   "description": "Minimum time for an appointment to be available for cancellation or reschedule (in minutes)",
-   "fieldname": "spa_cancel_time",
-   "fieldtype": "Duration",
-   "hide_days": 1,
-   "hide_seconds": 1,
-   "label": "Spa Appointment Cancellation Time"
   },
   {
    "description": "Minimum time for an appointment to be available for cancellation or reschedule (in minutes)",
@@ -58,22 +45,33 @@
   {
    "fieldname": "club_timings_section",
    "fieldtype": "Section Break",
-   "label": "Club Timings"
+   "label": "Club Business Hours"
   },
   {
-   "fieldname": "spa_from",
+   "fieldname": "start_time",
    "fieldtype": "Time",
-   "label": "Spa From"
+   "label": "Start Time"
   },
   {
-   "fieldname": "spa_to",
+   "fieldname": "end_time",
    "fieldtype": "Time",
-   "label": "Spa To"
+   "label": "End Time"
+  },
+  {
+   "fieldname": "club_tour_timing_section",
+   "fieldtype": "Section Break",
+   "label": "Club Tour Timing"
+  },
+  {
+   "description": "Add the schedules available for club tour. If multiple schedules are available, add multiple rows.",
+   "fieldname": "club_tour_schedule",
+   "fieldtype": "Table",
+   "options": "Club Tour Schedule"
   }
  ],
  "issingle": 1,
  "links": [],
- "modified": "2021-02-28 14:44:50.811814",
+ "modified": "2021-04-10 13:06:29.881921",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club Settings",
@@ -88,6 +86,20 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "print": 1,
+   "read": 1,
+   "role": "General Manager",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Customer",
+   "select": 1
   }
  ],
  "sort_field": "modified",

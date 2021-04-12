@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "autoname": "field:title",
  "creation": "2021-03-31 17:18:24.166258",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -33,7 +34,8 @@
    "fieldname": "title",
    "fieldtype": "Data",
    "hidden": 1,
-   "label": "Title"
+   "label": "Title",
+   "unique": 1
   },
   {
    "fieldname": "staff_name",
@@ -152,7 +154,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-04-02 23:09:32.523991",
+ "modified": "2021-04-09 21:54:11.445665",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Service Staff Availability",

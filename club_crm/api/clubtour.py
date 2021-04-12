@@ -1,14 +1,33 @@
+from __future__ import unicode_literals
 import frappe
-from frappe.website.utils import is_signup_enabled
+from frappe import _
+from datetime import datetime, timedelta, date, time
+from frappe.utils import getdate, get_time, flt, now_datetime
 from frappe.utils import escape_html
 from frappe import throw, msgprint, _
 
 @frappe.whitelist()
 def get_schedule():
-    time_schedule = frappe.get_all('Club Tour Schedule')
+    time_schedule = frappe.get_doc('Club Settings')
+    schedule = []
+    for time in time_schedule.club_tour_schedule:
+        from_time_string = str(time.from_time)
+        from_time_datetime = datetime.strptime(from_time_string, "%H:%M:%S")
+        from_time = datetime.strftime(from_time_datetime, "%I:%M %p")
+
+        to_time_string = str(time.to_time)
+        to_time_datetime = datetime.strptime(to_time_string, "%H:%M:%S")
+        to_time = datetime.strftime(to_time_datetime, "%I:%M %p")
+
+        name = _('{0} - {1}').format(from_time, to_time)
+        schedule.append({
+            "name" : name
+        })     
+      
     frappe.response["message"] = {
-        "Preferred Time": time_schedule
-         }
+        "Preferred Time": schedule
+    }
+
 
 @frappe.whitelist()         
 def get_status(client_id):
@@ -17,7 +36,7 @@ def get_status(client_id):
         frappe.response["message"] = {
             "Status": 0,
             "Status Message": "Pending"
-            }
+        }
     else:
         doc= frappe.get_all('Club Tour', filters={'client_id':client_id,'tour_status': "Scheduled"}, fields=["*"])
         if doc:
@@ -38,7 +57,7 @@ def create_clubtour(client_id,date,time):
         'preferred_time_between': time
             })
     doc.save()
-    return doc
     frappe.response["message"] = {
             "Status":1,
-            "Status Message": "Club Tour booking submitted"}
+            "Status Message": "Club Tour booking submitted"
+        }

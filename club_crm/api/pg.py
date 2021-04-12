@@ -34,6 +34,7 @@ def create_log(**kwargs):
     doc.auth_amount=kwargs['auth_amount']
     doc.signed_field_names=kwargs['signed_field_names']
     doc.signed_date_time=kwargs['signed_date_time']
+    doc.insert(ignore_permissions=True)
 
     signed_list = kwargs['signed_field_names'].split(",")
     sample_dict = {}
@@ -43,8 +44,7 @@ def create_log(**kwargs):
     doc.generated_hash = generate_hash_verifier(sample_dict)
     if doc.generated_hash == kwargs['signature']:
         doc.signature_verified = 1
-    
-    doc.insert(ignore_permissions=True)
+    doc.submit()
 
 def generate_data_string(data_dict):
     test_array = []
@@ -74,73 +74,6 @@ def generate_signed_time():
     signed_date=datetime.utcnow().replace(microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ")
     return signed_date
 
-# @frappe.whitelist()
-# def generate_hash(data_dict):
-#     user = frappe.get_doc('User', frappe.session.user)
-#     access_key = frappe.db.get_value("CS Settings",None,"access_key")
-#     profile_id = frappe.db.get_value("CS Settings",None,"profile_id")
-#     default_dict = {
-#         "access_key": access_key,
-#         "profile_id": profile_id,
-#         'customer_ip_address': customer_ip(),
-#         "device_fingerprint_id": generate_uuid(),
-#         "transaction_uuid": generate_uuid(),
-#         "signed_date_time" : generate_signed_time(),
-#         "locale":"en",
-#         "currency":"qar",
-# 	    "payment_method":"card",
-#         "bill_to_forename": user.first_name,
-#         "bill_to_surname": user.last_name,
-#         "bill_to_email": frappe.session.user,
-#         "bill_to_address_country":"QA",
-#         "signed_field_names":"access_key,profile_id,transaction_uuid,customer_ip_address,device_fingerprint_id,signed_date_time,locale,transaction_type,signed_field_names,unsigned_field_names,reference_number,amount,currency,payment_method,bill_to_forename,bill_to_surname,bill_to_email,bill_to_address_country",
-#         "unsigned_field_names":""
-#     }
-#     default_dict.update(data_dict)
-#     signed_list = default_dict["signed_field_names"].split(",")
-#     test_array = []
-#     for item in signed_list:
-#         for key,value in default_dict.items():
-#             if key==item:
-#                 test_array.append(str(key)+"="+str(value))
-    
-#     str1 = ",".join(test_array)
-
-#     API_SECRET = frappe.db.get_value("CS Signature",None,"secret_key")
-
-#     hash_value = hmac.new(API_SECRET.encode(), str1.encode(), hashlib.sha256)
-#     # print(hash_value.digest())
-#     signature = base64.b64encode(hash_value.digest()).decode("utf-8")
-#     default_dict['signature'] = signature
-
-#     return default_dict
-
-# def make_status_paid(docname):
-#     if re.match(membership_application, docname):
-#         frappe.db.set_value("Memberships Application",str(docname),"payment_status","Paid")
-#         doc = frappe.get_doc("Memberships Application",str(docname))
-#         doc.save()
-        
-#     elif re.match(online_order, docname):
-#         frappe.db.set_value("Online Order",str(docname),"payment_status","Paid")
-#         doc = frappe.get_doc("Online Order",str(docname))
-#         doc.save()
-        
-#     elif re.match(food_order, docname):
-#         frappe.db.set_value("Food Order Entry",str(docname),"payment_status","Paid")
-#         doc = frappe.get_doc("Food Order Entry",str(docname))
-#         doc.save()
-        
-#     elif re.match(fitness_training, docname):
-#         frappe.db.set_value("Fitness Training Request",str(docname),"payment_status","Paid")
-#         doc = frappe.get_doc("Fitness Training Request",str(docname))
-#         doc.save()
-        
-#     elif re.match(spa_app, docname):
-#         frappe.db.set_value("Spa Appointment",str(docname),"payment_status","Paid")
-#         doc = frappe.get_doc("Spa Appointment",str(docname))
-#         doc.save()
-
 
 @frappe.whitelist()
 def generate_hash(data_dict):
@@ -169,7 +102,6 @@ def generate_hash(data_dict):
         "signed_field_names":"access_key,profile_id,transaction_uuid,customer_ip_address,device_fingerprint_id,signed_date_time,locale,transaction_type,signed_field_names,unsigned_field_names,reference_number,amount,currency,payment_method,bill_to_forename,bill_to_surname,bill_to_email,bill_to_address_country",
         "unsigned_field_names":""
     }
-    # default_dict.update(data_dict)
     signed_list = default_dict["signed_field_names"].split(",")
     test_array = []
     for item in signed_list:
@@ -187,3 +119,32 @@ def generate_hash(data_dict):
     default_dict['signature'] = signature
 
     return default_dict
+
+# def make_status_paid(docname):
+#     membership_application = "^MEM-APP-[0-9]{4,4}-[0-9]{5,5}$"
+#     cart = "^CART-[0-9]{4,4}-[0-9]{5,5}$"
+
+#     if re.match(membership_application, docname):
+#         frappe.db.set_value("Memberships Application",str(docname),"payment_status","Paid")
+#         doc = frappe.get_doc("Memberships Application",str(docname))
+#         doc.save()
+        
+#     elif re.match(cart, docname):
+#         frappe.db.set_value("Cart",str(docname),"payment_status","Paid")
+#         doc = frappe.get_doc("Cart",str(docname))
+#         doc.save()
+        
+#     elif re.match(food_order, docname):
+#         frappe.db.set_value("Food Order Entry",str(docname),"payment_status","Paid")
+#         doc = frappe.get_doc("Food Order Entry",str(docname))
+#         doc.save()
+        
+#     elif re.match(fitness_training, docname):
+#         frappe.db.set_value("Fitness Training Request",str(docname),"payment_status","Paid")
+#         doc = frappe.get_doc("Fitness Training Request",str(docname))
+#         doc.save()
+        
+#     elif re.match(spa_app, docname):
+#         frappe.db.set_value("Spa Appointment",str(docname),"payment_status","Paid")
+#         doc = frappe.get_doc("Spa Appointment",str(docname))
+#         doc.save()

@@ -108,7 +108,7 @@ class Cart(Document):
 @frappe.whitelist()
 def add_cart_from_spa(client_id, appointment_id):
 	today = getdate()
-	client= frappe.get_doc('Client', client_id)
+	client = frappe.get_doc('Client', client_id)
 	if client.membership_status=="Member":
 		discount_amount="25.0"
 	else:
@@ -139,8 +139,10 @@ def add_cart_from_spa(client_id, appointment_id):
 				})
 		doc.save()
 		frappe.db.set_value("Spa Appointment",appointment_id,"cart", doc.name)
+		frappe.db.set_value("Spa Appointment",appointment_id,"payment_status", "Added to cart")
+		return doc.name
 	else:
-		cart =client_cart[0]
+		cart = client_cart[0]
 		cart_update = frappe.get_doc('Cart', cart.name)
 		cart_update.append('cart_appointment', {
 			"appointment_type": "Spa Appointment",
@@ -160,7 +162,8 @@ def add_cart_from_spa(client_id, appointment_id):
 				})
 		cart_update.save()
 		frappe.db.set_value("Spa Appointment",appointment_id,"cart", cart.name)
-	frappe.db.set_value("Spa Appointment",appointment_id,"payment_status", "Added to cart")
+		frappe.db.set_value("Spa Appointment",appointment_id,"payment_status", "Added to cart")
+		return cart.name
 
 @frappe.whitelist()
 def add_cart_from_fitness(client_id, appointment_id):

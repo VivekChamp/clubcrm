@@ -13,6 +13,8 @@ from frappe.model.document import Document
 
 class MembershipsApplication(Document):
 	def before_insert(self):
+		if self.online_application==0:
+			self.workflow_status = "Pending"
 		self.check_existing_application()
 
 	def after_insert(self):
@@ -31,6 +33,7 @@ class MembershipsApplication(Document):
 
 	def on_submit(self):
 		self.create_clients()
+		self.update_client_details()
 
 	def check_existing_application(self):
 		mem_app = frappe.get_all('Memberships Application', filters={'qatar_id_1':self.qatar_id_1,'application_status':"Pending"})
@@ -63,6 +66,11 @@ class MembershipsApplication(Document):
 						row.client_id = client.name
 						self.existing_client = 1
 	
+		if self.client_id:
+			frappe.db.set_value('Client', self.client_id, 'apply_membership', 1)
+			frappe.db.set_value('Client', self.client_id, 'mem_application', self.name)
+			frappe.db.commit()
+
 	def check_birthdate(self):
 		today = getdate()
 		self.no_of_adults = 0
@@ -169,6 +177,40 @@ class MembershipsApplication(Document):
 					if not row.client_id:
 						client = create_client(row.first_name,row.last_name,row.gender,row.birth_date,row.qatar_id,row.mobile_no,row.email)
 						frappe.db.set_value(row.doctype, row.name, "client_id", client, update_modified=False)
+
+	def update_client_details(self):
+		if self.client_id:
+			doc = frappe.get_doc('Client', self.client_id)
+			doc.occupation = self.occupation_1
+			doc.company = self.company_1
+			doc.birth_date = self.birth_date_1
+			doc.qatar_id = self.qatar_id_1
+			doc.nationality = self.nationality_1
+			if not doc.email:
+				doc.email = self.email_1
+			doc.save()
+		
+		if self.client_id_2:
+			doc = frappe.get_doc('Client', self.client_id_2)
+			doc.occupation = self.occupation_2
+			doc.company = self.company_2
+			doc.birth_date = self.birth_date_2
+			doc.qatar_id = self.qatar_id_2
+			doc.nationality = self.nationality_2
+			if not doc.email:
+				doc.email = self.email_2
+			doc.save()
+		
+		if self.additional_members:
+			for row in self.additional_members:
+				if row.client_id and row.category=="Adult":
+					doc = frappe.get_doc('Client', row.client_id)
+					doc.birth_date = row.birth_date
+					doc.qatar_id = row.qatar_id
+					doc.nationality = row.nationality
+					if not doc.email:
+						doc.email = row.email
+					doc.save()
 
 	def send_notification(self):
 		settings = frappe.get_doc('Memberships Settings')

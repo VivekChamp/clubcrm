@@ -35,15 +35,14 @@
   "response_data",
   "signed_field_names",
   "title",
-  "naming_series"
+  "naming_series",
+  "amended_from"
  ],
  "fields": [
   {
    "fieldname": "response_data",
-   "fieldtype": "Text",
-   "hidden": 1,
-   "label": "Response Data",
-   "read_only": 1
+   "fieldtype": "Long Text",
+   "label": "Response Data"
   },
   {
    "fieldname": "generated_hash",
@@ -178,7 +177,7 @@
   },
   {
    "fieldname": "signed_field_names",
-   "fieldtype": "Text",
+   "fieldtype": "Long Text",
    "hidden": 1,
    "label": "Signed Fields",
    "read_only": 1
@@ -210,11 +209,21 @@
    "label": "Series",
    "options": "PAY-.YYYY.-",
    "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Payment Log",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2021-04-01 19:25:04.258622",
+ "modified": "2021-04-12 00:25:21.539493",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Payment Log",
