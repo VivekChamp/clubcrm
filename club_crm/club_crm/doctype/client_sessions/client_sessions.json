@@ -189,7 +189,6 @@
    "fieldname": "title",
    "fieldtype": "Data",
    "hidden": 1,
-   "in_list_view": 1,
    "label": "Title",
    "read_only": 1
   },
@@ -268,9 +267,8 @@
    "read_only": 1
   }
  ],
- "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-04-05 14:14:58.179766",
+ "modified": "2021-04-13 01:46:57.328309",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client Sessions",
@@ -285,6 +283,7 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "select": 1,
    "share": 1,
    "write": 1
   },
@@ -299,10 +298,48 @@
    "select": 1,
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "CE Staff",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "CE Manager",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Managing Director",
+   "select": 1,
+   "share": 1,
+   "write": 1
   }
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "title_field": "title",
+ "title_field": "service_name",
  "track_changes": 1
 }

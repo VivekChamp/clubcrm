@@ -13,11 +13,11 @@ from frappe.model.document import Document
 
 class MembershipsApplication(Document):
 	def before_insert(self):
-		if self.online_application==0:
-			self.workflow_status = "Pending"
 		self.check_existing_application()
 
 	def after_insert(self):
+		if self.online_application==0:
+			frappe.db.set_value('Memberships Application', self.name, 'workflow_status', 'Pending')
 		self.send_notification()
 
 	def validate(self):
@@ -246,13 +246,16 @@ def create_membership(mem_application_id):
 	doc.primary_client_id = mem_app.client_id
 	doc.membership_plan = mem_app.membership_plan
 	doc.client_id_1 = mem_app.client_id
+	doc.assigned_to_1 = mem_app.assigned_to
 	if mem_app.membership_type == "Couple Membership":
 		doc.client_id_2 = mem_app.client_id_2
+		doc.assigned_to_2 = mem_app.assigned_to
 	if mem_app.membership_type == "Family Membership":
 		doc.client_id_2 = mem_app.client_id_2
 		for row in mem_app.additional_members:
 			child = doc.append("additional_members_item", {})
 			child.client_id = row.client_id
+			child.assigned_to = mem_app.assigned_to
 	doc.membership_application = mem_application_id
 	doc.total_amount = float(mem_app.grand_total)
 	doc.insert()

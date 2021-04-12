@@ -12,19 +12,26 @@ frappe.ui.form.on('Client', {
 			});
 		}
 
-		//Create button with various functions	
-		if (frm.doc.status!="Disabled") {
-			frm.add_custom_button(__("Membership Application"), function() {
-				var mem_app = frappe.model.get_new_doc("Memberships Application");
-					mem_app.client=frm.doc.name;
-					frappe.set_route('Form', 'Memberships Application', mem_app.name);
-			},__("Create"));
-		}
+		// //Create button with various functions	
+		// if (frm.doc.status!="Disabled") {
+		// 	frm.add_custom_button(__("Membership Application"), function() {
+		// 		var mem_app = frappe.model.get_new_doc("Memberships Application");
+		// 			mem_app.client=frm.doc.name;
+		// 			frappe.set_route('Form', 'Memberships Application', mem_app.name);
+		// 	},__("Create"));
+		// }
 
-		//Display accounts receivable button	
-		frm.add_custom_button(__('Accounts Receivable'), function() {
-			frappe.set_route('query-report', 'Accounts Receivable', {customer:frm.doc.customer});
-		},__("Create"));
+		// //Display accounts receivable button	
+		// frm.add_custom_button(__('Accounts Receivable'), function() {
+		// 	frappe.set_route('query-report', 'Accounts Receivable', {customer:frm.doc.customer});
+		// },__("Create"));
+
+		if (frm.doc.membership_status=="Member") {
+			frm.add_custom_button('View Memberships', () => {
+				frappe.route_options = {"membership_id": frm.doc.membership_id}
+				frappe.set_route('List', 'Memberships');
+			})
+		}
 		
 		//Disable a client
 		if (frm.doc.status!="Disabled") {

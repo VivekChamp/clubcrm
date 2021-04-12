@@ -18,6 +18,7 @@
   "application_status",
   "membership_plan",
   "membership_type",
+  "assigned_to",
   "column_break_14",
   "payment_status",
   "no_of_adults",
@@ -702,11 +703,17 @@
    "options": "Memberships Application",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "assigned_to",
+   "fieldtype": "Link",
+   "label": "Assigned To",
+   "options": "Service Staff"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-04-12 15:56:53.359405",
+ "modified": "2021-04-12 23:53:17.875308",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",
