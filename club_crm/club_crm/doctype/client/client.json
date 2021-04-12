@@ -461,15 +461,9 @@
  ],
  "icon": "fa fa-user",
  "image_field": "image",
- "links": [
-  {
-   "group": "Memberships",
-   "link_doctype": "Memberships",
-   "link_fieldname": "client_id_2"
-  }
- ],
+ "links": [],
  "max_attachments": 50,
- "modified": "2021-04-12 15:40:51.893238",
+ "modified": "2021-04-12 23:40:27.191389",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",

@@ -9,6 +9,11 @@ frappe.ui.form.on("Memberships Application", "onload", function(frm){
             }
 		}
 	});
+    frm.set_query("assigned_to", function(){
+		return {
+			"filters": [["Service Staff", "cec_check", "=", "1"]]
+		}
+	});
 });
 
 frappe.ui.form.on('Memberships Application', {

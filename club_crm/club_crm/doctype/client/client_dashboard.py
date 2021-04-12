@@ -4,18 +4,18 @@ from frappe import _
 def get_data():
 	return {
 		'fieldname': 'client_id',
-		'non_standard_fieldnames': {
-			'Memberships': 'primary_client_id'
-		},
+		# 'non_standard_fieldnames': {
+		# 	'Memberships': 'primary_client_id'
+		# },
 
 		'transactions': [
 			{
 				'label': _(''),
-				'items': ['Check In', 'Client Sessions', 'Spa Appointment','Fitness Training Appointment']
+				'items': ['Check In', 'Client Sessions', 'Spa Appointment']
 			},
 			{
 				'label': _(''),
- 				'items': ['Cart', 'Memberships','Memberships Application']
+ 				'items': ['Cart','Memberships Application','Fitness Training Appointment']
 			},
             {
 				'label': _(''),

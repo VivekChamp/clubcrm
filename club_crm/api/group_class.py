@@ -56,20 +56,39 @@ def create_attendee(client_id, class_id):
 
 @frappe.whitelist()
 def get_details(client_id):
-    doc = frappe.get_all('Group Class Attendees', filters={'client_id':client_id,'docstatus':1}, fields=['name','group_class','group_class_name','trainer_name','class_status','from_time','to_time'])
+    doc = frappe.get_all('Group Class Attendees', filters={'client_id':client_id,'docstatus':1}, fields=['name','group_class','group_class_name','trainer_name','class_status','class_date','from_time','to_time'])
     details=[]
     if doc:
         for rating in doc:
+            start_time = "%s %s" % (rating.class_date, rating.from_time or "00:00:00")
+            end_time = "%s %s" % (rating.class_date, rating.to_time or "00:00:00")
             rate = frappe.get_all('Rating', filters={'document_id':rating.group_class}, fields=['rating_point'])
+
             if rate:
                 rate=rate[0]
                 details.append({
-                    'Group Class': rating,
+                    'Group Class': {
+                        "name": rating.name,
+                        "group_class": rating.group_class,
+                        "group_class_name": rating.group_class_name,
+                        "trainer_name": rating.trainer_name,
+                        "class_status": rating.class_status,
+                        "from_time": start_time,
+                        "to_time": end_time
+                    },
                     'Rating': rate.rating_point
-                    })
+                })
             else:
                 details.append({
-                    'Group Class':rating,
+                    'Group Class': {
+                        "name": rating.name,
+                        "group_class": rating.group_class,
+                        "group_class_name": rating.group_class_name,
+                        "trainer_name": rating.trainer_name,
+                        "class_status": rating.class_status,
+                        "from_time": start_time,
+                        "to_time": end_time
+                    },
                     'Rating': -1
                 })
         return details
