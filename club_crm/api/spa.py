@@ -65,7 +65,7 @@ def get_details(client_id):
     if time.spa_cancellation_time and int(time.spa_cancellation_time) > 0:
         b = int(int(time.spa_cancellation_time)/3600)
 
-    doc = frappe.get_all('Spa Appointment', filters={'client_id':client_id, 'appointment_status':['not in',{'Cancelled','No Show'}]}, fields=['name','spa_service','total_service_duration','appointment_status','payment_status','appointment_date','appointment_time', 'start_time','default_price','spa_therapist'], order_by="appointment_date asc")
+    doc = frappe.get_all('Spa Appointment', filters={'client_id':client_id, 'appointment_status':['not in',{'Cancelled','No Show'}]}, fields=['name','spa_service','total_service_duration','appointment_status','payment_status','appointment_date','appointment_time', 'start_time','default_price','service_staff'], order_by="appointment_date asc")
     details = []
     if doc:
         for rating in doc:
@@ -84,7 +84,7 @@ def get_details(client_id):
                         "appointment_time": rating.appointment_time,
                         "start_time": rating.start_time,
                         "rate": str(rating.default_price),
-                        "therapist_name": rating.spa_therapist
+                        "therapist_name": rating.service_staff
                     },
                     'Rating': rate.rating_point,
                     'cancellation_time': cancel_time
@@ -101,7 +101,7 @@ def get_details(client_id):
                         "appointment_time": rating.appointment_time,
                         "start_time": rating.start_time,
                         "rate": str(rating.default_price),
-                        "therapist_name": rating.spa_therapist
+                        "therapist_name": rating.service_staff
                     },
                     'Rating': -1,
                     'cancellation_time': cancel_time
@@ -117,7 +117,7 @@ def book_spa(client_id, spa_item, therapist_name, date, time, any_surgeries,paym
         'client_id': client_id,
         'spa_service': spa_item,
         'appointment_status': "Draft",
-        'spa_therapist': therapist_name,
+        'service_staff': therapist_name,
         'start_time': start_time,
         'any_surgeries': any_surgeries,
         'payment_method': payment_method
@@ -135,7 +135,7 @@ def book_spa(client_id, spa_item, therapist_name, date, time, any_surgeries,paym
         "spa_item": doc.spa_service,
         "duration": doc.service_duration,
         "rate": doc.default_price,
-        "spa_therapist": doc.spa_therapist,
+        "spa_therapist": doc.service_staff,
         "appointment_date": doc.appointment_date,
         "appointment_time": doc.appointment_time,
         "wallet_balance": wallet
@@ -205,7 +205,7 @@ def get_slots(date, spa_item, therapist_name):
         b = int(doc.total_duration/900)
                     
         # Check for existing appointments and remove the appointment times from time slots
-        appointments = frappe.get_all('Spa Appointment', filters= {'spa_therapist': therapist_name, 'appointment_date': date_converted,'appointment_status': ['in', {'Draft','Scheduled','Open'}]}, fields=['name','appointment_date','appointment_time','total_duration','spa_service','start_time','end_time','appointment_status'])
+        appointments = frappe.get_all('Spa Appointment', filters= {'service_staff': therapist_name, 'appointment_date': date_converted,'appointment_status': ['in', {'Draft','Scheduled','Open'}]}, fields=['name','appointment_date','appointment_time','total_duration','spa_service','start_time','end_time','appointment_status'])
         if appointments:
             for s in appointments:
                 for a in time_slot[:]:

@@ -9,7 +9,7 @@ from club_crm.api.wallet import get_balance
 
 @frappe.whitelist()
 def get_category():
-    shop_category = frappe.get_all('Item Group', filters={'parent_item_group': "Retail Inventory"}, fields=['name','image'])
+    shop_category = frappe.get_all('Item Group', filters={'parent_item_group': "Retail Inventory", 'show_on_app':1}, fields=['name','image'])
     frappe.response["message"] = {
         "Shop Categories": shop_category
          }

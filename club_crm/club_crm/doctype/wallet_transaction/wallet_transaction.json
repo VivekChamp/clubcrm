@@ -11,16 +11,19 @@
   "date",
   "time",
   "client_id",
+  "column_break_6",
   "client_name",
+  "membership_status",
   "column_break_4",
+  "transaction_status",
   "transaction_type",
+  "payment_details_section",
+  "transaction_date",
   "amount",
+  "column_break_14",
   "payment_type",
   "mode_of_payment",
   "amended_from",
-  "payment_details_section",
-  "transaction_date",
-  "column_break_14",
   "transaction_reference"
  ],
  "fields": [
@@ -93,9 +96,9 @@
   {
    "depends_on": "eval:doc.transaction_type==\"Top Up\"",
    "fieldname": "mode_of_payment",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "label": "Mode of Payment",
-   "options": "\nCredit Card\nCash"
+   "options": "Mode of Payment"
   },
   {
    "fieldname": "payment_details_section",
@@ -122,11 +125,30 @@
    "fieldtype": "Select",
    "label": "Payment Type",
    "options": "\nSpa\nFitness\nMembership\nRestaurant\nOnline Order\nOthers"
+  },
+  {
+   "fetch_from": "client_id.membership_status",
+   "fieldname": "membership_status",
+   "fieldtype": "Data",
+   "label": "Membership Status",
+   "read_only": 1
+  },
+  {
+   "default": "Draft",
+   "fieldname": "transaction_status",
+   "fieldtype": "Select",
+   "label": "Transaction Status",
+   "options": "Draft\nComplete\nCancelled",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-04-07 00:45:08.702906",
+ "modified": "2021-04-15 14:40:10.536019",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Wallet Transaction",

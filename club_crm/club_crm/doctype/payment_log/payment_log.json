@@ -35,8 +35,7 @@
   "response_data",
   "signed_field_names",
   "title",
-  "naming_series",
-  "amended_from"
+  "naming_series"
  ],
  "fields": [
   {
@@ -209,21 +208,11 @@
    "label": "Series",
    "options": "PAY-.YYYY.-",
    "read_only": 1
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Payment Log",
-   "print_hide": 1,
-   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
- "is_submittable": 1,
  "links": [],
- "modified": "2021-04-12 00:25:21.539493",
+ "modified": "2021-04-15 00:58:29.839860",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Payment Log",

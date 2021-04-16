@@ -44,7 +44,8 @@ def create_log(**kwargs):
     doc.generated_hash = generate_hash_verifier(sample_dict)
     if doc.generated_hash == kwargs['signature']:
         doc.signature_verified = 1
-    doc.submit()
+    doc.save()
+    # update_payment(doc.req_reference_number, doc.auth_amount)
 
 def generate_data_string(data_dict):
     test_array = []
@@ -120,31 +121,60 @@ def generate_hash(data_dict):
 
     return default_dict
 
-# def make_status_paid(docname):
+# @frappe.whitelist()
+# def make_status_paid(docname,amount):
 #     membership_application = "^MEM-APP-[0-9]{4,4}-[0-9]{5,5}$"
 #     cart = "^CART-[0-9]{4,4}-[0-9]{5,5}$"
 
 #     if re.match(membership_application, docname):
-#         frappe.db.set_value("Memberships Application",str(docname),"payment_status","Paid")
-#         doc = frappe.get_doc("Memberships Application",str(docname))
-#         doc.save()
+#         update_payment(docname,amount)
+#         # doc = frappe.get_doc("Memberships Application",str(docname))
+#         # doc.append('membership_payment', {
+# 		# 	"mode_of_payment": "Online Payment",
+# 		# 	"paid_amount": amount
+# 		# })
+#         # doc.save(ignore_permissions=True)
+#         # frappe.db.commit()
+# 		# doc.save()
+#         return doc
+#         frappe.db.set_value("Memberships Application", str(docname), "payment_status", "Paid", update_modified=False)
+#         frappe.db.commit()
+#         return "Success"
+#         # frappe.db.set_value("Memberships Application",str(docname),"payment_status","Paid")
+#         # doc = frappe.get_doc("Memberships Application",str(docname))
+#         # doc.save()
         
 #     elif re.match(cart, docname):
-#         frappe.db.set_value("Cart",str(docname),"payment_status","Paid")
-#         doc = frappe.get_doc("Cart",str(docname))
-#         doc.save()
+#         return "Cart"
+# #         frappe.db.set_value("Cart",str(docname),"payment_status","Paid")
+# #         doc = frappe.get_doc("Cart",str(docname))
+# #         doc.save()
         
-#     elif re.match(food_order, docname):
-#         frappe.db.set_value("Food Order Entry",str(docname),"payment_status","Paid")
-#         doc = frappe.get_doc("Food Order Entry",str(docname))
-#         doc.save()
+# #     elif re.match(food_order, docname):
+# #         frappe.db.set_value("Food Order Entry",str(docname),"payment_status","Paid")
+# #         doc = frappe.get_doc("Food Order Entry",str(docname))
+# #         doc.save()
         
-#     elif re.match(fitness_training, docname):
-#         frappe.db.set_value("Fitness Training Request",str(docname),"payment_status","Paid")
-#         doc = frappe.get_doc("Fitness Training Request",str(docname))
-#         doc.save()
+# #     elif re.match(fitness_training, docname):
+# #         frappe.db.set_value("Fitness Training Request",str(docname),"payment_status","Paid")
+# #         doc = frappe.get_doc("Fitness Training Request",str(docname))
+# #         doc.save()
         
-#     elif re.match(spa_app, docname):
-#         frappe.db.set_value("Spa Appointment",str(docname),"payment_status","Paid")
-#         doc = frappe.get_doc("Spa Appointment",str(docname))
-#         doc.save()
+# #     elif re.match(spa_app, docname):
+# #         frappe.db.set_value("Spa Appointment",str(docname),"payment_status","Paid")
+# #         doc = frappe.get_doc("Spa Appointment",str(docname))
+# #         doc.save()
+
+@frappe.whitelist()
+def update_payment(docname, amount):
+    membership_application = "^MEM-APP-[0-9]{4,4}-[0-9]{5,5}$"
+    cart = "^CART-[0-9]{4,4}-[0-9]{5,5}$"
+    if re.match(membership_application, docname):
+        doc = frappe.get_doc("Memberships Application", str(docname))
+        doc.append('membership_payment', {
+			"mode_of_payment": "Online Payment",
+			"paid_amount": float(amount)
+		})
+        doc.payment_status = "Paid"
+        doc.save()
+        frappe.db.commit()

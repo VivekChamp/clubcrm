@@ -31,3 +31,19 @@ def get_medical_history(client_id):
         "medication": doc.medication,
         "other_notes": doc.other_notes
     }
+
+@frappe.whitelist()
+def update_fcm_token(token):
+  client = frappe.db.get("Client", {"email": frappe.session.user})
+  if client:
+    frappe.db.set_value("Client", client.name, "fcm_token", token)
+    frappe.response["message"] = {
+      "status": 1,
+      "status_message": "FCM Token updated"
+      
+    }
+  else:
+    frappe.response["message"] = {
+      "status": 0,
+      "status_message": "Client error"
+    }

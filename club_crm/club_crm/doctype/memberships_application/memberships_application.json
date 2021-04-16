@@ -240,15 +240,13 @@
    "fetch_from": "membership_application.front_qid_1",
    "fieldname": "front_qid_1",
    "fieldtype": "Attach",
-   "label": "Qatar ID Front",
-   "reqd": 1
+   "label": "Qatar ID Front"
   },
   {
    "fetch_from": "membership_application.back_qid_1",
    "fieldname": "back_qid_1",
    "fieldtype": "Attach",
-   "label": "Qatar ID Back",
-   "reqd": 1
+   "label": "Qatar ID Back"
   },
   {
    "fetch_from": "client_id.gender",
@@ -281,15 +279,13 @@
    "fetch_from": "membership_application.em_contact_no",
    "fieldname": "em_contact_no",
    "fieldtype": "Data",
-   "label": "Emergency Contact Number",
-   "reqd": 1
+   "label": "Emergency Contact Number"
   },
   {
    "fetch_from": "membership_application.em_contact_name",
    "fieldname": "em_contact_name",
    "fieldtype": "Data",
-   "label": "Emergency Contact Name",
-   "reqd": 1
+   "label": "Emergency Contact Name"
   },
   {
    "fetch_from": "client_id_2.first_name",
@@ -646,9 +642,9 @@
    "depends_on": "eval:doc.membership_category!=\"Complimentary\"",
    "fieldname": "discount_type",
    "fieldtype": "Select",
+   "ignore_user_permissions": 1,
    "label": "Discount Type",
-   "options": "\nAmount\nPercentage",
-   "permlevel": 1
+   "options": "\nAmount\nPercentage"
   },
   {
    "default": "0.0",
@@ -713,7 +709,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-04-12 23:53:17.875308",
+ "modified": "2021-04-15 00:36:38.001507",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",
@@ -732,6 +728,14 @@
    "write": 1
   },
   {
+   "delete": 1,
+   "permlevel": 1,
+   "read": 1,
+   "role": "System Manager",
+   "select": 1,
+   "write": 1
+  },
+  {
    "create": 1,
    "email": 1,
    "export": 1,
@@ -744,9 +748,35 @@
    "write": 1
   },
   {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "General Manager",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
    "create": 1,
    "email": 1,
    "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Managing Director",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
    "print": 1,
    "read": 1,
    "report": 1,
@@ -802,6 +832,13 @@
    "role": "CE Staff",
    "select": 1,
    "share": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "Customer",
+   "select": 1,
+   "write": 1
   }
  ],
  "sort_field": "modified",

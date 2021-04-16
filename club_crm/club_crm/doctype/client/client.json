@@ -66,7 +66,9 @@
   "alerts",
   "alert_type",
   "column_break_57",
-  "notes"
+  "notes",
+  "section_break_59",
+  "fcm_token"
  ],
  "fields": [
   {
@@ -172,6 +174,7 @@
    "collapsible": 1,
    "fieldname": "customer_details_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Customer Details"
   },
   {
@@ -296,6 +299,7 @@
    "fieldtype": "Select",
    "in_filter": 1,
    "in_list_view": 1,
+   "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Membership Status",
    "no_copy": 1,
@@ -366,6 +370,7 @@
   {
    "fieldname": "mem_application",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Membership Application",
    "read_only": 1
   },
@@ -381,6 +386,7 @@
   {
    "fieldname": "member_id",
    "fieldtype": "Data",
+   "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Member ID",
    "read_only": 1
@@ -457,13 +463,23 @@
    "fieldname": "company",
    "fieldtype": "Data",
    "label": "Company"
+  },
+  {
+   "fieldname": "section_break_59",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "fcm_token",
+   "fieldtype": "Small Text",
+   "hidden": 1,
+   "label": "FCM Token"
   }
  ],
  "icon": "fa fa-user",
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2021-04-12 23:40:27.191389",
+ "modified": "2021-04-14 01:10:37.837640",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",
@@ -597,6 +613,7 @@
  "quick_entry": 1,
  "search_fields": "client_name,mobile_no,member_id",
  "show_name_in_global_search": 1,
+ "show_preview_popup": 1,
  "sort_field": "client_name",
  "sort_order": "ASC",
  "title_field": "client_name",

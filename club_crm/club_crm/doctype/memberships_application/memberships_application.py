@@ -18,7 +18,7 @@ class MembershipsApplication(Document):
 	def after_insert(self):
 		if self.online_application==0:
 			frappe.db.set_value('Memberships Application', self.name, 'workflow_status', 'Pending')
-		self.send_notification()
+		# self.send_notification()
 
 	def validate(self):
 		self.check_clients()
@@ -66,10 +66,11 @@ class MembershipsApplication(Document):
 						row.client_id = client.name
 						self.existing_client = 1
 	
-		if self.client_id:
-			frappe.db.set_value('Client', self.client_id, 'apply_membership', 1)
-			frappe.db.set_value('Client', self.client_id, 'mem_application', self.name)
-			frappe.db.commit()
+		if self.online_application==0:
+			if self.client_id:
+				frappe.db.set_value('Client', self.client_id, 'apply_membership', 1)
+				frappe.db.set_value('Client', self.client_id, 'mem_application', self.name)
+				frappe.db.commit()
 
 	def check_birthdate(self):
 		today = getdate()
@@ -134,7 +135,7 @@ class MembershipsApplication(Document):
 		self.total_to_be_paid = self.grand_total
 		if self.membership_payment:
 			for row in self.membership_payment:
-				self.paid_amount += row.paid_amount
+				self.paid_amount += float(row.paid_amount)
 		self.balance_amount = self.total_to_be_paid - self.paid_amount
 		if int(self.balance_amount) == 0:
 			frappe.db.set_value("Memberships Application", self.name, "payment_status", "Paid")
@@ -212,12 +213,12 @@ class MembershipsApplication(Document):
 						doc.email = row.email
 					doc.save()
 
-	def send_notification(self):
-		settings = frappe.get_doc('Memberships Settings')
-		if settings.enabled==1 and self.online_application==1:
-			msg = "New membership application has been received from "+self.first_name_1+" "+self.last_name_1+"."
-			receiver_list='"'+settings.mobile_no+'"'
-			send_sms(receiver_list,msg)
+	# def send_notification(self):
+	# 	settings = frappe.get_doc('Memberships Settings')
+	# 	if settings.enabled==1 and self.online_application==1:
+	# 		msg = "New membership application has been received from "+self.first_name_1+" "+self.last_name_1+"."
+	# 		receiver_list='"'+settings.mobile_no+'"'
+	# 		send_sms(receiver_list,msg)
 
 @frappe.whitelist()
 def create_client(first_name,last_name,gender,birth_date,qatar_id,mobile_no,email):
@@ -273,3 +274,12 @@ def create_membership(mem_application_id):
 					if row.category == "Adult":
 						create_session(row.client_id,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
 
+@frappe.whitelist()
+def update_payment(docname, amount):
+	doc = frappe.get_doc("Memberships Application", docname)
+	doc.append('membership_payment', {
+		"mode_of_payment": "Online Payment",
+		"paid_amount": amount
+	})
+	doc.payment_status = "Paid"
+	doc.save()

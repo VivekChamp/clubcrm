@@ -30,7 +30,7 @@ class ServiceStaffAvailability(Document):
 		
 	def set_title(self):
 		month_name = ['January','February','March','April','May','June','July','August','September','October','November','December']
-		month = month_name[int(self.month) -1]
+		month = month_name[int(self.month) - 1]
 		self.title = _('{0} for {1} {2}').format(self.staff_name, month, self.year)
 
 	def add_schedule(self):
@@ -51,6 +51,10 @@ class ServiceStaffAvailability(Document):
 				add_day.day = weekdate
 				add_day.from_time = self.from_time
 				add_day.to_time = self.to_time
+				add_day.service_staff = self.staff_name
+				add_day.start_time = "%s %s" % (date, self.from_time or "00:00:00")
+				add_day.end_time = "%s %s" % (date, self.to_time or "00:00:00")
+
 			if week == 2:
 				add_day = self.append('week_2', {})
 				add_day.date = date
@@ -58,6 +62,10 @@ class ServiceStaffAvailability(Document):
 				add_day.day = weekdate
 				add_day.from_time = self.from_time
 				add_day.to_time = self.to_time
+				add_day.service_staff = self.staff_name
+				add_day.start_time = "%s %s" % (date, self.from_time or "00:00:00")
+				add_day.end_time = "%s %s" % (date, self.to_time or "00:00:00")
+
 			if week == 3:
 				add_day = self.append('week_3', {})
 				add_day.date = date
@@ -65,6 +73,10 @@ class ServiceStaffAvailability(Document):
 				add_day.day = weekdate
 				add_day.from_time = self.from_time
 				add_day.to_time = self.to_time
+				add_day.service_staff = self.staff_name
+				add_day.start_time = "%s %s" % (date, self.from_time or "00:00:00")
+				add_day.end_time = "%s %s" % (date, self.to_time or "00:00:00")
+
 			if week == 4:
 				add_day = self.append('week_4', {})
 				add_day.date = date
@@ -72,6 +84,10 @@ class ServiceStaffAvailability(Document):
 				add_day.day = weekdate
 				add_day.from_time = self.from_time
 				add_day.to_time = self.to_time
+				add_day.service_staff = self.staff_name
+				add_day.start_time = "%s %s" % (date, self.from_time or "00:00:00")
+				add_day.end_time = "%s %s" % (date, self.to_time or "00:00:00")
+
 			if week == 5:
 				add_day = self.append('week_5', {})
 				add_day.date = date
@@ -79,6 +95,10 @@ class ServiceStaffAvailability(Document):
 				add_day.day = weekdate
 				add_day.from_time = self.from_time
 				add_day.to_time = self.to_time
+				add_day.service_staff = self.staff_name
+				add_day.start_time = "%s %s" % (date, self.from_time or "00:00:00")
+				add_day.end_time = "%s %s" % (date, self.to_time or "00:00:00")
+
 			if week == 6:
 				add_day = self.append('week_6', {})
 				add_day.date = date
@@ -86,6 +106,9 @@ class ServiceStaffAvailability(Document):
 				add_day.day = weekdate
 				add_day.from_time = self.from_time
 				add_day.to_time = self.to_time
+				add_day.service_staff = self.staff_name
+				add_day.start_time = "%s %s" % (date, self.from_time or "00:00:00")
+				add_day.end_time = "%s %s" % (date, self.to_time or "00:00:00")
 
 	def validate_values(self):
 		if not self.start_date:

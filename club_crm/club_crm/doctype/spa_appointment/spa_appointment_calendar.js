@@ -5,11 +5,12 @@ frappe.views.calendar["Spa Appointment"] = {
 		"title": "title",
 		"allDay": "allDay",
 		"description": "notes",
-		"resourceId": "spa_therapist",
-		"color": "color"
+		"resourceId": "service_staff",
+		"color": "color",
+		"rendering": "rendering"
 		// "description": "description",
         // "name": "name",
-		// "rendering": "rendering"
+		
 	},
 	//order_by: "appointment_date",
 	gantt: true,
