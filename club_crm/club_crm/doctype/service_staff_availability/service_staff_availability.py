@@ -15,6 +15,7 @@ from frappe import throw, msgprint, _
 class ServiceStaffAvailability(Document):
 	def validate(self):
 		self.set_title()
+		self.set_time_for_calendar()
 		for i, item in enumerate(sorted(self.week_1, key=lambda item: str(item.date))):
 			item.idx = i
 		for i, item in enumerate(sorted(self.week_2, key=lambda item: str(item.date))):
@@ -32,6 +33,32 @@ class ServiceStaffAvailability(Document):
 		month_name = ['January','February','March','April','May','June','July','August','September','October','November','December']
 		month = month_name[int(self.month) - 1]
 		self.title = _('{0} for {1} {2}').format(self.staff_name, month, self.year)
+
+	def set_time_for_calendar(self):
+		if self.week_1:
+			for row in self.week_1:
+				row.start_time = "%s %s" % (row.date, row.from_time or "00:00:00")
+				row.end_time = "%s %s" % (row.date, row.to_time or "00:00:00")
+		if self.week_2:
+			for row in self.week_2:
+				row.start_time = "%s %s" % (row.date, row.from_time or "00:00:00")
+				row.end_time = "%s %s" % (row.date, row.to_time or "00:00:00")
+		if self.week_3:
+			for row in self.week_3:
+				row.start_time = "%s %s" % (row.date, row.from_time or "00:00:00")
+				row.end_time = "%s %s" % (row.date, row.to_time or "00:00:00")
+		if self.week_4:
+			for row in self.week_4:
+				row.start_time = "%s %s" % (row.date, row.from_time or "00:00:00")
+				row.end_time = "%s %s" % (row.date, row.to_time or "00:00:00")
+		if self.week_5:
+			for row in self.week_5:
+				row.start_time = "%s %s" % (row.date, row.from_time or "00:00:00")
+				row.end_time = "%s %s" % (row.date, row.to_time or "00:00:00")
+		if self.week_6:
+			for row in self.week_6:
+				row.start_time = "%s %s" % (row.date, row.from_time or "00:00:00")
+				row.end_time = "%s %s" % (row.date, row.to_time or "00:00:00")
 
 	def add_schedule(self):
 		self.validate_values()

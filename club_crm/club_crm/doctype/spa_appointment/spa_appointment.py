@@ -367,6 +367,7 @@ def get_events(start, end, filters=None):
 		select
 		`tabSpa Appointment`.name, `tabSpa Appointment`.client_name,
 		`tabSpa Appointment`.title, `tabSpa Appointment`.service_staff,
+		`tabSpa Appointment`.payment_status,
 		`tabSpa Appointment`.appointment_status,
 		`tabSpa Appointment`.total_duration,
 		`tabSpa Appointment`.notes,
@@ -377,7 +378,7 @@ def get_events(start, end, filters=None):
 		`tabSpa Appointment`
 		where
 		(`tabSpa Appointment`.appointment_date between %(start)s and %(end)s)
-		and `tabSpa Appointment`.appointment_status != 'Cancelled' {conditions}""".format(conditions=conditions),
+		and `tabSpa Appointment`.appointment_status != 'Draft' {conditions}""".format(conditions=conditions),
 		{"start": start, "end": end}, as_dict=True, update={"rendering": ''})
 	
 	for item in data:

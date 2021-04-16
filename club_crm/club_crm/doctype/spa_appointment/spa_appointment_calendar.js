@@ -8,16 +8,12 @@ frappe.views.calendar["Spa Appointment"] = {
 		"resourceId": "service_staff",
 		"color": "color",
 		"rendering": "rendering"
-		// "description": "description",
-        // "name": "name",
-		
 	},
-	//order_by: "appointment_date",
-	gantt: true,
+	gantt: false,
 	options: {
 		        header: {
-		            left: 'title',
-		            center: 'prev,today,next',
+					left: 'prev, title, next',
+		            center: 'today',
 		            right: 'listOneWeek,listOneDay agendaOneDay,agendaOneWeek timelineOneDay'
 		        },
 				views: {
@@ -71,7 +67,7 @@ frappe.views.calendar["Spa Appointment"] = {
 				defaultView: 'agendaOneDay',
 				allDaySlot:false,
 				slotEventOverlap:false,
-				eventTextColor : '#ffffff',
+				editable:false
 				// eventRender: function(eventObj, $el) {
 				// 	$el.popover({
 				// 	  title: "Notes",
@@ -82,6 +78,42 @@ frappe.views.calendar["Spa Appointment"] = {
 				// 	  container: 'body'
 				// 	});
 				//   },
-		    },
-	get_events_method: "club_crm.club_crm.doctype.spa_appointment.spa_appointment.get_events"
+	},
+	color_map : {
+		"paid": "blue",
+		"open": "purple",
+		"scheduled": "green",
+		"checked-in" : "yellow",
+		"no-show": "red",
+		"cancelled": "red",
+		"completed": "blue",
+		"background": "#b9fff5"
+	},
+	get_events_method: "club_crm.club_crm.doctype.spa_appointment.spa_appointment.get_events",
+	get_css_class: function(data) {
+		if(data.rendering=="background") {
+			return "background";
+		}
+		if(data.payment_status=="Paid") {
+			return "paid";
+		}
+		else if(data.appointment_status=="Open") {
+			return "open";
+			} 
+			else if(data.appointment_status=="Scheduled") {
+			return "scheduled";
+			}
+			else if(data.appointment_status=="Checked-in") {
+			return "checked-in";
+			}
+			else if(data.appointment_status=="No Show") {
+			return "no-show";
+			}
+			else if(data.appointment_status=="Cancelled") {
+			return "cancelled";
+			}
+			else if(data.appointment_status=="Completed") {
+			return "completed";
+			}
+	}
 };
