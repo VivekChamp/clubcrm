@@ -23,9 +23,8 @@ body .fc {
 
 .fc-bgevent {
   /* default look for background events */
-  background: #d3fced;
-  /* opacity: .3; */
-  }
+  background: #8fdf82;
+  opacity: .3; }
 
 .fc-nonbusiness {
   /* default look for non-business-hours areas */
