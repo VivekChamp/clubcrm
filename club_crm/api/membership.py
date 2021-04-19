@@ -33,6 +33,7 @@ def nationality():
 @frappe.whitelist()
 def member_benefits(client_id):
     doc = frappe.get_doc('Client', client_id)
+
     if doc.membership_status == 'Member':
         spa_treatments = 25.0
         retail = 15.0
@@ -40,9 +41,19 @@ def member_benefits(client_id):
         boho_social = 20.0
         salon = 15.0
         
+        benefits = []
         ben = frappe.get_all('Client Sessions', filters={'client_id':client_id, 'package_type':'Club', 'session_status' : 'Active'}, fields=['*'])
+        for comp in ben:
+            benefits.append({
+                "benefits_name" : comp.title,
+                "count": "Limited",
+                "quantity": str(comp.total_sessions),
+                "used": str(comp.used_sessions),
+                "remaining": str(comp.remaining_sessions)
+            })
 
-        mem = frappe.get_all('Memberships', filters={'client_id': client_id, 'membership_status': 'Active'}, fields=['*'])
+        mem = frappe.get_all('Memberships', filters={'client_id_1': client_id, 'membership_status': 'Active'}, fields=['*'])
+
         if mem:
             mem_1 = mem[0]
             frappe.response["message"] = {
@@ -58,10 +69,16 @@ def member_benefits(client_id):
                     'grams_discount': grams,
                     'boho_discount': boho_social,
                     'salon_discount': salon,
-                    'benefits': ben
-                }
-    else:
-        frappe.response["message"] = {
+                    'benefits': benefits
+          
+            }
+        else:
+            frappe.response["message"] = {
                 'status': 0,
                 'membership_status': 'Non-Member'
             }
+    else:
+        frappe.response["message"] = {
+            'status': 0,
+            'membership_status': 'Non-Member'
+        }
