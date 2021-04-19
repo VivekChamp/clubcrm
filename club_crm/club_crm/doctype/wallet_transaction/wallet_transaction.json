@@ -6,6 +6,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "online",
   "naming_series",
   "transaction_details_section",
   "date",
@@ -144,11 +145,19 @@
   {
    "fieldname": "column_break_6",
    "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "This checkbox implies that this transaction is made using web/mobile app.",
+   "fieldname": "online",
+   "fieldtype": "Check",
+   "label": "Online",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-04-15 14:40:10.536019",
+ "modified": "2021-04-18 01:04:17.159504",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Wallet Transaction",

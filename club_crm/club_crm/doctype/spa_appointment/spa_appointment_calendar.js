@@ -14,7 +14,7 @@ frappe.views.calendar["Spa Appointment"] = {
 		        header: {
 					left: 'prev, title, next',
 		            center: 'today',
-		            right: 'listOneWeek,listOneDay agendaOneDay,agendaOneWeek timelineOneDay'
+		            right: ' listOneWeek, listOneDay, agendaOneDay, agendaOneWeek, timelineOneDay'
 		        },
 				views: {
 					listOneDay: {
@@ -32,7 +32,7 @@ frappe.views.calendar["Spa Appointment"] = {
 					agendaOneDay: {
 					  type: 'agendaDay',
 					  duration: { days: 1 },
-					  buttonText: 'Day Overview',
+					  buttonText: 'Day',
 					  slotDuration: "01:00:00",
 					  minTime: "08:00:00",
 					  maxTime: "22:00:00"
@@ -40,7 +40,7 @@ frappe.views.calendar["Spa Appointment"] = {
 					agendaOneWeek: {
 						type: 'agendaDay',
 						duration: { days: 7 },
-						buttonText: 'Week Overview',
+						buttonText: 'Week',
 						slotDuration: "01:00:00",
 						minTime: "08:00:00",
 						maxTime: "22:00:00"
@@ -48,7 +48,7 @@ frappe.views.calendar["Spa Appointment"] = {
 					timelineOneDay: {
 						type: 'timeline',
 						duration: { days: 1 },
-						buttonText: 'Day Timeline',
+						buttonText: 'Timeline',
 						minTime: "08:00:00",
 						maxTime: "22:00:00"
 					  }

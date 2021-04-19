@@ -45,7 +45,6 @@ def create_log(**kwargs):
     if doc.generated_hash == kwargs['signature']:
         doc.signature_verified = 1
     doc.save()
-    # update_payment(doc.req_reference_number, doc.auth_amount)
 
 def generate_data_string(data_dict):
     test_array = []
@@ -74,7 +73,6 @@ def generate_hash_verifier(data_dict):
 def generate_signed_time():
     signed_date=datetime.utcnow().replace(microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ")
     return signed_date
-
 
 @frappe.whitelist()
 def generate_hash(data_dict):
@@ -165,16 +163,17 @@ def generate_hash(data_dict):
 # #         doc = frappe.get_doc("Spa Appointment",str(docname))
 # #         doc.save()
 
-@frappe.whitelist()
-def update_payment(docname, amount):
-    membership_application = "^MEM-APP-[0-9]{4,4}-[0-9]{5,5}$"
-    cart = "^CART-[0-9]{4,4}-[0-9]{5,5}$"
-    if re.match(membership_application, docname):
-        doc = frappe.get_doc("Memberships Application", str(docname))
-        doc.append('membership_payment', {
-			"mode_of_payment": "Online Payment",
-			"paid_amount": float(amount)
-		})
-        doc.payment_status = "Paid"
-        doc.save()
-        frappe.db.commit()
+# @frappe.whitelist()
+# def update_payment(doc):
+#     membership_application = "^MEM-APP-[0-9]{4,4}-[0-9]{5,5}$"
+#     cart = "^CART-[0-9]{4,4}-[0-9]{5,5}$"
+
+#     if re.match(membership_application, doc.req_reference_number):
+#         pay = frappe.get_doc("Memberships Application", doc.req_reference_number)
+#         pay.append('membership_payment', {
+# 			"mode_of_payment": "Online Payment",
+# 			"paid_amount": float(doc.auth_amount)
+# 		})
+#         pay.payment_status = "Paid"
+#         pay.save()
+#         frappe.db.commit()

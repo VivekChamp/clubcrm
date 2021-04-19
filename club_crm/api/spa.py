@@ -124,7 +124,7 @@ def book_spa(client_id, spa_item, therapist_name, date, time, any_surgeries,paym
         })
     doc.insert()
     cart = add_cart_from_spa(doc.client_id, doc.name)
-    wallet= get_balance(client_id)
+    wallet= get_balance()
     frappe.response["message"] = {
         "status": 1,
         "status_message": "Spa booking created successfully",
@@ -222,9 +222,9 @@ def get_slots(date, spa_item, therapist_name):
                             d = d+1
                             if d>b:
                                 slot.append(time_slot[i])
-                # frappe.response["message"] = {
-                #     "available_slots": slot
-                # }
+                frappe.response["message"] = {
+                    "available_slots": slot
+                }
         else:
             slot= []
             for i in range(len(time_slot) - b):
@@ -234,19 +234,19 @@ def get_slots(date, spa_item, therapist_name):
                         d = d+1
                         if d>b:
                             slot.append(time_slot[i])
-                # frappe.response["message"] = {
-                #     "available_slots": slot
-                # }
+                frappe.response["message"] = {
+                    "available_slots": slot
+                }
 
-        time_array = []
-        for one_time in slot[:]:
-            one_time_datetime = datetime.strptime(str(one_time), "%H:%M:%S")
-            one_time_ampm = datetime.strftime(one_time_datetime, "%I:%M %p")
-            time_array.append(one_time_ampm)
+        # time_array = []
+        # for one_time in slot[:]:
+        #     one_time_datetime = datetime.strptime(str(one_time), "%H:%M:%S")
+        #     one_time_ampm = datetime.strftime(one_time_datetime, "%I:%M %p")
+        #     time_array.append(one_time_ampm)
         
-        frappe.response["message"] = {
-                    "available_slots": time_array
-        }
+        # frappe.response["message"] = {
+        #             "available_slots": time_array
+        # }
 
     else:
         frappe.response["message"] = {
@@ -260,7 +260,7 @@ def cancel_spa(client_id,booking_id):
         doc.db_set('appointment_status', 'Cancelled')
         doc.db_set('docstatus', 2)
         doc.reload()
-        wallet= get_balance(client_id)
+        wallet= get_balance()
         frappe.response["message"] = {
             "status": 1,
             "status_message": "Spa booking cancelled",

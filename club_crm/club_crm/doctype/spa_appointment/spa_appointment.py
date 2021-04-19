@@ -103,7 +103,7 @@ class SpaAppointment(Document):
 				
 	def before_submit(self):
 		if self.payment_method=="Wallet":
-			wallet= get_balance(self.client_id)
+			wallet= get_balance()
 			if wallet < self.rate:
 				frappe.throw("Not enough wallet balance")
 
