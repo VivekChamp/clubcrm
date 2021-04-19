@@ -1,6 +1,6 @@
 {
  "actions": [],
- "autoname": "field:title",
+ "autoname": "naming_series:",
  "creation": "2021-03-31 17:18:24.166258",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -27,7 +27,8 @@
   "week_3",
   "week_4",
   "week_5",
-  "week_6"
+  "week_6",
+  "naming_series"
  ],
  "fields": [
   {
@@ -150,11 +151,18 @@
    "fieldtype": "Table",
    "label": "Week 6",
    "options": "Day Schedule"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "SSA-.YYYY.-",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-04-09 21:54:11.445665",
+ "modified": "2021-04-16 17:01:47.649315",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Service Staff Availability",

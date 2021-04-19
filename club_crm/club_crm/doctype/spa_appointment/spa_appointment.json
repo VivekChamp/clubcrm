@@ -42,7 +42,7 @@
   "service_turnover",
   "zero_turnover",
   "column_break_spa",
-  "spa_therapist",
+  "service_staff",
   "therapist_requested",
   "club_room",
   "default_price",
@@ -103,16 +103,6 @@
    "label": "Client Name",
    "no_copy": 1,
    "read_only": 1
-  },
-  {
-   "fieldname": "spa_therapist",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Spa Therapist",
-   "no_copy": 1,
-   "options": "Service Staff",
-   "reqd": 1
   },
   {
    "fieldname": "column_break_20",
@@ -613,10 +603,20 @@
   {
    "fieldname": "section_break_70",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "service_staff",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Spa Therapist",
+   "no_copy": 1,
+   "options": "Service Staff",
+   "reqd": 1
   }
  ],
  "links": [],
- "modified": "2021-04-05 02:24:06.284712",
+ "modified": "2021-04-16 17:48:55.070971",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Appointment",
@@ -648,7 +648,7 @@
    "write": 1
   }
  ],
- "search_fields": "client_name, spa_therapist, spa_service, appointment_date, appointment_time",
+ "search_fields": "client_name, service_staff, spa_service, appointment_date, appointment_time",
  "show_name_in_global_search": 1,
  "show_preview_popup": 1,
  "sort_field": "appointment_date",

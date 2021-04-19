@@ -9,7 +9,7 @@ frappe.ui.form.on("Spa Appointment", "onload", function(frm){
 		}
 	});
     // Filter service staff for spa appointment
-    frm.set_query("spa_therapist", function(){
+    frm.set_query("service_staff", function(){
 		return {
 			"filters": [["Service Staff", "spa_check", "=", "1"]]
 		}

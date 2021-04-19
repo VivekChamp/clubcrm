@@ -1,0 +1,86 @@
+{
+ "actions": [],
+ "creation": "2021-04-15 15:46:30.312769",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "send_to",
+  "client_id",
+  "client_name",
+  "column_break_4",
+  "title",
+  "message",
+  "send_notification"
+ ],
+ "fields": [
+  {
+   "depends_on": "eval:doc.send_to==\"Single Client\"",
+   "fieldname": "client_id",
+   "fieldtype": "Link",
+   "label": "Client ID",
+   "options": "Client"
+  },
+  {
+   "fetch_from": "client_id.client_name",
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "label": "Client Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title"
+  },
+  {
+   "fieldname": "message",
+   "fieldtype": "Small Text",
+   "label": "Message"
+  },
+  {
+   "default": "Single Client",
+   "fieldname": "send_to",
+   "fieldtype": "Select",
+   "label": "Send to ",
+   "options": "Single Client\nAll Registered Clients"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "send_notification",
+   "fieldtype": "Button",
+   "label": "Send",
+   "options": "send_notification"
+  }
+ ],
+ "hide_toolbar": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2021-04-15 22:36:13.388722",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Push Notification Center",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "read": 1,
+   "role": "System Manager",
+   "select": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "General Manager",
+   "select": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

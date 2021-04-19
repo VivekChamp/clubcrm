@@ -5,19 +5,16 @@ frappe.views.calendar["Spa Appointment"] = {
 		"title": "title",
 		"allDay": "allDay",
 		"description": "notes",
-		"resourceId": "spa_therapist",
-		"color": "color"
-		// "description": "description",
-        // "name": "name",
-		// "rendering": "rendering"
+		"resourceId": "service_staff",
+		"color": "color",
+		"rendering": "rendering"
 	},
-	//order_by: "appointment_date",
-	gantt: true,
+	gantt: false,
 	options: {
 		        header: {
-		            left: 'title',
-		            center: 'prev,today,next',
-		            right: 'listOneWeek,listOneDay agendaOneDay,agendaOneWeek timelineOneDay'
+					left: 'prev, title, next',
+		            center: 'today',
+		            right: ' listOneWeek, listOneDay, agendaOneDay, agendaOneWeek, timelineOneDay'
 		        },
 				views: {
 					listOneDay: {
@@ -35,7 +32,7 @@ frappe.views.calendar["Spa Appointment"] = {
 					agendaOneDay: {
 					  type: 'agendaDay',
 					  duration: { days: 1 },
-					  buttonText: 'Day Overview',
+					  buttonText: 'Day',
 					  slotDuration: "01:00:00",
 					  minTime: "08:00:00",
 					  maxTime: "22:00:00"
@@ -43,7 +40,7 @@ frappe.views.calendar["Spa Appointment"] = {
 					agendaOneWeek: {
 						type: 'agendaDay',
 						duration: { days: 7 },
-						buttonText: 'Week Overview',
+						buttonText: 'Week',
 						slotDuration: "01:00:00",
 						minTime: "08:00:00",
 						maxTime: "22:00:00"
@@ -51,7 +48,7 @@ frappe.views.calendar["Spa Appointment"] = {
 					timelineOneDay: {
 						type: 'timeline',
 						duration: { days: 1 },
-						buttonText: 'Day Timeline',
+						buttonText: 'Timeline',
 						minTime: "08:00:00",
 						maxTime: "22:00:00"
 					  }
@@ -70,7 +67,7 @@ frappe.views.calendar["Spa Appointment"] = {
 				defaultView: 'agendaOneDay',
 				allDaySlot:false,
 				slotEventOverlap:false,
-				eventTextColor : '#ffffff',
+				editable:false
 				// eventRender: function(eventObj, $el) {
 				// 	$el.popover({
 				// 	  title: "Notes",
@@ -81,6 +78,42 @@ frappe.views.calendar["Spa Appointment"] = {
 				// 	  container: 'body'
 				// 	});
 				//   },
-		    },
-	get_events_method: "club_crm.club_crm.doctype.spa_appointment.spa_appointment.get_events"
+	},
+	color_map : {
+		"paid": "blue",
+		"open": "purple",
+		"scheduled": "green",
+		"checked-in" : "yellow",
+		"no-show": "red",
+		"cancelled": "red",
+		"completed": "blue",
+		"background": "#b9fff5"
+	},
+	get_events_method: "club_crm.club_crm.doctype.spa_appointment.spa_appointment.get_events",
+	get_css_class: function(data) {
+		if(data.rendering=="background") {
+			return "background";
+		}
+		if(data.payment_status=="Paid") {
+			return "paid";
+		}
+		else if(data.appointment_status=="Open") {
+			return "open";
+			} 
+			else if(data.appointment_status=="Scheduled") {
+			return "scheduled";
+			}
+			else if(data.appointment_status=="Checked-in") {
+			return "checked-in";
+			}
+			else if(data.appointment_status=="No Show") {
+			return "no-show";
+			}
+			else if(data.appointment_status=="Cancelled") {
+			return "cancelled";
+			}
+			else if(data.appointment_status=="Completed") {
+			return "completed";
+			}
+	}
 };

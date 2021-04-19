@@ -9,7 +9,10 @@
   "day",
   "from_time",
   "to_time",
-  "notes"
+  "notes",
+  "service_staff",
+  "start_time",
+  "end_time"
  ],
  "fields": [
   {
@@ -42,12 +45,27 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Notes"
+  },
+  {
+   "fieldname": "service_staff",
+   "fieldtype": "Data",
+   "label": "Service Staff"
+  },
+  {
+   "fieldname": "start_time",
+   "fieldtype": "Datetime",
+   "label": "Start Time"
+  },
+  {
+   "fieldname": "end_time",
+   "fieldtype": "Datetime",
+   "label": "End Time"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-03-31 20:01:14.719357",
+ "modified": "2021-04-16 17:54:36.298511",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Day Schedule",

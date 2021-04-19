@@ -26,7 +26,7 @@ def login(usr,pwd):
     client_details = frappe.get_all('Client', filters={'mobile_no': usr}, fields=['name','first_name','last_name','client_name','gender','birth_date','nationality','qatar_id','email','mobile_no','apply_membership','mem_application','membership_status','status','customer_group','territory','marital_status','image'])
     if client_details:
         d = client_details[0]
-        wallet= get_balance(d.name)
+        wallet = get_balance()
         frappe.response["message"] = {
             "sid": frappe.session.sid,
             "client details": client_details,

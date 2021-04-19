@@ -11,18 +11,14 @@ frappe.ui.form.on("Service Staff Availability", {
 		frm.fields_dict['week_5'].grid.wrapper.find('.grid-add-row').hide();
 		frm.fields_dict['week_6'].grid.wrapper.find('.grid-add-row').hide();
 	},
-
+	month(frm) {
+		if (frm.doc.staff_name) {
+			frm.save();
+		}
+	},
+	staff_name(frm) {
+		if (frm.doc.month) {
+			frm.save();
+		}
+	}
 });
-
-// frappe.ui.form.on("Service Staff Availability", "refresh", function(frm){
-// 	var idx = 1;
-// 	frm.doc.week_1.sort(function(a,b){
-//   		if (a.date < b.date){ return -1 }
-//  	 	else if ( a.date > b.date){ return 1 }
-//  	 	return 1;
-// 	});
-
-// 	frm.doc.week_1.map(function(item){
-//   		item.idx = idx++;
-// 	});
-// });

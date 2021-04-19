@@ -1,12 +1,7 @@
 {
  "cards_label": "Menu",
  "category": "Domains",
- "charts": [
-  {
-   "chart_name": "Active Members",
-   "label": "Active Members"
-  }
- ],
+ "charts": [],
  "creation": "2020-10-08 02:26:52.788984",
  "developer_mode_only": 0,
  "disable_user_customization": 1,
@@ -20,7 +15,7 @@
  "is_standard": 1,
  "label": "Club CRM",
  "links": [],
- "modified": "2021-04-05 02:23:08.495438",
+ "modified": "2021-04-16 12:32:07.161524",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club CRM",
@@ -32,6 +27,7 @@
    "color": "#449CF0",
    "doc_view": "List",
    "format": "{}",
+   "icon": "getting-started",
    "label": "Client List",
    "link_to": "Client",
    "stats_filter": "",

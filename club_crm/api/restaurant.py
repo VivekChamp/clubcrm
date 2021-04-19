@@ -198,7 +198,7 @@ def checkout(client_id, payment_method):
         cart_1=cart[0]
         doc= frappe.get_doc('Food Order Entry', cart_1.name)
         doc.payment_method = payment_method
-    wallet= get_balance(client_id)
+    wallet= get_balance()
     frappe.response["message"] = {
         "status": 1,
         "document_name": doc.name,

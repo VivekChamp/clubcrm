@@ -180,7 +180,7 @@ def proceed_payment(client_id,doc_id, payment_method):
     doc= frappe.get_doc('Fitness Training Request', doc_id)
     doc.payment_method= payment_method
     doc.save()
-    wallet= get_balance(client_id)
+    wallet= get_balance()
     frappe.response["message"] = {
         "status": 1,
         "document_name": doc.name,

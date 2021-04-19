@@ -35,8 +35,7 @@
   "response_data",
   "signed_field_names",
   "title",
-  "naming_series",
-  "amended_from"
+  "naming_series"
  ],
  "fields": [
   {
@@ -102,8 +101,7 @@
   {
    "fieldname": "req_reference_number",
    "fieldtype": "Data",
-   "label": "Reference Number",
-   "read_only": 1
+   "label": "Reference Number"
   },
   {
    "fieldname": "req_amount",
@@ -114,8 +112,7 @@
   {
    "fieldname": "auth_amount",
    "fieldtype": "Data",
-   "label": "Authorized Amount",
-   "read_only": 1
+   "label": "Authorized Amount"
   },
   {
    "fieldname": "req_card_number",
@@ -132,14 +129,12 @@
   {
    "fieldname": "req_bill_to_forename",
    "fieldtype": "Data",
-   "label": "First Name",
-   "read_only": 1
+   "label": "First Name"
   },
   {
    "fieldname": "req_bill_to_surname",
    "fieldtype": "Data",
-   "label": "Last Name",
-   "read_only": 1
+   "label": "Last Name"
   },
   {
    "fieldname": "req_customer_ip_address",
@@ -209,21 +204,11 @@
    "label": "Series",
    "options": "PAY-.YYYY.-",
    "read_only": 1
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Payment Log",
-   "print_hide": 1,
-   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
- "is_submittable": 1,
  "links": [],
- "modified": "2021-04-12 00:25:21.539493",
+ "modified": "2021-04-17 21:33:51.245136",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Payment Log",

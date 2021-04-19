@@ -9,7 +9,7 @@ from club_crm.api.wallet import get_balance
 
 @frappe.whitelist()
 def get_category():
-    shop_category = frappe.get_all('Item Group', filters={'parent_item_group': "Retail Inventory"}, fields=['name','image'])
+    shop_category = frappe.get_all('Item Group', filters={'parent_item_group': "Retail Inventory", 'show_on_app':1}, fields=['name','image'])
     frappe.response["message"] = {
         "Shop Categories": shop_category
          }
@@ -176,7 +176,7 @@ def checkout(client_id, payment_method):
         cart_1=cart[0]
         doc = frappe.get_doc('Online Order', cart_1.name)
         doc.payment_method = payment_method
-        wallet= get_balance(client_id)
+        wallet= get_balance()
     frappe.response["message"] = {
         "status": 1,
         "document_name": doc.name,

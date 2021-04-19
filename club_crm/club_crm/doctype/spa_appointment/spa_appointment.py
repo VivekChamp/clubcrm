@@ -103,7 +103,7 @@ class SpaAppointment(Document):
 				
 	def before_submit(self):
 		if self.payment_method=="Wallet":
-			wallet= get_balance(self.client_id)
+			wallet= get_balance()
 			if wallet < self.rate:
 				frappe.throw("Not enough wallet balance")
 
@@ -168,17 +168,17 @@ class SpaAppointment(Document):
 		end_time = start_datetime + timedelta(seconds=self.total_duration)
 		overlaps = frappe.db.sql("""
 		select
-			name, spa_therapist, client_name, appointment_time, total_duration, appointment_end_time
+			name, service_staff, client_name, appointment_time, total_duration, appointment_end_time
 		from
 			`tabSpa Appointment`
 		where
 			appointment_date=%s and name!=%s and appointment_status NOT IN ("Cancelled", "No Show")
-			and (spa_therapist=%s or client_name=%s) and
+			and (service_staff=%s or client_name=%s) and
 			((appointment_time<%s and appointment_end_time>%s) or
 			(appointment_time>%s and appointment_time<%s) or
 			(appointment_time>%s and appointment_end_time<%s) or
 			(appointment_time=%s))
-		""", (self.appointment_date, self.name, self.spa_therapist, self.client_name,
+		""", (self.appointment_date, self.name, self.service_staff, self.client_name,
 		self.appointment_time, self.appointment_time,
 		self.appointment_time, self.appointment_end_time, 
 		self.appointment_time, self.appointment_end_time,
@@ -362,10 +362,12 @@ def get_events(start, end, filters=None):
 	from frappe.desk.calendar import get_event_conditions
 	conditions = get_event_conditions('Spa Appointment', filters)
 
+	events = []
 	data = frappe.db.sql("""
 		select
 		`tabSpa Appointment`.name, `tabSpa Appointment`.client_name,
-		`tabSpa Appointment`.title, `tabSpa Appointment`.spa_therapist,
+		`tabSpa Appointment`.title, `tabSpa Appointment`.service_staff,
+		`tabSpa Appointment`.payment_status,
 		`tabSpa Appointment`.appointment_status,
 		`tabSpa Appointment`.total_duration,
 		`tabSpa Appointment`.notes,
@@ -376,9 +378,29 @@ def get_events(start, end, filters=None):
 		`tabSpa Appointment`
 		where
 		(`tabSpa Appointment`.appointment_date between %(start)s and %(end)s)
-		and `tabSpa Appointment`.appointment_status != 'Cancelled' {conditions}""".format(conditions=conditions),
-		{"start": start, "end": end}, as_dict=True, update={"textColor": '#ffffff'})
+		and `tabSpa Appointment`.appointment_status != 'Draft' {conditions}""".format(conditions=conditions),
+		{"start": start, "end": end}, as_dict=True, update={"rendering": ''})
+	
+	for item in data:
+		events.append(item)
+	
+	bg_event = frappe.db.sql("""
+		select
+		`tabDay Schedule`.start_time,
+		`tabDay Schedule`.end_time,
+		`tabDay Schedule`.service_staff
 
-	return data
+		from
+		`tabDay Schedule`
+
+		where
+		(`tabDay Schedule`.date between %(start)s and %(end)s)
+		and `tabDay Schedule`.parenttype = 'Service Staff Availability' {conditions}""".format(conditions=conditions),
+		{"start": start, "end": end}, as_dict=True, update={"rendering": 'background'})
+
+	for item in bg_event:
+		events.append(item)
+
+	return events
 
 
