@@ -68,7 +68,8 @@
   "column_break_57",
   "notes",
   "section_break_59",
-  "fcm_token"
+  "fcm_token",
+  "offers_notification"
  ],
  "fields": [
   {
@@ -473,13 +474,19 @@
    "fieldtype": "Small Text",
    "hidden": 1,
    "label": "FCM Token"
+  },
+  {
+   "default": "0",
+   "fieldname": "offers_notification",
+   "fieldtype": "Check",
+   "label": "Offers"
   }
  ],
  "icon": "fa fa-user",
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2021-04-14 01:10:37.837640",
+ "modified": "2021-04-19 23:31:30.719517",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",

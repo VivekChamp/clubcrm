@@ -39,6 +39,7 @@ def transactions():
 @frappe.whitelist()
 def wallet_topup(amount):
     client = frappe.db.get("Client", {"email": frappe.session.user})
+    
     doc = frappe.get_doc({
         'doctype': 'Wallet Transaction',
         'client_id': client.name,
