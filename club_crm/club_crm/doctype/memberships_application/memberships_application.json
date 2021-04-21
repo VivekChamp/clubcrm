@@ -94,7 +94,9 @@
   "staff_notes_section",
   "notes",
   "membership_document",
-  "amended_from"
+  "amended_from",
+  "assignment_notify",
+  "new_notify"
  ],
  "fields": [
   {
@@ -709,11 +711,27 @@
    "fieldtype": "Link",
    "label": "Assigned To",
    "options": "Service Staff"
+  },
+  {
+   "default": "0",
+   "fieldname": "assignment_notify",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Assignment Notification",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "new_notify",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "New Notification",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-04-19 15:16:43.184858",
+ "modified": "2021-04-21 02:04:21.176814",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",

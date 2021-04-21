@@ -27,6 +27,7 @@ class MembershipsApplication(Document):
 		self.set_discounts_and_grand_total()
 		self.set_payment_details()
 		self.set_title()
+		# self.validate_submit()
 	
 	def before_submit(self):
 		self.check_payment()
@@ -97,19 +98,28 @@ class MembershipsApplication(Document):
 					row.category = "Child"
 	
 	def set_pricing(self):
+		self.joining_fee = 0.0
+		self.membership_fee_adult = 0.0
+		self.membership_fee_child = 0.0
+		self.total_membership_fee = 0.0
+		self.net_total = 0.0
+		
 		mem_plan = frappe.get_doc('Memberships Plan', self.membership_plan)
 		if self.application_type == "New":
 			self.joining_fee = mem_plan.joining_fee_adult * float(self.no_of_adults)
 		self.membership_fee_adult = mem_plan.membership_fee_adult * float(self.no_of_adults)
-		if self.no_of_children == 1 and self.no_of_adults == 2:
-			self.membership_fee_child = mem_plan.membership_fee_child * 2
-		else:
-			self.membership_fee_child = mem_plan.membership_fee_child * float(self.no_of_children)
+		
+		if self.membership_type == "Family Membership":
+			if self.no_of_children == 1 and self.no_of_adults == 2:
+				self.membership_fee_child = mem_plan.membership_fee_child * 2
+			else:
+				self.membership_fee_child = mem_plan.membership_fee_child * float(self.no_of_children)
 
 		self.total_membership_fee = self.membership_fee_adult + self.membership_fee_child
 		self.net_total = self.joining_fee + self.total_membership_fee
 
 	def set_discounts_and_grand_total(self):
+		self.discount_amount = 0.0
 		self.grand_total = 0.0
 		if self.discount_type == "Percentage":
 			if self.apply_discount == "On Joining Fee":
@@ -132,6 +142,7 @@ class MembershipsApplication(Document):
 
 	def set_payment_details(self):
 		self.paid_amount = 0.0
+		self.balance_amount = 0.0
 		self.total_to_be_paid = self.grand_total
 		if self.membership_payment:
 			for row in self.membership_payment:
@@ -143,6 +154,11 @@ class MembershipsApplication(Document):
 
 	def set_title(self):
 		self.title = _('{0} for {1}').format(self.first_name_1,self.membership_plan)
+
+	# def validate_submit (self):
+	# 	if self.online_application==1:
+	# 		if self.balance_amount==0.0:
+	# 			self.submit()
 
 	def create_clients(self):
 		if self.membership_type == "Single Membership":

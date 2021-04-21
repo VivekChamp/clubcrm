@@ -1,0 +1,1 @@
+{{doc.assigned_to}} has been assigned for membership application {{doc.name}}

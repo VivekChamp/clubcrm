@@ -52,13 +52,14 @@ def get_fitness_package(fitness_category):
                 sessions = int(package.no_of_sessions/4)
                 if sessions == 0:
                     sessions = 1
+                validity = int(package.validity // (24 * 3600))
                 packages.append({
                     "name": item.name,
-                    "duration": fit_category.duration,
+                    "duration": int(fit_category.duration),
                     "no_of_session": package.no_of_sessions,
-                    "validity": package.validity,
+                    "validity": validity,
                     "sessions_per_week": sessions,
-                    "price": package.price,
+                    "price": int(package.price),
                     "fitness_category": fitness_category
                 })
     

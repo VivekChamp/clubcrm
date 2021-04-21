@@ -157,6 +157,7 @@ def delete_from_cart(document_name,item_document_name):
             "date": cart.date,
             "payment_status": cart.payment_status,
             "client_id": cart.client_id,
+            "total_quantity": cart.total_quantity,
             "total_amount": cart.total_amount,
             "items": cart.order_items
         }
@@ -183,6 +184,7 @@ def get_cart(client_id):
             "date": doc.date,
             "payment_status": doc.payment_status,
             "client_id": doc.client_id,
+            "total_quantity": doc.total_quantity,
             "total_amount": doc.total_amount,
             "items": doc.order_items
         }
@@ -205,6 +207,7 @@ def checkout(client_id, payment_method):
         "cart_status": doc.order_status,
         "payment_status": doc.payment_status,
         "client_name": doc.client_name,
+        "total_quantity": doc.total_quantity,
         "total_amount": doc.total_amount,
         "wallet_balance": wallet
         }

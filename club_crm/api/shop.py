@@ -127,6 +127,7 @@ def delete_from_cart(document_name,item_document_name):
             "date": cart.created_date,
             "payment_status": cart.payment_status,
             "client_id": cart.client_id,
+            "total_quantity": cart.total_quantity,
             "total_amount": cart.total_amount,
             "items": cart.item
         }
@@ -141,7 +142,6 @@ def delete_from_cart(document_name,item_document_name):
             "status": 0
         }
 
-
 @frappe.whitelist()         
 def get_cart(client_id):
     cart= frappe.get_list('Online Order', filters={'client_id':client_id, 'cart_status': 'Cart'}, fields=['*'])
@@ -154,6 +154,7 @@ def get_cart(client_id):
             "date": doc.created_date,
             "payment_status": doc.payment_status,
             "client_id": doc.client_id,
+            "total_quantity": doc.total_quantity,
             "total_amount": doc.total_amount,
             "items": doc.item
         }
@@ -172,6 +173,7 @@ def get_cart(client_id):
 @frappe.whitelist()
 def checkout(client_id, payment_method):
     cart= frappe.get_list('Online Order', filters={'client_id':client_id, 'cart_status': 'Cart'}, fields=['*'])
+    cart = add_cart_from_spa(doc.client_id, doc.name)
     if cart:
         cart_1=cart[0]
         doc = frappe.get_doc('Online Order', cart_1.name)
@@ -183,6 +185,7 @@ def checkout(client_id, payment_method):
         "cart_status": doc.cart_status,
         "payment_status": doc.payment_status,
         "client_name": doc.client_name,
+        "total_quantity": doc.total_quantity,
         "total_amount": doc.total_amount,
         "wallet_balance": wallet
         } 

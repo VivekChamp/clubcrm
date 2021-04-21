@@ -1,0 +1,29 @@
+{
+ "attach_print": 0,
+ "channel": "SMS",
+ "condition": "doc.application_status==\"Pending\" and doc.assigned_to != \"\" and doc.assignment_notify==0",
+ "creation": "2021-04-21 02:12:47.902529",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Memberships Application",
+ "enabled": 1,
+ "event": "Save",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "{{doc.assigned_to}} has been assigned for membership application {{doc.name}}",
+ "modified": "2021-04-21 02:12:47.902529",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Alert on CEC assignment",
+ "owner": "Administrator",
+ "property_value": "1",
+ "recipients": [
+  {
+   "receiver_by_role": "CE Staff"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "set_property_after_alert": "assignment_notify"
+}

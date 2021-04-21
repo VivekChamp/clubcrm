@@ -1,0 +1,1 @@
+A new membership application has been received from {{doc.first_name_1}} {{doc.last_name_1}}

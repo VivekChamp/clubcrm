@@ -27,25 +27,27 @@ class PaymentLog(Document):
 				"mode_of_payment": "Online Payment",
 				"paid_amount": float(self.auth_amount)
 			})
-			frappe.db.set_value('Memberships Application', self.req_reference_number, 'payment_status', 'Paid')
-			# doc.save()
-			frappe.db.commit()
+			doc.payment_status = 'Paid'
+			doc.save(ignore_permissions=True)
 		
 		if re.match(cart, self.req_reference_number):
 			doc = frappe.get_doc("Cart", str(self.req_reference_number))
+			
 			doc.append('payment_table', {
 				"mode_of_payment": "Online Payment",
 				"paid_amount": float(self.auth_amount)
 			})
-			doc.payment_status = "Paid"
-			doc.save()
-			frappe.db.commit()
+			doc.payment_status = 'Paid'
+			doc.save(ignore_permissions=True)
 		
 		if re.match(wallet, self.req_reference_number):
 			doc = frappe.get_doc("Wallet Transaction", str(self.req_reference_number))
-			frappe.db.set_value('Wallet Transaction', self.req_reference_number, 'transaction_status', 'Complete')
-			frappe.db.set_value('Wallet Transaction', self.req_reference_number, 'transaction_reference', self.name)
-			frappe.db.set_value('Wallet Transaction', self.req_reference_number, 'docstatus', 1)
+			
+			frappe.db.set_value('Wallet Transaction', self.req_reference_number, {
+            'transaction_status': 'Complete',
+            'transaction_reference': self.name,
+			'docstatus' : 1
+        	})
 			frappe.db.commit()
 
 @frappe.whitelist()
