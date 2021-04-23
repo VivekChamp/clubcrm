@@ -269,6 +269,7 @@ def create_membership(mem_application_id):
 		doc.assigned_to_2 = mem_app.assigned_to
 	if mem_app.membership_type == "Family Membership":
 		doc.client_id_2 = mem_app.client_id_2
+		doc.assigned_to_2 = mem_app.assigned_to
 		for row in mem_app.additional_members:
 			child = doc.append("additional_members_item", {})
 			child.client_id = row.client_id

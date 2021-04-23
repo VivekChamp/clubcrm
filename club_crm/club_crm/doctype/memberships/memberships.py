@@ -8,6 +8,7 @@ import datetime
 from frappe import _
 from datetime import datetime, timedelta
 from frappe.utils import getdate, get_time, flt
+from frappe.model.naming import make_autoname
 from club_crm.club_crm.doctype.client_sessions.client_sessions import create_sessions
 from frappe.model.document import Document
 
@@ -15,13 +16,22 @@ class Memberships(Document):
 	# Remove after membership data upload
 	# def after_insert(self):
 	# 	self.create_client_sessions()
+	def before_insert(self):
+		if self.memberships_type == "New":
+			if self.membership_type == "Single Membership":
+				self.membership_id = make_autoname("S-.#####")
+			if self.membership_type == "Couple Membership":
+				self.membership_id = make_autoname("C-.#####")
+			if self.membership_type == "Family Membership":
+				self.membership_id = make_autoname("F-.#####")
 
 	def validate(self):
 		self.set_expiry()
-		self.set_membership_number()
+		# self.set_membership_number()
 		self.set_title()
 		self.set_status()
 		self.set_member_number()
+		self.set_membership_history()
 
 	def set_expiry(self):
 		if type(self.start_date) == str:
@@ -67,6 +77,9 @@ class Memberships(Document):
 			frappe.db.set_value('Client', self.client_id_2, 'membership_id', self.membership_id)
 		
 		if self.membership_type == "Family Membership":
+			frappe.db.set_value('Client', self.client_id_2, 'member_id', self.member_no_2)
+			frappe.db.set_value('Client', self.client_id_2, 'card_no', self.card_no_2)
+			frappe.db.set_value('Client', self.client_id_2, 'membership_id', self.membership_id)
 			for row in self.additional_members_item:
 				frappe.db.set_value('Client', row.client_id, 'member_id', row.member_no)
 				frappe.db.set_value('Client', row.client_id, 'card_no', row.card_no)
@@ -98,6 +111,90 @@ class Memberships(Document):
 						age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
 						if age >= 18:
 							create_sessions(row.client_id,mem_plan.benefits_item,start_date,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+
+	def set_membership_history(self):
+		client_1 = frappe.get_doc('Client', self.client_id_1)
+
+		match = False
+		for entry in client_1.membership_history:
+			if self.name == entry.membership:
+				match = True
+				entry.membership_plan = self.membership_plan,
+				entry.start_date = self.start_date,
+				entry.end_date = self.expiry_date,
+				entry.status = self.membership_status
+		if not match:
+			client_1.append('membership_history', {
+			"membership": self.name,
+			"membership_plan": self.membership_plan,
+			"start_date": self.start_date,
+			"end_date": self.expiry_date,
+			"status": self.membership_status
+			})
+		client_1.save()
+
+		if self.membership_type == "Couple Membership":
+			client_2 = frappe.get_doc('Client', self.client_id_2)
+
+			match = False
+			for entry in client_2.membership_history:
+				if self.name == entry.membership:
+					match = True
+					entry.membership_plan = self.membership_plan,
+					entry.start_date = self.start_date,
+					entry.end_date = self.expiry_date,
+					entry.status = self.membership_status
+			if not match:
+				client_2.append('membership_history', {
+				"membership": self.name,
+				"membership_plan": self.membership_plan,
+				"start_date": self.start_date,
+				"end_date": self.expiry_date,
+				"status": self.membership_status
+				})
+			client_2.save()
+
+		if self.membership_type == "Family Membership":
+			client_2 = frappe.get_doc('Client', self.client_id_2)
+
+			match = False
+			for entry in client_2.membership_history:
+				if self.name == entry.membership:
+					match = True
+					entry.membership_plan = self.membership_plan,
+					entry.start_date = self.start_date,
+					entry.end_date = self.expiry_date,
+					entry.status = self.membership_status
+			if not match:
+				client_2.append('membership_history', {
+				"membership": self.name,
+				"membership_plan": self.membership_plan,
+				"start_date": self.start_date,
+				"end_date": self.expiry_date,
+				"status": self.membership_status
+				})
+			client_2.save()
+			
+			for row in self.additional_members_item:
+				client = frappe.get_doc('Client', row.client_id)
+
+				match = False
+				for entry in client.membership_history:
+					if self.name == entry.membership:
+						match = True
+						entry.membership_plan = self.membership_plan,
+						entry.start_date = self.start_date,
+						entry.end_date = self.expiry_date,
+						entry.status = self.membership_status
+				if not match:
+					client.append('membership_history', {
+					"membership": self.name,
+					"membership_plan": self.membership_plan,
+					"start_date": self.start_date,
+					"end_date": self.expiry_date,
+					"status": self.membership_status
+					})
+				client.save()
 		
 @frappe.whitelist()
 def activate_membership(appointment_id):
@@ -118,3 +215,10 @@ def update_membership_status():
 
 	for membership in memberships:
 		frappe.get_doc('Memberships', membership.name).set_status()
+
+
+
+@frappe.whitelist()
+def make_autoname():
+	s = make_autoname("S-.#####")
+	return s

@@ -42,14 +42,16 @@
   "notification_preference",
   "apply_membership",
   "mem_application",
+  "membership_details_section",
+  "membership_history",
+  "sb_relation",
+  "client_relation",
   "allergy_and_medical_history",
   "allergies",
   "medication",
   "column_break_20",
   "medical_history",
   "other_notes",
-  "sb_relation",
-  "client_relation",
   "customer_details_section",
   "customer",
   "customer_group",
@@ -247,7 +249,6 @@
   {
    "fieldname": "client_relation",
    "fieldtype": "Table",
-   "label": "Client Relation",
    "options": "Client Relation"
   },
   {
@@ -479,14 +480,25 @@
    "default": "0",
    "fieldname": "offers_notification",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Offers"
+  },
+  {
+   "fieldname": "membership_details_section",
+   "fieldtype": "Section Break",
+   "label": "Membership Details"
+  },
+  {
+   "fieldname": "membership_history",
+   "fieldtype": "Table",
+   "options": "Membership History"
   }
  ],
  "icon": "fa fa-user",
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2021-04-19 23:31:30.719517",
+ "modified": "2021-04-22 14:39:08.569844",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",

@@ -15,6 +15,7 @@
   "primary_client_id",
   "primary_client_name",
   "column_break_7",
+  "memberships_type",
   "membership_plan",
   "membership_type",
   "membership_category",
@@ -22,6 +23,7 @@
   "membership_status",
   "duration",
   "column_break_15",
+  "membership_id_series",
   "membership_id",
   "start_date",
   "actual_expiry_date",
@@ -302,6 +304,7 @@
    "default": "0.0",
    "fieldname": "total_amount",
    "fieldtype": "Currency",
+   "hidden": 1,
    "label": "Total Membership Amount ",
    "read_only": 1
   },
@@ -361,10 +364,24 @@
   {
    "fieldname": "column_break_47",
    "fieldtype": "Column Break"
+  },
+  {
+   "default": "New",
+   "fieldname": "memberships_type",
+   "fieldtype": "Select",
+   "label": "Membership Type",
+   "options": "New\nRenew",
+   "read_only": 1
+  },
+  {
+   "fieldname": "membership_id_series",
+   "fieldtype": "Select",
+   "label": "Membership ID Series",
+   "options": "S.#####\nC.#####\nF.#####"
   }
  ],
  "links": [],
- "modified": "2021-04-20 01:40:26.929087",
+ "modified": "2021-04-21 20:49:52.166250",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships",
@@ -383,7 +400,6 @@
    "write": 1
   }
  ],
- "show_preview_popup": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "title_field": "title",
