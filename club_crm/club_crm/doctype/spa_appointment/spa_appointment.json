@@ -469,11 +469,11 @@
    "bold": 1,
    "fieldname": "net_total",
    "fieldtype": "Currency",
+   "in_list_view": 1,
    "label": "Net Total",
    "read_only": 1
   },
   {
-   "bold": 1,
    "fieldname": "grand_total",
    "fieldtype": "Currency",
    "hidden": 1,
@@ -616,7 +616,7 @@
   }
  ],
  "links": [],
- "modified": "2021-04-16 17:48:55.070971",
+ "modified": "2021-04-27 11:25:24.031833",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Appointment",

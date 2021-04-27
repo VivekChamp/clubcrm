@@ -21,34 +21,35 @@ class PaymentLog(Document):
 		cart = "^CART-[0-9]{4,4}-[0-9]{5,5}$"
 		wallet = "^WALL-[0-9]{4,4}-[0-9]{5,5}$"
 
-		if re.match(membership_application, self.req_reference_number):
-			doc = frappe.get_doc("Memberships Application", str(self.req_reference_number))
-			doc.append('membership_payment', {
-				"mode_of_payment": "Online Payment",
-				"paid_amount": float(self.auth_amount)
-			})
-			doc.payment_status = 'Paid'
-			doc.save(ignore_permissions=True)
-		
-		if re.match(cart, self.req_reference_number):
-			doc = frappe.get_doc("Cart", str(self.req_reference_number))
+		if self.decision == "ACCEPT" and self.req_amount == self.auth_amount:
+			if re.match(membership_application, self.req_reference_number):
+				doc = frappe.get_doc("Memberships Application", str(self.req_reference_number))
+				doc.append('membership_payment', {
+					"mode_of_payment": "Online Payment",
+					"paid_amount": float(self.auth_amount)
+				})
+				doc.payment_status = 'Paid'
+				doc.save(ignore_permissions=True)
 			
-			doc.append('payment_table', {
-				"mode_of_payment": "Online Payment",
-				"paid_amount": float(self.auth_amount)
-			})
-			doc.payment_status = 'Paid'
-			doc.save(ignore_permissions=True)
-		
-		if re.match(wallet, self.req_reference_number):
-			doc = frappe.get_doc("Wallet Transaction", str(self.req_reference_number))
+			if re.match(cart, self.req_reference_number):
+				doc = frappe.get_doc("Cart", str(self.req_reference_number))
+				
+				doc.append('payment_table', {
+					"mode_of_payment": "Online Payment",
+					"paid_amount": float(self.auth_amount)
+				})
+				doc.payment_status = 'Paid'
+				doc.save(ignore_permissions=True)
 			
-			frappe.db.set_value('Wallet Transaction', self.req_reference_number, {
-            'transaction_status': 'Complete',
-            'transaction_reference': self.name,
-			'docstatus' : 1
-        	})
-			frappe.db.commit()
+			if re.match(wallet, self.req_reference_number):
+				doc = frappe.get_doc("Wallet Transaction", str(self.req_reference_number))
+				
+				frappe.db.set_value('Wallet Transaction', self.req_reference_number, {
+				'transaction_status': 'Complete',
+				'transaction_reference': self.name,
+				'docstatus' : 1
+				})
+				frappe.db.commit()
 
 @frappe.whitelist()
 def update_payment(docname, amount):

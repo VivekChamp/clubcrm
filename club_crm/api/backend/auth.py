@@ -17,16 +17,21 @@ def login(usr,pwd):
                 "message":"Authentication Failed"
                 }
         return
-    frappe.errprint(frappe.session)
     api_generate=generate_keys(frappe.session.user)
     roles = frappe.get_roles()
     user=frappe.get_doc('User',frappe.session.user)
-    frappe.clear_messages()
     frappe.response["message"]={
             "success_key":1,
             "sid": frappe.session.sid,
-            "User Details":{"Email":user.name,"Full Name":user.full_name,"Is employee":user.is_employee,"Gender":user.gender,"Mobile No":user.mobile_no,"api key":user.api_key},
-            "api secret":api_generate,
+            "User Details":{
+                "Email":user.name,
+                "Full Name":user.full_name,
+                "Is employee":user.is_employee,
+                "Gender":user.gender,
+                "Mobile No":user.mobile_no,
+                "api key":user.api_key,
+                "api secret":api_generate
+            },
             "Roles":roles
             }
     return

@@ -185,6 +185,7 @@ frappe.ui.form.on('Memberships Application', {
                     indicator: 'green',
                     message: __('Membership Created successfully')
                 });
+                frm.save()
             });
         }
         if (frm.doc.membership_document) {

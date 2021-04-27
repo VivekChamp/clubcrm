@@ -52,6 +52,7 @@
   {
    "fieldname": "send_notification",
    "fieldtype": "Button",
+   "hidden": 1,
    "label": "Send",
    "options": "send_notification"
   }
@@ -59,7 +60,7 @@
  "hide_toolbar": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-04-15 22:36:13.388722",
+ "modified": "2021-04-26 15:45:34.786156",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Push Notification Center",

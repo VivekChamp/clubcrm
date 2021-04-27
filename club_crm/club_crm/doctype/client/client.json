@@ -27,6 +27,7 @@
   "member_id",
   "card_no",
   "membership_id",
+  "assigned_to",
   "primary_member",
   "image",
   "other_details_section",
@@ -243,7 +244,6 @@
    "collapsible": 1,
    "fieldname": "sb_relation",
    "fieldtype": "Section Break",
-   "hidden": 1,
    "label": "Client Relation"
   },
   {
@@ -305,7 +305,8 @@
    "in_standard_filter": 1,
    "label": "Membership Status",
    "no_copy": 1,
-   "options": "Non-Member\nMember"
+   "options": "Non-Member\nMember",
+   "read_only": 1
   },
   {
    "fieldname": "nationality",
@@ -338,7 +339,6 @@
    "allow_in_quick_entry": 1,
    "fieldname": "mobile_no",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Mobile",
    "length": 8,
@@ -366,7 +366,6 @@
    "default": "0",
    "fieldname": "apply_membership",
    "fieldtype": "Check",
-   "hidden": 1,
    "label": "Applied for Membership"
   },
   {
@@ -458,6 +457,7 @@
   {
    "fieldname": "membership_id",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Membership Number",
    "read_only": 1
   },
@@ -492,13 +492,19 @@
    "fieldname": "membership_history",
    "fieldtype": "Table",
    "options": "Membership History"
+  },
+  {
+   "fieldname": "assigned_to",
+   "fieldtype": "Data",
+   "label": "Assigned to",
+   "read_only": 1
   }
  ],
  "icon": "fa fa-user",
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2021-04-22 14:39:08.569844",
+ "modified": "2021-04-25 23:47:18.285453",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",
@@ -632,7 +638,6 @@
  "quick_entry": 1,
  "search_fields": "client_name,mobile_no,member_id",
  "show_name_in_global_search": 1,
- "show_preview_popup": 1,
  "sort_field": "client_name",
  "sort_order": "ASC",
  "title_field": "client_name",

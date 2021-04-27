@@ -23,7 +23,6 @@
   "membership_status",
   "duration",
   "column_break_15",
-  "membership_id_series",
   "membership_id",
   "start_date",
   "actual_expiry_date",
@@ -91,12 +90,11 @@
   },
   {
    "fieldname": "membership_id",
-   "fieldtype": "Int",
+   "fieldtype": "Data",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Membership ID",
-   "length": 6,
-   "read_only": 1
+   "length": 6
   },
   {
    "fieldname": "membership_application",
@@ -372,16 +370,10 @@
    "label": "Membership Type",
    "options": "New\nRenew",
    "read_only": 1
-  },
-  {
-   "fieldname": "membership_id_series",
-   "fieldtype": "Select",
-   "label": "Membership ID Series",
-   "options": "S.#####\nC.#####\nF.#####"
   }
  ],
  "links": [],
- "modified": "2021-04-21 20:49:52.166250",
+ "modified": "2021-04-24 01:02:06.777439",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships",

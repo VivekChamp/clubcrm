@@ -54,6 +54,7 @@ class PushNotificationCenter(Document):
 					response = requests.post("https://fcm.googleapis.com/fcm/send",headers = headers, data=json.dumps(body))
 				frappe.msgprint(msg='Push Notification sent successfully')
 
+@frappe.whitelist()
 def send_push_notification(client_id,title,message):
 	server_key = frappe.db.get_value("Push Notification Settings",None,"server_token")
 	client = frappe.get_doc("Client", client_id)
@@ -72,5 +73,6 @@ def send_push_notification(client_id,title,message):
 		'priority': 'high',
 	}
 	response = requests.post("https://fcm.googleapis.com/fcm/send",headers = headers, data=json.dumps(body))
+	frappe.msgprint(msg='Push Notification sent successfully')
 
  

@@ -216,7 +216,8 @@
    "reqd": 1
   },
   {
-   "fetch_from": "membership_application.nationality",
+   "fetch_from": "client_id.nationality",
+   "fetch_if_empty": 1,
    "fieldname": "nationality_1",
    "fieldtype": "Link",
    "label": "Nationality",
@@ -315,7 +316,8 @@
    "mandatory_depends_on": "eval:doc.membership_type!= \"Single Membership\""
   },
   {
-   "fetch_from": "membership_application.nationality",
+   "fetch_from": "client_id.nationality",
+   "fetch_if_empty": 1,
    "fieldname": "nationality_2",
    "fieldtype": "Link",
    "label": "Nationality",
@@ -456,7 +458,7 @@
   {
    "fieldname": "notes",
    "fieldtype": "Small Text",
-   "label": "Notes"
+   "label": "Note to Customer (in case of rejection)"
   },
   {
    "allow_on_submit": 1,
@@ -677,8 +679,7 @@
   },
   {
    "fieldname": "staff_notes_section",
-   "fieldtype": "Section Break",
-   "label": "Staff Notes"
+   "fieldtype": "Section Break"
   },
   {
    "allow_on_submit": 1,
@@ -693,8 +694,10 @@
   {
    "fieldname": "membership_document",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Membership Document",
-   "options": "Memberships"
+   "options": "Memberships",
+   "read_only": 1
   },
   {
    "fieldname": "amended_from",
@@ -730,7 +733,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-04-21 20:26:38.673898",
+ "modified": "2021-04-26 14:50:46.550519",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",

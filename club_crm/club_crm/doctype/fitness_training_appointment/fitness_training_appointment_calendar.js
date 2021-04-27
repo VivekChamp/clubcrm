@@ -5,7 +5,7 @@ frappe.views.calendar["Fitness Training Appointment"] = {
 		"title": "title",
 		"allDay": "allDay",
 		"description": "notes",
-		"resourceId": "fitness_trainer",
+		"resourceId": "service_staff",
 		"color": "color",
 		"eventTextColor": "textColor"
 	},

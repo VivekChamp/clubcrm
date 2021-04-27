@@ -133,7 +133,31 @@ frappe.ui.form.on('Client', {
 				});
 		 	});
 		}
-		
+
+		frm.fields_dict["membership_history"].$wrapper.find('.grid-body .rows').find(".grid-row").each(function(i, item) {
+			let d = locals[frm.fields_dict["membership_history"].grid.doctype][$(item).attr('data-name')];
+			if(d["status"] === "Active"){
+				$(item).find('.grid-static-col').css({'background-color': '#defdf2'});
+			}
+		});
 	}
 });
+
+// frappe.ui.form.on("Client", "onload", function(frm) {
+// 	if(frm.doc.membership_status == "Member") {
+// 		$('div[data-fieldname="membership_status"]').css('background-color','#e2fff0')
+// 	}
+// 	if(frm.doc.membership_status == "Non-Member") {
+// 		$('div[data-fieldname="membership_status"]').css('background-color','#ffe2e2')
+// 	}
+// });
+
+// var color_it = function(frm) {	
+// 	if(frm.doc.membership_status == "Member") {
+// 		document.querySelectorAll("[data-fieldname='membership_status']")[1].style.color="red";
+// 	}
+// }
+
+
+
 

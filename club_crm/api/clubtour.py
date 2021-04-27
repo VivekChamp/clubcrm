@@ -31,14 +31,15 @@ def get_schedule():
 
 @frappe.whitelist()         
 def get_status(client_id):
-    doc= frappe.get_all('Club Tour', filters={'client_id':client_id,'tour_status': "Pending"}, fields=["*"])
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    doc= frappe.get_all('Club Tour', filters={'client_id':client.name,'tour_status': "Pending"}, fields=["*"])
     if doc:
         frappe.response["message"] = {
             "Status": 0,
             "Status Message": "Pending"
         }
     else:
-        doc= frappe.get_all('Club Tour', filters={'client_id':client_id,'tour_status': "Scheduled"}, fields=["*"])
+        doc= frappe.get_all('Club Tour', filters={'client_id':client.name,'tour_status': "Scheduled"}, fields=["*"])
         if doc:
             doc_1= doc[0]
             frappe.response["message"] = {
@@ -50,12 +51,13 @@ def get_status(client_id):
 
 @frappe.whitelist()
 def create_clubtour(client_id,date,time):
+    client = frappe.db.get("Client", {"email": frappe.session.user})
     doc = frappe.get_doc({
         'doctype': 'Club Tour',
-        'client_id': client_id,
+        'client_id': client.name,
         'preferred_date': date,
         'preferred_time_between': time
-            })
+        })
     doc.save()
     frappe.response["message"] = {
             "Status":1,

@@ -36,6 +36,12 @@ class MembershipsApplication(Document):
 		self.create_clients()
 		self.update_client_details()
 
+	def on_cancel(self):
+		frappe.db.set_value('Memberships Application', self.name, {
+			'workflow_status': 'Cancelled',
+			'application_status': 'Cancelled'
+		})
+
 	def check_existing_application(self):
 		mem_app = frappe.get_all('Memberships Application', filters={'qatar_id_1':self.qatar_id_1,'application_status':"Pending"})
 		if mem_app:
@@ -154,11 +160,6 @@ class MembershipsApplication(Document):
 
 	def set_title(self):
 		self.title = _('{0} for {1}').format(self.first_name_1,self.membership_plan)
-
-	# def validate_submit (self):
-	# 	if self.online_application==1:
-	# 		if self.balance_amount==0.0:
-	# 			self.submit()
 
 	def create_clients(self):
 		if self.membership_type == "Single Membership":

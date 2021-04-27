@@ -248,31 +248,45 @@ class SpaAppointment(Document):
 def update_appointment_status():
 	# update the status of appointments daily
 	today = getdate()
-	appointments = frappe.get_all('Spa Appointment', filters={'appointment_status': ('not in', ['Draft', 'Complete', 'Cancelled', 'Checked-in', 'No Show']), 'docstatus': 0})
-
+	appointments = frappe.get_all('Spa Appointment', filters={'appointment_status': ('not in', ['Draft', 'Complete', 'Cancelled', 'Checked-in', 'No Show']), 'docstatus': 0}, fields=['name','appointment_status','online','appointment_date'])
 	for appointment in appointments:
-		spa_app = frappe.get_doc('Spa Appointment', appointment.name)
-		appointment_date = getdate(spa_app.appointment_date)
+		# spa_app = frappe.get_doc('Spa Appointment', appointment.name)
+		appointment_date = getdate(appointment.appointment_date)
+
 		# If appointment is created for today set status as Open else Scheduled (only for offline booking)
-		if spa_app.appointment_status=="Scheduled" or spa_app.appointment_status =="Open":
-			if spa_app.online==0:
+		if appointment.appointment_status=="Scheduled" or appointment.appointment_status =="Open":
+			if appointment.online==0:
 				if appointment_date == today:
-					spa_app.appointment_status = 'Open'
+					frappe.db.set_value('Spa Appointment', appointment.name, 'appointment_status', 'Open')
+					frappe.db.commit()
 				elif appointment_date > today:
-					spa_app.appointment_status = 'Scheduled'
+					frappe.db.set_value('Spa Appointment', appointment.name, 'appointment_status', 'Scheduled')
+					frappe.db.commit()
 				elif appointment_date < today:
-					spa_app.appointment_status = 'No Show'
+					frappe.db.set_value('Spa Appointment', appointment.name, 'appointment_status', 'No Show')
+					frappe.db.commit()
+
 			elif appointment.online==1:
-				if spa_app.payment_status=="Paid":
-					if appointment_date == today:
-						spa_app.appointment_status = 'Open'
-					elif appointment_date > today:
-						spa_app.appointment_status = 'Scheduled'
-					elif appointment_date < today:
-						spa_app.appointment_status = 'No Show'
+				if appointment_date == today:
+					frappe.db.set_value('Spa Appointment', appointment.name, 'appointment_status', 'Open')
+					frappe.db.commit()
+				elif appointment_date > today:
+					frappe.db.set_value('Spa Appointment', appointment.name, 'appointment_status', 'Scheduled')
+					frappe.db.commit()
+				elif appointment_date < today:
+					frappe.db.set_value('Spa Appointment', appointment.name, 'appointment_status', 'No Show')
+					frappe.db.commit()
 				else:
-					spa_app.appointment_status = 'Draft'
-			spa_app.save()
+					frappe.db.set_value('Spa Appointment', appointment.name, 'appointment_status', 'No Show')
+					frappe.db.commit()
+	
+	for membership in memberships:
+		mem = frappe.get_doc('Memberships', membership.name)
+		expiry_date = getdate(mem.expiry_date)
+		# If expiry date is past, set membership status as expired
+		if expiry_date < today:
+			frappe.db.set_value('Memberships', membership.name, 'membership_status', 'Expired')
+			frappe.db.commit()
 
 # def invoice_appointment(appointment_doc):
 # 	if appointment_doc.payment_status=="Paid":

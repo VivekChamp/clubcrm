@@ -9,7 +9,7 @@ frappe.ui.form.on("Fitness Training Appointment", "onload", function(frm){
 		}
 	});
     // Filter service staff for fitness appointment
-    frm.set_query("fitness_trainer", function(){
+    frm.set_query("service_staff", function(){
 	    return {
 			"filters": [["Service Staff", "fitness_check", "=", "1"]]
 		}

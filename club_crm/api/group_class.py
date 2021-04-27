@@ -32,7 +32,8 @@ def get_group_class():
 
 @frappe.whitelist()
 def create_attendee(client_id, class_id):
-    check = frappe.get_all('Group Class Attendees', filters={'group_class':class_id, 'docstatus':1, 'client_id':client_id})
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    check = frappe.get_all('Group Class Attendees', filters={'group_class':class_id, 'docstatus':1, 'client_id':client.name})
     
     if check:
         frappe.response["message"] = {
@@ -44,7 +45,7 @@ def create_attendee(client_id, class_id):
         doc= frappe.get_doc({
             'doctype': 'Group Class Attendees',
             'group_class': class_id,
-            'client_id': client_id,
+            'client_id': client.name,
             'class_status': "Scheduled"
             })
         doc.insert()
@@ -56,7 +57,8 @@ def create_attendee(client_id, class_id):
 
 @frappe.whitelist()
 def get_details(client_id):
-    doc = frappe.get_all('Group Class Attendees', filters={'client_id':client_id,'docstatus':1}, fields=['name','group_class','group_class_name','trainer_name','class_status','class_date','from_time','to_time'])
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    doc = frappe.get_all('Group Class Attendees', filters={'client_id':client.name,'docstatus':1}, fields=['name','group_class','group_class_name','trainer_name','class_status','class_date','from_time','to_time'])
     details=[]
     if doc:
         for rating in doc:

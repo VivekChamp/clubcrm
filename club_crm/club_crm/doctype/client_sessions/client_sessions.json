@@ -37,7 +37,8 @@
   "notes",
   "column_break_26",
   "extension",
-  "extension_notes"
+  "extension_notes",
+  "membership_no"
  ],
  "fields": [
   {
@@ -107,7 +108,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Session Status",
-   "options": "Active\nExpired\nComplete\nOn Hold",
+   "options": "Draft\nActive\nExpired\nComplete\nOn Hold",
    "read_only": 1
   },
   {
@@ -226,7 +227,6 @@
    "fieldtype": "Dynamic Link",
    "label": "Service Name",
    "options": "service_type",
-   "read_only": 1,
    "reqd": 1
   },
   {
@@ -265,10 +265,15 @@
    "hidden": 1,
    "label": "Package Type",
    "read_only": 1
+  },
+  {
+   "fieldname": "membership_no",
+   "fieldtype": "Data",
+   "label": "Membership No"
   }
  ],
  "links": [],
- "modified": "2021-04-13 01:46:57.328309",
+ "modified": "2021-04-26 16:34:32.783596",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client Sessions",

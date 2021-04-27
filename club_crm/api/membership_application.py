@@ -6,12 +6,13 @@ from frappe import throw, msgprint, _
 
 @frappe.whitelist()
 def apply_single(client_id,membership_plan,qatar_id,nationality,occupation,company,front_qid_filedata,back_qid_filedata,how_did):
+    client = frappe.db.get("Client", {"email": frappe.session.user})
     doc = frappe.get_doc({
         'doctype': 'Memberships Application',
         'online_application': 1,
         'application_status': 'Pending',
         'workflow_status':'Draft',
-        'client_id': client_id,
+        'client_id': client.name,
         'membership_category' : 'Standard',
         'membership_plan': membership_plan,
         'qatar_id_1': qatar_id,
@@ -28,8 +29,8 @@ def apply_single(client_id,membership_plan,qatar_id,nationality,occupation,compa
     doc.workflow_status = 'Pending'
     doc.save()
 
-    frappe.db.set_value('Client',client_id,'apply_membership','1')
-    frappe.db.set_value('Client',client_id,'mem_application',doc.name)
+    frappe.db.set_value('Client', client.name,'apply_membership','1')
+    frappe.db.set_value('Client', client.name,'mem_application',doc.name)
     frappe.db.commit()
     frappe.response["message"] = {
         "Status": 1,
@@ -80,10 +81,11 @@ def check_status(mem_application):
 
 @frappe.whitelist()
 def apply_couple(client_id,membership_plan,qatar_id_1,nationality_1,occupation_1,company_1,how_did,first_name_2,last_name_2,mobile_no_2,email_2,occupation_2,birth_date_2,gender_2,nationality_2,company_2,qatar_id_2,relation_2,front_qid_1,back_qid_1,front_qid_2,back_qid_2):
+    client = frappe.db.get("Client", {"email": frappe.session.user})
     doc = frappe.get_doc({
         'doctype': 'Memberships Application',
         'online_application': 1,
-        'client_id': client_id,
+        'client_id': client.name,
         'application_status': 'Pending',
         'workflow_status':'Draft',
         'membership_category' : 'Standard',
@@ -117,8 +119,8 @@ def apply_couple(client_id,membership_plan,qatar_id_1,nationality_1,occupation_1
     doc.workflow_status = 'Pending'
     doc.save()
 
-    frappe.db.set_value('Client',client_id,'apply_membership','1')
-    frappe.db.set_value('Client',client_id,'mem_application',doc.name)
+    frappe.db.set_value('Client', client.name,'apply_membership','1')
+    frappe.db.set_value('Client', client.name,'mem_application',doc.name)
     frappe.db.commit()
     frappe.response["message"] = {
         "Status": 1,
@@ -128,12 +130,13 @@ def apply_couple(client_id,membership_plan,qatar_id_1,nationality_1,occupation_1
 
 @frappe.whitelist()
 def apply_family_1(client_id,membership_plan,qatar_id_1,nationality_1,occupation_1,company_1,how_did,first_name_2,last_name_2,mobile_no_2,email_2,occupation_2,birth_date_2,gender_2,nationality_2,company_2,qatar_id_2,relation_2,front_qid_1,back_qid_1,front_qid_2,back_qid_2):
+    client = frappe.db.get("Client", {"email": frappe.session.user})
     doc = frappe.get_doc({
         'doctype': 'Memberships Application',
         'online_application': 1,
         'application_status': 'Draft',
         'workflow_status':'Draft',
-        'client_id': client_id,
+        'client_id': client.name,
         'membership_category' : 'Standard',
         'membership_plan': membership_plan,
         'qatar_id_1': qatar_id_1,

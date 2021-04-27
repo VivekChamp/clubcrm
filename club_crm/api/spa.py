@@ -37,7 +37,8 @@ def get_spa_item(spa_category):
 @frappe.whitelist()
 def get_therapist(spa_item, client_id):
     spa = frappe.get_doc('Spa Services', spa_item)
-    client = frappe.get_doc('Client', client_id)
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    # client = frappe.get_doc('Client', client_id)
     spa_therapists = frappe.get_all('Spa Services Assignment', filters={'spa_group':spa.spa_group, 'on_app':1}, fields=['name','parent','parenttype','parentfield','spa_group'])
 
     therapist=[]
@@ -61,11 +62,12 @@ def get_therapist(spa_item, client_id):
 
 @frappe.whitelist()
 def get_details(client_id):
+    client = frappe.db.get("Client", {"email": frappe.session.user})
     time = frappe.get_doc('Spa Settings')
     if time.spa_cancellation_time and int(time.spa_cancellation_time) > 0:
         b = int(int(time.spa_cancellation_time)/3600)
 
-    doc = frappe.get_all('Spa Appointment', filters={'client_id':client_id, 'appointment_status':['not in',{'Cancelled','No Show'}]}, fields=['name','spa_service','total_service_duration','appointment_status','payment_status','appointment_date','appointment_time', 'start_time','default_price','service_staff'], order_by="appointment_date asc")
+    doc = frappe.get_all('Spa Appointment', filters={'client_id':client.name, 'appointment_status':['not in',{'Cancelled','No Show'}]}, fields=['name','spa_service','total_service_duration','appointment_status','payment_status','appointment_date','appointment_time', 'start_time','default_price','service_staff'], order_by="appointment_date asc")
     details = []
     if doc:
         for rating in doc:
@@ -110,11 +112,12 @@ def get_details(client_id):
 
 @frappe.whitelist()
 def book_spa(client_id, spa_item, therapist_name, date, time, any_surgeries,payment_method):
+    client = frappe.db.get("Client", {"email": frappe.session.user})
     start_time = datetime.combine(getdate(date), get_time(time))
     doc = frappe.get_doc({
         'doctype': 'Spa Appointment',
         'online': '1',
-        'client_id': client_id,
+        'client_id': client.name,
         'spa_service': spa_item,
         'appointment_status': "Draft",
         'service_staff': therapist_name,

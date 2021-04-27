@@ -17,7 +17,7 @@
    "fieldname": "membership",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Membership",
+   "label": "Document #",
    "options": "Memberships",
    "read_only": 1
   },
@@ -57,7 +57,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-04-21 20:21:35.768691",
+ "modified": "2021-04-24 20:59:36.412906",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Membership History",

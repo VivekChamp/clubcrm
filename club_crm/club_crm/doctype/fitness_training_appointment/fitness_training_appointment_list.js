@@ -1,5 +1,5 @@
 frappe.listview_settings['Fitness Training Appointment'] = {
-	add_fields: ["title", "appointment_status", "fitness_trainer", "appointment_time", "appointment_date"],
+	add_fields: ["title", "appointment_status", "service_staff", "appointment_time", "appointment_date"],
 	get_indicator: function (doc) {
 		if (doc.appointment_status === "Draft") {
 			// Draft

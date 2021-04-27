@@ -6,9 +6,15 @@ from frappe.utils import getdate
 from frappe.model.document import Document
 
 class Client(Document):
+    def after_insert(self):
+        customer = frappe.get_all('Customer', filters={'mobile_no':self.mobile_no})
+        if not customer:
+            self.create_customer()
+    
     def validate(self):
         self.set_full_name()
         self.get_age()
+        self.set_membership_status()
 
     def set_full_name(self):
         if self.last_name:
@@ -25,10 +31,12 @@ class Client(Document):
             age_html = str(age.years) + ' year(s) ' + str(age.months) + ' month(s) ' + str(age.days) + ' day(s)'
             self.age_html = age_html
 
-    def after_insert(self):
-        customer = frappe.get_all('Customer', filters={'mobile_no':self.mobile_no})
-        if not customer:
-            self.create_customer()
+    def set_membership_status(self):
+        self.membership_status = "Non-Member"
+        if self.membership_history:
+            for row in self.membership_history:
+                if row.status == "Active":
+                    self.membership_status = "Member"
 
     def create_customer(self):
         customer = frappe.get_doc({
@@ -81,10 +89,11 @@ def check_status(client_id):
 
 @frappe.whitelist()
 def auto_checkout():
-    client_list = frappe.get_all('Client', filters = {status:'Checked-in'})
+    client_list = frappe.get_all('Client', filters={'status':'Checked-in'})
     if client_list:
         for client in client_list:
-            frappe.db.set_value("Client", client.name, "status", "Active")
+            frappe.db.set_value('Client', client.name, 'status', 'Active')
+            frappe.db.commit()
 
 # @frappe.whitelist()
 # def disable_client(client_id):

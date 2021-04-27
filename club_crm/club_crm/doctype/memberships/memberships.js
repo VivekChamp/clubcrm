@@ -28,7 +28,7 @@ frappe.ui.form.on('Memberships', {
             },__("View"));
         }
         //if (frm.doc.membership_application && frm.doc.membership_status=="Draft") {
-        if (frm.doc.membership_status=="Draft") {
+        if (frm.doc.membership_status=="Draft" || frm.doc.membership_status=="Cancelled") {
             frm.add_custom_button(__('Active'), function(){
                 frappe.call({
                     method: 'club_crm.club_crm.doctype.memberships.memberships.activate_membership',
@@ -42,7 +42,24 @@ frappe.ui.form.on('Memberships', {
                     indicator: 'green',
                     message: __('Membership has been activated')
                 });
+                
             },__("Set"));
+        }
+        if (frm.doc.membership_status=="Active") {
+            frm.add_custom_button(__('Cancel'), function(){
+                frappe.call({
+                    method: 'club_crm.club_crm.doctype.memberships.memberships.cancel_membership',
+                    args: {appointment_id: frm.doc.name},
+                    callback: function(r) {
+                        cur_frm.reload_doc();
+                    }
+                });
+                frappe.msgprint({
+                    title: __('Notification'),
+                    indicator: 'red',
+                    message: __('Membership has been cancelled')
+                });  
+            });
         }
 	}
 });

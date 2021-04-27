@@ -230,11 +230,11 @@
   {
    "fieldname": "grams_discount",
    "fieldtype": "Percent",
-   "label": "Grams Discount (%)"
+   "label": "Boho Discount (%)"
   }
  ],
  "links": [],
- "modified": "2021-04-11 20:25:53.820911",
+ "modified": "2021-04-26 16:05:26.730864",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Plan",
