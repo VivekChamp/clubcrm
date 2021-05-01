@@ -13,10 +13,10 @@ def get_client(mobile_no):
 @frappe.whitelist()
 def medical_history(client_id,allergies,medication,history,notes):
     client = frappe.db.get("Client", {"email": frappe.session.user})
-    client.allergies=allergies
-    client.medication=medication
-    client.medical_history=history
-    client.other_notes=notes
+    client.allergies = allergies
+    client.medication = medication
+    client.medical_history = history
+    client.other_notes = notes
     client.save()
     frappe.response["message"] =  {
 		"Status": 1

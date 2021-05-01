@@ -83,7 +83,7 @@ def get_details(client_id):
     appointments = []
 
     # Fetch all the Open spa appointments of the client
-    spa_list = frappe.get_all('Spa Appointment', filters={'client_id':client_id, 'status':'Scheduled'}, fields=['name','spa_service','appointment_time','service_staff'])
+    spa_list = frappe.get_all('Spa Appointment', filters={'client_id':client_id, 'appointment_status':'Open'}, fields=['name','spa_service','appointment_time','service_staff'])
     for spa in spa_list:
         appointments.append({
             "service_name": spa.spa_service,
@@ -101,7 +101,7 @@ def get_details(client_id):
         })
 
     # Fetch all the Open Fitness Training appointments of the client
-    fitness_list = frappe.get_all('Fitness Training Appointment', filters={'client_id':client_id, 'status':'Open'}, fields=['name','fitness_service','appointment_time','service_staff'])
+    fitness_list = frappe.get_all('Fitness Training Appointment', filters={'client_id':client_id, 'appointment_status':'Open'}, fields=['name','fitness_service','appointment_time','service_staff'])
     for fitness in fitness_list:
         appointments.append({
             "service_name": fitness.fitness_service,

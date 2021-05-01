@@ -7,24 +7,26 @@ from frappe import throw, msgprint, _
 
 @frappe.whitelist()
 def get_group_class():
-    group_class = frappe.get_all('Group Class', filters={'on_app':1, 'enabled':1, 'booking_status':"Available"}, fields=['name','group_class_name','group_class_image','group_class_type','group_class_category','trainer_name','capacity','remaining','class_date','class_from_time','class_to_time','members_only'])
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    group_class = frappe.get_all('Group Class', filters={'on_app':1, 'enabled':1, 'booking_status':"Available"}, fields=['name','group_class_name','group_class_image','group_class_type','group_class_category','trainer_name','capacity','remaining','class_date','class_from_time','for_gender','class_to_time','members_only'], order_by="class_date asc")
     group_class_list = []
     if group_class:
         for gc_class in group_class:
-            group_class_list.append({
-                "name": gc_class.name,
-                "date": gc_class.class_date,
-                "group_class_name": gc_class.group_class_name,
-                "image": gc_class.group_class_image,
-                "class_type": gc_class.group_class_type,
-                "class_category": gc_class.group_class_category,
-                "trainer_name": gc_class.trainer_name,
-                "capacity": gc_class.capacity,
-                "remaining": gc_class.remaining,
-                "from_time": gc_class.class_from_time,
-                "to_time": gc_class.class_to_time,
-                "members_only": gc_class.members_only
-            })
+            if gc_class.for_gender == client.gender or gc_class.for_gender == "Mixed" or not gc_class.for_gender:
+                group_class_list.append({
+                    "name": gc_class.name,
+                    "date": gc_class.class_date,
+                    "group_class_name": gc_class.group_class_name,
+                    "image": gc_class.group_class_image,
+                    "class_type": gc_class.group_class_type,
+                    "class_category": gc_class.group_class_category,
+                    "trainer_name": gc_class.trainer_name,
+                    "capacity": gc_class.capacity,
+                    "remaining": gc_class.remaining,
+                    "from_time": gc_class.class_from_time,
+                    "to_time": gc_class.class_to_time,
+                    "members_only": gc_class.members_only
+                })
 
     frappe.response["message"] = {
         "Group Class": group_class_list
@@ -58,7 +60,7 @@ def create_attendee(client_id, class_id):
 @frappe.whitelist()
 def get_details(client_id):
     client = frappe.db.get("Client", {"email": frappe.session.user})
-    doc = frappe.get_all('Group Class Attendees', filters={'client_id':client.name,'docstatus':1}, fields=['name','group_class','group_class_name','trainer_name','class_status','class_date','from_time','to_time'])
+    doc = frappe.get_all('Group Class Attendees', filters={'client_id':client.name,'docstatus':1}, fields=['name','group_class','group_class_name','trainer_name','class_status','class_date','from_time','to_time'], order_by="class_date asc")
     details=[]
     if doc:
         for rating in doc:
