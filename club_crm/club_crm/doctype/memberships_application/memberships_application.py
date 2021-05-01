@@ -277,20 +277,21 @@ def create_membership(mem_application_id):
 			child.assigned_to = mem_app.assigned_to
 	doc.membership_application = mem_application_id
 	doc.total_amount = float(mem_app.grand_total)
-	doc.insert()
+	doc.save()
 	frappe.db.set_value("Memberships Application", mem_application_id, "membership_document", doc.name, update_modified=False)
-
-	club_package = frappe.get_doc('Club Packages', mem_plan.benefits_item)
-	if club_package.package_table:
-		for item in club_package.package_table:
-			create_session(mem_app.client_id,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
-			if mem_app.membership_type == "Couple Membership":
-				create_session(mem_app.client_id_2,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
-			if mem_app.membership_type == "Family Membership":
-				create_session(mem_app.client_id_2,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
-				for row in mem_app.additional_members:
-					if row.category == "Adult":
-						create_session(row.client_id,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+	
+	# club_package = frappe.get_doc('Club Packages', mem_plan.benefits_item)
+	# if club_package.package_table:
+	# 	for item in club_package.package_table:
+	# 		create_session(mem_app.client_id,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+	# 		if mem_app.membership_type == "Couple Membership":
+	# 			create_session(mem_app.client_id_2,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+	# 		if mem_app.membership_type == "Family Membership":
+	# 			create_session(mem_app.client_id_2,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+	# 			for row in mem_app.additional_members:
+	# 				if row.category == "Adult":
+	# 					create_session(row.client_id,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+	frappe.msgprint(msg = "Membership created successfully. Please verify the membership details and set it Active to make the member(s) active ", title="Success")
 
 @frappe.whitelist()
 def update_payment(docname, amount):
@@ -301,3 +302,24 @@ def update_payment(docname, amount):
 	})
 	doc.payment_status = "Paid"
 	doc.save()
+
+# @frappe.whitelist()
+# def renew_membership_single(source_name, target_doc=None):
+# 	def set_missing_values(source, target):
+# 		target.application_type = 'Renew'
+# 		target.existing_client_1 = 1
+
+# 	doc = get_mapped_doc('Memberships', source_name, {
+# 			'Memberships': {
+# 				'doctype': 'Memberships Application',
+# 				'field_map': {
+# 					'membership_category': 'membership_category',
+# 					'membership_plan': 'membership_plan',
+# 					'assigned_to': 'assigned_to_1',
+# 					'client_id': 'client_id_1',
+# 					'occupation_1': 'client_id_1',
+# 					'company_1': 'client_id_1'
+# 				}
+# 			}
+# 		}, target_doc)
+# 	return doc

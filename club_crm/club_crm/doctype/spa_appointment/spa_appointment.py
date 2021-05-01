@@ -276,17 +276,6 @@ def update_appointment_status():
 				elif appointment_date < today:
 					frappe.db.set_value('Spa Appointment', appointment.name, 'appointment_status', 'No Show')
 					frappe.db.commit()
-				else:
-					frappe.db.set_value('Spa Appointment', appointment.name, 'appointment_status', 'No Show')
-					frappe.db.commit()
-	
-	for membership in memberships:
-		mem = frappe.get_doc('Memberships', membership.name)
-		expiry_date = getdate(mem.expiry_date)
-		# If expiry date is past, set membership status as expired
-		if expiry_date < today:
-			frappe.db.set_value('Memberships', membership.name, 'membership_status', 'Expired')
-			frappe.db.commit()
 
 # def invoice_appointment(appointment_doc):
 # 	if appointment_doc.payment_status=="Paid":

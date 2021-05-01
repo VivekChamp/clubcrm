@@ -29,6 +29,7 @@
   "price",
   "column_break_17",
   "validity",
+  "gender_preference",
   "no_member_discount",
   "column_break_21",
   "capacity",
@@ -307,11 +308,18 @@
    "fieldtype": "Select",
    "label": "Revenue Account",
    "options": "\n40100001 - Massage&Body Services - KC\n40100002 - Skin Care Services - KC\n40100003 - Hair Care Services - KC\n40100004 - Nail Care Services - KC"
+  },
+  {
+   "default": "No Preference",
+   "fieldname": "gender_preference",
+   "fieldtype": "Select",
+   "label": "Gender Preference",
+   "options": "\nNo Preference\nMale\nFemale"
   }
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-04-01 23:40:24.827590",
+ "modified": "2021-05-02 00:22:49.199829",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Services",

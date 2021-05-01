@@ -13,3 +13,16 @@ frappe.ui.form.on("Club Tour", "onload", function(frm){
 		}
 	});
 });
+
+frappe.ui.form.on('Club Tour', {
+	from_time: function(frm) {
+		if (!frm.doc.from_time) {
+			frm.set_value('from_time', '');
+		}
+	},
+	to_time: function(frm) {
+		if (!frm.doc.to_time) {
+			frm.set_value('to_time', '');
+		}
+	}
+});

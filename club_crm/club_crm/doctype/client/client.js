@@ -140,6 +140,16 @@ frappe.ui.form.on('Client', {
 				$(item).find('.grid-static-col').css({'background-color': '#defdf2'});
 			}
 		});
+
+		// frm.add_custom_button(__('Benefits List'), function(){
+		// 	frappe.call({
+		// 		method: 'club_crm.club_crm.doctype.client.client.benefits',
+		// 		args: {client_id: frm.doc.name}
+		// 		// callback: function(r) {
+		// 		// 	cur_frm.reload_doc();
+		// 		// }
+		// 	});
+		// });
 	}
 });
 

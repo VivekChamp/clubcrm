@@ -22,3 +22,7 @@ class ClubTour(Document):
 		if self.date and self.from_time and self.to_time:
 			self.start_time = "%s %s" % (self.date, self.from_time or "00:00:00")
 			self.end_time = "%s %s" % (self.date, self.to_time or "00:00:00")
+		# if not self.from_time:
+		# 	self.from_time = None
+		# if not self.to_time:
+		# 	self.to_time -= None

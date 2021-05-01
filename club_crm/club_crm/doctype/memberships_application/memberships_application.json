@@ -234,7 +234,8 @@
    "reqd": 1
   },
   {
-   "fetch_from": "membership_application.occupation_1",
+   "fetch_from": "client_id.occupation",
+   "fetch_if_empty": 1,
    "fieldname": "occupation_1",
    "fieldtype": "Data",
    "label": "Occupation",
@@ -385,7 +386,8 @@
    "options": "Client"
   },
   {
-   "fetch_from": "membership_application.company_1",
+   "fetch_from": "client_id.company",
+   "fetch_if_empty": 1,
    "fieldname": "company_1",
    "fieldtype": "Data",
    "label": "Company",
@@ -451,6 +453,7 @@
   },
   {
    "collapsible": 1,
+   "depends_on": "eval:doc.application_type==\"New\"",
    "fieldname": "section_break_62",
    "fieldtype": "Section Break",
    "label": "Other Details"
@@ -733,7 +736,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-04-26 14:50:46.550519",
+ "modified": "2021-05-01 14:43:53.882093",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",

@@ -95,7 +95,37 @@ def auto_checkout():
             frappe.db.set_value('Client', client.name, 'status', 'Active')
             frappe.db.commit()
 
-# @frappe.whitelist()
+
+@frappe.whitelist()
+def benefits(client_id):
+    benefits = []
+    ben = frappe.get_all('Client Sessions', filters={'client_id':client_id, 'package_type':'Club'}, fields=['*'])
+    for comp in ben:
+        benefits.append({
+            "benefits_name" : comp.title,
+            "count": "Limited",
+            "quantity": str(comp.total_sessions),
+            "used": str(comp.used_sessions),
+            "remaining": str(comp.remaining_sessions),
+            "session_status": comp.session_status
+        })
+    frappe.msgprint(
+        msg = benefits,
+        title = "Active Benefits",
+        as_table = True
+    )
+
+@frappe.whitelist()
+def medical_history(client_id,allergies,medication,history,notes):
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    client.allergies = allergies
+    client.medication = medication
+    client.medical_history = history
+    client.other_notes = notes
+    client.save()
+    frappe.response["message"] =  {
+		"Status": 1
+    }
 # def disable_client(client_id):
 #     client = frappe.get_doc('Client', client_id)
 #     client.status = "Disabled"

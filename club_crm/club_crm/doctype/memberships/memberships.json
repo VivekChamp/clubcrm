@@ -55,9 +55,14 @@
   "retail_discount",
   "column_break_47",
   "grams_discount",
+  "membership_application",
+  "membership_extensions_section",
+  "validity_extension",
+  "column_break_51",
+  "total_days_of_extension",
+  "number_of_extensions",
   "section_break_38",
-  "notes",
-  "membership_application"
+  "notes"
  ],
  "fields": [
   {
@@ -68,7 +73,8 @@
    "fieldname": "membership_plan",
    "fieldtype": "Link",
    "label": "Membership Plan",
-   "options": "Memberships Plan"
+   "options": "Memberships Plan",
+   "reqd": 1
   },
   {
    "default": "Today",
@@ -94,7 +100,8 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Membership ID",
-   "length": 6
+   "length": 6,
+   "read_only": 1
   },
   {
    "fieldname": "membership_application",
@@ -217,10 +224,10 @@
    "read_only": 1
   },
   {
-   "depends_on": "eval:doc.extended==1",
+   "depends_on": "eval:doc.total_days_of_extension!=0",
    "fieldname": "expiry_date",
    "fieldtype": "Date",
-   "label": "Expiry Date",
+   "label": "Membership Expiry Date (Extended)",
    "read_only": 1
   },
   {
@@ -370,10 +377,38 @@
    "label": "Membership Type",
    "options": "New\nRenew",
    "read_only": 1
+  },
+  {
+   "fieldname": "membership_extensions_section",
+   "fieldtype": "Section Break",
+   "label": "Membership Extensions"
+  },
+  {
+   "fieldname": "validity_extension",
+   "fieldtype": "Table",
+   "options": "Validity Extension"
+  },
+  {
+   "default": "0",
+   "fieldname": "number_of_extensions",
+   "fieldtype": "Data",
+   "label": "Number of Extensions",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_51",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_days_of_extension",
+   "fieldtype": "Duration",
+   "hide_seconds": 1,
+   "label": "Total Extended Days",
+   "read_only": 1
   }
  ],
  "links": [],
- "modified": "2021-04-24 01:02:06.777439",
+ "modified": "2021-04-29 03:00:50.844753",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships",

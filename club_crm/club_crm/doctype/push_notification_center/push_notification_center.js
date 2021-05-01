@@ -3,7 +3,7 @@
 
 frappe.ui.form.on('Push Notification Center', {
 	onload: function(frm) {
-			frm.disable_save();
+		frm.disable_save();
 	},
   	send_to: function(frm){
         frm.set_value('client_id', "");
@@ -11,18 +11,24 @@ frappe.ui.form.on('Push Notification Center', {
     },
 	refresh: function(frm) {
 		frm.add_custom_button(__('Send Notification'), function(){
-			frappe.call({
-				method: 'club_crm.club_crm.doctype.push_notification_center.push_notification_center.send_push_notification',
-				args: {client_id: frm.doc.client_id, title: frm.doc.title, message: frm.doc.message},
-				callback: function(r) {
-					cur_frm.reload_doc();
-				}
-			});
-			// frappe.msgprint({
-			// 	title: __('Notification'),
-			// 	indicator: 'green',
-			// 	message: __('Push Notification sent successfully')
-			// });	
+			if (frm.doc.send_to=="Single Client") {
+				frappe.call({
+					method: 'club_crm.club_crm.doctype.push_notification_center.push_notification_center.send_push_to_client',
+					args: {client_id: frm.doc.client_id, title: frm.doc.title, message: frm.doc.message},
+					callback: function(r) {
+						cur_frm.reload_doc();
+					}
+				});
+			}
+			if (frm.doc.send_to=="All Registered Clients") {
+				frappe.call({
+					method: 'club_crm.club_crm.doctype.push_notification_center.push_notification_center.send_push_to_all',
+					args: {title: frm.doc.title, message: frm.doc.message},
+					callback: function(r) {
+						cur_frm.reload_doc();
+					}
+				});
+			}
 		});
 	}
 });

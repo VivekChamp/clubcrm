@@ -55,7 +55,7 @@ class PushNotificationCenter(Document):
 				frappe.msgprint(msg='Push Notification sent successfully')
 
 @frappe.whitelist()
-def send_push_notification(client_id,title,message):
+def send_push_to_client(client_id,title,message):
 	server_key = frappe.db.get_value("Push Notification Settings",None,"server_token")
 	client = frappe.get_doc("Client", client_id)
 	device_token = client.fcm_token
@@ -68,11 +68,33 @@ def send_push_notification(client_id,title,message):
 			'title': title,
 			'body': message
 		},
-		'to':
-			device_token,
+		'to': device_token,
 		'priority': 'high',
 	}
 	response = requests.post("https://fcm.googleapis.com/fcm/send",headers = headers, data=json.dumps(body))
 	frappe.msgprint(msg='Push Notification sent successfully')
 
- 
+@frappe.whitelist()
+def send_push_to_all(title,message):
+	server_key = frappe.db.get_value("Push Notification Settings",None,"server_token")
+	client_list = frappe.get_all('Client', filters={'reg_on_app': 'Yes'}, fields=['name','fcm_token'])
+	if client_list:
+		client_id_list = []
+		for client in client_list:
+			if client.fcm_token:
+				client_id_list.append(client.fcm_token)
+
+		headers = {
+			'Content-Type': 'application/json',
+			'Authorization': 'key=' + server_key,
+		}
+		body = {
+			'notification': {
+				'title': title,
+				'body': message
+			},
+			'registration_ids': client_id_list,
+			'priority': 'high',
+		}
+		response = requests.post("https://fcm.googleapis.com/fcm/send",headers = headers, data=json.dumps(body))
+		frappe.msgprint(msg='Push Notification sent successfully')

@@ -9,46 +9,53 @@ from frappe import _
 from datetime import datetime, timedelta
 from frappe.utils import getdate, get_time, flt, cint
 from frappe.model.naming import getseries
-from club_crm.club_crm.doctype.client_sessions.client_sessions import create_sessions
+from club_crm.club_crm.doctype.client_sessions.client_sessions import create_benefit_sessions
 from frappe.model.document import Document
 
 class Memberships(Document):
-	# Remove after membership data upload
-	# def after_insert(self):
-	# 	self.create_client_sessions()
-
-	def before_insert(self):
-		self.set_membership_number()
 
 	def after_insert(self):
 		self.set_membership_history()
+		self.set_member_number()
+		self.create_benefits()
 
 	def validate(self):
-		self.set_expiry()
-		self.set_title()
-		self.set_status()
-		self.set_member_number()
 		if not self.membership_id:
 			self.set_membership_number()
+		self.set_expiry()
+		self.set_status()
+		self.set_title()
 
 	def on_update(self):
 		self.set_membership_history()
+		self.set_member_number()
+		self.update_benefits()
 	
 	def on_trash(self):
 		self.delete_membership_application_link()
 		self.delete_membership_history()
 		self.delete_membership_number()
+		# self.delete_benefits()
 
 	# Set expiry date based on the membership plan
 	def set_expiry(self):
+		self.total_days_of_extension = 0.0
+		self.number_of_extensions = 0
+
+		if self.validity_extension:
+			for row in self.validity_extension:
+				self.number_of_extensions += 1
+				self.total_days_of_extension += row.days
+
 		if type(self.start_date) == str:
 			start_date = datetime.strptime(self.start_date, "%Y-%m-%d")
 		else:
 			start_date = self.start_date
+			
 		expiry_date = start_date + timedelta(seconds=float(self.duration))
+		new_expiry_date = start_date + timedelta(seconds=float(self.duration)) + timedelta(seconds=float(self.total_days_of_extension))
 		self.actual_expiry_date = expiry_date.strftime("%Y-%m-%d")
-		if self.extended == 0:
-			self.expiry_date = self.actual_expiry_date
+		self.expiry_date = new_expiry_date.strftime("%Y-%m-%d")
 
 	# Generate and set a membership number based on the membership type
 	def set_membership_number(self):
@@ -62,7 +69,8 @@ class Memberships(Document):
 	
 	# Set title for the document
 	def set_title(self):
-		self.title = _('{0} - {1}').format(self.client_name_1, self.membership_id)
+		# self.title = _('{0} - {1}').format(self.client_name_1, self.membership_id)
+		self.title = _('{0}').format(self.client_name_1)
 
 	# Set the membership status while saving document
 	def set_status(self):
@@ -118,24 +126,24 @@ class Memberships(Document):
 						'assigned_to': self.assigned_to
 					})
 
-	# Remove after membership data upload
-	def create_client_sessions(self):
+	# Create Benefit sessions for Membership
+	def create_benefits(self):
 		if type(self.start_date) == str:
 			start_date = datetime.strptime(self.start_date, "%Y-%m-%d")
 		else:
 			start_date = self.start_date
-		return start_date
 
 		mem_plan = frappe.get_doc('Memberships Plan', self.membership_plan)
 		club_package = frappe.get_doc('Club Packages', mem_plan.benefits_item)
 		today = getdate()
+
 		if club_package.package_table:
 			for item in club_package.package_table:
-				create_sessions(self.client_id_1,mem_plan.benefits_item,start_date,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+				create_benefit_sessions(self.client_id_1,mem_plan.benefits_item,start_date,item.service_type,item.service_name,item.no_of_sessions,item.validity,self.name)
 				if self.membership_type == "Couple Membership":
-					create_sessions(self.client_id_2,mem_plan.benefits_item,start_date,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+					create_benefit_sessions(self.client_id_2,mem_plan.benefits_item,start_date,item.service_type,item.service_name,item.no_of_sessions,item.validity,self.name)
 				if self.membership_type == "Family Membership":
-					create_sessions(self.client_id_2,mem_plan.benefits_item,start_date,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+					create_benefit_sessions(self.client_id_2,mem_plan.benefits_item,start_date,item.service_type,item.service_name,item.no_of_sessions,item.validity,self.name)
 					for row in self.additional_members_item:
 						if type(row.birth_date) == str:
 							dob = datetime.strptime(row.birth_date, "%Y-%m-%d")
@@ -143,7 +151,7 @@ class Memberships(Document):
 							dob = row.birth_date
 						age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
 						if age >= 18:
-							create_sessions(row.client_id,mem_plan.benefits_item,start_date,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+							create_benefit_sessions(row.client_id,mem_plan.benefits_item,start_date,item.service_type,item.service_name,item.no_of_sessions,item.validity,self.name)
 
 	# Set membership details on the client document as membership history
 	def set_membership_history(self):
@@ -234,6 +242,30 @@ class Memberships(Document):
 					})
 				client.save()
 
+	def update_benefits(self):
+		if type(self.start_date) == str:
+			new_start_date = datetime.strptime(self.start_date, "%Y-%m-%d")
+		else:
+			new_start_date = self.start_date
+
+		benefit_list = frappe.get_all('Client Sessions', filters={'membership_no': self.name})
+		if benefit_list:
+			for benefit in benefit_list:
+				session = frappe.get_doc('Client Sessions', benefit.name)
+				session.session_status =  self.membership_status
+				session.start_date = new_start_date
+				if session.session_extension:
+					for rows in session.session_extension:
+						session.remove(rows)
+				if self.validity_extension:
+					for row in self.validity_extension:
+						session.append('session_extension', {
+							"entry_date" : row.entry_date,
+							"days" : row.days,
+							"notes": row.notes
+						})
+				session.save(ignore_permissions=True)
+
 	def delete_membership_application_link(self):
 		frappe.db.set_value("Memberships Application", self.membership_application, "membership_document", "", update_modified=False)
 		
@@ -309,6 +341,22 @@ class Memberships(Document):
 					'membership_id': None,
 					'assigned_to': None
 				})
+	
+	def getseries_add(key, digits):
+	# series created ?
+		current = frappe.db.sql("SELECT `current` FROM `tabSeries` WHERE `name`=%s FOR UPDATE", (key,))
+		if current and current[0][0] is not None:
+			current = current[0][0]
+			# yes, update it
+			frappe.db.sql("UPDATE `tabSeries` SET `current` = `current` + 1 WHERE `name`=%s", (key,))
+			frappe.db.commit()
+			current = cint(current) + 1
+		else:
+			# no, create it
+			frappe.db.sql("INSERT INTO `tabSeries` (`name`, `current`) VALUES (%s, 1)", (key,))
+			frappe.db.commit()
+			current = 1
+		return (key+('%0'+str(digits)+'d') % current)
 
 @frappe.whitelist()
 def activate_membership(appointment_id):
@@ -319,9 +367,11 @@ def activate_membership(appointment_id):
 	if mem.membership_type == "Couple Membership":
 		frappe.db.set_value('Client', mem.client_id_2, 'membership_status', 'Member')
 	if mem.membership_type == "Family Membership":
+		frappe.db.set_value('Client', mem.client_id_2, 'membership_status', 'Member')
 		for row in mem.additional_members_item:
 			frappe.db.set_value('Client', row.client_id, 'membership_status', 'Member')
 	mem.save()
+	frappe.msgprint(msg = "Membership has been activated", title="Success")
 
 @frappe.whitelist()
 def cancel_membership(appointment_id):

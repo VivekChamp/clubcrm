@@ -180,11 +180,11 @@ frappe.ui.form.on('Memberships Application', {
                         cur_frm.reload_doc();
                     }
                 });
-                frappe.msgprint({
-                    title: __('Notification'),
-                    indicator: 'green',
-                    message: __('Membership Created successfully')
-                });
+                // frappe.msgprint({
+                //     title: __('Notification'),
+                //     indicator: 'green',
+                //     message: __('Membership Created successfully')
+                // });
                 frm.save()
             });
         }

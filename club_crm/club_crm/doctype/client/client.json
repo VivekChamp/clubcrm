@@ -366,6 +366,7 @@
    "default": "0",
    "fieldname": "apply_membership",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Applied for Membership"
   },
   {
@@ -447,12 +448,11 @@
    "label": "Notes"
   },
   {
-   "default": "Everytime the client profile is opened",
    "depends_on": "eval:doc.alerts",
    "fieldname": "alert_type",
    "fieldtype": "Select",
    "label": "Alert Type",
-   "options": "Everytime the client profile is opened\nDuring client check-in only"
+   "options": "\nEverytime the client profile is opened\nDuring client check-in only"
   },
   {
    "fieldname": "membership_id",
@@ -504,7 +504,7 @@
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2021-04-25 23:47:18.285453",
+ "modified": "2021-04-29 03:12:55.096522",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",
