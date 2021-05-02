@@ -32,10 +32,10 @@ class Memberships(Document):
 		self.update_benefits()
 	
 	def on_trash(self):
+		self.delete_benefits()
 		self.delete_membership_application_link()
 		self.delete_membership_history()
 		self.delete_membership_number()
-		# self.delete_benefits()
 
 	# Set expiry date based on the membership plan
 	def set_expiry(self):
@@ -265,6 +265,13 @@ class Memberships(Document):
 							"notes": row.notes
 						})
 				session.save(ignore_permissions=True)
+	
+	def delete_benefits(self):
+		benefit_list = frappe.get_all('Client Sessions', filters={'membership_no': self.name})
+		if benefit_list:
+			for benefit in benefit_list:
+				session = frappe.get_doc('Client Sessions', benefit.name)
+				session.delete()
 
 	def delete_membership_application_link(self):
 		frappe.db.set_value("Memberships Application", self.membership_application, "membership_document", "", update_modified=False)

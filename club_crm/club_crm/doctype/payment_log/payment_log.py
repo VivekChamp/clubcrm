@@ -11,6 +11,8 @@ from frappe.model.document import Document
 class PaymentLog(Document):
 	def validate(self):
 		self.set_title()
+
+	def after_insert(self):
 		self.update_payment()
 
 	def set_title(self):

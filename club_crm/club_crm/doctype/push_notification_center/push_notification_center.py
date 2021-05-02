@@ -98,3 +98,22 @@ def send_push_to_all(title,message):
 		}
 		response = requests.post("https://fcm.googleapis.com/fcm/send",headers = headers, data=json.dumps(body))
 		frappe.msgprint(msg='Push Notification sent successfully')
+
+@frappe.whitelist()
+def send_push_updates(client_id,title,message):
+	server_key = frappe.db.get_value("Push Notification Settings",None,"server_token")
+	client = frappe.get_doc("Client", client_id)
+	device_token = client.fcm_token
+	headers = {
+		'Content-Type': 'application/json',
+		'Authorization': 'key=' + server_key,
+	}
+	body = {
+		'notification': {
+			'title': title,
+			'body': message
+		},
+		'to': device_token,
+		'priority': 'high',
+	}
+	response = requests.post("https://fcm.googleapis.com/fcm/send",headers = headers, data=json.dumps(body))
