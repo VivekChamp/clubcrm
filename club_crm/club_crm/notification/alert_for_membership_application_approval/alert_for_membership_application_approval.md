@@ -1,0 +1,1 @@
+The membership application {{doc.name}} requires your attention for approval

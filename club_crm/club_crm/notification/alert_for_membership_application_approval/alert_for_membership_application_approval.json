@@ -1,0 +1,37 @@
+{
+ "attach_print": 0,
+ "channel": "SMS",
+ "condition": "",
+ "creation": "2021-04-21 02:16:17.715237",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Memberships Application",
+ "enabled": 1,
+ "event": "Value Change",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "The membership application {{doc.name}} requires your attention for approval",
+ "modified": "2021-04-21 02:16:17.715237",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Alert for membership application approval",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "condition": "doc.workflow_status==\"Pending Approval by CE Manager\"",
+   "receiver_by_role": "CE Manager"
+  },
+  {
+   "condition": "doc.workflow_status==\"Pending Approval by GM\"",
+   "receiver_by_role": "General Manager"
+  },
+  {
+   "condition": "doc.workflow_status==\"Pending Approval by MD\"",
+   "receiver_by_role": "Managing Director"
+  }
+ ],
+ "send_system_notification": 1,
+ "send_to_all_assignees": 0,
+ "value_changed": "workflow_status"
+}

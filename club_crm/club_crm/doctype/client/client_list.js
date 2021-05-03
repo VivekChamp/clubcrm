@@ -1,5 +1,15 @@
 frappe.listview_settings['Client'] = {
-    add_fields: ["full_name", "status", "membership_status", "gender", "mobile_no"],
+    add_fields: ["full_name", "status", "membership_status", "gender"],
+	// get_indicator: function (doc) {
+	// 	if (doc.membership_status === "Member" && doc.status === "Active") {
+	// 		// Member
+	// 		return [__("Member"), "green", "membership_status,=,Member" ];
+	// 	}
+	// 	else if (doc.membership_status === "Non-Member") {
+	// 		// Non-Member
+	// 		return [__("Non-Member"), "blue","membership_status,=,Non-Member"];
+	// 	}
+    // }
 	get_indicator: function (doc) {
 		if (doc.status === "Active") {
 			// Active
@@ -13,16 +23,6 @@ frappe.listview_settings['Client'] = {
 			// Disabled
 			return [__("Disabled"), "red", "status,=,Disabled"];
 		}
-    },
-    // get_indicator: function (doc) {
-	// 	if (doc.membership_status === "Member") {
-	// 		// Member
-	// 		return [__("Member"), "green", "membership_status,=,Member" ];
-	// 	}
-	// 	else if (doc.membership_status === "Non-Member") {
-	// 		// Non-Member
-	// 		return [__("Non-Member"), "blue","membership_status,=,Non-Member"];
-	// 	}
-    // }
+    }
 }
         

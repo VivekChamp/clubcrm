@@ -94,7 +94,9 @@
   "staff_notes_section",
   "notes",
   "membership_document",
-  "amended_from"
+  "amended_from",
+  "assignment_notify",
+  "new_notify"
  ],
  "fields": [
   {
@@ -179,7 +181,7 @@
    "fieldname": "client_id",
    "fieldtype": "Link",
    "in_standard_filter": 1,
-   "label": "Client ID",
+   "label": "Primary Client ID",
    "no_copy": 1,
    "options": "Client"
   },
@@ -214,7 +216,8 @@
    "reqd": 1
   },
   {
-   "fetch_from": "membership_application.nationality",
+   "fetch_from": "client_id.nationality",
+   "fetch_if_empty": 1,
    "fieldname": "nationality_1",
    "fieldtype": "Link",
    "label": "Nationality",
@@ -231,7 +234,8 @@
    "reqd": 1
   },
   {
-   "fetch_from": "membership_application.occupation_1",
+   "fetch_from": "client_id.occupation",
+   "fetch_if_empty": 1,
    "fieldname": "occupation_1",
    "fieldtype": "Data",
    "label": "Occupation",
@@ -313,7 +317,8 @@
    "mandatory_depends_on": "eval:doc.membership_type!= \"Single Membership\""
   },
   {
-   "fetch_from": "membership_application.nationality",
+   "fetch_from": "client_id.nationality",
+   "fetch_if_empty": 1,
    "fieldname": "nationality_2",
    "fieldtype": "Link",
    "label": "Nationality",
@@ -376,12 +381,13 @@
    "depends_on": "eval:doc.existing_client_2==1",
    "fieldname": "client_id_2",
    "fieldtype": "Link",
-   "label": "Client ID",
+   "label": "Secondary Client ID",
    "no_copy": 1,
    "options": "Client"
   },
   {
-   "fetch_from": "membership_application.company_1",
+   "fetch_from": "client_id.company",
+   "fetch_if_empty": 1,
    "fieldname": "company_1",
    "fieldtype": "Data",
    "label": "Company",
@@ -440,6 +446,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.membership_type==\"Family Membership\"",
    "fieldname": "additional_members",
    "fieldtype": "Table",
    "label": "Additional Members",
@@ -447,6 +454,7 @@
   },
   {
    "collapsible": 1,
+   "depends_on": "eval:doc.application_type==\"New\"",
    "fieldname": "section_break_62",
    "fieldtype": "Section Break",
    "label": "Other Details"
@@ -454,7 +462,7 @@
   {
    "fieldname": "notes",
    "fieldtype": "Small Text",
-   "label": "Notes"
+   "label": "Note to Customer (in case of rejection)"
   },
   {
    "allow_on_submit": 1,
@@ -485,7 +493,6 @@
   },
   {
    "default": "0",
-   "description": "This checkbox implies that this booking is made using web/mobile app.",
    "fieldname": "online_application",
    "fieldtype": "Check",
    "label": "Online Application",
@@ -589,7 +596,6 @@
   },
   {
    "collapsible": 1,
-   "depends_on": "eval:doc.membership_type==\"Family Membership\"",
    "fieldname": "additional_member_section",
    "fieldtype": "Section Break",
    "label": "Additional Members"
@@ -676,8 +682,7 @@
   },
   {
    "fieldname": "staff_notes_section",
-   "fieldtype": "Section Break",
-   "label": "Staff Notes"
+   "fieldtype": "Section Break"
   },
   {
    "allow_on_submit": 1,
@@ -692,8 +697,10 @@
   {
    "fieldname": "membership_document",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Membership Document",
-   "options": "Memberships"
+   "options": "Memberships",
+   "read_only": 1
   },
   {
    "fieldname": "amended_from",
@@ -709,11 +716,27 @@
    "fieldtype": "Link",
    "label": "Assigned To",
    "options": "Service Staff"
+  },
+  {
+   "default": "0",
+   "fieldname": "assignment_notify",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Assignment Notification",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "new_notify",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "New Notification",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-04-19 15:16:43.184858",
+ "modified": "2021-05-02 15:53:32.556062",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",
@@ -732,30 +755,9 @@
    "write": 1
   },
   {
-   "delete": 1,
-   "permlevel": 1,
-   "read": 1,
-   "role": "System Manager",
-   "select": 1,
-   "write": 1
-  },
-  {
    "create": 1,
    "email": 1,
    "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "General Manager",
-   "select": 1,
-   "share": 1,
-   "write": 1
-  },
-  {
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "permlevel": 1,
    "print": 1,
    "read": 1,
    "report": 1,
@@ -777,35 +779,9 @@
    "write": 1
   },
   {
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "permlevel": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Managing Director",
-   "select": 1,
-   "share": 1,
-   "write": 1
-  },
-  {
    "create": 1,
    "email": 1,
    "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "CE Manager",
-   "select": 1,
-   "share": 1,
-   "write": 1
-  },
-  {
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "permlevel": 1,
    "print": 1,
    "read": 1,
    "report": 1,
@@ -825,23 +801,19 @@
    "select": 1,
    "share": 1,
    "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "permlevel": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "CE Staff",
-   "select": 1,
-   "share": 1
   },
   {
    "create": 1,
    "read": 1,
    "role": "Customer",
    "select": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Guest",
+   "select": 1,
+   "submit": 1,
    "write": 1
   }
  ],

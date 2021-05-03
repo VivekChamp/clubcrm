@@ -20,16 +20,24 @@ class ClientSessions(Document):
 		# self.check_fitness_bookings()	
 
 	def set_expiry_date(self):
+		self.extension = 0.0
+		self.no_of_extensions = 0
+
+		if self.session_extension:
+			for row in self.session_extension:
+				self.no_of_extensions += 1
+				self.extension += row.days
+
 		if self.start_date:
 			if type(self.start_date) == str:
-				start_datetime = datetime.strptime(self.start_date, "%Y-%m-%d")
+				start_date = datetime.strptime(self.start_date, "%Y-%m-%d")
 			else:
-				start_datetime = self.start_date
-			if self.extension:
-				expiry_date = start_datetime + timedelta(seconds=float(self.validity)) + timedelta(seconds=float(self.extension))
-			else:
-				expiry_date = start_datetime + timedelta(seconds=float(self.validity))
-			self.expiry_date = datetime.strftime(expiry_date, "%Y-%m-%d")
+				start_date = self.start_date
+
+			expiry_date = start_date + timedelta(seconds=float(self.validity))
+			new_expiry_date = start_date + timedelta(seconds=float(self.validity)) + timedelta(seconds=float(self.extension))
+			self.actual_expiry_date = expiry_date.strftime("%Y-%m-%d")
+			self.expiry_date = new_expiry_date.strftime("%Y-%m-%d")
 		else:
 			frappe.throw("Please set the start date")
 
@@ -113,23 +121,27 @@ def create_session(client_id, package_name, service_type, service_name, no_of_se
 	})
 	doc.save()
 
-# @frappe.whitelist()
-# def create_sessions(client_id,package_name,start_date,service_type,service_name,no_of_sessions,validity):
-# 	if type(start_date) == str:
-# 		new_start_date = datetime.strptime(start_date, "%Y-%m-%d")
-# 	else:
-# 		new_start_date = start_date
-# 	doc= frappe.get_doc({
-# 		"doctype": 'Client Sessions',
-# 		"client_id": client_id,
-# 		"package_name": package_name,
-# 		"start_date" : new_start_date,
-# 		"service_type": service_type,
-# 		"service_name": service_name,
-# 		"total_sessions": no_of_sessions,
-# 		"validity": validity
-# 	})
-# 	doc.save()
+@frappe.whitelist()
+def create_benefit_sessions(client_id,package_name,start_date,service_type,service_name,no_of_sessions,validity,mem_no):
+	if type(start_date) == str:
+		new_start_date = datetime.strptime(start_date, "%Y-%m-%d")
+	else:
+		new_start_date = start_date
+	doc= frappe.get_doc({
+		"doctype": 'Client Sessions',
+		"client_id": client_id,
+		"package_name": package_name,
+		"package_type": "Club",
+		"start_date" : new_start_date,
+		"service_type": service_type,
+		"service_name": service_name,
+		"total_sessions": no_of_sessions,
+		"validity": validity,
+		"membership_no": mem_no,
+		"session_status": "Draft",
+		"is_benefit": 1
+	})
+	doc.save()
 
 @frappe.whitelist()
 def create_sessions(doc, method=None):

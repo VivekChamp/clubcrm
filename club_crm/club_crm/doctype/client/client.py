@@ -6,9 +6,15 @@ from frappe.utils import getdate
 from frappe.model.document import Document
 
 class Client(Document):
+    def after_insert(self):
+        customer = frappe.get_all('Customer', filters={'mobile_no':self.mobile_no})
+        if not customer:
+            self.create_customer()
+    
     def validate(self):
         self.set_full_name()
         self.get_age()
+        self.set_membership_status()
 
     def set_full_name(self):
         if self.last_name:
@@ -25,10 +31,12 @@ class Client(Document):
             age_html = str(age.years) + ' year(s) ' + str(age.months) + ' month(s) ' + str(age.days) + ' day(s)'
             self.age_html = age_html
 
-    def after_insert(self):
-        customer = frappe.get_all('Customer', filters={'mobile_no':self.mobile_no})
-        if not customer:
-            self.create_customer()
+    def set_membership_status(self):
+        self.membership_status = "Non-Member"
+        if self.membership_history:
+            for row in self.membership_history:
+                if row.status == "Active":
+                    self.membership_status = "Member"
 
     def create_customer(self):
         customer = frappe.get_doc({
@@ -81,12 +89,34 @@ def check_status(client_id):
 
 @frappe.whitelist()
 def auto_checkout():
-    client_list = frappe.get_all('Client', filters = {status:'Checked-in'})
+    client_list = frappe.get_all('Client', filters={'status':'Checked-in'})
     if client_list:
         for client in client_list:
-            frappe.db.set_value("Client", client.name, "status", "Active")
+            frappe.db.set_value('Client', client.name, 'status', 'Active')
+            frappe.db.commit()
 
-# @frappe.whitelist()
+
+@frappe.whitelist()
+def benefits(client_id):
+    benefit = []
+    benefit.append(['Benefit Name', 'Remaining', 'Expiry Date', 'Status'])
+    ben = frappe.get_all('Client Sessions', filters={'client_id':client_id, 'package_type':'Club'}, fields=['*'])
+    for comp in ben:
+        expiry_date = comp.expiry_date.strftime("%d-%m-%Y")
+        benefit.append([comp.title, str(comp.remaining_session_text), str(expiry_date), comp.session_status])
+    frappe.msgprint(benefit, title="Benefits List", as_table=True)
+
+@frappe.whitelist()
+def medical_history(client_id,allergies,medication,history,notes):
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    client.allergies = allergies
+    client.medication = medication
+    client.medical_history = history
+    client.other_notes = notes
+    client.save()
+    frappe.response["message"] =  {
+		"Status": 1
+    }
 # def disable_client(client_id):
 #     client = frappe.get_doc('Client', client_id)
 #     client.status = "Disabled"

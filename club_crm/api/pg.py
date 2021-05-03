@@ -44,7 +44,7 @@ def create_log(**kwargs):
     doc.generated_hash = generate_hash_verifier(sample_dict)
     if doc.generated_hash == kwargs['signature']:
         doc.signature_verified = 1
-    doc.save()
+    doc.save(ignore_permissions=True)
 
 def generate_data_string(data_dict):
     test_array = []

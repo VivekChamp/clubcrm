@@ -17,27 +17,66 @@ def get_spa_category(client_id):
 
 @frappe.whitelist()
 def get_spa_item(spa_category):
-    spa = frappe.get_all('Spa Services', filters={'spa_category':spa_category,'on_app': 1,'enabled':1},fields=['spa_name','spa_group','spa_category','duration','price','description','image'])
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    doc = frappe.get_doc('Client', client.name)
+    spa = frappe.get_all('Spa Services', filters={'spa_category':spa_category,'on_app': 1,'enabled':1,'session_type':'Single'}, fields=['spa_name','spa_group','spa_category','duration','price','description','image','gender_preference'])
     spa_item = []
+
+    if doc.membership_status == "Member":
+        if doc.membership_history:
+            for row in doc.membership_history:
+                if row.status == "Active":
+                    mem = frappe.get_doc('Memberships', row.membership)
+                    discount = mem.spa_discount
+                else:
+                    discount = 0.0
+        else:
+            discount = 0.0
+
+        benefits = frappe.get_all('Client Sessions', filters={'client_id': doc.name, 'is_benefit': 1, 'session_status': 'Active','service_type': 'Spa Services'}, fields=['name','service_name'])
+        if benefits:
+            spa_comp = frappe.get_all('Spa Services', filters={'spa_category':spa_category,'enabled':1,'session_type':'Complimentary'}, fields=['spa_name','spa_group','spa_category','duration','price','description','image','gender_preference'])
+
+            for benefit in benefits:
+                for items in spa_comp:
+                    if benefit.service_name == items.spa_name:
+                        spa_item.append({
+                            "spa_item_name" : items.spa_name,
+                            "spa_menu_group" : items.spa_group,
+                            "spa_menu_category" : items.spa_category,
+                            "duration" : items.duration,
+                            "has_addon" : 0,
+                            "rate" : items.price,
+                            "description" : items.description,
+                            "image" : items.image
+                        })
+    else:
+        discount = 0.0
+
     for item in spa:
-        spa_item.append({
-            "spa_item_name" : item.spa_name,
-            "spa_menu_group" : item.spa_group,
-            "spa_menu_category" : item.spa_category,
-            "duration" : item.duration,
-            "has_addon" : 0,
-            "rate" : item.price,
-            "description" : item.description,
-            "image" : item.image
-        })
+        discount_price = item.price - (item.price * (discount/100.0))
+        price = int(discount_price//0.5*0.5)
+        if item.gender_preference == doc.gender or item.gender_preference == "No Preference" or not item.gender_preference:
+            spa_item.append({
+                "spa_item_name" : item.spa_name,
+                "spa_menu_group" : item.spa_group,
+                "spa_menu_category" : item.spa_category,
+                "duration" : item.duration,
+                "has_addon" : 0,
+                "rate" : price,
+                "description" : item.description,
+                "image" : item.image
+            })
+
     frappe.response["message"] = {
         "Spa Items": spa_item
-        }
+    }
 
 @frappe.whitelist()
 def get_therapist(spa_item, client_id):
     spa = frappe.get_doc('Spa Services', spa_item)
-    client = frappe.get_doc('Client', client_id)
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    # client = frappe.get_doc('Client', client_id)
     spa_therapists = frappe.get_all('Spa Services Assignment', filters={'spa_group':spa.spa_group, 'on_app':1}, fields=['name','parent','parenttype','parentfield','spa_group'])
 
     therapist=[]
@@ -61,11 +100,12 @@ def get_therapist(spa_item, client_id):
 
 @frappe.whitelist()
 def get_details(client_id):
+    client = frappe.db.get("Client", {"email": frappe.session.user})
     time = frappe.get_doc('Spa Settings')
     if time.spa_cancellation_time and int(time.spa_cancellation_time) > 0:
         b = int(int(time.spa_cancellation_time)/3600)
 
-    doc = frappe.get_all('Spa Appointment', filters={'client_id':client_id, 'appointment_status':['not in',{'Cancelled','No Show'}]}, fields=['name','spa_service','total_service_duration','appointment_status','payment_status','appointment_date','appointment_time', 'start_time','default_price','service_staff'], order_by="appointment_date asc")
+    doc = frappe.get_all('Spa Appointment', filters={'client_id':client.name, 'appointment_status':['not in',{'Cancelled','No Show'}]}, fields=['name','spa_service','total_service_duration','appointment_status','payment_status','appointment_date','appointment_time', 'start_time','default_price','service_staff'], order_by="appointment_date asc")
     details = []
     if doc:
         for rating in doc:
@@ -110,11 +150,12 @@ def get_details(client_id):
 
 @frappe.whitelist()
 def book_spa(client_id, spa_item, therapist_name, date, time, any_surgeries,payment_method):
+    client = frappe.db.get("Client", {"email": frappe.session.user})
     start_time = datetime.combine(getdate(date), get_time(time))
     doc = frappe.get_doc({
         'doctype': 'Spa Appointment',
         'online': '1',
-        'client_id': client_id,
+        'client_id': client.name,
         'spa_service': spa_item,
         'appointment_status': "Draft",
         'service_staff': therapist_name,

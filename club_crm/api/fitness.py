@@ -7,7 +7,8 @@ from club_crm.api.wallet import get_balance
 
 @frappe.whitelist()
 def get_fitness_category(client_id):
-    doc = frappe.get_list('Fitness Training Request', filters={'client_id':client_id, 'request_status':['in', {'Pending','Scheduled'}], 'docstatus':1}, fields=['*'])
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    doc = frappe.get_list('Fitness Training Request', filters={'client_id':client.name, 'request_status':['in', {'Pending','Scheduled'}]}, fields=['*'])
     if doc:
         for doc_1 in doc:
             if doc_1.request_status=="Pending":
@@ -18,13 +19,20 @@ def get_fitness_category(client_id):
                 }
             else:
                 schedule=frappe.get_list('Fitness Training Trainer Scheduler', filters={'parent':doc_1.name,'parentfield':'table_schedule'}, fields=['day','date','from_time','to_time'], order_by="date asc")
+                # single_package = frappe.get_doc('Club Packages', doc_1.fitness_package)
+                # for package in single_package.package_table:
+                #     if package.service_name == fitness_category:
+                #         sessions = int(package.no_of_sessions/4)
+                #         if sessions == 0:
+                #             sessions = 1
+                
                 frappe.response["message"] = {
                     "Status":1,
                     "Status Message": "Training has been scheduled",
                     "Document ID": doc_1.name,
                     "rate": doc_1.price,
                     "package_name": doc_1.fitness_package,
-                    "Number of Sessions": doc_1.number_of_sessions,
+                    "Number of Sessions": doc_1.no_of_sessions,
                     "Schedule": schedule
                     }
     else:
@@ -33,7 +41,7 @@ def get_fitness_category(client_id):
         for item in fitness_category:
             fitness_item.append({
                 "category_name" : item.fitness_name,
-            "category_image" : item.image
+                "category_image" : item.image
             })
         frappe.response["message"] = {
             "Status":2,
@@ -52,13 +60,14 @@ def get_fitness_package(fitness_category):
                 sessions = int(package.no_of_sessions/4)
                 if sessions == 0:
                     sessions = 1
+                validity = int(package.validity // (24 * 3600))
                 packages.append({
                     "name": item.name,
-                    "duration": fit_category.duration,
+                    "duration": int(fit_category.duration),
                     "no_of_session": package.no_of_sessions,
-                    "validity": package.validity,
+                    "validity": validity,
                     "sessions_per_week": sessions,
-                    "price": package.price,
+                    "price": int(package.price),
                     "fitness_category": fitness_category
                 })
     
@@ -68,7 +77,8 @@ def get_fitness_package(fitness_category):
 
 @frappe.whitelist()
 def get_trainer(fitness_package,client_id):
-    client = frappe.get_doc('Client', client_id)
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    # client = frappe.get_doc('Client', client_id)
     club_package = frappe.get_doc('Club Packages', fitness_package)
     for package in club_package.package_table:
         fit_trainer = frappe.get_all('Fitness Services Assignment', filters={'fitness_package': package.service_name, 'on_app':1}, fields=['name','parent','parenttype','parentfield'])
@@ -95,7 +105,8 @@ def get_trainer(fitness_package,client_id):
 
 @frappe.whitelist()
 def get_appointments(client_id):
-    doc = frappe.get_all('Fitness Training Appointment', filters={'client_id':client_id}, fields=['name','booking_date','client_id','client_name','fitness_service','fitness_trainer','appointment_status','start_time','end_time','payment_status'], order_by="appointment_date asc")
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    doc = frappe.get_all('Fitness Training Appointment', filters={'client_id':client.name}, fields=['name','booking_date','client_id','client_name','fitness_service','service_staff','appointment_status','start_time','end_time','payment_status'], order_by="appointment_date asc")
     details=[]
     if doc:
         for rating in doc:
@@ -110,7 +121,7 @@ def get_appointments(client_id):
                         "client_id" : rating.client_id,
                         "client_name": rating.client_name,
                         "package_name": rating.fitness_service,
-                        "trainer_name": rating.fitness_trainer,
+                        "trainer_name": rating.service_staff,
                         "status": rating.appointment_status,
                         "start_time": rating.start_time,
                         "end_time": rating.end_time,
@@ -126,7 +137,7 @@ def get_appointments(client_id):
                         "client_id" : rating.client_id,
                         "client_name": rating.client_name,
                         "package_name": rating.fitness_service,
-                        "trainer_name": rating.fitness_trainer,
+                        "trainer_name": rating.service_staff,
                         "status": rating.appointment_status,
                         "start_time": rating.start_time,
                         "end_time": rating.end_time,
@@ -138,22 +149,21 @@ def get_appointments(client_id):
 
 @frappe.whitelist()
 def cancel_request(doc_id):
-    doc= frappe.get_doc('Fitness Training Request', doc_id)
-    if doc.docstatus==1:
-        frappe.db.set_value('Fitness Training Request', doc_id, {
-            'request_status': 'Cancelled',
-            'docstatus': 2
-            })
-        doc.reload()
-        frappe.response["message"] = {
+    doc = frappe.get_doc('Fitness Training Request', doc_id)
+    frappe.db.set_value('Fitness Training Request', doc_id, {
+        'request_status': 'Cancelled',
+        'docstatus': 2
+    })
+    doc.reload()
+    frappe.response["message"] = {
         "status": 1,
         "status_message": "Fitness Training Request has been cancelled"
-         }
-    else:
-        frappe.response["message"] = {
-            "status": 0,
-            "status_message": "Fitness Training Appointmnent already cancelled"
-            }
+    }
+    # else:
+    #     frappe.response["message"] = {
+    #         "status": 0,
+    #         "status_message": "Fitness Training Appointmnent already cancelled"
+    #         }
 
 
 @frappe.whitelist()
@@ -168,12 +178,12 @@ def cancel_session(appointment_id):
         frappe.response["message"] = {
             "status": 1,
             "status_message": "Fitness Training Appointment has been cancelled"
-         }
+        }
     else:
         frappe.response["message"] = {
             "status": 0,
-            "status_message": "Fitness Training Appointmnent already cancelled"
-            }
+            "status_message": "Fitness Training Appointment already cancelled"
+        }
 
 @frappe.whitelist()
 def proceed_payment(client_id,doc_id, payment_method):

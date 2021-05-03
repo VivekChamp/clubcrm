@@ -5,11 +5,12 @@ from frappe import throw, msgprint, _
 
 @frappe.whitelist()
 def spa_rating(client_id,booking_id,rating,comments):
+    client = frappe.db.get("Client", {"email": frappe.session.user})
     doc_all= frappe.get_list('Rating', filters={'document_id':booking_id, 'docstatus':1})
     if not doc_all:
         doc = frappe.get_doc({
         'doctype': 'Rating',
-        'client_id': client_id,
+        'client_id': client.name,
         'rating_type': "Spa Appointment",
         'document_id': booking_id,
         'rating_point': int(rating),
@@ -43,11 +44,12 @@ def check_status(booking_id):
 
 @frappe.whitelist()
 def groupclass_rating(client_id,class_id,rating,comments):
-    doc_all= frappe.get_all('Rating', filters={'document_id':class_id, 'docstatus':1, 'client_id':client_id})
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    doc_all= frappe.get_all('Rating', filters={'document_id':class_id, 'docstatus':1, 'client_id':client.name})
     if not doc_all:
         doc = frappe.get_doc({
         'doctype': 'Rating',
-        'client_id': client_id,
+        'client_id': client.name,
         'rating_type': "Group Class",
         'document_id': class_id,
         'rating_point': int(rating),
@@ -68,11 +70,12 @@ def groupclass_rating(client_id,class_id,rating,comments):
 
 @frappe.whitelist()
 def pt_rating(client_id,appointment_id,rating,comments):
+    client = frappe.db.get("Client", {"email": frappe.session.user})
     doc_all= frappe.get_list('Rating', filters={'document_id':appointment_id, 'docstatus':1})
     if not doc_all:
         doc = frappe.get_doc({
         'doctype': 'Rating',
-        'client_id': client_id,
+        'client_id': client.name,
         'rating_type': "Fitness Training Appointment",
         'document_id': appointment_id,
         'rating_point': int(rating),

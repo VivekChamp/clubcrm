@@ -1,0 +1,143 @@
+{
+ "actions": [],
+ "creation": "2021-04-27 13:42:49.480180",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "images_section",
+  "membership_application",
+  "club_tour",
+  "column_break_4",
+  "pt_sessions",
+  "group_classes",
+  "column_break_7",
+  "grams_table",
+  "terms_and_conditions_section",
+  "spa_tc",
+  "spa_cancellation",
+  "fitness_booking_section",
+  "fitness_tc",
+  "fitness_cancellation",
+  "user_registration_section",
+  "user_tc",
+  "membership_application_section",
+  "mem_app_tc"
+ ],
+ "fields": [
+  {
+   "fieldname": "membership_application",
+   "fieldtype": "Attach Image",
+   "label": "Membership Application"
+  },
+  {
+   "fieldname": "club_tour",
+   "fieldtype": "Attach Image",
+   "label": "Club Tour"
+  },
+  {
+   "fieldname": "images_section",
+   "fieldtype": "Section Break",
+   "label": "Images"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "pt_sessions",
+   "fieldtype": "Attach Image",
+   "label": "PT Sessions"
+  },
+  {
+   "fieldname": "group_classes",
+   "fieldtype": "Attach Image",
+   "label": "Group Classes"
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "grams_table",
+   "fieldtype": "Attach Image",
+   "label": "Grams Table Reservation"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "terms_and_conditions_section",
+   "fieldtype": "Section Break",
+   "label": "Spa Booking"
+  },
+  {
+   "fieldname": "spa_tc",
+   "fieldtype": "Text",
+   "label": "Terms & Conditions"
+  },
+  {
+   "fieldname": "spa_cancellation",
+   "fieldtype": "Text",
+   "label": "Cancellation Policy"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "fitness_booking_section",
+   "fieldtype": "Section Break",
+   "label": "Fitness Booking"
+  },
+  {
+   "fieldname": "fitness_tc",
+   "fieldtype": "Text",
+   "label": "Terms & Conditions"
+  },
+  {
+   "fieldname": "fitness_cancellation",
+   "fieldtype": "Text",
+   "label": "Cancellation Policy"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "user_registration_section",
+   "fieldtype": "Section Break",
+   "label": "User Registration"
+  },
+  {
+   "fieldname": "user_tc",
+   "fieldtype": "Text",
+   "label": "Terms & Conditions"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "membership_application_section",
+   "fieldtype": "Section Break",
+   "label": "Membership Application"
+  },
+  {
+   "fieldname": "mem_app_tc",
+   "fieldtype": "Text",
+   "label": "Terms & Conditions"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2021-04-27 14:35:27.491076",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "App Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -99,17 +99,17 @@ class FitnessTrainingAppointment(Document):
 		end_time = start_datetime + timedelta(seconds=self.total_duration)
 		overlaps = frappe.db.sql("""
 		select
-			name, fitness_trainer, client_name, appointment_time, total_duration, appointment_end_time
+			name, service_staff, client_name, appointment_time, total_duration, appointment_end_time
 		from
 			`tabFitness Training Appointment`
 		where
 			appointment_date=%s and name!=%s and appointment_status NOT IN ("Cancelled", "No Show")
-			and (fitness_trainer=%s or client_name=%s) and
+			and (service_staff=%s or client_name=%s) and
 			((appointment_time<%s and appointment_end_time>%s) or
 			(appointment_time>%s and appointment_time<%s) or
 			(appointment_time>%s and appointment_end_time<%s) or
 			(appointment_time=%s))
-		""", (self.appointment_date, self.name, self.fitness_trainer, self.client_name,
+		""", (self.appointment_date, self.name, self.service_staff, self.client_name,
 		self.appointment_time, self.appointment_time,
 		self.appointment_time, self.appointment_end_time, 
 		self.appointment_time, self.appointment_end_time,
@@ -167,7 +167,7 @@ def get_events(start, end, filters=None):
 	data = frappe.db.sql("""
 		select
 		`tabFitness Training Appointment`.name, `tabFitness Training Appointment`.client_name,
-		`tabFitness Training Appointment`.title, `tabFitness Training Appointment`.fitness_trainer,
+		`tabFitness Training Appointment`.title, `tabFitness Training Appointment`.service_staff,
 		`tabFitness Training Appointment`.appointment_status,
 		`tabFitness Training Appointment`.total_duration,
 		`tabFitness Training Appointment`.notes,

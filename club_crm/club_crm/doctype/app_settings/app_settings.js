@@ -1,7 +1,7 @@
-// Copyright (c) 2020, Blue Lynx and contributors
+// Copyright (c) 2021, Blue Lynx and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on('Members', {
+frappe.ui.form.on('App Settings', {
 	// refresh: function(frm) {
 
 	// }

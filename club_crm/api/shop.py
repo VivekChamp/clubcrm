@@ -16,7 +16,8 @@ def get_category():
 
 @frappe.whitelist()         
 def get_product(client_id,category):
-    client = frappe.get_doc('Client', client_id)
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    # client = frappe.get_doc('Client', client_id)
     if client.membership_status == "Member":
         discount = 0.0
         memberships = frappe.get_all('Memberships', filters={'membership_id': client.membership_id, 'membership_status':'Active'}, fields=['*'])
@@ -86,7 +87,8 @@ def get_product(client_id,category):
 
 @frappe.whitelist()         
 def add_to_cart(client_id, item_code, qty):
-    cart= frappe.get_list('Online Order', filters={'client_id':client_id, 'cart_status': 'Cart'}, fields=['*'])
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    cart= frappe.get_list('Online Order', filters={'client_id':client.name, 'cart_status': 'Cart'}, fields=['*'])
     if cart:
         cart_1=cart[0]
         doc= frappe.get_doc('Online Order', cart_1.name)
@@ -100,7 +102,7 @@ def add_to_cart(client_id, item_code, qty):
     else:
         doc = frappe.get_doc({
             'doctype':'Online Order',
-            'client_id': client_id,
+            'client_id': client.name,
             'item': [{
             'item_code': item_code,
             'quantity':qty
@@ -127,6 +129,7 @@ def delete_from_cart(document_name,item_document_name):
             "date": cart.created_date,
             "payment_status": cart.payment_status,
             "client_id": cart.client_id,
+            "total_quantity": cart.total_quantity,
             "total_amount": cart.total_amount,
             "items": cart.item
         }
@@ -141,10 +144,10 @@ def delete_from_cart(document_name,item_document_name):
             "status": 0
         }
 
-
 @frappe.whitelist()         
 def get_cart(client_id):
-    cart= frappe.get_list('Online Order', filters={'client_id':client_id, 'cart_status': 'Cart'}, fields=['*'])
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    cart= frappe.get_list('Online Order', filters={'client_id': client.name, 'cart_status': 'Cart'}, fields=['*'])
     if cart:
         cart_1=cart[0]
         doc= frappe.get_doc('Online Order', cart_1.name)
@@ -154,6 +157,7 @@ def get_cart(client_id):
             "date": doc.created_date,
             "payment_status": doc.payment_status,
             "client_id": doc.client_id,
+            "total_quantity": doc.total_quantity,
             "total_amount": doc.total_amount,
             "items": doc.item
         }
@@ -171,18 +175,22 @@ def get_cart(client_id):
 
 @frappe.whitelist()
 def checkout(client_id, payment_method):
-    cart= frappe.get_list('Online Order', filters={'client_id':client_id, 'cart_status': 'Cart'}, fields=['*'])
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    cart = frappe.get_list('Online Order', filters={'client_id': client.name, 'cart_status': 'Cart'}, fields=['*'])
+    # cart = add_cart_from_spa(doc.client_id, doc.name)
     if cart:
         cart_1=cart[0]
         doc = frappe.get_doc('Online Order', cart_1.name)
         doc.payment_method = payment_method
-        wallet= get_balance()
+        doc.save()
+    wallet = get_balance()
     frappe.response["message"] = {
         "status": 1,
         "document_name": doc.name,
         "cart_status": doc.cart_status,
         "payment_status": doc.payment_status,
         "client_name": doc.client_name,
+        "total_quantity": doc.total_quantity,
         "total_amount": doc.total_amount,
         "wallet_balance": wallet
         } 

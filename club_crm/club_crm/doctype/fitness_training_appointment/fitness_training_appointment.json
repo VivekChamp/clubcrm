@@ -38,7 +38,7 @@
   "fitness_service_category",
   "service_duration",
   "column_break_21",
-  "fitness_trainer",
+  "service_staff",
   "default_price",
   "section_break_33",
   "notes",
@@ -146,13 +146,6 @@
    "fieldname": "start_time",
    "fieldtype": "Datetime",
    "label": "Start Time"
-  },
-  {
-   "fieldname": "fitness_trainer",
-   "fieldtype": "Link",
-   "in_standard_filter": 1,
-   "label": "Fitness Trainer",
-   "options": "Service Staff"
   },
   {
    "allow_on_submit": 1,
@@ -334,10 +327,17 @@
    "label": "Checkin Document",
    "options": "Check In",
    "read_only": 1
+  },
+  {
+   "fieldname": "service_staff",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Fitness Trainer",
+   "options": "Service Staff"
   }
  ],
  "links": [],
- "modified": "2021-03-31 14:59:13.365688",
+ "modified": "2021-04-26 22:17:29.243859",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Appointment",
@@ -356,7 +356,7 @@
    "write": 1
   }
  ],
- "search_fields": "client_name, fitness_trainer, fitness_service, appointment_date, appointment_time",
+ "search_fields": "client_name, service_staff, fitness_service, appointment_date, appointment_time",
  "show_name_in_global_search": 1,
  "sort_field": "appointment_date",
  "sort_order": "DESC",

@@ -1,0 +1,29 @@
+{
+ "attach_print": 0,
+ "channel": "SMS",
+ "condition": "doc.application_status==\"Pending\" and doc.new_notify==0",
+ "creation": "2021-04-21 02:09:37.560833",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Memberships Application",
+ "enabled": 1,
+ "event": "Save",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "A new membership application has been received from {{doc.first_name_1}} {{doc.last_name_1}}",
+ "modified": "2021-04-21 02:09:37.560833",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Alert on new membership application",
+ "owner": "Administrator",
+ "property_value": "1",
+ "recipients": [
+  {
+   "receiver_by_role": "CE Manager"
+  }
+ ],
+ "send_system_notification": 1,
+ "send_to_all_assignees": 0,
+ "set_property_after_alert": "new_notify"
+}

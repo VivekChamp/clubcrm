@@ -27,6 +27,7 @@
   "member_id",
   "card_no",
   "membership_id",
+  "assigned_to",
   "primary_member",
   "image",
   "other_details_section",
@@ -42,14 +43,16 @@
   "notification_preference",
   "apply_membership",
   "mem_application",
+  "membership_details_section",
+  "membership_history",
+  "sb_relation",
+  "client_relation",
   "allergy_and_medical_history",
   "allergies",
   "medication",
   "column_break_20",
   "medical_history",
   "other_notes",
-  "sb_relation",
-  "client_relation",
   "customer_details_section",
   "customer",
   "customer_group",
@@ -241,13 +244,11 @@
    "collapsible": 1,
    "fieldname": "sb_relation",
    "fieldtype": "Section Break",
-   "hidden": 1,
    "label": "Client Relation"
   },
   {
    "fieldname": "client_relation",
    "fieldtype": "Table",
-   "label": "Client Relation",
    "options": "Client Relation"
   },
   {
@@ -304,7 +305,8 @@
    "in_standard_filter": 1,
    "label": "Membership Status",
    "no_copy": 1,
-   "options": "Non-Member\nMember"
+   "options": "Non-Member\nMember",
+   "read_only": 1
   },
   {
    "fieldname": "nationality",
@@ -337,7 +339,6 @@
    "allow_in_quick_entry": 1,
    "fieldname": "mobile_no",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Mobile",
    "length": 8,
@@ -447,16 +448,16 @@
    "label": "Notes"
   },
   {
-   "default": "Everytime the client profile is opened",
    "depends_on": "eval:doc.alerts",
    "fieldname": "alert_type",
    "fieldtype": "Select",
    "label": "Alert Type",
-   "options": "Everytime the client profile is opened\nDuring client check-in only"
+   "options": "\nEverytime the client profile is opened\nDuring client check-in only"
   },
   {
    "fieldname": "membership_id",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Membership Number",
    "read_only": 1
   },
@@ -479,14 +480,31 @@
    "default": "0",
    "fieldname": "offers_notification",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Offers"
+  },
+  {
+   "fieldname": "membership_details_section",
+   "fieldtype": "Section Break",
+   "label": "Membership Details"
+  },
+  {
+   "fieldname": "membership_history",
+   "fieldtype": "Table",
+   "options": "Membership History"
+  },
+  {
+   "fieldname": "assigned_to",
+   "fieldtype": "Data",
+   "label": "Assigned to",
+   "read_only": 1
   }
  ],
  "icon": "fa fa-user",
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2021-04-19 23:31:30.719517",
+ "modified": "2021-04-29 03:12:55.096522",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",
@@ -620,7 +638,6 @@
  "quick_entry": 1,
  "search_fields": "client_name,mobile_no,member_id",
  "show_name_in_global_search": 1,
- "show_preview_popup": 1,
  "sort_field": "client_name",
  "sort_order": "ASC",
  "title_field": "client_name",
