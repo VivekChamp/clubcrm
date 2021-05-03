@@ -98,22 +98,13 @@ def auto_checkout():
 
 @frappe.whitelist()
 def benefits(client_id):
-    benefits = []
+    benefit = []
+    benefit.append(['Benefit Name', 'Remaining', 'Expiry Date', 'Status'])
     ben = frappe.get_all('Client Sessions', filters={'client_id':client_id, 'package_type':'Club'}, fields=['*'])
     for comp in ben:
-        benefits.append({
-            "benefits_name" : comp.title,
-            "count": "Limited",
-            "quantity": str(comp.total_sessions),
-            "used": str(comp.used_sessions),
-            "remaining": str(comp.remaining_sessions),
-            "session_status": comp.session_status
-        })
-    frappe.msgprint(
-        msg = benefits,
-        title = "Active Benefits",
-        as_table = True
-    )
+        expiry_date = comp.expiry_date.strftime("%d-%m-%Y")
+        benefit.append([comp.title, str(comp.remaining_session_text), str(expiry_date), comp.session_status])
+    frappe.msgprint(benefit, title="Benefits List", as_table=True)
 
 @frappe.whitelist()
 def medical_history(client_id,allergies,medication,history,notes):

@@ -278,8 +278,7 @@
    "fieldname": "client_id_2",
    "fieldtype": "Link",
    "label": "Client ID",
-   "options": "Client",
-   "read_only": 1
+   "options": "Client"
   },
   {
    "fieldname": "assigned_to_1",
@@ -408,7 +407,7 @@
   }
  ],
  "links": [],
- "modified": "2021-04-29 03:00:50.844753",
+ "modified": "2021-05-02 16:10:41.843899",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships",

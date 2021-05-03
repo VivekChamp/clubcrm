@@ -446,6 +446,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.membership_type==\"Family Membership\"",
    "fieldname": "additional_members",
    "fieldtype": "Table",
    "label": "Additional Members",
@@ -595,7 +596,6 @@
   },
   {
    "collapsible": 1,
-   "depends_on": "eval:doc.membership_type==\"Family Membership\"",
    "fieldname": "additional_member_section",
    "fieldtype": "Section Break",
    "label": "Additional Members"
@@ -736,7 +736,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-01 14:43:53.882093",
+ "modified": "2021-05-02 15:53:32.556062",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",

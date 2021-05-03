@@ -123,7 +123,7 @@ class Memberships(Document):
 						frappe.db.set_value('Client', row.client_id, 'card_no', row.card_no)
 					frappe.db.set_value('Client', row.client_id, {
 						'membership_id': self.membership_id,
-						'assigned_to': self.assigned_to
+						'assigned_to': row.assigned_to
 					})
 
 	# Create Benefit sessions for Membership

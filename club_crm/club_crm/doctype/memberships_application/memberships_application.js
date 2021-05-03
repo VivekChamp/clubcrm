@@ -164,7 +164,7 @@ frappe.ui.form.on('Memberships Application', {
                 d.show();
             });
         }
-        if (frm.doc.payment_status == "Paid" && !frm.doc.membership_document) {
+        if (frm.doc.docstatus == 1 && !frm.doc.membership_document) {
             frm.add_custom_button(__('Create Membership'), function() {
                 frappe.call({
                     method: 'club_crm.club_crm.doctype.memberships_application.memberships_application.create_membership',
@@ -173,7 +173,7 @@ frappe.ui.form.on('Memberships Application', {
                         cur_frm.reload_doc();
                     }
                 });
-                frm.save()
+                // frm.save()
             });
         }
         if (frm.doc.membership_document) {
