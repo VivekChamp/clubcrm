@@ -51,9 +51,11 @@
   "additional_members_item",
   "discount_benefits_section",
   "spa_discount",
+  "salon_discount",
   "column_break_45",
   "retail_discount",
   "column_break_47",
+  "boho_discount",
   "grams_discount",
   "membership_application",
   "membership_extensions_section",
@@ -359,7 +361,7 @@
    "fieldname": "grams_discount",
    "fieldtype": "Percent",
    "hidden": 1,
-   "label": "Boho Discount"
+   "label": "Grams Discount"
   },
   {
    "fieldname": "column_break_45",
@@ -404,10 +406,24 @@
    "hide_seconds": 1,
    "label": "Total Extended Days",
    "read_only": 1
+  },
+  {
+   "fetch_from": "membership_plan.salon_discount",
+   "fetch_if_empty": 1,
+   "fieldname": "salon_discount",
+   "fieldtype": "Percent",
+   "label": "Salon Discount"
+  },
+  {
+   "fetch_from": "membership_plan.boho_discount",
+   "fetch_if_empty": 1,
+   "fieldname": "boho_discount",
+   "fieldtype": "Percent",
+   "label": "Boho Discount"
   }
  ],
  "links": [],
- "modified": "2021-05-02 16:10:41.843899",
+ "modified": "2021-05-04 12:29:29.600539",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships",

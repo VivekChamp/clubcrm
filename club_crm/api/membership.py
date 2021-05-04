@@ -48,9 +48,9 @@ def member_benefits(client_id):
                     mem = frappe.get_doc('Memberships', row.membership)
                     spa_discount = int(mem.spa_discount)
                     retail_discount = int(mem.retail_discount)
-                    grams_discount = 0
-                    boho_discount = 20
-                    salon_discount = 15
+                    grams_discount = int(mem.grams_discount)
+                    boho_discount = int(mem.boho_discount)
+                    salon_discount = int(mem.salon_discount)
         else:
             spa_discount = 0
             retail_discount = 0

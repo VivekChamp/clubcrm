@@ -87,3 +87,16 @@ def get_nonmember_dashboard(client_id):
         "spa": spa_next,
         "club_tour": club_tour
         }
+
+
+@frappe.whitelist()
+def get_terms():
+    terms = frappe.get_doc('App Settings')
+    frappe.response["message"] = {
+        "spa_terms": terms.spa_tc,
+        "spa_cancellation": terms.spa_cancellation,
+        "fitness_terms": terms.fitness_tc,
+        "fitness_cancellation": terms.fitness_cancellation,
+        "user_terms": terms.user_tc,
+        "membership_terms": terms.mem_app_tc
+        }

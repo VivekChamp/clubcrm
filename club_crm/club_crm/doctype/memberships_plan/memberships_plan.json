@@ -35,9 +35,11 @@
   "discount_amount",
   "discount_benefits",
   "spa_discount",
+  "salon_discount",
   "column_break_29",
   "retail_discount",
   "column_break_31",
+  "boho_discount",
   "grams_discount"
  ],
  "fields": [
@@ -230,11 +232,22 @@
   {
    "fieldname": "grams_discount",
    "fieldtype": "Percent",
+   "hidden": 1,
+   "label": "Grams Discount (%)"
+  },
+  {
+   "fieldname": "salon_discount",
+   "fieldtype": "Percent",
+   "label": "Salon Discount (%)"
+  },
+  {
+   "fieldname": "boho_discount",
+   "fieldtype": "Percent",
    "label": "Boho Discount (%)"
   }
  ],
  "links": [],
- "modified": "2021-04-26 16:05:26.730864",
+ "modified": "2021-05-04 11:56:37.835716",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Plan",
