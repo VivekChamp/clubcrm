@@ -113,6 +113,7 @@
   {
    "fieldname": "add_schedule",
    "fieldtype": "Button",
+   "ignore_user_permissions": 1,
    "label": "Add Schedule",
    "options": "add_schedule"
   },
@@ -162,7 +163,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-04-16 17:01:47.649315",
+ "modified": "2021-05-04 16:06:55.255640",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Service Staff Availability",

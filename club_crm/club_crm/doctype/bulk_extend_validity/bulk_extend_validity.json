@@ -1,0 +1,93 @@
+{
+ "actions": [],
+ "creation": "2021-05-05 17:38:39.444699",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "creation_date",
+  "section_break_2",
+  "extend_on",
+  "membership_category",
+  "start_date",
+  "column_break_5",
+  "days",
+  "notes",
+  "bulk_update"
+ ],
+ "fields": [
+  {
+   "default": "Today",
+   "fieldname": "creation_date",
+   "fieldtype": "Date",
+   "label": "Creation Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "extend_on",
+   "fieldtype": "Select",
+   "label": "Extend for",
+   "options": "\nMemberships\nClient Sessions"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "days",
+   "fieldtype": "Duration",
+   "hide_seconds": 1,
+   "label": "No. of Days"
+  },
+  {
+   "fieldname": "bulk_update",
+   "fieldtype": "Button",
+   "label": "Bulk Update",
+   "options": "bulk_update"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Data",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.extend_on==\"Memberships\"",
+   "fieldname": "membership_category",
+   "fieldtype": "Link",
+   "label": "Membership Category",
+   "options": "Memberships Category"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2021-05-06 02:08:42.151483",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Bulk Extend Validity",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

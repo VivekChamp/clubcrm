@@ -255,8 +255,12 @@ class Memberships(Document):
 				session.session_status =  self.membership_status
 				session.start_date = new_start_date
 				if session.session_extension:
-					for rows in session.session_extension:
-						session.remove(rows)
+					frappe.db.delete('Validity Extension', {
+    					'parentfield': 'session_extension',
+						'parent': session.name
+					})
+					# for rows in session.session_extension:
+					# 	session.remove(rows)
 				if self.validity_extension:
 					for row in self.validity_extension:
 						session.append('session_extension', {
