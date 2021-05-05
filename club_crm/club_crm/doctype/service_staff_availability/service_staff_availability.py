@@ -60,6 +60,7 @@ class ServiceStaffAvailability(Document):
 				row.start_time = "%s %s" % (row.date, row.from_time or "00:00:00")
 				row.end_time = "%s %s" % (row.date, row.to_time or "00:00:00")
 
+	@frappe.whitelist()
 	def add_schedule(self):
 		self.validate_values()
 		if not self.end_date:
