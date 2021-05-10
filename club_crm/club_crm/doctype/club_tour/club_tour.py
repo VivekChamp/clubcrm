@@ -5,6 +5,8 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
+from club_crm.club_crm.utils.sms_notification import send_sms
+from club_crm.club_crm.utils.push_notification import send_push
 from club_crm.club_crm.doctype.push_notification_center.push_notification_center import send_push_updates
 
 class ClubTour(Document):
@@ -33,4 +35,11 @@ class ClubTour(Document):
 			message = "You have an update on your club tour appointment"
 			client = frappe.get_doc('Client', self.client_id)
 			if client.fcm_token:
-				send_push_updates(client.name, title, message)
+				send_push(client.name, title, message)
+			
+			cec_list = frappe.get_all('Service Staff', filters={'display_name': self.assign_cec})
+			msg = "You have been assigned for a new Club Tour - "+self.name+"."
+			if cec_list:
+				for cec in cec_list:
+					receiver_list='"'+cec.mobile_no+'"'
+					send_sms(receiver_list,msg)

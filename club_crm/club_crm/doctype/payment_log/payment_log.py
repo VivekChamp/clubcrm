@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 import frappe
 import re
 from frappe import _
+from club_crm.club_crm.utils.sms_notification import send_sms
 from frappe.model.document import Document
 
 class PaymentLog(Document):
@@ -32,6 +33,13 @@ class PaymentLog(Document):
 				})
 				doc.payment_status = 'Paid'
 				doc.save(ignore_permissions=True)
+
+				cec_list = frappe.get_all('Service Staff', filters={'display_name': doc.assigned_to})
+				msg = "Payment for the membership application "+doc.name+" has been received."
+				if cec_list:
+					for cec in cec_list:
+						receiver_list='"'+cec.mobile_no+'"'
+						send_sms(receiver_list,msg)
 			
 			if re.match(cart, self.req_reference_number):
 				doc = frappe.get_doc("Cart", str(self.req_reference_number))

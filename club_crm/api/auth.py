@@ -8,42 +8,61 @@ from frappe.core.doctype.sms_settings.sms_settings import send_sms
 
 @frappe.whitelist(allow_guest=True)
 def login(usr,pwd):
-    try:
-        login_manager = frappe.auth.LoginManager()
-        login_manager.authenticate(user=usr,pwd=pwd)
-        login_manager.post_login()
-    except frappe.exceptions.AuthenticationError:
-        frappe.clear_messages()
-        frappe.local.response["message"] =  {
-            "success_key":0,
-            "message":"Authentication Failed"
-            }
-        return
-    api_generate = generate_keys(frappe.session.user)
-    user = frappe.get_doc('User',frappe.session.user)
-    pg = frappe.get_doc('CS Settings')
+        try:
+            login_manager = frappe.auth.LoginManager()
+            login_manager.authenticate(user=usr,pwd=pwd)
+            login_manager.post_login()
+        except frappe.exceptions.AuthenticationError:
+            frappe.clear_messages()
+            frappe.local.response["message"] =  {
+                "success_key":0,
+                "message":"Authentication Failed"
+                }
+            return
+        api_generate = generate_keys(frappe.session.user)
+        user = frappe.get_doc('User',frappe.session.user)
+        if user.is_employee == 0:
+            pg = frappe.get_doc('CS Settings')
+            client_details = []
 
-    client_details = frappe.get_all('Client', filters={'mobile_no': usr}, fields=['name','first_name','last_name','client_name','gender','birth_date','nationality','qatar_id','email','mobile_no','apply_membership','mem_application','membership_status','status','customer_group','territory','marital_status','image'])
-    if client_details:
-        d = client_details[0]
-        wallet = get_balance()
-        frappe.response["message"] = {
-            "sid": frappe.session.sid,
-            "client details": client_details,
-            "api_key":user.api_key,
-            "api secret": api_generate,
-            "wallet_balance": wallet,
-            "access_key": pg.access_key,
-            "profile_id": pg.profile_id,
-            "transaction_url": pg.transaction_url
-        }
-    else:
-        frappe.response["message"] = {
-            "sid": frappe.session.sid,
-            "client details": [],
-            "api_key":user.api_key,
-            "api secret": api_generate
-        }
+            client = frappe.db.get("Client", {"email": frappe.session.user})
+            client_details.append({
+                'name': client.name,
+                'first_name': client.first_name,
+                'last_name': client.last_name,
+                'client_name': client.client_name,
+                'gender': client.gender,
+                'birth_date': client.birth_date,
+                'nationality': client.nationality,
+                'qatar_id': client.qatar_id,
+                'email': client.email,
+                'mobile_no': client.mobile_no,
+                'apply_membership': client.apply_membership,
+                'mem_application': client.mem_application,
+                'membership_status': client.membership_status,
+                'status': client.status,
+                'customer_group': client.customer_group,
+                'territory': client.territory ,
+                'marital_status': client.marital_status,
+                'image': client.image
+            })
+
+            wallet = get_balance()
+            frappe.response["message"] = {
+                "sid": frappe.session.sid,
+                "client details": client_details,
+                "api_key":user.api_key,
+                "api secret": api_generate,
+                "wallet_balance": wallet,
+                "access_key": pg.access_key,
+                "profile_id": pg.profile_id,
+                "transaction_url": pg.transaction_url
+            }
+        else:
+            frappe.local.response["message"] =  {
+                "success_key":0,
+                "message":"Authentication Failed"
+            }
 
 def generate_keys(user):
     user_details = frappe.get_doc('User', user)

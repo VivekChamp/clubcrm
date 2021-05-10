@@ -78,6 +78,7 @@
   {
    "fieldname": "client_id",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Client ID",
    "options": "Client",
    "reqd": 1
@@ -120,7 +121,7 @@
   {
    "fieldname": "assign_cec",
    "fieldtype": "Link",
-   "label": "Assigned Staff",
+   "label": "Assigned CEC",
    "options": "Service Staff"
   },
   {
@@ -128,23 +129,23 @@
    "fieldname": "start_time",
    "fieldtype": "Datetime",
    "hidden": 1,
-   "label": "Time from"
+   "in_list_view": 1,
+   "label": "On"
   },
   {
    "allow_on_submit": 1,
    "fieldname": "end_time",
    "fieldtype": "Datetime",
    "hidden": 1,
-   "label": "Time to"
+   "label": "To"
   },
   {
    "allow_on_submit": 1,
    "default": "Pending",
    "fieldname": "tour_status",
    "fieldtype": "Select",
-   "in_list_view": 1,
    "label": "Tour Status",
-   "options": "Pending\nScheduled\nCompleted\nNo Show"
+   "options": "Pending\nScheduled\nCompleted\nNo Show\nCancelled"
   },
   {
    "fieldname": "column_break_21",
@@ -171,18 +172,22 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.date",
    "fieldname": "from_time",
-   "fieldtype": "Time",
-   "label": "From"
+   "fieldtype": "Select",
+   "label": "From",
+   "options": "\n07:00\n07:30\n08:00\n08:30\n09:00\n09:30\n10:00\n10:30\n11:00\n11:30\n12:00\n12:30\n13:00\n13:30\n14:00\n14:30\n15:00\n15:30\n16:00\n16:30\n17:00\n17:30\n18:00\n18:30\n19:00\n19:30\n20:00\n20:30\n21:00"
   },
   {
+   "depends_on": "eval:doc.date",
    "fieldname": "to_time",
-   "fieldtype": "Time",
-   "label": "To"
+   "fieldtype": "Select",
+   "label": "To",
+   "options": "\n07:30\n08:00\n08:30\n09:00\n09:30\n10:00\n10:30\n11:00\n11:30\n12:00\n12:30\n13:00\n13:30\n14:00\n14:30\n15:00\n15:30\n16:00\n16:30\n17:00\n17:30\n18:00\n18:30\n19:00\n19:30\n20:00\n20:30\n21:00\n21:30"
   }
  ],
  "links": [],
- "modified": "2021-04-11 20:52:51.680836",
+ "modified": "2021-05-07 14:03:53.126566",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club Tour",

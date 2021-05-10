@@ -8,7 +8,8 @@ from frappe import _
 from frappe.utils import getdate, get_time, flt
 from datetime import datetime, timedelta
 from club_crm.club_crm.doctype.client_sessions.client_sessions import create_session
-from frappe.core.doctype.sms_settings.sms_settings import send_sms
+from club_crm.club_crm.utils.sms_notification import send_sms 
+from club_crm.club_crm.utils.push_notification import send_push
 from frappe.model.document import Document
 
 class MembershipsApplication(Document):
@@ -27,6 +28,7 @@ class MembershipsApplication(Document):
 		self.set_discounts_and_grand_total()
 		self.set_payment_details()
 		self.set_title()
+		#self.send_notification()
 		# self.validate_submit()
 	
 	def before_submit(self):
@@ -230,12 +232,66 @@ class MembershipsApplication(Document):
 						doc.email = row.email
 					doc.save()
 
-	# def send_notification(self):
-	# 	settings = frappe.get_doc('Memberships Settings')
-	# 	if settings.enabled==1 and self.online_application==1:
-	# 		msg = "New membership application has been received from "+self.first_name_1+" "+self.last_name_1+"."
-	# 		receiver_list='"'+settings.mobile_no+'"'
-	# 		send_sms(receiver_list,msg)
+	def send_notification(self):
+		# Notification for new application to CE Manager
+		if self.new_notify==0 and self.application_status=="Pending":
+			users = frappe.get_all('User', filter={'roles': 'CE Manager'})
+			msg = "New membership application has been received from "+self.first_name_1+" "+self.last_name_1+"."
+			if users:
+				for user in users:
+					receiver_list='"'+user.mobile_no+'"'
+					send_sms(receiver_list,msg)
+			self.new_notify=1
+
+		# Notification to CEC on assignment	
+		if self.new_notify==1 and self.assignment_notify==0 and self.application_status=="Pending" and self.assigned_to:
+			cec_list = frappe.get_all('Service Staff', filters={'display_name': self.assigned_to})
+			msg = "You have been assigned to a new membership application "+self.name+"."
+			if cec_list:
+				for cec in cec_list:
+					receiver_list='"'+cec.mobile_no+'"'
+					send_sms(receiver_list,msg)
+			self.assignment_notify==1
+
+		# Notification to CE Manager for approval
+		if self.cem_approval_notify==0 and self.application_status=="Pending Approval by CE Manager":
+			users = frappe.get_all('User', filter={'roles': 'CE Manager'})
+			msg = "Membership application "+self.name+" is pending your approval."
+			if users:
+				for user in users:
+					receiver_list='"'+user.mobile_no+'"'
+					send_sms(receiver_list,msg)
+			self.cem_approval_notify=1
+
+		# Notification to GM for approval
+		if self.gm_approval_notify==0 and self.application_status=="Pending Approval by GM":
+			users = frappe.get_all('User', filter={'roles': 'General Manager'})
+			msg = "Membership application "+self.name+" is pending your approval."
+			if users:
+				for user in users:
+					receiver_list='"'+user.mobile_no+'"'
+					send_sms(receiver_list,msg)
+			self.gm_approval_notify=1
+
+		# Notification to MD for approval
+		if self.md_approval_notify==0 and self.application_status=="Pending Approval by MD":
+			users = frappe.get_all('User', filter={'roles': 'Managing Director'})
+			msg = "Membership application "+self.name+" is pending your approval."
+			if users:
+				for user in users:
+					receiver_list='"'+user.mobile_no+'"'
+					send_sms(receiver_list,msg)
+			self.md_approval_notify=1
+		
+		# Notification to customer regarding approval
+		if self.md_approval_notify==1 and self.application_status=="Approved by MD":
+			msg= "Your membership application has been approved. Kindly proceed to make the payment via app/in-person to activate your membership."
+			receiver_list='"'+self.mobile_no_1+'"'
+			send_sms(receiver_list,msg)
+			client = frappe.get_doc('Client', self.client_id)
+			if client.fcm_token:
+				title = "Membership Approval"
+				send_push(self.client_id,title,msg)
 
 @frappe.whitelist()
 def create_client(first_name,last_name,gender,birth_date,qatar_id,mobile_no,email):

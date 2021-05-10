@@ -4,7 +4,7 @@
   "doctype": "Workflow",
   "document_type": "Memberships Application",
   "is_active": 1,
-  "modified": "2021-04-21 01:25:19.925622",
+  "modified": "2021-04-24 20:29:08.263885",
   "name": "Membership Application Workflow",
   "override_status": 0,
   "parent": null,
@@ -141,6 +141,19 @@
     "state": "Complete",
     "update_field": "payment_status",
     "update_value": "Paid"
+   },
+   {
+    "allow_edit": "CE Manager",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Membership Application Workflow",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Cancelled",
+    "update_field": "application_status",
+    "update_value": "Cancelled"
    }
   ],
   "transitions": [

@@ -164,6 +164,7 @@
    "default": "SMS",
    "fieldname": "notification_preference",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Notification Preference",
    "options": "\nEmail\nSMS\nBoth"
   },
@@ -244,6 +245,7 @@
    "collapsible": 1,
    "fieldname": "sb_relation",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Client Relation"
   },
   {
@@ -343,7 +345,6 @@
    "label": "Mobile",
    "length": 8,
    "options": "Phone",
-   "reqd": 1,
    "unique": 1
   },
   {
@@ -359,6 +360,7 @@
    "depends_on": "eval:doc.membership_status==\"Member\"",
    "fieldname": "primary_member",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Is Primary Member",
    "read_only": 1
   },
@@ -496,7 +498,7 @@
   {
    "fieldname": "assigned_to",
    "fieldtype": "Data",
-   "label": "Assigned to",
+   "label": "Assigned CEC",
    "read_only": 1
   }
  ],
@@ -504,7 +506,7 @@
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2021-04-29 03:12:55.096522",
+ "modified": "2021-05-08 13:17:23.652038",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",

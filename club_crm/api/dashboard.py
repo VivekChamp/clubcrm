@@ -56,6 +56,14 @@ def get_dashboard_details(client_id):
     else:
         spa_next = None
     
+    assigned_cec = None
+    mobile_no = None
+    if client.assigned_to:
+        assigned_cec = client.assigned_to
+        staff = frappe.get_doc('Service Staff', client.assigned_to)
+        if staff.mobile_no:
+            mobile_no = '+974 ' + str(staff.mobile_no)
+    
     frappe.response["message"] = {
         "Valet": valet_parking,
         "valet_id": valet_name,
@@ -63,8 +71,10 @@ def get_dashboard_details(client_id):
         "food_order": food_order,
         "group_class": grp_class,
         "fitness": fitness,
-        "spa": spa_next
-        }
+        "spa": spa_next,
+        "assigned_cec": assigned_cec,
+        "cec_contact": mobile_no
+    }
 
 @frappe.whitelist()
 def get_nonmember_dashboard(client_id):
@@ -83,13 +93,22 @@ def get_nonmember_dashboard(client_id):
     else:
         club_tour= None
     
+    assigned_cec = None
+    mobile_no = None
+    if client.assigned_to:
+        assigned_cec = client.assigned_to
+        staff = frappe.get_doc('Service Staff', client.assigned_to)
+        if staff.mobile_no:
+            mobile_no = '+974 ' + str(staff.mobile_no)
+
     frappe.response["message"] = {
         "spa": spa_next,
-        "club_tour": club_tour
+        "club_tour": club_tour,
+        "assigned_cec": assigned_cec,
+        "cec_contact": mobile_no
         }
 
-
-@frappe.whitelist()
+@frappe.whitelist(allow_guest=True)
 def get_terms():
     terms = frappe.get_doc('App Settings')
     frappe.response["message"] = {

@@ -423,7 +423,7 @@
   }
  ],
  "links": [],
- "modified": "2021-05-04 12:29:29.600539",
+ "modified": "2021-05-07 15:51:34.482834",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships",
@@ -444,6 +444,6 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "title_field": "title",
+ "title_field": "membership_plan",
  "track_changes": 1
 }

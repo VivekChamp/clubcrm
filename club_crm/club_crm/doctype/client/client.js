@@ -2,6 +2,14 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Client', {
+    onload: function(frm) {
+        if (!frm.doc.birth_date) {
+            $(frm.doc['age_html'].wrapper).html('');
+        }
+        if (frm.doc.birth_date) {
+            $(frm.doc['age_html'].wrapper).html(`${get_age(frm.doc.birth_date)}`);
+        }
+    },
     refresh(frm) {
         //Show alert pop-up everytime the client list is opened with the message from Alert section
         if (frm.doc.alerts && frm.doc.alert_type == "Everytime the client profile is opened") {
@@ -11,20 +19,6 @@ frappe.ui.form.on('Client', {
                 message: __(frm.doc.alerts)
             });
         }
-
-        // //Create button with various functions	
-        // if (frm.doc.status!="Disabled") {
-        // 	frm.add_custom_button(__("Membership Application"), function() {
-        // 		var mem_app = frappe.model.get_new_doc("Memberships Application");
-        // 			mem_app.client=frm.doc.name;
-        // 			frappe.set_route('Form', 'Memberships Application', mem_app.name);
-        // 	},__("Create"));
-        // }
-
-        // //Display accounts receivable button	
-        // frm.add_custom_button(__('Accounts Receivable'), function() {
-        // 	frappe.set_route('query-report', 'Accounts Receivable', {customer:frm.doc.customer});
-        // },__("Create"));
 
         if (frm.doc.membership_status == "Member") {
             frm.add_custom_button('View Memberships', () => {
@@ -152,6 +146,29 @@ frappe.ui.form.on('Client', {
     }
 });
 
+frappe.ui.form.on('Client', 'birth_date', function(frm) {
+    if (frm.doc.birth_date) {
+        let today = new Date();
+        let birthDate = new Date(frm.doc.birth_date);
+        if (today < birthDate) {
+            frappe.msgprint(__('Please select a valid Date'));
+            frappe.model.set_value(frm.doctype, frm.docname, 'birth_date', '');
+        } else {
+            let age_str = get_age(frm.doc.birth_date);
+            $(frm.doc['age_html'].wrapper).html(`${age_str}`);
+        }
+    } else {
+        $(frm.doc['age_html'].wrapper).html('');
+    }
+});
+
+let get_age = function(birth) {
+    let ageMS = Date.parse(Date()) - Date.parse(birth);
+    let age = new Date();
+    age.setTime(ageMS);
+    let years = age.getFullYear() - 1970;
+    return years + ' Year(s) ' + age.getMonth() + ' Month(s) ' + age.getDate() + ' Day(s)';
+};
 // frappe.ui.form.on("Client", "onload", function(frm) {
 // 	if(frm.doc.membership_status == "Member") {
 // 		$('div[data-fieldname="membership_status"]').css('background-color','#e2fff0')

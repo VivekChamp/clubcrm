@@ -151,18 +151,21 @@
    "default": "0",
    "fieldname": "spa_check",
    "fieldtype": "Check",
+   "in_standard_filter": 1,
    "label": "Spa"
   },
   {
    "default": "0",
    "fieldname": "fitness_check",
    "fieldtype": "Check",
+   "in_standard_filter": 1,
    "label": "Fitness"
   },
   {
    "default": "0",
    "fieldname": "cec_check",
    "fieldtype": "Check",
+   "in_standard_filter": 1,
    "label": "CEC"
   },
   {
@@ -175,7 +178,7 @@
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-04-04 02:23:17.746838",
+ "modified": "2021-05-07 00:29:47.655984",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Service Staff",

@@ -148,14 +148,31 @@ def cancel_appointment(appointment_id):
 
 @frappe.whitelist()
 def get_trainer_resources():
-	trainers = frappe.get_all('Service Staff', filters={'fitness_check':1}, fields=['display_name'])
-	resource=[]
-	if trainers:
-		for trainer in trainers:
-			resource.append({
-				'id' : trainer.display_name,
-				'title' : trainer.display_name
-			})
+	roles = frappe.get_roles()
+	all_trainer = True
+	for role in roles:
+		if role == "Fitness Trainer":
+			all_trainer = False
+			break
+	
+	if all_trainer:
+		trainers = frappe.get_all('Service Staff', filters={'fitness_check':1}, fields=['display_name'], order_by="display_name asc")
+		resource=[]
+		if trainers:
+			for trainer in trainers:
+				resource.append({
+					'id' : trainer.display_name,
+					'title' : trainer.display_name
+				})
+	else:
+		trainers = frappe.get_all('Service Staff', filters={'fitness_check':1, 'email': frappe.session.user}, fields=['display_name'])
+		resource=[]
+		if trainers:
+			for trainer in trainers:
+				resource.append({
+					'id' : trainer.display_name,
+					'title' : trainer.display_name
+				})
 	return resource
 
 @frappe.whitelist()

@@ -22,7 +22,10 @@
   "user_registration_section",
   "user_tc",
   "membership_application_section",
-  "mem_app_tc"
+  "mem_app_tc",
+  "app_versions_section",
+  "ios_version",
+  "android_version"
  ],
  "fields": [
   {
@@ -116,11 +119,27 @@
    "fieldname": "mem_app_tc",
    "fieldtype": "Text",
    "label": "Terms & Conditions"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "app_versions_section",
+   "fieldtype": "Section Break",
+   "label": "App Versions"
+  },
+  {
+   "fieldname": "ios_version",
+   "fieldtype": "Data",
+   "label": "iOS version"
+  },
+  {
+   "fieldname": "android_version",
+   "fieldtype": "Data",
+   "label": "Android version"
   }
  ],
  "issingle": 1,
  "links": [],
- "modified": "2021-04-27 14:35:27.491076",
+ "modified": "2021-05-09 13:05:06.160396",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "App Settings",

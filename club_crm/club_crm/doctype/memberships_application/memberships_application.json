@@ -95,8 +95,12 @@
   "notes",
   "membership_document",
   "amended_from",
+  "section_break_90",
+  "new_notify",
   "assignment_notify",
-  "new_notify"
+  "cem_approval_notify",
+  "gm_approval_notify",
+  "md_approval_notify"
  ],
  "fields": [
   {
@@ -446,7 +450,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval:doc.membership_type==\"Family Membership\"",
    "fieldname": "additional_members",
    "fieldtype": "Table",
    "label": "Additional Members",
@@ -596,6 +599,7 @@
   },
   {
    "collapsible": 1,
+   "depends_on": "eval:doc.membership_type==\"Family Membership\"",
    "fieldname": "additional_member_section",
    "fieldtype": "Section Break",
    "label": "Additional Members"
@@ -722,7 +726,7 @@
    "fieldname": "assignment_notify",
    "fieldtype": "Check",
    "hidden": 1,
-   "label": "Assignment Notification",
+   "label": "CEC Assignment",
    "read_only": 1
   },
   {
@@ -730,13 +734,37 @@
    "fieldname": "new_notify",
    "fieldtype": "Check",
    "hidden": 1,
-   "label": "New Notification",
+   "label": "New Application",
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_90",
+   "fieldtype": "Section Break",
+   "hidden": 1,
+   "label": "Notifications"
+  },
+  {
+   "default": "0",
+   "fieldname": "cem_approval_notify",
+   "fieldtype": "Check",
+   "label": "Request for CEM Approval"
+  },
+  {
+   "default": "0",
+   "fieldname": "gm_approval_notify",
+   "fieldtype": "Check",
+   "label": "Request for GM Approval"
+  },
+  {
+   "default": "0",
+   "fieldname": "md_approval_notify",
+   "fieldtype": "Check",
+   "label": "Request for MD Approval"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-02 15:53:32.556062",
+ "modified": "2021-05-09 16:17:34.478564",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",

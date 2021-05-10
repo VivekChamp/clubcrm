@@ -8,44 +8,46 @@ from club_crm.api.wallet import get_balance
 @frappe.whitelist()
 def get_fitness_category(client_id):
     client = frappe.db.get("Client", {"email": frappe.session.user})
-    doc = frappe.get_list('Fitness Training Request', filters={'client_id':client.name, 'request_status':['in', {'Pending','Scheduled'}]}, fields=['*'])
-    if doc:
-        for doc_1 in doc:
-            if doc_1.request_status=="Pending":
-                frappe.response["message"] = {
-                "Status":0,
-                "Status Message": "A pending request exists",
-                "Document ID" : doc_1.name
-                }
-            else:
-                schedule=frappe.get_list('Fitness Training Trainer Scheduler', filters={'parent':doc_1.name,'parentfield':'table_schedule'}, fields=['day','date','from_time','to_time'], order_by="date asc")
-                # single_package = frappe.get_doc('Club Packages', doc_1.fitness_package)
-                # for package in single_package.package_table:
-                #     if package.service_name == fitness_category:
-                #         sessions = int(package.no_of_sessions/4)
-                #         if sessions == 0:
-                #             sessions = 1
-                
-                frappe.response["message"] = {
-                    "Status":1,
-                    "Status Message": "Training has been scheduled",
-                    "Document ID": doc_1.name,
-                    "rate": doc_1.price,
-                    "package_name": doc_1.fitness_package,
-                    "Number of Sessions": doc_1.no_of_sessions,
-                    "Schedule": schedule
+    if not client.status == "Disabled":
+        doc = frappe.get_list('Fitness Training Request', filters={'client_id':client.name, 'request_status':['in', {'Pending','Scheduled'}]}, fields=['*'])
+        if doc:
+            for doc_1 in doc:
+                if doc_1.request_status=="Pending":
+                    frappe.response["message"] = {
+                    "Status":0,
+                    "Status Message": "A pending request exists",
+                    "Document ID" : doc_1.name
                     }
+                else:
+                    schedule=frappe.get_list('Fitness Training Trainer Scheduler', filters={'parent':doc_1.name,'parentfield':'table_schedule'}, fields=['day','date','from_time','to_time'], order_by="date asc")
+                    
+                    frappe.response["message"] = {
+                        "Status":1,
+                        "disabled": 0,
+                        "Status Message": "Training has been scheduled",
+                        "Document ID": doc_1.name,
+                        "rate": doc_1.price,
+                        "package_name": doc_1.fitness_package,
+                        "Number of Sessions": doc_1.no_of_sessions,
+                        "Schedule": schedule
+                        }
+        else:
+            fitness_category = frappe.get_all('Fitness Services', filters={'on_app': 1}, fields=['fitness_name','image'])
+            fitness_item = []
+            for item in fitness_category:
+                fitness_item.append({
+                    "category_name" : item.fitness_name,
+                    "category_image" : item.image
+                })
+            frappe.response["message"] = {
+                "Status":2,
+                "disabled": 0,
+                "Fitness Categories": fitness_item
+            }
     else:
-        fitness_category = frappe.get_all('Fitness Services', filters={'on_app': 1}, fields=['fitness_name','image'])
-        fitness_item = []
-        for item in fitness_category:
-            fitness_item.append({
-                "category_name" : item.fitness_name,
-                "category_image" : item.image
-            })
         frappe.response["message"] = {
-            "Status":2,
-            "Fitness Categories": fitness_item
+                "Status":3,
+                "disabled": 1
         }
 
 @frappe.whitelist()
