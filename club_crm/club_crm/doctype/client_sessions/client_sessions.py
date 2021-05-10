@@ -35,7 +35,7 @@ class ClientSessions(Document):
 				start_date = self.start_date
 
 			expiry_date = start_date + timedelta(seconds=float(self.validity))
-			new_expiry_date = start_date + timedelta(seconds=float(self.validity)) + timedelta(seconds=float(self.extension))
+			new_expiry_date = start_date + timedelta(seconds=float(self.validity)) + timedelta(seconds=float(self.extension)) + timedelta(seconds=float(self.no_of_extensions*86400))
 			self.actual_expiry_date = expiry_date.strftime("%Y-%m-%d")
 			self.expiry_date = new_expiry_date.strftime("%Y-%m-%d")
 		else:

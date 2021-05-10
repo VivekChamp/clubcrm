@@ -58,6 +58,11 @@ def member_benefits(client_id):
             boho_discount = 0
             salon_discount = 0
         
+        if doc.member_id:
+            member_id = doc.member_id
+        else:
+            member_id = "0"
+
         benefits = []
         ben = frappe.get_all('Client Sessions', filters={'client_id':doc.name, 'package_type':'Club', 'session_status' : 'Active'}, fields=['*'])
         for comp in ben:
@@ -77,7 +82,7 @@ def member_benefits(client_id):
                     'status': 1,
                     'membership_status': 'Member',
                     'client_name': doc.name,
-                    'member_id': doc.member_id,
+                    'member_id': member_id,
                     'membership': doc.membership_id,
                     'start_date': mem_1.start_date,
                     'expiry_date': mem_1.expiry_date,

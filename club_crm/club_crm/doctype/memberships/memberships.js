@@ -101,11 +101,11 @@ frappe.ui.form.on('Memberships', {
                 primary_action_label: ('Submit'),
                 primary_action: function() {
                     d.hide();
-                    frm.save();
                     let row = frappe.model.add_child(frm.doc, 'Validity Extension', 'validity_extension');
                     frappe.model.set_value(row.doctype, row.name, 'entry_date', d.get_value('entry_date'));
                     frappe.model.set_value(row.doctype, row.name, 'days', d.get_value('extension'));
                     frappe.model.set_value(row.doctype, row.name, 'notes', d.get_value('extension_reason'));
+                    frm.save();
                 }
             });
             d.show();

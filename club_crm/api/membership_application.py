@@ -60,13 +60,13 @@ def check_status(mem_application):
             "status": 0,
             "status_message":"Pending approval"
             }
-    elif doc.application_status=="Rejected":
+    elif doc.application_status == "Rejected":
         frappe.response["message"] = {
             "status": 2,
             "status_message":"Rejected",
             "reason": doc.notes
             }
-    elif doc.application_status=="Approved":
+    elif doc.application_status == "Approved":
         if doc.payment_status=="Not Paid":
             frappe.response["message"] = {
                 "status": 1,
@@ -76,7 +76,7 @@ def check_status(mem_application):
         else:
             frappe.response["message"] = {
                 "status": 3,
-                "status_message":"Please wait while you membership is activated",
+                "status_message":"Please wait while your membership is activated",
                 }
 
 @frappe.whitelist()

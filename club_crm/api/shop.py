@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 import frappe
 import dateutil
 import re
+import numpy as np
 from frappe.utils import getdate
 from frappe.model.document import Document
 from frappe import throw, msgprint, _
@@ -13,6 +14,73 @@ def get_category():
     frappe.response["message"] = {
         "Shop Categories": shop_category
          }
+
+@frappe.whitelist()         
+def get_products(category,count):
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    # client = frappe.get_doc('Client', client_id)
+    product = []
+    if client.membership_status == "Member":
+        discount = 0.0
+        memberships = frappe.get_all('Memberships', filters={'membership_id': client.membership_id, 'membership_status':'Active'}, fields=['*'])
+        if memberships:
+            for mem in memberships:
+                discount = mem.retail_discount
+            
+                items = frappe.get_all('Item', filters={'item_group':category, 'disabled': 0}, fields=['*'])
+                if items:
+                    # product = []
+                    for item in items:
+                        price = frappe.get_all('Item Price', filters={'item_code':item.item_code, 'price_list':'Standard Selling'}, fields=['*'])
+                        if price:
+                            price_1 = price[0]
+                            description = re.sub("<.*?>", "", price_1.item_description)
+                            reg_price = price_1.price_list_rate
+                            mem_price = reg_price - (reg_price * discount/100.0)
+                            member_price = int(mem_price//0.5*0.5)
+                            product.append({
+                                "item_code": item.item_code,
+                                "item_name": item.item_name,
+                                "item_group": item.item_group,
+                                "image": item.image,
+                                "description": description,
+                                "currency": price_1.currency,
+                                "regular_price": format(reg_price, '.2f'),
+                                "member_price": format(member_price, '.2f')
+                            })
+
+    else:
+        items = frappe.get_all('Item', filters={'item_group':category, 'disabled': 0}, fields=['*'])
+        if items:
+            # product=[]
+            for item in items:
+                price = frappe.get_all('Item Price', filters={'item_code':item.item_code, 'price_list':'Standard Selling'}, fields=['*'])
+                if price:
+                    price_1 = price[0]
+                    description = re.sub("<.*?>", "", price_1.item_description)
+                    reg_price= price_1.price_list_rate
+                    product.append({
+                        "item_code": item.item_code,
+                        "item_name": item.item_name,
+                        "item_group": item.item_group,
+                        "image": item.image,
+                        "description": description,
+                        "currency": price_1.currency,
+                        "regular_price": format(reg_price, '.2f')
+                    })
+    if product:
+        total_count = len(product)
+        frappe.response["message"] = {
+            "status": 1,
+            "status_message": "Product Details",
+            "total_count": total_count,
+            "item": product[int(count):int(count)+16]
+    }
+    else:
+        frappe.response["message"] = {
+            "status": 0,
+            "status_message": "No products available for this category"
+        }
 
 @frappe.whitelist()         
 def get_product(client_id,category):

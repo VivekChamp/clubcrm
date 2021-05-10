@@ -99,6 +99,7 @@
    "fetch_from": "client_id.member_id",
    "fieldname": "member_id",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Member ID",
    "read_only": 1
@@ -311,11 +312,12 @@
    "default": "0",
    "fieldname": "is_benefit",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Is Benefit"
   }
  ],
  "links": [],
- "modified": "2021-04-29 17:10:53.554318",
+ "modified": "2021-05-10 04:39:15.199808",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client Sessions",
@@ -387,6 +389,6 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "title_field": "service_name",
+ "title_field": "title",
  "track_changes": 1
 }

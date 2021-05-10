@@ -349,14 +349,31 @@ def complete(appointment_id):
 
 @frappe.whitelist()
 def get_therapist_resources():
-	therapists = frappe.get_all('Service Staff', filters={'spa_check':1}, fields=['display_name'])
-	resource=[]
-	if therapists:
-		for therapist in therapists:
-			resource.append({
-				'id' : therapist.display_name,
-				'title' : therapist.display_name
-			})
+	roles = frappe.get_roles()
+	all_therapist = True
+	for role in roles:
+		if role == "Spa Staff":
+			all_therapist = False
+			break
+	
+	if all_therapist:
+		therapists = frappe.get_all('Service Staff', filters={'spa_check':1}, fields=['display_name'], order_by="display_name asc")
+		resource=[]
+		if therapists:
+			for therapist in therapists:
+				resource.append({
+					'id' : therapist.display_name,
+					'title' : therapist.display_name
+				})
+	else:
+		therapists = frappe.get_all('Service Staff', filters={'spa_check':1, 'email': frappe.session.user}, fields=['display_name'])
+		resource=[]
+		if therapists:
+			for therapist in therapists:
+				resource.append({
+					'id' : therapist.display_name,
+					'title' : therapist.display_name
+				})
 	return resource
 
 @frappe.whitelist()
@@ -405,5 +422,21 @@ def get_events(start, end, filters=None):
 		events.append(item)
 
 	return events
+
+@frappe.whitelist()
+def get_therapist_spa_service(spa_service):
+	spa_service = frappe.get_doc('Spa Services', spa_service)
+
+	therapists = []
+	therapist_list = frappe.get_all('Service Staff', filters={'spa_check':1})
+	if therapist_list:
+		for therapist in therapist_list:
+			doc = frappe.get_doc('Service Staff', therapist.name)
+			if doc.spa_service_assignment:
+				for spa in doc.spa_service_assignment:
+					if spa.spa_group == spa_service.spa_group:
+						therapists.append({therapist.name})
+	return therapists
+
 
 
