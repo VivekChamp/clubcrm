@@ -7,6 +7,7 @@ import frappe
 from frappe import _
 from frappe.utils import getdate, get_time, flt
 from datetime import datetime, timedelta, date, time
+from club_crm.club_crm.utils.date import add_month
 from frappe.model.document import Document
 
 class ClientSessions(Document):
@@ -33,11 +34,20 @@ class ClientSessions(Document):
 				start_date = datetime.strptime(self.start_date, "%Y-%m-%d")
 			else:
 				start_date = self.start_date
+			
+			if self.package_name:
+				club_package = frappe.get_doc('Club Packages', self.package_name)
+				if club_package.package_table:
+					for row in club_package.package_table:
+						if self.service_name == row.service_name:
+							if row.validity_in == "Months":
+								expiry_date = add_month(start_date, row.validity_months)
+							elif row.validity_in == "Days":
+								expiry_date = start_date + timedelta(seconds=float(row.validity)) - timedelta(seconds=float(86400))
 
-			expiry_date = start_date + timedelta(seconds=float(self.validity))
-			new_expiry_date = start_date + timedelta(seconds=float(self.validity)) + timedelta(seconds=float(self.extension)) + timedelta(seconds=float(self.no_of_extensions*86400))
-			self.actual_expiry_date = expiry_date.strftime("%Y-%m-%d")
-			self.expiry_date = new_expiry_date.strftime("%Y-%m-%d")
+							new_expiry_date = expiry_date + timedelta(seconds=float(self.extension))
+							self.actual_expiry_date = expiry_date.strftime("%Y-%m-%d")
+							self.expiry_date = new_expiry_date.strftime("%Y-%m-%d")
 		else:
 			frappe.throw("Please set the start date")
 

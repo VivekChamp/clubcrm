@@ -14,8 +14,10 @@
   "title",
   "membership_plan_name",
   "membership_type",
-  "column_break_3",
   "membership_category",
+  "column_break_3",
+  "membership_duration",
+  "duration_months",
   "duration",
   "amount_section",
   "max_members",
@@ -72,11 +74,12 @@
    "label": "Pricing"
   },
   {
+   "depends_on": "eval:doc.membership_duration==\"Days\"",
    "fieldname": "duration",
    "fieldtype": "Duration",
    "hide_seconds": 1,
-   "label": "Membership Duration",
-   "reqd": 1
+   "label": "Duration in Days",
+   "mandatory_depends_on": "eval:doc.membership_duration==\"Day(s)\""
   },
   {
    "fieldname": "benefits_item",
@@ -244,10 +247,24 @@
    "fieldname": "boho_discount",
    "fieldtype": "Percent",
    "label": "Boho Discount (%)"
+  },
+  {
+   "fieldname": "membership_duration",
+   "fieldtype": "Select",
+   "label": "Membership Duration in",
+   "options": "Days\nMonths"
+  },
+  {
+   "depends_on": "eval:doc.membership_duration==\"Months\"",
+   "fieldname": "duration_months",
+   "fieldtype": "Select",
+   "label": "Duration in Months",
+   "mandatory_depends_on": "eval:doc.membership_duration==\"Month(s)\"",
+   "options": "\n1\n2\n3\n6\n12"
   }
  ],
  "links": [],
- "modified": "2021-05-04 11:56:37.835716",
+ "modified": "2021-05-12 03:26:56.939316",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Plan",
