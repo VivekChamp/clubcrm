@@ -9,6 +9,7 @@ from frappe import _
 from datetime import datetime, timedelta
 from club_crm.club_crm.utils.sms_notification import send_sms
 from club_crm.club_crm.utils.push_notification import send_push
+from club_crm.club_crm.utils.date import add_month
 from frappe.utils import getdate, get_time, flt, cint
 from frappe.model.naming import getseries
 
@@ -53,10 +54,16 @@ class Memberships(Document):
 			start_date = datetime.strptime(self.start_date, "%Y-%m-%d")
 		else:
 			start_date = self.start_date
-			
-		expiry_date = start_date + timedelta(seconds=float(self.duration))
-		# new_expiry_date = start_date + timedelta(seconds=float(self.duration)) + timedelta(seconds=float(self.total_days_of_extension))
-		new_expiry_date = start_date + timedelta(seconds=float(self.duration)) + timedelta(seconds=float(self.total_days_of_extension)) + timedelta(seconds=float(self.number_of_extensions*86400))
+
+		mem_plan = frappe.get_doc('Memberships Plan', self.membership_plan)
+		if mem_plan.membership_duration=="Months":
+			expiry_date = add_month(start_date, mem_plan.duration_months)
+		elif mem_plan.membership_duration=="Days":
+			expiry_date = start_date + timedelta(seconds=float(self.duration)) - timedelta(seconds=float(86400))
+		
+		self.actual_expiry_date = expiry_date.strftime("%Y-%m-%d")
+
+		new_expiry_date = expiry_date + timedelta(seconds=float(self.total_days_of_extension))
 		self.actual_expiry_date = expiry_date.strftime("%Y-%m-%d")
 		self.expiry_date = new_expiry_date.strftime("%Y-%m-%d")
 
