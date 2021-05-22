@@ -12,23 +12,39 @@ frappe.ui.form.on("Spa Appointment", "onload", function(frm) {
     });
     // Filter service staff for spa appointment
     frm.set_query("service_staff", function() {
-        // if (frm.doc.spa_service) {
-        //     return frappe.call({
-        //         method: 'club_crm.club_crm.doctype.spa_appointment.spa_appointment.get_therapist_spa_service',
-        //         type: "GET",
-        //         args: { spa_service: frm.doc.spa_service },
-        //         callback: function(r) {
-        //             r.message;
-        //         }
-        //     });
-        // } else {
+        // return frappe.call({
+        //     method: 'club_crm.club_crm.doctype.spa_appointment.spa_appointment.get_therapist_spa_service',
+        //     type: "GET",
+        //     args: { spa_service: frm.doc.spa_service },
+        //     callback: function(r) {
+        //         r.message;
+        //     }
+        // });
         return {
             "filters": [
                 ["Service Staff", "spa_check", "=", "1"]
             ]
         }
-        // }
     });
+
+    // frm.set_query("service_staff", function() {
+    //     // if (frm.doc.spa_service) {
+    //     //     return frappe.call({
+    //     //         method: 'club_crm.club_crm.doctype.spa_appointment.spa_appointment.get_therapist_spa_service',
+    //     //         type: "GET",
+    //     //         args: { spa_service: frm.doc.spa_service },
+    //     //         callback: function(r) {
+    //     //             r.message;
+    //     //         }
+    //     //     });
+    //     // } else {
+    //     return {
+    //         "filters": [
+    //             ["Service Staff", "spa_check", "=", "1"]
+    //         ]
+    //     }
+    //     // }
+    // });
     // Filter Spa Services based on Add-on service check
     frm.set_query("spa_service", function() {
         if (frm.doc.addon_service_check == 0) {
@@ -168,7 +184,7 @@ frappe.ui.form.on("Spa Appointment", {
         }
 
         // Add progress notes for appointment
-        if (frm.doc.appointment_status == "Checked-in") {
+        if (frm.doc.appointment_status == "Checked-in" || frm.doc.appointment_status == "Complete") {
             frappe.call({
                 method: 'club_crm.club_crm.doctype.spa_progress_notes.spa_progress_notes.check_if_exists',
                 args: { appointment_id: frm.doc.name },

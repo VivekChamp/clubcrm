@@ -7,6 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "naming_series",
+  "request_details_sb",
   "date",
   "client_id",
   "client_name",
@@ -19,10 +20,10 @@
   "payment_status",
   "trainer_and_session_details_section",
   "trainer",
-  "column_break_14",
   "trainer_mobile_no",
-  "column_break_12",
+  "column_break_14",
   "fitness_package",
+  "column_break_12",
   "number_of_sessions",
   "sessions_per_week",
   "price",
@@ -71,6 +72,7 @@
   {
    "fieldname": "trainer",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Fitness Trainer",
    "options": "Service Staff"
   },
@@ -119,6 +121,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "fetch_from": "fitness_package.total_sessions",
    "fieldname": "number_of_sessions",
    "fieldtype": "Data",
    "label": "Number of Sessions",
@@ -140,6 +143,7 @@
    "read_only": 1
   },
   {
+   "fetch_from": "fitness_package.total_price",
    "fieldname": "price",
    "fieldtype": "Currency",
    "label": "Price",
@@ -148,7 +152,8 @@
   {
    "fieldname": "start_date",
    "fieldtype": "Date",
-   "label": "Start Date"
+   "label": "Start Date",
+   "read_only": 1
   },
   {
    "allow_on_submit": 1,
@@ -246,11 +251,15 @@
   {
    "fieldname": "column_break_14",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "request_details_sb",
+   "fieldtype": "Section Break",
+   "label": "Request Details"
   }
  ],
- "is_submittable": 1,
  "links": [],
- "modified": "2021-04-04 13:26:45.462745",
+ "modified": "2021-05-19 02:07:24.411685",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Request",

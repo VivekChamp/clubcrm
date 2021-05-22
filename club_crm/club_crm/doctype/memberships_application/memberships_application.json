@@ -764,7 +764,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-09 16:17:34.478564",
+ "modified": "2021-05-21 23:00:48.226558",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",
@@ -784,6 +784,7 @@
   },
   {
    "create": 1,
+   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
@@ -808,6 +809,7 @@
   },
   {
    "create": 1,
+   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
@@ -816,6 +818,7 @@
    "role": "CE Manager",
    "select": 1,
    "share": 1,
+   "submit": 1,
    "write": 1
   },
   {
@@ -828,6 +831,7 @@
    "role": "CE Staff",
    "select": 1,
    "share": 1,
+   "submit": 1,
    "write": 1
   },
   {
@@ -835,6 +839,7 @@
    "read": 1,
    "role": "Customer",
    "select": 1,
+   "submit": 1,
    "write": 1
   },
   {

@@ -5,8 +5,10 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "day",
   "date",
+  "day",
+  "time_from",
+  "time_to",
   "from_time",
   "to_time"
  ],
@@ -15,7 +17,6 @@
    "allow_on_submit": 1,
    "fieldname": "day",
    "fieldtype": "Select",
-   "in_list_view": 1,
    "label": "Day",
    "options": "\nSunday\nMonday\nTuesday\nWednesday\nThursday\nFriday\nSaturday"
   },
@@ -31,20 +32,32 @@
    "allow_on_submit": 1,
    "fieldname": "from_time",
    "fieldtype": "Time",
-   "in_list_view": 1,
    "label": "From Time"
   },
   {
    "allow_on_submit": 1,
    "fieldname": "to_time",
    "fieldtype": "Time",
-   "in_list_view": 1,
    "label": "To Time"
+  },
+  {
+   "fieldname": "time_from",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "From",
+   "options": "\n06:00\n06:30\n07:00\n07:30\n08:00\n08:30\n09:00\n09:30\n10:00\n10:30\n11:00\n11:30\n12:00\n12:30\n13:00\n13:30\n14:00\n14:30\n15:00\n15:30\n16:00\n16:30\n17:00\n17:30\n18:00\n18:30\n19:00\n19:30\n20:00\n20:30\n21:00\n21:30\n22:00"
+  },
+  {
+   "fieldname": "time_to",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "To",
+   "options": "\n06:00\n06:30\n07:00\n07:30\n08:00\n08:30\n09:00\n09:30\n10:00\n10:30\n11:00\n11:30\n12:00\n12:30\n13:00\n13:30\n14:00\n14:30\n15:00\n15:30\n16:00\n16:30\n17:00\n17:30\n18:00\n18:30\n19:00\n19:30\n20:00\n20:30\n21:00\n21:30\n22:00"
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2021-04-04 13:22:41.299829",
+ "modified": "2021-05-19 02:42:15.860560",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Trainer Scheduler",

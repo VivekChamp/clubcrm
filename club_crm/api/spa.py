@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from frappe.utils import escape_html
 from frappe import throw, msgprint, _
 from club_crm.api.wallet import get_balance
-from club_crm.club_crm.doctype.cart.cart import add_cart_from_spa
+from club_crm.club_crm.doctype.cart.cart import add_cart_from_spa_online
 
 @frappe.whitelist()
 def get_spa_category(client_id):
@@ -19,19 +19,16 @@ def get_spa_category(client_id):
 def get_spa_item(spa_category):
     client = frappe.db.get("Client", {"email": frappe.session.user})
     doc = frappe.get_doc('Client', client.name)
-    spa = frappe.get_all('Spa Services', filters={'spa_category':spa_category,'on_app': 1,'enabled':1,'session_type':'Single'}, fields=['spa_name','spa_group','spa_category','duration','price','description','image','gender_preference'])
+    spa = frappe.get_all('Spa Services', filters={'spa_category':spa_category,'on_app': 1,'enabled':1,'session_type':'Single'}, fields=['spa_name','spa_group','spa_category','duration','price','description','image','gender_preference','no_member_discount'])
     spa_item = []
 
+    discount = 0.0
     if doc.membership_status == "Member":
         if doc.membership_history:
             for row in doc.membership_history:
                 if row.status == "Active":
                     mem = frappe.get_doc('Memberships', row.membership)
                     discount = mem.spa_discount
-                else:
-                    discount = 0.0
-        else:
-            discount = 0.0
 
         benefits = frappe.get_all('Client Sessions', filters={'client_id': doc.name, 'is_benefit': 1, 'session_status': 'Active','service_type': 'Spa Services'}, fields=['name','service_name'])
         if benefits:
@@ -50,12 +47,12 @@ def get_spa_item(spa_category):
                             "description" : items.description,
                             "image" : items.image
                         })
-    else:
-        discount = 0.0
 
     for item in spa:
+        if item.no_member_discount == 1:
+            discount = 0.0
         discount_price = item.price - (item.price * (discount/100.0))
-        price = int(discount_price//0.5*0.5)
+        price = discount_price//0.5*0.5
         if item.gender_preference == doc.gender or item.gender_preference == "No Preference" or not item.gender_preference:
             spa_item.append({
                 "spa_item_name" : item.spa_name,
@@ -105,48 +102,51 @@ def get_details(client_id):
     if time.spa_cancellation_time and int(time.spa_cancellation_time) > 0:
         b = int(int(time.spa_cancellation_time)/3600)
 
-    doc = frappe.get_all('Spa Appointment', filters={'client_id':client.name, 'appointment_status':['not in',{'Cancelled','No Show'}]}, fields=['name','spa_service','total_service_duration','appointment_status','payment_status','appointment_date','appointment_time', 'start_time','default_price','service_staff'], order_by="appointment_date asc")
+    spa_list = frappe.get_all('Spa Appointment', filters={'client_id':client.name, 'appointment_status':['not in',{'Cancelled','No Show'}]}, fields=['name', 'appointment_date'], order_by="appointment_date asc")
     details = []
-    if doc:
-        for rating in doc:
-            rate = frappe.get_all('Rating', filters={'document_id':rating.name}, fields=['rating_point'])
-            cancel_time = rating.start_time - timedelta(seconds=int(time.spa_cancellation_time))
-            if rate:
-                rate=rate[0]
-                details.append({
+    if spa_list:
+        for spa in spa_list:
+            spa_doc = frappe.get_doc('Spa Appointment', spa.name)
+            cancel_time = spa_doc.start_time - timedelta(seconds=int(time.spa_cancellation_time))
+            if spa_doc.cart:
+                cart_doc = frappe.get_doc('Cart', spa_doc.cart)
+                rating_list = frappe.get_all('Rating', filters={'document_id': spa.name}, fields=['rating_point'])
+                if rating_list:
+                    for rating in rating_list:
+                        details.append({
+                            'Spa Appointment': {
+                                "name": cart_doc.name,
+                                "spa_item": spa_doc.spa_service,
+                                "duration": int(spa_doc.service_duration),
+                                "status": spa_doc.appointment_status,
+                                "payment_status": spa_doc.payment_status,
+                                "appointment_date": spa_doc.appointment_date,
+                                "appointment_time": spa_doc.appointment_time,
+                                "start_time": spa_doc.start_time,
+                                "rate": cart_doc.grand_total,
+                                "therapist_name": spa_doc.service_staff
+                            },
+                            'Rating': rating.rating_point,
+                            'cancellation_time': cancel_time
+                        })
+                else:
+                    details.append({
                     'Spa Appointment': {
-                        "name": rating.name,
-                        "spa_item": rating.spa_service,
-                        "duration": int(rating.total_service_duration),
-                        "status": rating.appointment_status,
-                        "payment_status": rating.payment_status,
-                        "appointment_date": rating.appointment_date,
-                        "appointment_time": rating.appointment_time,
-                        "start_time": rating.start_time,
-                        "rate": str(rating.default_price),
-                        "therapist_name": rating.service_staff
-                    },
-                    'Rating': rate.rating_point,
-                    'cancellation_time': cancel_time
-                    })
-            else:
-                details.append({
-                    'Spa Appointment': {
-                        "name": rating.name,
-                        "spa_item": rating.spa_service,
-                        "duration": int(rating.total_service_duration),
-                        "status": rating.appointment_status,
-                        "payment_status": rating.payment_status,
-                        "appointment_date": rating.appointment_date,
-                        "appointment_time": rating.appointment_time,
-                        "start_time": rating.start_time,
-                        "rate": str(rating.default_price),
-                        "therapist_name": rating.service_staff
+                        "name": cart_doc.name,
+                        "spa_item": spa_doc.spa_service,
+                        "duration": int(spa_doc.service_duration),
+                        "status": spa_doc.appointment_status,
+                        "payment_status": spa_doc.payment_status,
+                        "appointment_date": spa_doc.appointment_date,
+                        "appointment_time": spa_doc.appointment_time,
+                        "start_time": spa_doc.start_time,
+                        "rate": cart_doc.grand_total,
+                        "therapist_name": spa_doc.service_staff
                     },
                     'Rating': -1,
                     'cancellation_time': cancel_time
                     })
-        return details      
+    return details
 
 @frappe.whitelist()
 def book_spa(client_id, spa_item, therapist_name, date, time, any_surgeries,payment_method):
@@ -164,7 +164,8 @@ def book_spa(client_id, spa_item, therapist_name, date, time, any_surgeries,paym
         'payment_method': payment_method
         })
     doc.insert()
-    cart = add_cart_from_spa(doc.client_id, doc.name)
+    cart = add_cart_from_spa_online(doc.client_id, doc.name)
+    cart_doc = frappe.get_doc('Cart', cart)
     wallet= get_balance()
     frappe.response["message"] = {
         "status": 1,
@@ -175,7 +176,7 @@ def book_spa(client_id, spa_item, therapist_name, date, time, any_surgeries,paym
         "client_name": doc.client_name,
         "spa_item": doc.spa_service,
         "duration": doc.service_duration,
-        "rate": doc.default_price,
+        "rate": cart_doc.grand_total,
         "spa_therapist": doc.service_staff,
         "appointment_date": doc.appointment_date,
         "appointment_time": doc.appointment_time,
@@ -313,3 +314,34 @@ def cancel_spa(client_id,booking_id):
             "status": 0,
             "status_message": "Client and Booking ID mismatch",
             }
+
+@frappe.whitelist()
+def reschedule_spa(booking_id, date, time):
+    doc = frappe.get_doc('Spa Appointment', booking_id)
+    if doc:
+        start_time = datetime.combine(getdate(date), get_time(time))
+        doc.start_time = start_time
+        doc.save()
+
+    spa = frappe.get_doc('Spa Appointment', booking_id)
+    wallet= get_balance()
+    frappe.response["message"] = {
+        "status": 1,
+        "status_message": "Spa booking rescheduled",
+        "appointment_status": spa.appointment_status,
+        "payment_status": spa.payment_status,
+        "client_name": spa.client_name,
+        "spa_item": spa.spa_service,
+        "duration": spa.service_duration,
+        "rate": spa.default_price,
+        "spa_therapist": spa.service_staff,
+        "appointment_date": spa.appointment_date,
+        "appointment_time": spa.appointment_time,
+        "wallet_balance": wallet
+        }
+
+
+
+
+
+

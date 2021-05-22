@@ -117,13 +117,3 @@ def medical_history(client_id,allergies,medication,history,notes):
     frappe.response["message"] =  {
 		"Status": 1
     }
-# def disable_client(client_id):
-#     client = frappe.get_doc('Client', client_id)
-#     client.status = "Disabled"
-#     client.save()
-
-# @frappe.whitelist()
-# def enable_client(client_id):
-#     client = frappe.get_doc('Client', client_id)
-#     client.status = "Active"
-#     client.save()

@@ -9,8 +9,6 @@ from datetime import datetime, timedelta, date, time
 from frappe import _
 from frappe.model.document import Document
 from club_crm.api.wallet import get_balance
-from club_crm.club_crm.doctype.client_sessions.client_sessions import check_fitness_bookings
-from frappe.model.mapper import get_mapped_doc
 
 class FitnessTrainingAppointment(Document):
 	def validate(self):
@@ -24,7 +22,10 @@ class FitnessTrainingAppointment(Document):
 		self.set_title()
 		if self.session==1:
 			self.set_paid_and_net_total()
-			self.set_session_count()
+	
+	def after_insert(self):
+		if self.session==1:
+			self.set_booked_session_count()
 
 	def set_appointment_date_time(self):
 		start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
@@ -91,8 +92,10 @@ class FitnessTrainingAppointment(Document):
 		self.default_price = 0.0
 		self.net_total = 0.0
 
-	def set_session_count(self):
-		check_fitness_bookings(self.session_name)
+	def set_booked_session_count(self):
+		doc = frappe.get_doc('Client Sessions', self.session_name)
+		doc.booked_sessions += 1
+		doc.save()
 	
 	def validate_overlaps(self):
 		start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
@@ -129,6 +132,12 @@ def no_show(appointment_id):
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"color","#ff8a8a")
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"docstatus",2)
 
+	if appointment.session==1:
+		doc = frappe.get_doc('Client Sessions', appointment.session_name)
+		doc.used_sessions += 1
+		doc.booked_sessions -= 1
+		doc.save()
+
 @frappe.whitelist()
 def complete(appointment_id):
 	appointment = frappe.get_doc('Fitness Training Appointment', appointment_id)
@@ -139,12 +148,23 @@ def complete(appointment_id):
 	doc.check_out_time = now_datetime()
 	doc.save()
 
+	if appointment.session==1:
+		doc = frappe.get_doc('Client Sessions', appointment.session_name)
+		doc.used_sessions += 1
+		doc.booked_sessions -= 1
+		doc.save()
+
 @frappe.whitelist()
 def cancel_appointment(appointment_id):
 	appointment = frappe.get_doc('Fitness Training Appointment', appointment_id)
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"appointment_status","Cancelled")
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"color","#b22222")
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"docstatus",2)
+
+	if appointment.session==1:
+		doc = frappe.get_doc('Client Sessions', appointment.session_name)
+		doc.booked_sessions -= 1
+		doc.save()
 
 @frappe.whitelist()
 def get_trainer_resources():

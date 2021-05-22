@@ -7,6 +7,7 @@ import frappe
 import re
 from frappe import _
 from club_crm.club_crm.utils.sms_notification import send_sms
+from club_crm.club_crm.doctype.cart.cart import submit_cart
 from frappe.model.document import Document
 
 class PaymentLog(Document):
@@ -23,6 +24,7 @@ class PaymentLog(Document):
 		membership_application = "^MEM-APP-[0-9]{4,4}-[0-9]{5,5}$"
 		cart = "^CART-[0-9]{4,4}-[0-9]{5,5}$"
 		wallet = "^WALL-[0-9]{4,4}-[0-9]{5,5}$"
+		online = "^ON-[0-9]{4,4}-[0-9]{5,5}$"
 
 		if self.decision == "ACCEPT" and self.req_amount == self.auth_amount:
 			if re.match(membership_application, self.req_reference_number):
@@ -38,18 +40,17 @@ class PaymentLog(Document):
 				msg = "Payment for the membership application "+doc.name+" has been received."
 				if cec_list:
 					for cec in cec_list:
-						receiver_list='"'+cec.mobile_no+'"'
+						receiver_list='"'+str(cec.mobile_no)+'"'
 						send_sms(receiver_list,msg)
 			
 			if re.match(cart, self.req_reference_number):
 				doc = frappe.get_doc("Cart", str(self.req_reference_number))
-				
 				doc.append('payment_table', {
 					"mode_of_payment": "Online Payment",
 					"paid_amount": float(self.auth_amount)
 				})
-				doc.payment_status = 'Paid'
 				doc.save(ignore_permissions=True)
+				submit_cart(doc.name)
 			
 			if re.match(wallet, self.req_reference_number):
 				doc = frappe.get_doc("Wallet Transaction", str(self.req_reference_number))
@@ -60,7 +61,7 @@ class PaymentLog(Document):
 				'docstatus' : 1
 				})
 				frappe.db.commit()
-
+			
 @frappe.whitelist()
 def update_payment(docname, amount):
 	doc = frappe.get_doc("Memberships Application", docname)
