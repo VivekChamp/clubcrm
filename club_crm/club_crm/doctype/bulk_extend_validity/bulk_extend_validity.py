@@ -26,6 +26,21 @@ class BulkExtendValidity(Document):
 			else:
 				frappe.msgprint(msg='No memberships found matching the criteria.')
 
+		elif self.extend_on == "Client Sessions":
+			sess_list = frappe.get_all("Client Sessions", filters={'is_benefit':0, 'service_type': self.session_service_type, 'expiry_date':['>', self.start_date]})
+			if sess_list:
+				for sess in sess_list:
+					doc = frappe.get_doc('Client Sessions', sess.name)
+					doc.append('session_extension', {
+						'entry_date': today,
+						'days': self.days,
+						'notes': self.notes
+					})
+					doc.save()
+				frappe.msgprint(msg='Selected sessions has been updated.')
+			else:
+				frappe.msgprint(msg='No sessions found matching the criteria.')
+
 # @frappe.whitelist()
 # def bulk_update(date):
 # 	mem_list = frappe.get_all("Memberships", filters={'membership_category':'Standard', 'expiry_date':['>', date]}, fields={'name', 'expiry_date'})

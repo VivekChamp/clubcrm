@@ -5,18 +5,26 @@ from frappe.utils import escape_html
 from frappe import throw, msgprint, _
 
 def get_vehicle_vehicleno(vehicle_no):
-    vehicle = frappe.get_all('Valet Parking', filters={'vehicle_no': vehicle_id, 'status': 'Parked'}, fields=['name','date','client_id','client_name','membership_status','membership_id','vehicle_no','vehicle_type','location','parking_time','modified_by'])
+    vehicle = frappe.get_all('Valet Parking', filters={'vehicle_no': vehicle_id, 'status': 'Parked'}, fields=['name','date','client_id','client_name','membership_status','membership_id','vehicle_no','vehicle_type','location','parking_time','valet_staff'])
     frappe.response["message"] =  vehicle
 
 @frappe.whitelist()
 def get_parked_vehicle():
-    parked_vehicle = frappe.get_all('Valet Parking', filters={'status': 'Parked'}, fields=['name','date','client_id','client_name','membership_status','membership_id','vehicle_no','vehicle_type','location','status','parking_time','modified_by'])
-    frappe.response["message"] =  parked_vehicle
+    parked_vehicle = frappe.get_all('Valet Parking', filters={'status': 'Parked'}, fields=['name','date','client_id','client_name','membership_status','member_id','vehicle_no','vehicle_type','location','status','parking_time','valet_staff'])
+    if parked_vehicle:
+        frappe.response["message"] =  {
+            'status' : 1,
+            'parked_vehicles': parked_vehicle
+        }
+    else:
+        frappe.response['message'] = {
+            'status': 0
+        }
 
 @frappe.whitelist()
 def get_requested_vehicle():
-    requested_vehicle = frappe.get_all('Valet Parking', filters={'status':'Requested for Delivery'}, fields=['name','date','client_id','client_name','membership_status','membership_id','vehicle_no','vehicle_type','location','status','parking_time','delivery_request_time','modified_by'])
-    ready_vehicle = frappe.get_all('Valet Parking', filters={'status': 'Ready for Delivery'}, fields=['name','date','client_id','client_name','membership_status','membership_id','vehicle_no','vehicle_type','location','status','parking_time','delivery_request_time','delivery_time','modified_by'])
+    requested_vehicle = frappe.get_all('Valet Parking', filters={'status':'Requested for Delivery'}, fields=['name','date','client_id','client_name','membership_status','member_id','vehicle_no','vehicle_type','location','status','parking_time','delivery_request_time','valet_staff'])
+    ready_vehicle = frappe.get_all('Valet Parking', filters={'status': 'Ready for Delivery'}, fields=['name','date','client_id','client_name','membership_status','member_id','vehicle_no','vehicle_type','location','status','parking_time','delivery_request_time','delivery_time','valet_staff'])
     frappe.response["message"] = {
         "Requested Vehicles":requested_vehicle,
         "Ready for Delivery":ready_vehicle
@@ -24,23 +32,21 @@ def get_requested_vehicle():
 
 @frappe.whitelist()
 def new_vehicle(client_id,vehicle_no,vehicle_type,location):
+    user = frappe.get_doc('User',frappe.session.user)
     doc = frappe.get_doc({
         'doctype': 'Valet Parking',
-        #'date': date,
         'client_id': client_id,
-        #'client_name': client_name,
-        #parking_time': parking_time,
         'status': "Parked",
         'vehicle_no': vehicle_no,
         'vehicle_type': vehicle_type,
-        'location': location
+        'location': location,
+        'valet_user': user.email
         })
-    doc.insert()
-    doc.submit()
+    doc.save()
     frappe.response["message"] = {
         "Name": doc.name,
         "Status":"Vehicle has been parked",
-        "Parked by": doc.owner
+        "Parked by": doc.valet_staff
         }
 
 @frappe.whitelist()

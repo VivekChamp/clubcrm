@@ -9,7 +9,7 @@ from club_crm.api.wallet import get_balance
 def get_fitness_category(client_id):
     client = frappe.db.get("Client", {"email": frappe.session.user})
     if not client.status == "Disabled":
-        doc = frappe.get_list('Fitness Training Request', filters={'client_id':client.name, 'request_status':['in', {'Pending','Scheduled'}]}, fields=['*'])
+        doc = frappe.get_all('Fitness Training Request', filters={'client_id':client.name, 'request_status':['in', {'Pending','Scheduled'}]}, fields=['*'])
         if doc:
             for doc_1 in doc:
                 if doc_1.request_status=="Pending":
@@ -28,7 +28,7 @@ def get_fitness_category(client_id):
                         "Document ID": doc_1.name,
                         "rate": doc_1.price,
                         "package_name": doc_1.fitness_package,
-                        "Number of Sessions": doc_1.no_of_sessions,
+                        "Number of Sessions": doc_1.number_of_sessions,
                         "Schedule": schedule
                         }
         else:
@@ -69,7 +69,7 @@ def get_fitness_package(fitness_category):
                     "no_of_session": package.no_of_sessions,
                     "validity": validity,
                     "sessions_per_week": sessions,
-                    "price": int(package.price),
+                    "price": package.price,
                     "fitness_category": fitness_category
                 })
     
@@ -80,15 +80,14 @@ def get_fitness_package(fitness_category):
 @frappe.whitelist()
 def get_trainer(fitness_package,client_id):
     client = frappe.db.get("Client", {"email": frappe.session.user})
-    # client = frappe.get_doc('Client', client_id)
     club_package = frappe.get_doc('Club Packages', fitness_package)
     for package in club_package.package_table:
-        fit_trainer = frappe.get_all('Fitness Services Assignment', filters={'fitness_package': package.service_name, 'on_app':1}, fields=['name','parent','parenttype','parentfield'])
+        fit_trainer = frappe.get_all('Fitness Services Assignment', filters={'fitness_package': package.service_name, 'on_app':1}, fields=['name','parent','parenttype','parentfield','gender_preference'])
         trainers = []
         for trainer in fit_trainer:
             doc_1 = frappe.get_doc('Service Staff', trainer.parent)
             if doc_1.on_app == 1:
-                if client.membership_status == "Non-Member":
+                if trainer.gender_preference == "Same Gender":
                     if doc_1.gender == client.gender:
                         trainers.append({
                             'Trainer': doc_1.display_name,
@@ -96,7 +95,7 @@ def get_trainer(fitness_package,client_id):
                             'Image': doc_1.image,
                             'Gender': doc_1.gender
                         })
-                else:
+                elif trainer.gender_preference == "No Preference":
                     trainers.append({
                             "Trainer": doc_1.display_name,
                             "Description": doc_1.description,

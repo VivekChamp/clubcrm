@@ -33,7 +33,7 @@ frappe.views.calendar["Spa Appointment"] = {
                 type: 'agendaDay',
                 duration: { days: 1 },
                 buttonText: 'Day',
-                slotDuration: "01:00:00",
+                slotDuration: "00:30:00",
                 minTime: "08:00:00",
                 maxTime: "22:00:00"
             },
@@ -85,7 +85,7 @@ frappe.views.calendar["Spa Appointment"] = {
         "scheduled": "green",
         "checked-in": "yellow",
         "no-show": "red",
-        "cancelled": "red",
+        "draft": "pink",
         "completed": "blue",
         "background": "#b9fff5"
     },
@@ -104,8 +104,8 @@ frappe.views.calendar["Spa Appointment"] = {
             return "checked-in";
         } else if (data.appointment_status == "No Show") {
             return "no-show";
-        } else if (data.appointment_status == "Cancelled") {
-            return "cancelled";
+        } else if (data.appointment_status == "Draft") {
+            return "draft";
         } else if (data.appointment_status == "Completed") {
             return "completed";
         }

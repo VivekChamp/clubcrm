@@ -27,15 +27,16 @@ class SpaAppointment(Document):
 		self.set_title()
 		if self.session==1:
 			self.set_paid_and_net_total()
-			self.set_session_count()
 
 	def after_insert(self):
+		if self.session==1:
+			self.set_booked_session_count()
 		if self.club_room:
 			self.create_room_schedule()
 
-	# def on_update(self):
-	# 	if self.club_room:
-	# 		self.create_room_schedule()
+	def on_update(self):
+		if self.club_room:
+			self.create_room_schedule()
 
 	def set_title(self):
 		self.title = _('{0} for {1}').format(self.client_name,
@@ -83,9 +84,6 @@ class SpaAppointment(Document):
 		self.addon_amount = self.addon_total_price
 		self.net_total = self.service_amount + self.addon_amount
 
-	def set_session_count(self):
-		check_spa_bookings(self.session_name)
-
 	def set_color(self):
 		if self.payment_status == "Not Paid":
 			if self.appointment_status=="Scheduled":
@@ -100,7 +98,12 @@ class SpaAppointment(Document):
 				self.color="#b22222"
 		if self.payment_status == "Paid":
 			self.color="#20a7ff"
-				
+
+	def set_booked_session_count(self):
+		doc = frappe.get_doc('Client Sessions', self.session_name)
+		doc.booked_sessions += 1
+		doc.save()
+
 	def before_submit(self):
 		if self.payment_method=="Wallet":
 			wallet= get_balance()
@@ -141,22 +144,18 @@ class SpaAppointment(Document):
 		today = getdate()
 		appointment_date = getdate(self.appointment_date)
 		# If appointment is created for today set status as Open else Scheduled (only for offline booking)
-		if self.appointment_status=="Scheduled" or self.appointment_status =="Open":
+		if self.appointment_status=="Scheduled" or self.appointment_status =="Open" or self.appointment_status == "Draft":
 			if self.online==0:
 				if appointment_date == today:
 					self.appointment_status = 'Open'
 				elif appointment_date > today:
 					self.appointment_status = 'Scheduled'
-				elif appointment_date < today:
-					self.appointment_status = 'No Show'
 			elif self.online==1:
 				if self.payment_status=="Paid":
 					if appointment_date == today:
 						self.appointment_status = 'Open'
 					elif appointment_date > today:
 						self.appointment_status = 'Scheduled'
-					elif appointment_date < today:
-						self.appointment_status = 'No Show'
 				else:
 					self.appointment_status = 'Draft'
 
@@ -315,22 +314,51 @@ def cancel_appointment(appointment_id):
 	frappe.db.set_value("Spa Appointment",appointment_id,"color","#b22222")
 	frappe.db.set_value("Spa Appointment",appointment_id,"docstatus",2)
 
+	if appointment.session==1:
+		doc = frappe.get_doc('Client Sessions', appointment.session_name)
+		doc.booked_sessions -= 1
+		doc.save()
+	
+	# if appointment.payment_status == "Paid":
+
+	# 	doc= frappe.get_doc({
+	# 		"doctype": 'Wallet Transaction',
+	# 		"client_id": appointment.client_id,
+	# 		"transaction_type": 'Refund',
+	# 		"amount": appointment.rate,
+	# 		"payment_type": 'Spa'
+	# 	})
+	# 	doc.insert()
+	# 	doc.submit()
+
 @frappe.whitelist()
 def no_show(appointment_id):
 	appointment = frappe.get_doc('Spa Appointment', appointment_id)
 	frappe.db.set_value("Spa Appointment",appointment_id,"appointment_status","No Show")
-	frappe.db.set_value("Spa Appointment",appointment_id,"color","#ff8a8a")
+	# frappe.db.set_value("Spa Appointment",appointment_id,"color","#ff8a8a")
 	frappe.db.set_value("Spa Appointment",appointment_id,"docstatus",2)
+
+	if appointment.session==1:
+		doc = frappe.get_doc('Client Sessions', appointment.session_name)
+		doc.used_sessions += 1
+		doc.booked_sessions -= 1
+		doc.save()
 
 @frappe.whitelist()
 def complete(appointment_id):
 	appointment = frappe.get_doc('Spa Appointment', appointment_id)
 	frappe.db.set_value("Spa Appointment",appointment_id,"appointment_status","Complete")
-	frappe.db.set_value("Spa Appointment",appointment_id,"color","#20a7ff")
+	# frappe.db.set_value("Spa Appointment",appointment_id,"color","#20a7ff")
 	frappe.db.set_value("Spa Appointment",appointment_id,"docstatus",1)
 	doc = frappe.get_doc('Check In', appointment.checkin_document)
 	doc.check_out_time = now_datetime()
 	doc.save()
+
+	if appointment.session==1:
+		doc = frappe.get_doc('Client Sessions', appointment.session_name)
+		doc.used_sessions += 1
+		doc.booked_sessions -= 1
+		doc.save()
 
 	#For cancellation
 	# if appointment.invoiced:
@@ -349,31 +377,31 @@ def complete(appointment_id):
 
 @frappe.whitelist()
 def get_therapist_resources():
-	roles = frappe.get_roles()
-	all_therapist = True
-	for role in roles:
-		if role == "Spa Staff":
-			all_therapist = False
-			break
+	# roles = frappe.get_roles()
+	# all_therapist = True
+	# for role in roles:
+	# 	if role == "Spa Staff":
+	# 		all_therapist = False
+	# 		break
 	
-	if all_therapist:
-		therapists = frappe.get_all('Service Staff', filters={'spa_check':1}, fields=['display_name'], order_by="display_name asc")
-		resource=[]
-		if therapists:
-			for therapist in therapists:
-				resource.append({
-					'id' : therapist.display_name,
-					'title' : therapist.display_name
-				})
-	else:
-		therapists = frappe.get_all('Service Staff', filters={'spa_check':1, 'email': frappe.session.user}, fields=['display_name'])
-		resource=[]
-		if therapists:
-			for therapist in therapists:
-				resource.append({
-					'id' : therapist.display_name,
-					'title' : therapist.display_name
-				})
+	# if all_therapist:
+	therapists = frappe.get_all('Service Staff', filters={'spa_check':1}, fields=['display_name'], order_by="display_name asc")
+	resource=[]
+	if therapists:
+		for therapist in therapists:
+			resource.append({
+				'id' : therapist.display_name,
+				'title' : therapist.display_name
+			})
+	# else:
+	# 	therapists = frappe.get_all('Service Staff', filters={'spa_check':1, 'email': frappe.session.user}, fields=['display_name'])
+	# 	resource=[]
+	# 	if therapists:
+	# 		for therapist in therapists:
+	# 			resource.append({
+	# 				'id' : therapist.display_name,
+	# 				'title' : therapist.display_name
+	# 			})
 	return resource
 
 @frappe.whitelist()
@@ -398,7 +426,7 @@ def get_events(start, end, filters=None):
 		`tabSpa Appointment`
 		where
 		(`tabSpa Appointment`.appointment_date between %(start)s and %(end)s)
-		and `tabSpa Appointment`.appointment_status != 'Draft' {conditions}""".format(conditions=conditions),
+		and `tabSpa Appointment`.appointment_status != 'Cancelled' {conditions}""".format(conditions=conditions),
 		{"start": start, "end": end}, as_dict=True, update={"rendering": ''})
 	
 	for item in data:
@@ -425,18 +453,21 @@ def get_events(start, end, filters=None):
 
 @frappe.whitelist()
 def get_therapist_spa_service(spa_service):
-	spa_service = frappe.get_doc('Spa Services', spa_service)
+	spa_services = frappe.get_doc('Spa Services', spa_service)
 
-	therapists = []
-	therapist_list = frappe.get_all('Service Staff', filters={'spa_check':1})
-	if therapist_list:
-		for therapist in therapist_list:
-			doc = frappe.get_doc('Service Staff', therapist.name)
-			if doc.spa_service_assignment:
-				for spa in doc.spa_service_assignment:
-					if spa.spa_group == spa_service.spa_group:
-						therapists.append({therapist.name})
-	return therapists
-
-
-
+	therapist_data = frappe.db.get_all('Spa Services Assignment', {'spa_group': spa_services.spa_group}, ['parent as service_staff'])
+	if therapist_data:
+		return therapist_data
+	# therapists = []
+	# therapist_list = frappe.get_all('Service Staff', filters={'spa_check':1})
+	# if therapist_list:
+	# 	for therapist in therapist_list:
+	# 		doc = frappe.get_doc('Service Staff', therapist.name)
+	# 		if doc.spa_service_assignment:
+	# 			for spa in doc.spa_service_assignment:
+	# 				if spa.spa_group == spa_services.spa_group:
+	# 					therapists.append({
+	# 						"name": therapist.name
+	# 						})
+	# return therapists
+	return {}

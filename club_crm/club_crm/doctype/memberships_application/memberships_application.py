@@ -28,7 +28,7 @@ class MembershipsApplication(Document):
 		self.set_discounts_and_grand_total()
 		self.set_payment_details()
 		self.set_title()
-		#self.send_notification()
+		self.send_notification()
 		# self.validate_submit()
 	
 	def before_submit(self):
@@ -39,10 +39,17 @@ class MembershipsApplication(Document):
 		self.update_client_details()
 
 	def on_cancel(self):
-		frappe.db.set_value('Memberships Application', self.name, {
-			'workflow_status': 'Cancelled',
-			'application_status': 'Cancelled'
-		})
+		if self.payment_status == "Not Paid":
+			frappe.db.set_value('Memberships Application', self.name, {
+				'workflow_status': 'Cancelled',
+				'application_status': 'Cancelled'
+			})
+		else:
+			frappe.throw('Paid membership application cannot be cancelled.')
+
+	def on_trash(self):
+		frappe.db.set_value('Client',self.client_id,'apply_membership',0)
+		frappe.db.set_value('Client',self.client_id,'mem_application',None)
 
 	def check_existing_application(self):
 		mem_app = frappe.get_all('Memberships Application', filters={'qatar_id_1':self.qatar_id_1,'application_status':"Pending"})
@@ -235,8 +242,8 @@ class MembershipsApplication(Document):
 	def send_notification(self):
 		# Notification for new application to CE Manager
 		if self.new_notify==0 and self.application_status=="Pending":
-			users = frappe.get_all('User', filter={'roles': 'CE Manager'})
 			msg = "New membership application has been received from "+self.first_name_1+" "+self.last_name_1+"."
+			users = frappe.get_all('User', filters={'role_profile_name': 'CE Manager'}, fields=['name', 'mobile_no'])
 			if users:
 				for user in users:
 					receiver_list='"'+user.mobile_no+'"'
@@ -249,14 +256,14 @@ class MembershipsApplication(Document):
 			msg = "You have been assigned to a new membership application "+self.name+"."
 			if cec_list:
 				for cec in cec_list:
-					receiver_list='"'+cec.mobile_no+'"'
+					receiver_list='"'+str(cec.mobile_no)+'"'
 					send_sms(receiver_list,msg)
 			self.assignment_notify==1
 
 		# Notification to CE Manager for approval
 		if self.cem_approval_notify==0 and self.application_status=="Pending Approval by CE Manager":
-			users = frappe.get_all('User', filter={'roles': 'CE Manager'})
 			msg = "Membership application "+self.name+" is pending your approval."
+			users = frappe.get_all('User', filters={'role_profile_name': 'CE Manager'}, fields=['name', 'mobile_no'])
 			if users:
 				for user in users:
 					receiver_list='"'+user.mobile_no+'"'
@@ -265,8 +272,8 @@ class MembershipsApplication(Document):
 
 		# Notification to GM for approval
 		if self.gm_approval_notify==0 and self.application_status=="Pending Approval by GM":
-			users = frappe.get_all('User', filter={'roles': 'General Manager'})
 			msg = "Membership application "+self.name+" is pending your approval."
+			users = frappe.get_all('User', filters={'role_profile_name': 'General Manager'}, fields=['name', 'mobile_no'])
 			if users:
 				for user in users:
 					receiver_list='"'+user.mobile_no+'"'
@@ -275,8 +282,8 @@ class MembershipsApplication(Document):
 
 		# Notification to MD for approval
 		if self.md_approval_notify==0 and self.application_status=="Pending Approval by MD":
-			users = frappe.get_all('User', filter={'roles': 'Managing Director'})
 			msg = "Membership application "+self.name+" is pending your approval."
+			users = frappe.get_all('User', filters={'role_profile_name': 'Managing Director'}, fields=['name', 'mobile_no'])
 			if users:
 				for user in users:
 					receiver_list='"'+user.mobile_no+'"'
@@ -331,26 +338,11 @@ def create_membership(mem_application_id):
 			child = doc.append("additional_members_item", {})
 			child.client_id = row.client_id
 			child.assigned_to = mem_app.assigned_to
-			# doc.append('additional_members_item', {
-			# 	'client_id': row.client_id,
-			# 	'assigned_to': mem_app.assigned_to
-			# })
 	doc.membership_application = mem_application_id
 	doc.total_amount = float(mem_app.grand_total)
 	doc.save()
 	frappe.db.set_value("Memberships Application", mem_application_id, "membership_document", doc.name, update_modified=False)
-	
-	# club_package = frappe.get_doc('Club Packages', mem_plan.benefits_item)
-	# if club_package.package_table:
-	# 	for item in club_package.package_table:
-	# 		create_session(mem_app.client_id,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
-	# 		if mem_app.membership_type == "Couple Membership":
-	# 			create_session(mem_app.client_id_2,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
-	# 		if mem_app.membership_type == "Family Membership":
-	# 			create_session(mem_app.client_id_2,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
-	# 			for row in mem_app.additional_members:
-	# 				if row.category == "Adult":
-	# 					create_session(row.client_id,mem_plan.benefits_item,item.service_type,item.service_name,item.no_of_sessions,item.validity)
+
 	frappe.msgprint(msg = "Membership created successfully. Please verify the membership details and set it Active to make the member(s) active ", title="Success")
 
 @frappe.whitelist()

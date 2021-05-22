@@ -41,5 +41,5 @@ class ClubTour(Document):
 			msg = "You have been assigned for a new Club Tour - "+self.name+"."
 			if cec_list:
 				for cec in cec_list:
-					receiver_list='"'+cec.mobile_no+'"'
+					receiver_list='"'+str(cec.mobile_no)+'"'
 					send_sms(receiver_list,msg)

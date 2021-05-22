@@ -6,9 +6,13 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "valet_details_sb",
   "date",
   "client_id",
   "client_name",
+  "column_break_4",
+  "membership_status",
+  "member_id",
   "column_break_6",
   "status",
   "parking_time",
@@ -20,6 +24,9 @@
   "vehicle_type",
   "column_break_14",
   "location",
+  "valet_user",
+  "valet_staff",
+  "column_break_21",
   "naming_series",
   "amended_from"
  ],
@@ -110,8 +117,9 @@
   {
    "fieldname": "client_id",
    "fieldtype": "Link",
-   "label": "Client",
+   "label": "Client ID",
    "options": "Client",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -129,11 +137,51 @@
    "fieldtype": "Datetime",
    "label": "Ready Time",
    "read_only": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "client_id.membership_status",
+   "fieldname": "membership_status",
+   "fieldtype": "Data",
+   "label": "Membership Status",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "client_id.member_id",
+   "fieldname": "member_id",
+   "fieldtype": "Data",
+   "label": "Member ID",
+   "read_only": 1
+  },
+  {
+   "fieldname": "valet_details_sb",
+   "fieldtype": "Section Break",
+   "label": "Valet Details"
+  },
+  {
+   "fieldname": "valet_user",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Valet User",
+   "options": "User"
+  },
+  {
+   "fetch_from": "valet_user.full_name",
+   "fieldname": "valet_staff",
+   "fieldtype": "Data",
+   "label": "Valet Staff",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_21",
+   "fieldtype": "Column Break"
   }
  ],
- "is_submittable": 1,
  "links": [],
- "modified": "2020-11-26 06:02:36.825842",
+ "modified": "2021-05-18 23:14:37.378318",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Valet Parking",
@@ -148,6 +196,7 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "select": 1,
    "share": 1,
    "write": 1
   },
@@ -159,7 +208,8 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "All",
+   "role": "Valet Staff",
+   "select": 1,
    "share": 1,
    "write": 1
   }

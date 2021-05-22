@@ -15,5 +15,8 @@ class ClubPackages(Document):
 	# 	self.title = self.package_name
 	def set_total(self):
 		self.total_price = 0.0
+		self.total_sessions = 0
+
 		for row in self.package_table:
 			self.total_price += row.price
+			self.total_sessions += row.no_of_sessions
