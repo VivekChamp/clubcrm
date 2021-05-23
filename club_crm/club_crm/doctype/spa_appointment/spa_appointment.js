@@ -12,39 +12,13 @@ frappe.ui.form.on("Spa Appointment", "onload", function(frm) {
     });
     // Filter service staff for spa appointment
     frm.set_query("service_staff", function() {
-        // return frappe.call({
-        //     method: 'club_crm.club_crm.doctype.spa_appointment.spa_appointment.get_therapist_spa_service',
-        //     type: "GET",
-        //     args: { spa_service: frm.doc.spa_service },
-        //     callback: function(r) {
-        //         r.message;
-        //     }
-        // });
         return {
-            "filters": [
-                ["Service Staff", "spa_check", "=", "1"]
-            ]
+            "filters": {
+                'spa_group': frm.doc.spa_group,
+                'spa_check': 1
+            }
         }
     });
-
-    // frm.set_query("service_staff", function() {
-    //     // if (frm.doc.spa_service) {
-    //     //     return frappe.call({
-    //     //         method: 'club_crm.club_crm.doctype.spa_appointment.spa_appointment.get_therapist_spa_service',
-    //     //         type: "GET",
-    //     //         args: { spa_service: frm.doc.spa_service },
-    //     //         callback: function(r) {
-    //     //             r.message;
-    //     //         }
-    //     //     });
-    //     // } else {
-    //     return {
-    //         "filters": [
-    //             ["Service Staff", "spa_check", "=", "1"]
-    //         ]
-    //     }
-    //     // }
-    // });
     // Filter Spa Services based on Add-on service check
     frm.set_query("spa_service", function() {
         if (frm.doc.addon_service_check == 0) {
@@ -84,14 +58,14 @@ frappe.ui.form.on("Spa Appointment", "onload", function(frm) {
         // Filter club-room based on client gender
     frm.set_query("club_room", function() {
         return {
-            "filters": [
-                ["Club Room", "club_room_type", "=", "Spa"],
-                ["Club Room", "is_group", "=", "0"],
-                ["Club Room", "gender_preference", "in", [frm.doc.gender, "Mixed"]]
-            ]
-        }
+            query: "club_crm.club_crm.doctype.spa_appointment.spa_appointment.get_club_room",
+            filters: {
+                "from_time": frm.doc.start_time,
+                "to_time": frm.doc.end_time
+            }
+        };
     });
-})
+});
 
 frappe.ui.form.on("Spa Appointment", {
     refresh: function(frm) {

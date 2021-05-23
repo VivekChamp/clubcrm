@@ -23,12 +23,13 @@ def get_spa_item(spa_category):
     spa_item = []
 
     discount = 0.0
+    mem_discount = 0.0
     if doc.membership_status == "Member":
         if doc.membership_history:
             for row in doc.membership_history:
                 if row.status == "Active":
                     mem = frappe.get_doc('Memberships', row.membership)
-                    discount = mem.spa_discount
+                    mem_discount = mem.spa_discount
 
         benefits = frappe.get_all('Client Sessions', filters={'client_id': doc.name, 'is_benefit': 1, 'session_status': 'Active','service_type': 'Spa Services'}, fields=['name','service_name'])
         if benefits:
@@ -49,6 +50,7 @@ def get_spa_item(spa_category):
                         })
 
     for item in spa:
+        discount = mem_discount
         if item.no_member_discount == 1:
             discount = 0.0
         discount_price = item.price - (item.price * (discount/100.0))
@@ -150,7 +152,7 @@ def get_details(client_id):
 
 @frappe.whitelist()
 def book_spa(client_id, spa_item, therapist_name, date, time, any_surgeries,payment_method):
-    client = frappe.db.get("Client", {"email": frappe.session.user})
+    client = frappe.db.get("Client", {"email": frappe.session.user}) 
     start_time = datetime.combine(getdate(date), get_time(time))
     doc = frappe.get_doc({
         'doctype': 'Spa Appointment',
@@ -163,7 +165,7 @@ def book_spa(client_id, spa_item, therapist_name, date, time, any_surgeries,paym
         'any_surgeries': any_surgeries,
         'payment_method': payment_method
         })
-    doc.insert()
+    doc.save()
     cart = add_cart_from_spa_online(doc.client_id, doc.name)
     cart_doc = frappe.get_doc('Cart', cart)
     wallet= get_balance()

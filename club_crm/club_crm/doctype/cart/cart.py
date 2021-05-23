@@ -17,16 +17,6 @@ class Cart(Document):
 		self.set_discount_and_grand_total()
 		self.set_payment_details()
 
-	# def before_submit(self):
-	# 	self.check_payment()
-	# 	self.set_status()
-
-	# def on_submit(self):
-	# 	if self.cart_appointment:
-	# 		self.make_paid()
-	# 	if self.cart_session:
-	# 		self.create_session()
-
 	def set_item_price(self):
 		if self.products_check==1:
 			if self.cart_product:
@@ -301,10 +291,6 @@ def submit_cart(cart_id):
 					online_cart.cart_status = "Ordered"
 					online_cart.payment_status = "Paid"
 					online_cart.save()
-
-					# frappe.db.set_value("Online Order", order.name, "payment_status", 'Paid')
-					# # frappe.db.set_value("Online Order", order.name, "cart_status", 'Ordered')
-					# frappe.db.commmit()
 
 	cart.save()
 	frappe.db.set_value('Cart', cart_id, 'docstatus', 1)
