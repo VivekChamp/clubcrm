@@ -34,6 +34,7 @@
    "fieldname": "start_date",
    "fieldtype": "Data",
    "in_list_view": 1,
+   "in_preview": 1,
    "label": "Start Date",
    "read_only": 1
   },
@@ -42,6 +43,7 @@
    "fieldname": "end_date",
    "fieldtype": "Data",
    "in_list_view": 1,
+   "in_preview": 1,
    "label": "End Date",
    "read_only": 1
   },
@@ -65,12 +67,13 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-05-07 16:14:53.402363",
+ "modified": "2021-05-22 19:11:40.377414",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Membership History",
  "owner": "Administrator",
  "permissions": [],
+ "show_preview_popup": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

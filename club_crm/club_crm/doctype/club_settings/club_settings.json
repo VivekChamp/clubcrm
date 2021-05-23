@@ -13,7 +13,8 @@
   "group_class_settings",
   "group_class_cancel_time",
   "club_tour_timing_section",
-  "club_tour_schedule"
+  "club_tour_schedule",
+  "notification_messages"
  ],
  "fields": [
   {
@@ -27,7 +28,7 @@
    "label": "Group Class Settings"
   },
   {
-   "description": "Minimum time for an appointment to be available for cancellation or reschedule (in minutes)",
+   "description": "Minimum time for an appointment to be available for cancellation or reschedule",
    "fieldname": "fitness_cancel_time",
    "fieldtype": "Duration",
    "hide_days": 1,
@@ -35,7 +36,7 @@
    "label": "Fitness Session Cancellation Time"
   },
   {
-   "description": "Minimum time for an appointment to be available for cancellation or reschedule (in minutes)",
+   "description": "Minimum time for an appointment to be available for cancellation or reschedule",
    "fieldname": "group_class_cancel_time",
    "fieldtype": "Duration",
    "hide_days": 1,
@@ -67,11 +68,17 @@
    "fieldname": "club_tour_schedule",
    "fieldtype": "Table",
    "options": "Club Tour Schedule"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "notification_messages",
+   "fieldtype": "Section Break",
+   "label": "Notification Messages"
   }
  ],
  "issingle": 1,
  "links": [],
- "modified": "2021-04-10 13:06:29.881921",
+ "modified": "2021-05-16 14:32:25.618984",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club Settings",

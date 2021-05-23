@@ -24,7 +24,7 @@ class PaymentLog(Document):
 		membership_application = "^MEM-APP-[0-9]{4,4}-[0-9]{5,5}$"
 		cart = "^CART-[0-9]{4,4}-[0-9]{5,5}$"
 		wallet = "^WALL-[0-9]{4,4}-[0-9]{5,5}$"
-		online = "^ON-[0-9]{4,4}-[0-9]{5,5}$"
+		# online = "^ON-[0-9]{4,4}-[0-9]{5,5}$"
 
 		if self.decision == "ACCEPT" and self.req_amount == self.auth_amount:
 			if re.match(membership_application, self.req_reference_number):

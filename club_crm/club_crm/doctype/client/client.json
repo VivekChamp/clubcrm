@@ -334,7 +334,6 @@
    "bold": 1,
    "fieldname": "birth_date",
    "fieldtype": "Date",
-   "in_preview": 1,
    "label": "Date of birth"
   },
   {
@@ -398,6 +397,7 @@
   {
    "fieldname": "card_no",
    "fieldtype": "Data",
+   "in_preview": 1,
    "label": "Card Number",
    "read_only": 1
   },
@@ -506,7 +506,7 @@
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2021-05-08 13:17:23.652038",
+ "modified": "2021-05-22 19:15:10.382415",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",
@@ -640,6 +640,7 @@
  "quick_entry": 1,
  "search_fields": "client_name,mobile_no,member_id",
  "show_name_in_global_search": 1,
+ "show_preview_popup": 1,
  "sort_field": "client_name",
  "sort_order": "ASC",
  "title_field": "client_name",

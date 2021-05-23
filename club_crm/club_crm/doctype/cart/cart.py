@@ -12,19 +12,29 @@ from frappe.model.document import Document
 
 class Cart(Document):
 	def validate(self):
+		self.set_item_price()
 		self.set_net_price()
 		self.set_discount_and_grand_total()
 		self.set_payment_details()
 
-	def before_submit(self):
-		self.check_payment()
-		self.set_status()
+	# def before_submit(self):
+	# 	self.check_payment()
+	# 	self.set_status()
 
-	def on_submit(self):
-		if self.cart_appointment:
-			self.make_paid()
-		if self.cart_session:
-			self.create_session()
+	# def on_submit(self):
+	# 	if self.cart_appointment:
+	# 		self.make_paid()
+	# 	if self.cart_session:
+	# 		self.create_session()
+
+	def set_item_price(self):
+		if self.products_check==1:
+			if self.cart_product:
+				for row in self.cart_product:
+					prices = frappe.get_all('Item Price', filters={'item_code':row.cart_item, 'price_list':'Standard Selling'}, fields=['*'])
+					if prices:
+						for price in prices:
+							row.unit_price = price.price_list_rate
 
 	def set_net_price(self):
 		self.net_total_appointments = 0.0
@@ -48,9 +58,10 @@ class Cart(Document):
 
 		if self.products_check==1:
 			for row in self.cart_product:
-				p_total = float(row.qty) * row.unit_price
-				row.total_price = float(p_total) - (float(p_total) * float(row.discount)/100)
-				self.quantity_products += 1
+				item_price = float(row.unit_price) - (float(row.unit_price) * float(row.discount)/100.0)
+				price = float(item_price)//0.5*0.5
+				row.total_price = float(price) * float(row.qty)
+				self.quantity_products += int(row.qty)
 				self.net_total_products += row.total_price
 		
 		self.net_total = self.net_total_appointments + self.net_total_sessions + self.net_total_products
@@ -236,6 +247,7 @@ def add_cart_from_spa_online(client_id, appointment_id):
 
 	doc= frappe.get_doc({
 		"doctype": 'Cart',
+		'online': 1,
 		"appointments_check": 1,
 		"client_id": client_id
 	})
@@ -280,6 +292,43 @@ def submit_cart(cart_id):
 				for item in club_package.package_table:
 					create_session(cart.client_id,row.package_name,service_type,item.service_name,item.no_of_sessions,item.validity)
 	
+	if cart.cart_product:
+		if cart.online==1:
+			online = frappe.get_all('Online Order', filters={'cart_id':cart_id})
+			if online:
+				for order in online:
+					online_cart = frappe.get_doc('Online Order', order.name)
+					online_cart.cart_status = "Ordered"
+					online_cart.payment_status = "Paid"
+					online_cart.save()
+
+					# frappe.db.set_value("Online Order", order.name, "payment_status", 'Paid')
+					# # frappe.db.set_value("Online Order", order.name, "cart_status", 'Ordered')
+					# frappe.db.commmit()
+
 	cart.save()
 	frappe.db.set_value('Cart', cart_id, 'docstatus', 1)
 	frappe.msgprint(msg='Cart has been submitted successfully')
+
+@frappe.whitelist()
+def add_cart_from_shop_online(client_id, order_id):
+	online = frappe.get_doc('Online Order', order_id)
+	doc= frappe.get_doc({
+		"doctype": 'Cart',
+		'online':1,
+		"products_check": 1,
+		"client_id": client_id
+	})
+	if online.item:
+		for row in online.item:
+			doc.append('cart_product', {
+				"cart_item": row.item_code,
+				"qty": row.quantity,
+				"unit_price": row.rate,
+				"discount": row.discount,
+				"total_price": row.amount
+			})
+	doc.save()
+	frappe.db.set_value('Online Order', order_id, 'cart_id', doc.name)
+	frappe.db.commit()
+	return doc
