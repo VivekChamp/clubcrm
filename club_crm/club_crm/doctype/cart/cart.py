@@ -318,3 +318,23 @@ def add_cart_from_shop_online(client_id, order_id):
 	frappe.db.set_value('Online Order', order_id, 'cart_id', doc.name)
 	frappe.db.commit()
 	return doc
+
+@frappe.whitelist()
+def add_cart_from_pt_online(client_id, request_id):
+	pt_request = frappe.get_doc('Fitness Training Request', request_id)
+	client = frappe.get_doc('Client', client_id)
+
+	doc= frappe.get_doc({
+		"doctype": 'Cart',
+		'online': 1,
+		"sessions_check": 1,
+		"client_id": client_id
+	})
+	doc.append('cart_session', {
+		"package_type": "Fitness",
+		"package_name": pt_request.fitness_package,
+		"unit_price": pt_request.price,
+		"total_price": pt_request.price
+	})
+	doc.save()
+	return doc

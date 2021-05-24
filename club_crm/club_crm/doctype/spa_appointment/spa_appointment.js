@@ -56,15 +56,15 @@ frappe.ui.form.on("Spa Appointment", "onload", function(frm) {
             }
         }
         // Filter club-room based on client gender
-    frm.set_query("club_room", function() {
-        return {
-            query: "club_crm.club_crm.doctype.spa_appointment.spa_appointment.get_club_room",
-            filters: {
-                "from_time": frm.doc.start_time,
-                "to_time": frm.doc.end_time
-            }
-        };
-    });
+        // frm.set_query("club_room", function() {
+        //     return {
+        //         query: "club_crm.club_crm.doctype.spa_appointment.spa_appointment.get_club_room",
+        //         filters: {
+        //             "from_time": frm.doc.start_time,
+        //             "to_time": frm.doc.end_time
+        //         }
+        //     };
+        // });
 });
 
 frappe.ui.form.on("Spa Appointment", {
