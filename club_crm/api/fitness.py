@@ -3,6 +3,7 @@ from frappe.website.utils import is_signup_enabled
 from frappe.utils import escape_html
 from datetime import datetime, timedelta
 from frappe import throw, msgprint, _
+from club_crm.club_crm.doctype.cart.cart import add_cart_from_pt_online
 from club_crm.api.wallet import get_balance
 
 @frappe.whitelist()
@@ -191,9 +192,10 @@ def proceed_payment(client_id,doc_id, payment_method):
     doc= frappe.get_doc('Fitness Training Request', doc_id)
     doc.payment_method= payment_method
     doc.save()
+    cart = add_cart_from_pt_online(doc.client_id, doc.name)
     wallet= get_balance()
     frappe.response["message"] = {
         "status": 1,
-        "document_name": doc.name,
+        "document_name": cart.name,
         "wallet_balance": wallet
         }

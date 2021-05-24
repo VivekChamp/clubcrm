@@ -19,7 +19,8 @@ class SpaAppointment(Document):
 		# self.validate_past_days()
 		self.set_addons_and_durations()
 		self.set_total_duration()
-		self.validate_overlaps()
+		if self.online==0:
+			self.validate_overlaps()
 		self.validate_room_overlaps()
 		self.set_prices()
 		self.set_status()
@@ -39,8 +40,10 @@ class SpaAppointment(Document):
 			self.create_room_schedule()
 
 	def set_title(self):
-		self.title = _('{0} for {1}').format(self.client_name,
-			self.spa_service)
+		if self.therapist_requested == 1:
+			self.title = _('** {0} for {1}').format(self.client_name,self.spa_service)
+		else:	
+			self.title = _('{0} for {1}').format(self.client_name,self.spa_service)
 
 	def set_appointment_date_time(self):
 		if type(self.start_time) == str:
@@ -319,6 +322,11 @@ def cancel_appointment(appointment_id):
 		doc.booked_sessions -= 1
 		doc.save()
 	
+	if appointment.online == 1:
+		frappe.db.set_value('Cart', appointment.cart, 'payment_status', 'Cancelled')
+		frappe.db.set_value('Spa Appointment', appointment_id, 'cart', None)
+		frappe.db.commit()
+
 	# if appointment.payment_status == "Paid":
 
 	# 	doc= frappe.get_doc({
@@ -471,3 +479,14 @@ def get_therapist_spa_service(spa_service):
 	# 						})
 	# return therapists
 	return {}
+
+@frappe.whitelist()
+def get_club_room(doctype, txt, searchfield, start, page_len, filters):
+	available_rooms =[]
+	club_room_list = frappe.db.get_list('Club Room', {'club_room_type': 'Spa','is_group':0}, ['name'])
+
+	for room in club_room_list:
+		if not frappe.db.get_value('Club Room Schedule', {'room_name': room["name"],'from_time': ['>=', filters['from_time']],'to_time': ['<=', filters['to_time']]}, 'name'):
+			available_rooms.append([room['name']])
+	
+	return available_rooms

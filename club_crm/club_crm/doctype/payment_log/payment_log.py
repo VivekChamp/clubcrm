@@ -24,7 +24,8 @@ class PaymentLog(Document):
 		membership_application = "^MEM-APP-[0-9]{4,4}-[0-9]{5,5}$"
 		cart = "^CART-[0-9]{4,4}-[0-9]{5,5}$"
 		wallet = "^WALL-[0-9]{4,4}-[0-9]{5,5}$"
-		online = "^ON-[0-9]{4,4}-[0-9]{5,5}$"
+		food = "^FOE-[0-9]{4,4}-[0-9]{5,5}$"
+		# online = "^ON-[0-9]{4,4}-[0-9]{5,5}$"
 
 		if self.decision == "ACCEPT" and self.req_amount == self.auth_amount:
 			if re.match(membership_application, self.req_reference_number):
@@ -61,6 +62,13 @@ class PaymentLog(Document):
 				'docstatus' : 1
 				})
 				frappe.db.commit()
+
+			if re.match(food, self.req_reference_number):
+				doc = frappe.get_doc("Food Order Entry", str(self.req_reference_number))
+				doc.order_status = "Ordered"
+				doc.payment_status = "Paid"
+				doc.payment_method = "Credit Card"
+				doc.save()
 			
 @frappe.whitelist()
 def update_payment(docname, amount):

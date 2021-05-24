@@ -2,38 +2,38 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Spa Services', {
-	refresh: function(frm) {
-	    cur_frm.get_field('male_rooms').get_query = function(doc) {
-            return {
-                filters: [
-                    ["Club Room", "parent_club_room", "=", "Male Room"]
-                    ["Club Room", "enabled", "=", "1"]
-                ]
-            };
-        };
-        cur_frm.get_field('female_rooms').get_query = function(doc) {
-            return {
-                filters: [
-                    ["Club Room", "parent_club_room", "=", "Female Room"]
-                    ["Club Room", "enabled", "=", "1"]
-                ]
-            };
-        };
-	},
+    // refresh: function(frm) {
+    //     cur_frm.get_field('male_rooms').get_query = function(doc) {
+    //         return {
+    //             filters: [
+    //                 ["Club Room", "parent_club_room", "=", "Male Room"]
+    //                 ["Club Room", "enabled", "=", "1"]
+    //             ]
+    //         };
+    //     };
+    //     cur_frm.get_field('female_rooms').get_query = function(doc) {
+    //         return {
+    //             filters: [
+    //                 ["Club Room", "parent_club_room", "=", "Female Room"]
+    //                 ["Club Room", "enabled", "=", "1"]
+    //             ]
+    //         };
+    //     };
+    // },
 
     // validate:function(frm) {
-	//     if(!frm.doc.item){
-	//      frappe.db.insert({
-	//         "doctype" : "Item",
+    //     if(!frm.doc.item){
+    //      frappe.db.insert({
+    //         "doctype" : "Item",
     //         "item_code": frm.doc.spa_name,
-	//         "item_name": frm.doc.spa_name,
+    //         "item_name": frm.doc.spa_name,
     //         "is_stock_item" : 0,
-	//         "item_group": frm.doc.spa_category,
-	//         "stock_uom": "Nos",
+    //         "item_group": frm.doc.spa_category,
+    //         "stock_uom": "Nos",
     //         "item_defaults.selling_cost_center": frm.doc.cost_center,
     //         "item_defaults.income_account" : frm.doc.revenue_account,
     //         "standard_rate": frm.doc.price
-	//      }).then(c => {
+    //      }).then(c => {
     //             frappe.model.set_value(frm.doctype, frm.docname, 'Item', c);
     //             frm.set_value("item",c.name);
     //             frappe.show_alert({
@@ -41,9 +41,9 @@ frappe.ui.form.on('Spa Services', {
     //                 indicator:'green'
     //             });
     //         });
-	//     }
-	//     if(frm.doc.item){
-	//         frappe.call({
+    //     }
+    //     if(frm.doc.item){
+    //         frappe.call({
     //             "method": "frappe.client.set_value",
     //             "args":{
     //                 "doctype": "Item",
@@ -59,7 +59,7 @@ frappe.ui.form.on('Spa Services', {
     //                 }
     //             }
     //         })
-	//     }
-	// }
+    //     }
+    // }
 
 });

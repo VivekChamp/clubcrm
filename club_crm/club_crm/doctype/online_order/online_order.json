@@ -28,6 +28,7 @@
   "column_break_20",
   "transaction_number",
   "transaction_date",
+  "cart_id",
   "amended_from",
   "naming_series"
  ],
@@ -92,13 +93,13 @@
    "fieldname": "created_date",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Created Date",
+   "label": "Order Date",
    "read_only": 1
   },
   {
    "fieldname": "created_time",
    "fieldtype": "Time",
-   "label": "Created Time",
+   "label": "Order Time",
    "read_only": 1
   },
   {
@@ -110,7 +111,7 @@
    "fieldname": "cart_status",
    "fieldtype": "Select",
    "label": "Cart Status",
-   "options": "Cart\nOrdered\nDelivered\nCancelled"
+   "options": "Cart\nCheck-out\nOrdered\nDelivered\nCancelled"
   },
   {
    "fetch_from": "client_id.client_name",
@@ -130,6 +131,7 @@
    "allow_on_submit": 1,
    "fieldname": "payment_details_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Payment Details"
   },
   {
@@ -164,11 +166,10 @@
    "read_only": 1
   },
   {
-   "default": "Credit Card",
    "fieldname": "payment_method",
    "fieldtype": "Select",
    "label": "Payment Method",
-   "options": "Credit Card\nWallet\nCash",
+   "options": "\nCredit Card\nWallet",
    "read_only": 1
   },
   {
@@ -179,11 +180,17 @@
    "label": "Series",
    "options": "ON-.YYYY.-",
    "read_only": 1
+  },
+  {
+   "fieldname": "cart_id",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Cart ID",
+   "read_only": 1
   }
  ],
- "is_submittable": 1,
  "links": [],
- "modified": "2021-04-01 14:01:41.717193",
+ "modified": "2021-05-23 02:29:28.633609",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Online Order",

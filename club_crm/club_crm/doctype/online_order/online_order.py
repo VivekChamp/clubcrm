@@ -8,7 +8,15 @@ from frappe.model.document import Document
 
 class OnlineOrder(Document):
 	def validate(self):
+		self.set_item_total()
 		self.set_total_and_quantity()
+
+	def set_item_total(self):
+		if self.item:
+			for row in self.item:
+				item_price = row.rate - (row.rate * row.discount/100.0)
+				price = item_price//0.5*0.5
+				row.amount = float(price) * float(row.quantity)
 
 	def set_total_and_quantity(self):
 		self.total_quantity = 0
@@ -16,6 +24,5 @@ class OnlineOrder(Document):
 
 		if self.item:
 			for row in self.item:
-				row.amount = float(row.rate) * float(row.quantity)
 				self.total_quantity += int(row.quantity)
 				self.total_amount += row.amount

@@ -6,6 +6,7 @@ import numpy as np
 from frappe.utils import getdate
 from frappe.model.document import Document
 from frappe import throw, msgprint, _
+from club_crm.club_crm.doctype.cart.cart import add_cart_from_shop_online
 from club_crm.api.wallet import get_balance
 
 @frappe.whitelist()
@@ -18,7 +19,7 @@ def get_category():
 @frappe.whitelist()         
 def get_products(category,count):
     client = frappe.db.get("Client", {"email": frappe.session.user})
-    # client = frappe.get_doc('Client', client_id)
+
     product = []
     if client.membership_status == "Member":
         discount = 0.0
@@ -29,7 +30,6 @@ def get_products(category,count):
             
                 items = frappe.get_all('Item', filters={'item_group':category, 'disabled': 0}, fields=['*'])
                 if items:
-                    # product = []
                     for item in items:
                         price = frappe.get_all('Item Price', filters={'item_code':item.item_code, 'price_list':'Standard Selling'}, fields=['*'])
                         if price:
@@ -37,7 +37,7 @@ def get_products(category,count):
                             description = re.sub("<.*?>", "", price_1.item_description)
                             reg_price = price_1.price_list_rate
                             mem_price = reg_price - (reg_price * discount/100.0)
-                            member_price = int(mem_price//0.5*0.5)
+                            member_price = mem_price//0.5*0.5
                             product.append({
                                 "item_code": item.item_code,
                                 "item_name": item.item_name,
@@ -52,7 +52,6 @@ def get_products(category,count):
     else:
         items = frappe.get_all('Item', filters={'item_group':category, 'disabled': 0}, fields=['*'])
         if items:
-            # product=[]
             for item in items:
                 price = frappe.get_all('Item Price', filters={'item_code':item.item_code, 'price_list':'Standard Selling'}, fields=['*'])
                 if price:
@@ -101,8 +100,8 @@ def get_product(client_id,category):
                         if price:
                             price_1 = price[0]
                             description = re.sub("<.*?>", "", price_1.item_description)
-                            reg_price = price_1.price_list_rate
-                            member_price = reg_price - (reg_price * discount/100.0)
+                            reg_price = float(price_1.price_list_rate)
+                            member_price = float(reg_price) - float(reg_price * discount/100.0)
                             product.append({
                                 "item_code": item.item_code,
                                 "item_name": item.item_name,
@@ -110,8 +109,8 @@ def get_product(client_id,category):
                                 "image": item.image,
                                 "description": description,
                                 "currency": price_1.currency,
-                                "regular_price": format(reg_price, '.2f'),
-                                "member_price": format(member_price, '.2f')
+                                "regular_price": reg_price,
+                                "member_price": member_price
                             })
                     frappe.response["message"] = {
                         "status": 1,
@@ -155,29 +154,101 @@ def get_product(client_id,category):
 
 @frappe.whitelist()         
 def add_to_cart(client_id, item_code, qty):
+    discount = 0.0
     client = frappe.db.get("Client", {"email": frappe.session.user})
-    cart= frappe.get_list('Online Order', filters={'client_id':client.name, 'cart_status': 'Cart'}, fields=['*'])
-    if cart:
-        cart_1=cart[0]
-        doc= frappe.get_doc('Online Order', cart_1.name)
-        doc.append('item', {
-            'item_code': item_code,
-            'quantity':qty
+    doc = frappe.get_doc('Client', client.name)
+    if doc.membership_status == "Member":
+        if doc.membership_history:
+            for row in doc.membership_history:
+                if row.status == "Active":
+                    mem = frappe.get_doc('Memberships', row.membership)
+                    discount = mem.retail_discount
+                    
+    price_list = frappe.get_all('Item Price', filters={'item_code':item_code, 'price_list':'Standard Selling'}, fields=['*'])
+    if price_list:
+        for price in price_list:
+            item_price = price.price_list_rate
+
+    carts = frappe.get_all('Online Order', filters={'client_id':client.name, 'cart_status': 'Cart'})
+    if carts:
+        for cart in carts:
+            doc = frappe.get_doc('Online Order', cart.name)
+            doc.append('item', {
+                'item_code': item_code,
+                'quantity':qty,
+                'rate': item_price,
+                'discount': discount
             })
-        doc.save()
-        return doc
-        
+            doc.save()
+
+            # items = []
+            # for item in doc.item:
+            #     items.append({
+            #         'name': item.name,
+            #         'parent': item.parent,
+            #         'item_code': item.item_code,
+            #         'item_name': item.item_name,
+            #         'quantity': int(item.quantity),
+            #         'rate': int(item.rate),
+            #         # 'discount': item.discount,
+            #         'amount': int(item.amount)
+            #     })
+
+            frappe.response["message"] = {
+                'name': doc.name,
+                'client_id': doc.client_id,
+                'client_name': doc.client_name,
+                'mobile_number': doc.mobile_number,
+                'membership_status': doc.membership_status,
+                'cart_status': doc.cart_status,
+                'payment_status': doc.payment_status,
+                'payment_method': doc.payment_method,
+                'total_quantity': int(doc.total_quantity),
+                'total_amount': doc.total_amount,
+                'naming_series': doc.naming_series,
+                'doctype': doc.doctype,
+                'item': doc.item
+            }
     else:
         doc = frappe.get_doc({
             'doctype':'Online Order',
             'client_id': client.name,
             'item': [{
-            'item_code': item_code,
-            'quantity':qty
+                'item_code': item_code,
+                'quantity':qty,
+                'rate': item_price,
+                'discount': discount
             }]
         })
-        doc.insert()
-        return doc
+        doc.save()
+
+        # items = []
+        # for item in doc.item:
+        #     items.append({
+        #         'name': item.name,
+        #         'parent': item.parent,
+        #         'item_code': item.item_code,
+        #         'item_name': item.item_name,
+        #         'quantity': item.quantity,
+        #         'rate': int(item.rate),
+        #         # 'discount': item.discount,
+        #         'amount': int(item.amount)
+        #     })
+        frappe.response["message"] = {
+                'name': doc.name,
+                'client_id': doc.client_id,
+                'client_name': doc.client_name,
+                'mobile_number': doc.mobile_number,
+                'membership_status': doc.membership_status,
+                'cart_status': doc.cart_status,
+                'payment_status': doc.payment_status,
+                'payment_method': doc.payment_method,
+                'total_quantity': int(doc.total_quantity),
+                'total_amount': doc.total_amount,
+                'naming_series': doc.naming_series,
+                'doctype': doc.doctype,
+                'item': doc.item
+            }
 
 @frappe.whitelist()         
 def delete_from_cart(document_name,item_document_name):
@@ -202,7 +273,6 @@ def delete_from_cart(document_name,item_document_name):
             "items": cart.item
         }
     else:
-        cart.submit()
         frappe.db.set_value('Online Order', cart.name, {
             'docstatus':2,
             'cart_status': 'Cancelled'
@@ -219,6 +289,17 @@ def get_cart(client_id):
     if cart:
         cart_1=cart[0]
         doc= frappe.get_doc('Online Order', cart_1.name)
+        items = []
+        for item in doc.item:
+            items.append({
+                'name': item.name,
+                'parent': item.parent,
+                'parentfield': item.parentfield,
+                'item_code': item.item_code,
+                'item_name': item.item_name,
+                'quantity': item.quantity,
+                'rate': item.amount
+            })
         frappe.response["message"] = {
             "status": 1,
             "document_name": doc.name,
@@ -227,38 +308,35 @@ def get_cart(client_id):
             "client_id": doc.client_id,
             "total_quantity": doc.total_quantity,
             "total_amount": doc.total_amount,
-            "items": doc.item
+            "items": items
         }
     else:
         frappe.response["message"] = {
             "status": 0
         }
 
-# @frappe.whitelist()         
-# def checkout(document_name):
-#     doc= frappe.get_doc('Online Order', document_name)
-#     doc.submit()
-#     return doc
-
-
 @frappe.whitelist()
 def checkout(client_id, payment_method):
     client = frappe.db.get("Client", {"email": frappe.session.user})
+
     cart = frappe.get_list('Online Order', filters={'client_id': client.name, 'cart_status': 'Cart'}, fields=['*'])
-    # cart = add_cart_from_spa(doc.client_id, doc.name)
     if cart:
         cart_1=cart[0]
         doc = frappe.get_doc('Online Order', cart_1.name)
+        doc.cart_status = 'Check-out'
         doc.payment_method = payment_method
         doc.save()
+
+    to_cart = add_cart_from_shop_online(doc.client_id, doc.name)
+
     wallet = get_balance()
     frappe.response["message"] = {
         "status": 1,
-        "document_name": doc.name,
+        "document_name": to_cart.name,
         "cart_status": doc.cart_status,
         "payment_status": doc.payment_status,
         "client_name": doc.client_name,
-        "total_quantity": doc.total_quantity,
-        "total_amount": doc.total_amount,
+        "total_quantity": to_cart.total_quantity,
+        "total_amount": to_cart.grand_total,
         "wallet_balance": wallet
-        } 
+        }
