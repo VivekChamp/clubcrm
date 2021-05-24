@@ -324,7 +324,6 @@ def cancel_appointment(appointment_id):
 	
 	if appointment.online == 1:
 		frappe.db.set_value('Cart', appointment.cart, 'payment_status', 'Cancelled')
-		frappe.db.set_value('Spa Appointment', appointment_id, 'cart', None)
 		frappe.db.commit()
 
 	# if appointment.payment_status == "Paid":

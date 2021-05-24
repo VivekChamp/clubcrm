@@ -251,6 +251,105 @@ def add_to_cart(client_id, item_code, qty):
             }
 
 @frappe.whitelist()         
+def add_to_carts(client_id, item_code, qty):
+    discount = 0.0
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    doc = frappe.get_doc('Client', client.name)
+    if doc.membership_status == "Member":
+        if doc.membership_history:
+            for row in doc.membership_history:
+                if row.status == "Active":
+                    mem = frappe.get_doc('Memberships', row.membership)
+                    discount = mem.retail_discount
+                    
+    price_list = frappe.get_all('Item Price', filters={'item_code':item_code, 'price_list':'Standard Selling'}, fields=['*'])
+    if price_list:
+        for price in price_list:
+            item_price = price.price_list_rate
+
+    carts = frappe.get_all('Online Order', filters={'client_id':client.name, 'cart_status': 'Cart'})
+    if carts:
+        for cart in carts:
+            doc = frappe.get_doc('Online Order', cart.name)
+            doc.append('item', {
+                'item_code': item_code,
+                'quantity':qty,
+                'rate': item_price,
+                'discount': discount
+            })
+            doc.save()
+
+            items = []
+            for item in doc.item:
+                items.append({
+                    'name': item.name,
+                    'parent': item.parent,
+                    'item_code': item.item_code,
+                    'item_name': item.item_name,
+                    'quantity': int(item.quantity),
+                    'rate': int(item.rate),
+                    'discount': item.discount,
+                    'amount': int(item.amount)
+                })
+
+            frappe.response["message"] = {
+                'name': doc.name,
+                'client_id': doc.client_id,
+                'client_name': doc.client_name,
+                'mobile_number': doc.mobile_number,
+                'membership_status': doc.membership_status,
+                'cart_status': doc.cart_status,
+                'payment_status': doc.payment_status,
+                'payment_method': doc.payment_method,
+                'total_quantity': int(doc.total_quantity),
+                'total_amount': int(doc.total_amount),
+                'naming_series': doc.naming_series,
+                'doctype': doc.doctype,
+                'item': items
+            }
+    else:
+        doc = frappe.get_doc({
+            'doctype':'Online Order',
+            'client_id': client.name,
+            'item': [{
+                'item_code': item_code,
+                'quantity':qty,
+                'rate': item_price,
+                'discount': discount
+            }]
+        })
+        doc.save()
+
+        items = []
+        for item in doc.item:
+            items.append({
+                'name': item.name,
+                'parent': item.parent,
+                'item_code': item.item_code,
+                'item_name': item.item_name,
+                'quantity': item.quantity,
+                'rate': int(item.rate),
+                'discount': item.discount,
+                'amount': int(item.amount)
+            })
+
+        frappe.response["message"] = {
+                'name': doc.name,
+                'client_id': doc.client_id,
+                'client_name': doc.client_name,
+                'mobile_number': doc.mobile_number,
+                'membership_status': doc.membership_status,
+                'cart_status': doc.cart_status,
+                'payment_status': doc.payment_status,
+                'payment_method': doc.payment_method,
+                'total_quantity': int(doc.total_quantity),
+                'total_amount': int(doc.total_amount),
+                'naming_series': doc.naming_series,
+                'doctype': doc.doctype,
+                'item': items
+            }
+
+@frappe.whitelist()         
 def delete_from_cart(document_name,item_document_name):
     cart= frappe.get_doc('Online Order', document_name)
     row= None
