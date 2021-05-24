@@ -7,6 +7,7 @@ from frappe.utils import escape_html
 from frappe import throw, msgprint, _
 from club_crm.api.wallet import get_balance
 from club_crm.club_crm.doctype.cart.cart import add_cart_from_spa_online
+from club_crm.club_crm.doctype.spa_appointment.spa_appointment import cancel_appointment
 
 @frappe.whitelist()
 def get_spa_category(client_id):
@@ -299,51 +300,50 @@ def get_slots(date, spa_item, therapist_name):
 
 @frappe.whitelist()
 def cancel_spa(client_id,booking_id):
-    doc= frappe.get_doc('Spa Appointment', booking_id)
-    if doc and doc.client_id==client_id:
-        doc.db_set('appointment_status', 'Cancelled')
-        doc.db_set('docstatus', 2)
-        doc.reload()
-        wallet= get_balance()
-        frappe.response["message"] = {
-            "status": 1,
-            "status_message": "Spa booking cancelled",
-            "document_name": doc.name,
-            "wallet_balance": wallet
-            }
-    else:
-        frappe.response["message"] = {
-            "status": 0,
-            "status_message": "Client and Booking ID mismatch",
-            }
+    spa_list = frappe.get_all('Spa Appointment', filters={'cart': booking_id})
+    if spa_list:
+        for spa in spa_list:
+            doc = frappe.get_doc('Spa Appointment', spa.name)
+            if doc and doc.client_id==client_id:
+                cancel_appointment(doc.name)
+                # doc.db_set('appointment_status', 'Cancelled')
+                # doc.db_set('docstatus', 2)
+                # doc.reload()
+                wallet= get_balance()
+                frappe.response["message"] = {
+                    "status": 1,
+                    "status_message": "Spa booking cancelled",
+                    "document_name": doc.name,
+                    "wallet_balance": wallet
+                    }
+            else:
+                frappe.response["message"] = {
+                    "status": 0,
+                    "status_message": "Client and Booking ID mismatch",
+                    }
 
 @frappe.whitelist()
 def reschedule_spa(booking_id, date, time):
-    doc = frappe.get_doc('Spa Appointment', booking_id)
-    if doc:
-        start_time = datetime.combine(getdate(date), get_time(time))
-        doc.start_time = start_time
-        doc.save()
+    spa_list = frappe.get_all('Spa Appointment', filters={'cart': booking_id})
+    if spa_list:
+        for spa in spa_list:
+            doc = frappe.get_doc('Spa Appointment', spa.name)
+            start_time = datetime.combine(getdate(date), get_time(time))
+            doc.start_time = start_time
+            doc.save()
 
-    spa = frappe.get_doc('Spa Appointment', booking_id)
-    wallet= get_balance()
-    frappe.response["message"] = {
-        "status": 1,
-        "status_message": "Spa booking rescheduled",
-        "appointment_status": spa.appointment_status,
-        "payment_status": spa.payment_status,
-        "client_name": spa.client_name,
-        "spa_item": spa.spa_service,
-        "duration": spa.service_duration,
-        "rate": spa.default_price,
-        "spa_therapist": spa.service_staff,
-        "appointment_date": spa.appointment_date,
-        "appointment_time": spa.appointment_time,
-        "wallet_balance": wallet
-        }
-
-
-
-
-
-
+            wallet= get_balance()
+            frappe.response["message"] = {
+                "status": 1,
+                "status_message": "Spa booking rescheduled",
+                "appointment_status": doc.appointment_status,
+                "payment_status": doc.payment_status,
+                "client_name": doc.client_name,
+                "spa_item": doc.spa_service,
+                "duration": doc.service_duration,
+                "rate": doc.default_price,
+                "spa_therapist": doc.service_staff,
+                "appointment_date": doc.appointment_date,
+                "appointment_time": doc.appointment_time,
+                "wallet_balance": wallet
+            }
