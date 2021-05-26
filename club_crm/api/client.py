@@ -100,7 +100,8 @@ def get_client_details():
 
     pt_list = frappe.get_all('Fitness Training Appointment', filters={'client_id': client.name, 'appointment_status':['in', {'Open','Scheduled'}]})
     if pt_list:
-        fitness = len(pt_list)
+        # fitness = len(pt_list)
+        fitness = None
 
   else:
     club_tour_list = frappe.get_all('Club Tour', filters={'client_id': client.name,'tour_status':['in', {'Pending','Scheduled'}]})

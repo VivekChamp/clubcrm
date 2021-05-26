@@ -12,23 +12,28 @@ from club_crm.api.wallet import get_balance
 
 class FitnessTrainingAppointment(Document):
 	def validate(self):
+		if self.session==1:
+			self.set_paid_and_net_total()
 		self.set_appointment_date_time()
-		self.validate_past_days()
+		# self.validate_past_days()
 		self.set_total_duration()
 		self.validate_overlaps()
 		self.set_prices()
 		self.set_status()
-		self.set_color()
+		# self.set_color()
 		self.set_title()
-		if self.session==1:
-			self.set_paid_and_net_total()
+
 	
 	def after_insert(self):
 		if self.session==1:
 			self.set_booked_session_count()
 
 	def set_appointment_date_time(self):
-		start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
+		if type(self.start_time) == str:
+			start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
+		else:
+			start_datetime = self.start_time
+
 		self.appointment_date = start_datetime.date()
 		self.appointment_time = datetime.strftime(start_datetime, "%H:%M:%S")
 	
@@ -40,7 +45,10 @@ class FitnessTrainingAppointment(Document):
 
 	def set_total_duration(self):
 		self.total_duration = self.service_duration
-		start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
+		if type(self.start_time) == str:
+			start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
+		else:
+			start_datetime = self.start_time
 		self.end_time = start_datetime + timedelta(seconds=self.total_duration)
 		self.appointment_end_time = datetime.strftime(self.end_time, "%H:%M:%S")	
 
@@ -98,7 +106,10 @@ class FitnessTrainingAppointment(Document):
 		doc.save()
 	
 	def validate_overlaps(self):
-		start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
+		if type(self.start_time) == str:
+			start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
+		else:
+			start_datetime= self.start_time
 		end_time = start_datetime + timedelta(seconds=self.total_duration)
 		overlaps = frappe.db.sql("""
 		select
@@ -219,3 +230,35 @@ def get_events(start, end, filters=None):
 		{"start": start, "end": end}, as_dict=True, update={"textColor": '#ffffff'})
 
 	return data
+
+@frappe.whitelist()
+def update_appointment_status():
+	# update the status of appointments daily
+	today = getdate()
+	appointments = frappe.get_all('Fitness Training Appointment', filters={'appointment_status': ('not in', ['Complete', 'Cancelled', 'Checked-in', 'No Show']), 'docstatus': 0}, fields=['name','appointment_status','online','appointment_date'])
+	for appointment in appointments:
+		appointment_date = getdate(appointment.appointment_date)
+
+		# If appointment is created for today set status as Open else Scheduled (only for offline booking)
+		if appointment.appointment_status=="Scheduled" or appointment.appointment_status =="Open":
+			if appointment.online==0:
+				if appointment_date == today:
+					frappe.db.set_value('Fitness Training Appointment', appointment.name, 'appointment_status', 'Open')
+					frappe.db.commit()
+				elif appointment_date > today:
+					frappe.db.set_value('Fitness Training Appointment', appointment.name, 'appointment_status', 'Scheduled')
+					frappe.db.commit()
+				elif appointment_date < today:
+					frappe.db.set_value('Fitness Training Appointment', appointment.name, 'appointment_status', 'No Show')
+					frappe.db.commit()
+
+			elif appointment.online==1:
+				if appointment_date == today:
+					frappe.db.set_value('Fitness Training Appointment', appointment.name, 'appointment_status', 'Open')
+					frappe.db.commit()
+				elif appointment_date > today:
+					frappe.db.set_value('Fitness Training Appointment', appointment.name, 'appointment_status', 'Scheduled')
+					frappe.db.commit()
+				elif appointment_date < today:
+					frappe.db.set_value('Fitness Training Appointment', appointment.name, 'appointment_status', 'No Show')
+					frappe.db.commit()

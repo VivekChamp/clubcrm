@@ -100,7 +100,8 @@
   "assignment_notify",
   "cem_approval_notify",
   "gm_approval_notify",
-  "md_approval_notify"
+  "md_approval_notify",
+  "reject_notify"
  ],
  "fields": [
   {
@@ -760,11 +761,17 @@
    "fieldname": "md_approval_notify",
    "fieldtype": "Check",
    "label": "Request for MD Approval"
+  },
+  {
+   "default": "0",
+   "fieldname": "reject_notify",
+   "fieldtype": "Check",
+   "label": "Rejected"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-21 23:00:48.226558",
+ "modified": "2021-05-25 17:15:05.596694",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",

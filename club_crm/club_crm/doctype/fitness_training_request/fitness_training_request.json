@@ -23,6 +23,7 @@
   "trainer_mobile_no",
   "column_break_14",
   "fitness_package",
+  "validity",
   "column_break_12",
   "number_of_sessions",
   "sessions_per_week",
@@ -34,12 +35,15 @@
   "table_schedule",
   "customer_remarks",
   "section_break_4",
-  "payment_method",
-  "paid_amount",
-  "column_break_9",
+  "payment_table",
+  "column_break_30",
+  "total_to_be_paid",
+  "paid_amounts",
+  "balance_amount",
   "transaction_date",
   "transaction_reference",
-  "amended_from"
+  "sessions_created",
+  "schedule_notification"
  ],
  "fields": [
   {
@@ -81,7 +85,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "collapsible": 1,
    "fieldname": "customer_preference_section",
    "fieldtype": "Section Break",
    "label": "Preferred Days and Time"
@@ -89,6 +92,7 @@
   {
    "fieldname": "customer_remarks",
    "fieldtype": "Small Text",
+   "hidden": 1,
    "label": "Customer Remarks"
   },
   {
@@ -131,15 +135,6 @@
    "fieldname": "sessions_per_week",
    "fieldtype": "Data",
    "label": "Session(s) per week",
-   "read_only": 1
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Fitness Training Request",
-   "print_hide": 1,
    "read_only": 1
   },
   {
@@ -200,14 +195,6 @@
    "options": "Fitness Training Trainer Scheduler"
   },
   {
-   "allow_on_submit": 1,
-   "fieldname": "payment_method",
-   "fieldtype": "Select",
-   "label": "Payment Method",
-   "options": "\nCredit Card\nWallet\nCash",
-   "read_only": 1
-  },
-  {
    "fieldname": "section_break_4",
    "fieldtype": "Section Break",
    "label": "Payment Details"
@@ -217,17 +204,6 @@
    "fieldname": "transaction_date",
    "fieldtype": "Date",
    "label": "Transaction Date",
-   "read_only": 1
-  },
-  {
-   "fieldname": "column_break_9",
-   "fieldtype": "Column Break"
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "paid_amount",
-   "fieldtype": "Data",
-   "label": "Paid Amount",
    "read_only": 1
   },
   {
@@ -256,10 +232,56 @@
    "fieldname": "request_details_sb",
    "fieldtype": "Section Break",
    "label": "Request Details"
+  },
+  {
+   "fieldname": "payment_table",
+   "fieldtype": "Table",
+   "options": "Cart Payment"
+  },
+  {
+   "fieldname": "column_break_30",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_to_be_paid",
+   "fieldtype": "Currency",
+   "label": "Total to be paid",
+   "read_only": 1
+  },
+  {
+   "fieldname": "paid_amounts",
+   "fieldtype": "Currency",
+   "label": "Paid Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "balance_amount",
+   "fieldtype": "Currency",
+   "label": "Balance Amount",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "sessions_created",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Sessions Created"
+  },
+  {
+   "default": "0",
+   "fieldname": "schedule_notification",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Schedule Notification"
+  },
+  {
+   "fieldname": "validity",
+   "fieldtype": "Duration",
+   "label": "Validity"
   }
  ],
  "links": [],
- "modified": "2021-05-19 02:07:24.411685",
+ "modified": "2021-05-25 22:05:32.117721",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Request",

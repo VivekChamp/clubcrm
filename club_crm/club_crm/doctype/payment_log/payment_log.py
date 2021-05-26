@@ -25,6 +25,7 @@ class PaymentLog(Document):
 		cart = "^CART-[0-9]{4,4}-[0-9]{5,5}$"
 		wallet = "^WALL-[0-9]{4,4}-[0-9]{5,5}$"
 		food = "^FOE-[0-9]{4,4}-[0-9]{5,5}$"
+		fitness = "^FIT-REQ-[0-9]{4,4}-[0-9]{5,5}$"
 		# online = "^ON-[0-9]{4,4}-[0-9]{5,5}$"
 
 		if self.decision == "ACCEPT" and self.req_amount == self.auth_amount:
@@ -69,6 +70,16 @@ class PaymentLog(Document):
 				doc.payment_status = "Paid"
 				doc.payment_method = "Credit Card"
 				doc.save()
+
+			if re.match(fitness, self.req_reference_number):
+				doc = frappe.get_doc("Fitness Training Request", str(self.req_reference_number))
+				doc.append('payment_table', {
+					"mode_of_payment": "Online Payment",
+					"paid_amount": float(self.auth_amount)
+				})
+				doc.request_status = "Completed"
+				doc.payment_status = "Paid"
+				doc.save(ignore_permissions=True)
 			
 @frappe.whitelist()
 def update_payment(docname, amount):

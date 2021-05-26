@@ -252,7 +252,6 @@ def update_appointment_status():
 	today = getdate()
 	appointments = frappe.get_all('Spa Appointment', filters={'appointment_status': ('not in', ['Draft', 'Complete', 'Cancelled', 'Checked-in', 'No Show']), 'docstatus': 0}, fields=['name','appointment_status','online','appointment_date'])
 	for appointment in appointments:
-		# spa_app = frappe.get_doc('Spa Appointment', appointment.name)
 		appointment_date = getdate(appointment.appointment_date)
 
 		# If appointment is created for today set status as Open else Scheduled (only for offline booking)
@@ -325,18 +324,17 @@ def cancel_appointment(appointment_id):
 	if appointment.online == 1:
 		frappe.db.set_value('Cart', appointment.cart, 'payment_status', 'Cancelled')
 		frappe.db.commit()
-
-	# if appointment.payment_status == "Paid":
-
-	# 	doc= frappe.get_doc({
-	# 		"doctype": 'Wallet Transaction',
-	# 		"client_id": appointment.client_id,
-	# 		"transaction_type": 'Refund',
-	# 		"amount": appointment.rate,
-	# 		"payment_type": 'Spa'
-	# 	})
-	# 	doc.insert()
-	# 	doc.submit()
+		
+	if appointment.payment_status == "Paid":
+		doc= frappe.get_doc({
+			"doctype": 'Wallet Transaction',
+			"online": 1,
+			"client_id": appointment.client_id,
+			"transaction_type": 'Refund',
+			"amount": appointment.rate,
+			"payment_type": 'Spa'
+		})
+		doc.save()
 
 @frappe.whitelist()
 def no_show(appointment_id):

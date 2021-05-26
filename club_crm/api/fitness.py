@@ -1,7 +1,8 @@
 import frappe
 from frappe.website.utils import is_signup_enabled
 from frappe.utils import escape_html
-from datetime import datetime, timedelta
+from frappe.utils import getdate, get_time, flt, now_datetime
+from datetime import datetime, timedelta, date, time
 from frappe import throw, msgprint, _
 from club_crm.club_crm.doctype.cart.cart import add_cart_from_pt_online
 from club_crm.api.wallet import get_balance
@@ -112,14 +113,18 @@ def get_appointments(client_id):
     details=[]
     if doc:
         for rating in doc:
+            # start_time = datetime.strftime(rating.start_time, "%H:%M:%S")
+            # end_time = datetime.strftime(rating.end_time, "%H:%M:%S")
+            start_date = rating.start_time.date()
+
             rate=frappe.get_all('Rating', filters={'document_id':rating.name}, fields=['rating_point'])
-            # cancel_time = rating.start_time - timedelta(seconds=int(time.spa_cancel_time))
+            #cancel_time = rating.start_time - timedelta(seconds=int(time.spa_cancel_time))
             if rate:
                 rate=rate[0]
                 details.append({
                     'pt_appointment': {
                         "name": rating.name,
-                        "date": rating.booking_date,
+                        "date": start_date,
                         "client_id" : rating.client_id,
                         "client_name": rating.client_name,
                         "package_name": rating.fitness_service,
@@ -130,12 +135,12 @@ def get_appointments(client_id):
                         "payment_status": rating.payment_status
                     },
                     'Rating': rate.rating_point,
-                    })
+                })
             else:
                 details.append({
                     'pt_appointment': {
                         "name": rating.name,
-                        "date": rating.booking_date,
+                        "date": start_date,
                         "client_id" : rating.client_id,
                         "client_name": rating.client_name,
                         "package_name": rating.fitness_service,
@@ -146,7 +151,7 @@ def get_appointments(client_id):
                         "payment_status": rating.payment_status
                     },
                     'Rating': -1,
-                    })
+                })
         return details
 
 @frappe.whitelist()
@@ -189,13 +194,13 @@ def cancel_session(appointment_id):
 
 @frappe.whitelist()
 def proceed_payment(client_id,doc_id, payment_method):
-    doc= frappe.get_doc('Fitness Training Request', doc_id)
-    doc.payment_method= payment_method
-    doc.save()
-    cart = add_cart_from_pt_online(doc.client_id, doc.name)
+    doc = frappe.get_doc('Fitness Training Request', doc_id)
+    # doc.payment_method= payment_method
+    # doc.save()
+    # cart = add_cart_from_pt_online(doc.client_id, doc.name)
     wallet= get_balance()
     frappe.response["message"] = {
         "status": 1,
-        "document_name": cart.name,
+        "document_name": doc.name,
         "wallet_balance": wallet
         }

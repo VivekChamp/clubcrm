@@ -130,6 +130,7 @@ def create_session(client_id, package_name, service_type, service_name, no_of_se
 		"validity": validity
 	})
 	doc.save()
+	return doc
 
 @frappe.whitelist()
 def create_benefit_sessions(client_id,package_name,start_date,service_type,service_name,no_of_sessions,validity,mem_no):

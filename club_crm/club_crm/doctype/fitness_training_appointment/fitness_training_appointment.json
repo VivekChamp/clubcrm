@@ -154,7 +154,7 @@
    "fieldname": "appointment_status",
    "fieldtype": "Select",
    "label": "Appointment Status",
-   "options": "Scheduled\nOpen\nChecked-in\nComplete\nNo Show\nCancelled",
+   "options": "Scheduled\nOpen\nChecked-in\nCompleted\nNo Show\nCancelled",
    "read_only": 1
   },
   {
@@ -215,7 +215,6 @@
    "fieldname": "session_name",
    "fieldtype": "Link",
    "label": "Session Name",
-   "mandatory_depends_on": "eval:doc.session==1",
    "options": "Client Sessions"
   },
   {
@@ -337,7 +336,7 @@
   }
  ],
  "links": [],
- "modified": "2021-04-26 22:17:29.243859",
+ "modified": "2021-05-26 01:54:03.504630",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Appointment",
