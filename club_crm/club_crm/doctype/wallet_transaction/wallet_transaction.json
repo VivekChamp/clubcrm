@@ -155,9 +155,8 @@
    "read_only": 1
   }
  ],
- "is_submittable": 1,
  "links": [],
- "modified": "2021-04-18 01:04:17.159504",
+ "modified": "2021-05-25 14:38:20.090406",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Wallet Transaction",
@@ -172,6 +171,7 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "select": 1,
    "share": 1,
    "write": 1
   },
@@ -181,7 +181,6 @@
    "report": 1,
    "role": "Customer",
    "select": 1,
-   "submit": 1,
    "write": 1
   }
  ],

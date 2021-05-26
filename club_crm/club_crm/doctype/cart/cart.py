@@ -17,6 +17,15 @@ class Cart(Document):
 		self.set_discount_and_grand_total()
 		self.set_payment_details()
 
+	def on_trash(self):
+		if self.payment_status=="Paid":
+			frappe.throw(msg="Paid cart cannot be cancelled", title=_('Room Overlap'))
+		else:
+			spa_list = frappe.get_all('Spa Appointment', filters={'cart': self.name})
+			if spa_list:
+				for spa in spa_list:
+					frappe.db.set_value("Spa Appointment", spa.name, "cart", None)
+
 	def set_item_price(self):
 		if self.products_check==1:
 			if self.cart_product:

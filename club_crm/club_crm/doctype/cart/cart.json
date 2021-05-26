@@ -319,6 +319,7 @@
    "options": "Cart Payment"
   },
   {
+   "default": "0.0",
    "fieldname": "total_to_be_paid",
    "fieldtype": "Currency",
    "label": "Total to be Paid",
@@ -357,7 +358,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-05-22 16:50:02.742881",
+ "modified": "2021-05-25 09:47:40.493909",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Cart",
