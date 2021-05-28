@@ -91,11 +91,20 @@ def get_therapist(spa_item, client_id):
                         'Gender': staff.gender
                         })
             else:
-                therapist.append({
-                    'Document Name': staff.name,
-                    'Therapist Name': staff.display_name,
-                    'Gender': staff.gender
+                if client.gender == "Female":
+                    if staff.gender == "Female":
+                        therapist.append({
+                            'Document Name': staff.name,
+                            'Therapist Name': staff.display_name,
+                            'Gender': staff.gender
+                        })
+                else:
+                    therapist.append({
+                        'Document Name': staff.name,
+                        'Therapist Name': staff.display_name,
+                        'Gender': staff.gender
                     })
+
     return therapist
 
 @frappe.whitelist()

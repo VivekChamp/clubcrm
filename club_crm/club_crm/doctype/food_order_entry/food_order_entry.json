@@ -26,10 +26,13 @@
   "column_break_17",
   "total_amount",
   "payment_details_section",
-  "payment_method",
+  "payment_table",
+  "column_break_22",
+  "total_to_be_paid",
   "paid_amount",
-  "sales_invoice",
+  "balance_amount",
   "column_break_18",
+  "sales_invoice",
   "transaction_date",
   "transaction_reference",
   "amended_from"
@@ -98,7 +101,8 @@
    "fieldname": "payment_status",
    "fieldtype": "Select",
    "label": "Payment Status",
-   "options": "Paid\nNot Paid"
+   "options": "Paid\nNot Paid",
+   "read_only": 1
   },
   {
    "fetch_from": "client_id.mobile_no",
@@ -129,18 +133,21 @@
   },
   {
    "fieldname": "column_break_18",
-   "fieldtype": "Column Break"
+   "fieldtype": "Section Break",
+   "hidden": 1
   },
   {
    "fieldname": "total_quantity",
    "fieldtype": "Data",
-   "label": "Total Quantity"
+   "label": "Total Quantity",
+   "read_only": 1
   },
   {
    "fieldname": "total_amount",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Total Amount"
+   "label": "Total Amount",
+   "read_only": 1
   },
   {
    "fieldname": "amended_from",
@@ -163,12 +170,6 @@
   {
    "fieldname": "column_break_17",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "payment_method",
-   "fieldtype": "Select",
-   "label": "Payment Method",
-   "options": "\nCredit Card\nWallet\nCash\nComplimentary"
   },
   {
    "depends_on": "eval:doc.payment_method==\"Credit Card\"",
@@ -196,14 +197,38 @@
    "label": "Transaction Reference"
   },
   {
+   "default": "0.0",
    "fieldname": "paid_amount",
-   "fieldtype": "Data",
-   "label": "Paid Amount"
+   "fieldtype": "Currency",
+   "label": "Paid Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "payment_table",
+   "fieldtype": "Table",
+   "options": "Cart Payment"
+  },
+  {
+   "fieldname": "column_break_22",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0.0",
+   "fieldname": "total_to_be_paid",
+   "fieldtype": "Currency",
+   "label": "Total to be paid",
+   "read_only": 1
+  },
+  {
+   "default": "0.0",
+   "fieldname": "balance_amount",
+   "fieldtype": "Currency",
+   "label": "Balance Amount",
+   "read_only": 1
   }
  ],
- "is_submittable": 1,
  "links": [],
- "modified": "2021-04-01 13:12:29.591895",
+ "modified": "2021-05-29 02:19:23.228291",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Food Order Entry",
@@ -264,12 +289,10 @@
    "write": 1
   },
   {
-   "cancel": 1,
    "create": 1,
    "read": 1,
    "role": "Customer",
    "select": 1,
-   "submit": 1,
    "write": 1
   }
  ],

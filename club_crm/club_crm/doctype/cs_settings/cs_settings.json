@@ -9,7 +9,8 @@
   "profile_id",
   "column_break_3",
   "token_url",
-  "transaction_url"
+  "transaction_url",
+  "base_url"
  ],
  "fields": [
   {
@@ -35,11 +36,16 @@
    "fieldname": "transaction_url",
    "fieldtype": "Data",
    "label": "Transaction URL"
+  },
+  {
+   "fieldname": "base_url",
+   "fieldtype": "Data",
+   "label": "Base URL"
   }
  ],
  "issingle": 1,
  "links": [],
- "modified": "2021-03-31 23:19:10.485006",
+ "modified": "2021-05-26 13:46:49.934615",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "CS Settings",

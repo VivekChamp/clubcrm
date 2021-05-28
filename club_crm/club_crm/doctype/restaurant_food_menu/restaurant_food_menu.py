@@ -11,6 +11,10 @@ class RestaurantFoodMenu(Document):
 		for d in self.items:
 			if not d.rate:
 				d.rate = frappe.db.get_value('Item', d.item, 'standard_rate')
+			if d.enabled==0:
+				frappe.db.set_value("Item", d.item, "disabled",1)
+			else:
+				frappe.db.set_value("Item", d.item, "disabled",0)
 
 	def on_update(self):
 		'''Sync Price List'''
