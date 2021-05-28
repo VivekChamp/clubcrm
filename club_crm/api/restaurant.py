@@ -130,7 +130,7 @@ def add_to_cart(client_id, item_code, qty):
             })
         doc.save()
         return doc
-        
+    
     else:
         doc = frappe.get_doc({
             'doctype':'Food Order Entry',
@@ -166,7 +166,6 @@ def delete_from_cart(document_name,item_document_name):
             "items": cart.order_items
         }
     else:
-        cart.submit()
         frappe.db.set_value('Food Order Entry', cart.name, {
             'docstatus':2,
             'order_status': 'Cancelled'
@@ -206,6 +205,8 @@ def checkout(client_id, payment_method):
         cart_1=cart[0]
         doc= frappe.get_doc('Food Order Entry', cart_1.name)
         doc.payment_method = payment_method
+        doc.save()
+        
     wallet= get_balance()
     frappe.response["message"] = {
         "status": 1,

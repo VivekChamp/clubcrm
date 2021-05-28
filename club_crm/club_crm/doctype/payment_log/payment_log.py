@@ -66,10 +66,13 @@ class PaymentLog(Document):
 
 			if re.match(food, self.req_reference_number):
 				doc = frappe.get_doc("Food Order Entry", str(self.req_reference_number))
+				doc.append('payment_table', {
+					"mode_of_payment": "Online Payment",
+					"paid_amount": float(self.auth_amount)
+				})
 				doc.order_status = "Ordered"
 				doc.payment_status = "Paid"
-				doc.payment_method = "Credit Card"
-				doc.save()
+				doc.save(ignore_permissions=True)
 
 			if re.match(fitness, self.req_reference_number):
 				doc = frappe.get_doc("Fitness Training Request", str(self.req_reference_number))

@@ -275,7 +275,6 @@ def submit_cart(cart_id):
 				doc = frappe.get_doc('Spa Appointment', row.appointment_id)
 				doc.payment_status = 'Paid'
 				doc.save()
-				frappe.db.commit()
 			if row.appointment_type == "Fitness Training Appointment":
 				frappe.db.set_value('Fitness Training Appointment', row.appointment_id, 'payment_status', 'Paid')
 				frappe.db.commit()

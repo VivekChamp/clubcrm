@@ -56,7 +56,8 @@ def login(usr,pwd):
                 "wallet_balance": wallet,
                 "access_key": pg.access_key,
                 "profile_id": pg.profile_id,
-                "transaction_url": pg.transaction_url
+                "transaction_url": pg.transaction_url,
+                "base_url": pg.base_url
             }
         else:
             frappe.local.response["message"] =  {
