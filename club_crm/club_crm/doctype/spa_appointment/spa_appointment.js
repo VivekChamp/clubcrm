@@ -73,7 +73,7 @@ frappe.ui.form.on("Spa Appointment", {
         frm.set_df_property("session", "read_only", frm.is_new() ? 0 : 1);
 
         // 'Check-in' button for appointment check-in
-        if (!frm.is_new() && frm.doc.appointment_status == "Open") {
+        if (!frm.is_new() && (frm.doc.appointment_status == "Open" || frm.doc.appointment_status == "Draft")) {
             frappe.call({
                 method: 'club_crm.club_crm.doctype.client.client.check_status',
                 args: { client_id: frm.doc.client_id },
@@ -219,7 +219,7 @@ frappe.ui.form.on("Spa Appointment", {
         }
 
         // Add to cart
-        if (!frm.is_new() && (frm.doc.appointment_status == "Scheduled" || frm.doc.appointment_status == "Open" || frm.doc.appointment_status == "Checked-in") && frm.doc.payment_status == "Not Paid") {
+        if (!frm.is_new() && (frm.doc.appointment_status == "Scheduled" || frm.doc.appointment_status == "Open" || frm.doc.appointment_status == "Checked-in" || frm.doc.appointment_status == "Complete") && frm.doc.payment_status == "Not Paid") {
             frm.add_custom_button(__('To Cart'), function() {
                 frappe.call({
                     method: 'club_crm.club_crm.doctype.cart.cart.add_cart_from_spa',
