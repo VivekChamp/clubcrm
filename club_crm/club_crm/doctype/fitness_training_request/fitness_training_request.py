@@ -7,7 +7,8 @@ import frappe
 from frappe.utils import getdate, get_time, flt, now_datetime
 from datetime import datetime, timedelta, date, time
 from frappe.model.document import Document
-from club_crm.club_crm.utils.sms_notification import send_sms 
+# from club_crm.club_crm.utils.sms_notification import send_sms
+from frappe.core.doctype.sms_settings.sms_settings import send_sms
 from club_crm.club_crm.utils.push_notification import send_push
 from club_crm.club_crm.doctype.client_sessions.client_sessions import create_session
 

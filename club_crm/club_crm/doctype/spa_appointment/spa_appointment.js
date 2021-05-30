@@ -73,13 +73,13 @@ frappe.ui.form.on("Spa Appointment", {
         frm.set_df_property("session", "read_only", frm.is_new() ? 0 : 1);
 
         // 'Check-in' button for appointment check-in
-        if (!frm.is_new() && frm.doc.appointment_status == "Open") {
+        if (!frm.is_new() && (frm.doc.appointment_status == "Open" || frm.doc.appointment_status == "Draft")) {
             frappe.call({
                 method: 'club_crm.club_crm.doctype.client.client.check_status',
                 args: { client_id: frm.doc.client_id },
                 callback: function(r) {
                     if (r.message == "Checked-in") {
-                        frm.add_custom_button(__('Check In'), function() {
+                        frm.add_custom_button(__('Check-In'), function() {
                             frappe.call({
                                 method: 'club_crm.club_crm.doctype.check_in.check_in.spa_checkin',
                                 args: { client_id: frm.doc.client_id, appointment_id: frm.doc.name },
@@ -87,12 +87,17 @@ frappe.ui.form.on("Spa Appointment", {
                                     frm.reload_doc();
                                 }
                             });
-                            frappe.msgprint({
-                                title: __('Notification'),
-                                indicator: 'green',
-                                message: __('Checked in successfully')
-                            });
                         }, __("Set Status"));
+
+                        frm.page.add_menu_item(__("Check-in"), function() {
+                            frappe.call({
+                                method: 'club_crm.club_crm.doctype.check_in.check_in.spa_checkin',
+                                args: { client_id: frm.doc.client_id, appointment_id: frm.doc.name },
+                                callback: function(r) {
+                                    frm.reload_doc();
+                                }
+                            });
+                        });
                     }
                 }
             });
@@ -108,15 +113,20 @@ frappe.ui.form.on("Spa Appointment", {
                         frm.reload_doc();
                     }
                 });
-                frappe.msgprint({
-                    title: __('Notification'),
-                    indicator: 'green',
-                    message: __("Appointment has been marked as 'Completed'")
-                });
             }, __("Set Status"));
+
+            frm.page.add_menu_item(__("Set as Complete"), function() {
+                frappe.call({
+                    method: 'club_crm.club_crm.doctype.spa_appointment.spa_appointment.complete',
+                    args: { appointment_id: frm.doc.name },
+                    callback: function(r) {
+                        frm.reload_doc();
+                    }
+                });
+            });
         }
 
-        // 'No Show' button for client no-shows.
+        // 'No Show' button for client no-shows
         if (!frm.is_new() && frm.doc.appointment_status == "Open") {
             frm.add_custom_button(__('No Show'), function() {
                 frappe.call({
@@ -126,12 +136,17 @@ frappe.ui.form.on("Spa Appointment", {
                         frm.reload_doc();
                     }
                 });
-                frappe.msgprint({
-                    title: __('Notification'),
-                    indicator: 'green',
-                    message: __("Appointment has been marked as 'No Show'")
-                });
             }, __("Set Status"));
+
+            frm.page.add_menu_item(__("Set as No-Show"), function() {
+                frappe.call({
+                    method: 'club_crm.club_crm.doctype.spa_appointment.spa_appointment.no_show',
+                    args: { appointment_id: frm.doc.name },
+                    callback: function(r) {
+                        frm.reload_doc();
+                    }
+                });
+            });
         }
 
         // 'Cancel' button for cancelling appointment
@@ -144,12 +159,17 @@ frappe.ui.form.on("Spa Appointment", {
                         frm.reload_doc();
                     }
                 });
-                frappe.msgprint({
-                    title: __('Notification'),
-                    indicator: 'green',
-                    message: __('Appointment has been cancelled')
-                });
             }, __("Set Status"));
+
+            frm.page.add_menu_item(__("Cancel"), function() {
+                frappe.call({
+                    method: 'club_crm.club_crm.doctype.spa_appointment.spa_appointment.cancel_appointment',
+                    args: { appointment_id: frm.doc.name },
+                    callback: function(r) {
+                        frm.reload_doc();
+                    }
+                });
+            });
         }
 
         // Disable save for cancelled and no-show appointments
@@ -199,7 +219,7 @@ frappe.ui.form.on("Spa Appointment", {
         }
 
         // Add to cart
-        if (!frm.is_new() && (frm.doc.appointment_status == "Scheduled" || frm.doc.appointment_status == "Open" || frm.doc.appointment_status == "Checked-in") && frm.doc.payment_status == "Not Paid") {
+        if (!frm.is_new() && (frm.doc.appointment_status == "Scheduled" || frm.doc.appointment_status == "Open" || frm.doc.appointment_status == "Checked-in" || frm.doc.appointment_status == "Complete") && frm.doc.payment_status == "Not Paid") {
             frm.add_custom_button(__('To Cart'), function() {
                 frappe.call({
                     method: 'club_crm.club_crm.doctype.cart.cart.add_cart_from_spa',
