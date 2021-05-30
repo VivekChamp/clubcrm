@@ -264,8 +264,9 @@
   },
   {
    "fieldname": "package_name",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "label": "Package Name",
+   "options": "Club Packages",
    "read_only": 1
   },
   {
@@ -317,7 +318,7 @@
   }
  ],
  "links": [],
- "modified": "2021-05-10 04:39:15.199808",
+ "modified": "2021-05-29 11:51:20.677507",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client Sessions",

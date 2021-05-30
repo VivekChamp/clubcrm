@@ -259,6 +259,26 @@ def add_cart_from_spa_online(client_id, appointment_id):
 	})
 	doc.save()
 	frappe.db.set_value("Spa Appointment",appointment_id,"cart", doc.name)
+	
+	if appointment.payment_method == "Wallet":
+		wallet = frappe.get_doc({
+        	'doctype': 'Wallet Transaction',
+        	'client_id': client_id,
+        	'transaction_type': 'Payment',
+			'payment_type': 'Spa',
+			'transaction_document': doc.name,
+        	'transaction_date': getdate(),
+        	'amount': doc.grand_total,
+			'transaction_status': 'Complete'
+    	})
+		wallet.save()
+		doc.append('payment_table', {
+			"mode_of_payment": "Wallet",
+			"paid_amount": doc.grand_total
+		})
+		doc.save(ignore_permissions=True)
+		submit_cart(doc.name)
+
 	return doc.name
 
 @frappe.whitelist(allow_guest=True)

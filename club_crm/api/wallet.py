@@ -30,9 +30,28 @@ def get_balance():
 @frappe.whitelist()
 def transactions():
     client = frappe.db.get("Client", {"email": frappe.session.user})
-    doc = frappe.get_all('Wallet Transaction', filters={'client_id': client.name, 'docstatus':1}, fields={'date', 'transaction_type', 'amount','mode_of_payment','payment_type'})
+    doc = frappe.get_all('Wallet Transaction', filters={'client_id': client.name, 'transaction_status':'Complete'}, fields={'date', 'transaction_type', 'amount','mode_of_payment','payment_type'})
     if doc:
-        return doc
+        wallet = []
+        for d in doc:
+            if d.mode_of_payment==None:
+                wallet.append({
+                    "payment_type": d.payment_type,
+                    "amount": d.amount,
+                    "mode_of_payment": d.payment_type,
+                    "transaction_type": d.transaction_type,
+                    "date": d.date
+                })
+            else:
+                wallet.append({
+                    "payment_type": d.payment_type,
+                    "amount": d.amount,
+                    "mode_of_payment": d.mode_of_payment,
+                    "transaction_type": d.transaction_type,
+                    "date": d.date
+                })
+
+        return wallet
     # else:
     #     return 0
 
