@@ -19,6 +19,7 @@
   "membership_plan",
   "membership_type",
   "assigned_to",
+  "cec_mobile_no",
   "column_break_14",
   "payment_status",
   "no_of_adults",
@@ -767,11 +768,19 @@
    "fieldname": "reject_notify",
    "fieldtype": "Check",
    "label": "Rejected"
+  },
+  {
+   "fetch_from": "assigned_to.mobile_no",
+   "fieldname": "cec_mobile_no",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "CEC Mobile Number",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-25 17:15:05.596694",
+ "modified": "2021-06-08 00:44:57.048652",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",

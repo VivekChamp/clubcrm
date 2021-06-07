@@ -49,7 +49,7 @@
    "options": "SPA-PN-.YYYY.-"
   },
   {
-   "fetch_from": "appointment_id.spa_therapist",
+   "fetch_from": "appointment_id.service_staff",
    "fieldname": "spa_therapist",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -131,7 +131,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-06-03 12:40:01.909718",
+ "modified": "2021-06-07 12:51:15.417260",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Progress Notes",

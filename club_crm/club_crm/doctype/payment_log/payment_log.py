@@ -38,12 +38,10 @@ class PaymentLog(Document):
 				doc.payment_status = 'Paid'
 				doc.save(ignore_permissions=True)
 
-				cec_list = frappe.get_all('Service Staff', filters={'display_name': doc.assigned_to})
-				msg = "Payment for the membership application "+doc.name+" has been received."
-				if cec_list:
-					for cec in cec_list:
-						receiver_list='"'+str(cec.mobile_no)+'"'
-						send_sms(receiver_list,msg)
+				if doc.assigned_to and doc.cec_mobile_no:
+					msg = "Payment for the membership application "+doc.name+" has been received."
+					receiver_list='"'+str(doc.cec_mobile_no)+'"'
+					send_sms(receiver_list,msg)
 			
 			if re.match(cart, self.req_reference_number):
 				doc = frappe.get_doc("Cart", str(self.req_reference_number))

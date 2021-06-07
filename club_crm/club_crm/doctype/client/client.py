@@ -117,3 +117,29 @@ def medical_history(client_id,allergies,medication,history,notes):
     frappe.response["message"] =  {
 		"Status": 1
     }
+
+@frappe.whitelist()
+def create_missing_customers():
+    client_list = frappe.get_all('Clients')
+    for clients in client_list:
+        client = frappe.get_doc('Clients', clients.name)
+        if not client.customer:
+            customer = frappe.get_doc({
+            'doctype': 'Customer',
+            'customer_name': client.client_name,
+            'client_type': 'Club Client',
+            'customer_group': 'Clients',
+            'territory' : 'Qatar',
+            'gender': client.gender,
+            'email_id': client.email,
+            'client_id': client.name,
+            'so_required':1,
+            'dn_required':1,
+            'customer_type': 'Individual',
+        }).insert(ignore_permissions=True,ignore_mandatory=True)
+        frappe.db.set_value('Client', client.name, {
+            'customer': customer.name,
+            'customer_group': customer.customer_group,
+            'territory': customer.territory
+        })
+        frappe.db.commit()
