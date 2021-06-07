@@ -1,0 +1,48 @@
+{
+ "actions": [],
+ "creation": "2021-05-27 14:03:08.917147",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "appointment_doc",
+  "service_category",
+  "count"
+ ],
+ "fields": [
+  {
+   "fieldname": "appointment_doc",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Appointment Doc",
+   "options": "Fitness Training Appointment",
+   "read_only": 1
+  },
+  {
+   "fieldname": "service_category",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Session Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "count",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Count",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2021-05-27 22:41:29.354066",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Fitness Appointment Count",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
