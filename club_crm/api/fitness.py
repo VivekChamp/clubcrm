@@ -4,7 +4,6 @@ from frappe.utils import escape_html
 from frappe.utils import getdate, get_time, flt, now_datetime
 from datetime import datetime, timedelta, date, time
 from frappe import throw, msgprint, _
-from club_crm.club_crm.doctype.cart.cart import add_cart_from_pt_online
 from club_crm.api.wallet import get_balance
 
 @frappe.whitelist()
@@ -107,6 +106,60 @@ def get_trainer(fitness_package,client_id):
         return trainers
 
 @frappe.whitelist()
+def get_pt_appointments():
+    rating_point = -1
+    disabled = 0
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    if client.status == "Disabled":
+        disabled = 1
+    time = frappe.get_doc('Fitness Training Settings')
+
+    sessions = []
+    client_session_list = frappe.get_all('Client Sessions', filters={'client_id': client.name, 'session_status': 'Active', 'package_type': 'Fitness'}, order_by="expiry_date asc")
+    if client_session_list:
+        for client_session in client_session_list:
+            client_session_doc = frappe.get_doc('Client Sessions', client_session.name)
+            sessions.append({
+                'package_name': client_session_doc.package_name,
+                'expiry_date' : client_session_doc.expiry_date,
+                'used_sessions': client_session_doc.used_sessions,
+                'remaining_sessions': client_session_doc.remaining_sessions
+            })
+
+    details=[]
+    pt_list = frappe.get_all('Fitness Training Appointment', filters={'client_id':client.name}, fields=['name','start_time'], order_by="appointment_date asc")
+    if pt_list:
+        for pt in pt_list:
+            pt_doc = frappe.get_doc('Fitness Training Appointment', pt.name)
+            cancel_time = pt_doc.start_time - timedelta(seconds=int(time.pt_cancellation_time))
+            start_date = pt_doc.start_time.date()
+
+            rating_list = frappe.get_all('Rating', filters={'document_id':pt.name}, fields=['rating_point'])
+            if rating_list:
+                for rating in rating_list:
+                    rating_point = rating.rating_point
+            details.append({
+                "name": pt_doc.name,
+                "date": start_date,
+                "client_id" : pt_doc.client_id,
+                "client_name": pt_doc.client_name,
+                "package_name": pt_doc.fitness_service,
+                "trainer_name": pt_doc.service_staff,
+                "status": pt_doc.appointment_status,
+                "start_time": pt_doc.start_time,
+                "end_time": pt_doc.end_time,
+                "payment_status": pt_doc.payment_status,
+                "cancellation_time" : cancel_time,
+                "rating": rating_point
+            })
+
+    frappe.response["message"] = {
+        "disabled": disabled,
+        "pt_appointments": details,
+        "packages": sessions
+    }
+
+@frappe.whitelist()
 def get_appointments(client_id):
     client = frappe.db.get("Client", {"email": frappe.session.user})
     doc = frappe.get_all('Fitness Training Appointment', filters={'client_id':client.name}, fields=['name','booking_date','client_id','client_name','fitness_service','service_staff','appointment_status','start_time','end_time','payment_status'], order_by="appointment_date asc")
@@ -204,3 +257,12 @@ def proceed_payment(client_id,doc_id, payment_method):
         "document_name": doc.name,
         "wallet_balance": wallet
         }
+
+@frappe.whitelist(allow_guest=True)
+def update_mem(doc_id):
+    doc = frappe.get_doc("Memberships Application", doc_id)
+    doc.append('membership_payment', {
+        "mode_of_payment": "Online Payment",
+        "paid_amount": doc.grand_total
+		})
+    doc.save(ignore_permissions=True)

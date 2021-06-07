@@ -4,6 +4,7 @@ import datetime
 import time
 import re
 from datetime import datetime, timedelta
+from datetime import datetime, date
 from frappe.utils import escape_html
 from frappe import throw, msgprint, _
 from club_crm.api.wallet import get_balance
@@ -85,6 +86,7 @@ def get_menu_categories():
     doc= frappe.get_all('Item Group', filters={'parent_item_group':'Restaurant'}, fields=['name','image'], order_by="creation asc")
     return doc
 
+# Remove after app update
 @frappe.whitelist()         
 def get_menu_item(category):
     doc= frappe.get_all('Item', filters={'item_group':category, 'disabled': 0}, fields=['*'])
@@ -118,9 +120,43 @@ def get_menu_item(category):
         }
 
 @frappe.whitelist()         
+def get_menu_items(category):
+    doc= frappe.get_all('Item', filters={'item_group':category, 'disabled': 0}, fields=['*'])
+    if doc:
+        menu = []
+        for d in doc:
+            price = frappe.get_all('Item Price', filters={'item_code':d.item_code, 'price_list':'Grams Menu'}, fields=['*'])
+            if price:
+                price_1=price[0]
+                description = re.sub("<.*?>", "", price_1.item_description)
+                menu.append({
+                    "item_code": d.item_code,
+                    "item_name": d.item_name,
+                    "item_group": d.item_group,
+                    "image": d.image,
+                    "description": description,
+                    "currency": price_1.currency,
+                    "rate": format(price_1.price_list_rate, '.2f'),
+                    "prep_time": d.preperation_time
+                })
+            
+        frappe.response["message"] = {
+            "status": 1,
+            "status_message": "Product Details",
+            "item": menu
+        }
+
+    else:
+        frappe.response["message"] = {
+            "status": 0,
+            "status_message": "No products available for this category"
+        }
+
+@frappe.whitelist()         
 def add_to_cart(client_id, item_code, qty):
+    today = date.today()
     client = frappe.db.get("Client", {"email": frappe.session.user})
-    cart= frappe.get_list('Food Order Entry', filters={'client_id':client.name, 'order_status': 'Cart'}, fields=['*'])
+    cart= frappe.get_list('Food Order Entry', filters={'client_id':client.name, 'date': today, 'order_status': 'Cart'}, fields=['*'])
     if cart:
         cart_1=cart[0]
         doc= frappe.get_doc('Food Order Entry', cart_1.name)
@@ -177,8 +213,9 @@ def delete_from_cart(document_name,item_document_name):
 
 @frappe.whitelist()         
 def get_cart(client_id):
+    today = date.today()
     client = frappe.db.get("Client", {"email": frappe.session.user})
-    cart= frappe.get_list('Food Order Entry', filters={'client_id':client.name, 'order_status': 'Cart'}, fields=['*'])
+    cart= frappe.get_list('Food Order Entry', filters={'client_id':client.name, 'date': today, 'order_status': 'Cart'}, fields=['*'])
     if cart:
         cart_1=cart[0]
         doc= frappe.get_doc('Food Order Entry', cart_1.name)
@@ -198,9 +235,34 @@ def get_cart(client_id):
         }
 
 @frappe.whitelist()
-def checkout(client_id, payment_method):
+def cart_checkout(payment_method, order_type):
+    today = date.today()
     client = frappe.db.get("Client", {"email": frappe.session.user})
-    cart= frappe.get_list('Food Order Entry', filters={'client_id': client.name, 'order_status': 'Cart'}, fields=['*'])
+    cart= frappe.get_list('Food Order Entry', filters={'client_id': client.name, 'date': today, 'order_status': 'Cart'}, fields=['*'])
+    if cart:
+        cart_1=cart[0]
+        doc= frappe.get_doc('Food Order Entry', cart_1.name)
+        doc.payment_method = payment_method
+        doc.order_type = order_type
+        doc.save()
+        
+    wallet= get_balance()
+    frappe.response["message"] = {
+        "status": 1,
+        "document_name": doc.name,
+        "cart_status": doc.order_status,
+        "payment_status": doc.payment_status,
+        "client_name": doc.client_name,
+        "total_quantity": doc.total_quantity,
+        "total_amount": doc.total_amount,
+        "wallet_balance": wallet
+        }
+
+@frappe.whitelist()
+def checkout(client_id, payment_method):
+    today = date.today()
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    cart= frappe.get_list('Food Order Entry', filters={'client_id': client.name, 'date': today, 'order_status': 'Cart'}, fields=['*'])
     if cart:
         cart_1=cart[0]
         doc= frappe.get_doc('Food Order Entry', cart_1.name)

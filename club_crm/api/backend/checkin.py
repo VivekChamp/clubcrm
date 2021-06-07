@@ -120,17 +120,25 @@ def get_details(client_id):
 @frappe.whitelist()
 def club_checkin(client_id):
     client = frappe.get_doc('Client', client_id)
-    doc = frappe.get_doc({
-        'doctype': 'Check In',
-        'client_id': client_id,
-        'check_in_type': "Club Check-in",
-        'checked_in_by' : 'Self Check-in'
-        })
-    doc.insert()
-    doc.submit()
+    if client.status == "Disabled":
+        frappe.throw('Disabled')
+    else:
+        doc = frappe.get_doc({
+            'doctype': 'Check In',
+            'client_id': client_id,
+            'check_in_type': "Club Check-in",
+            'checked_in_by' : 'Self Check-in'
+            })
+        doc.insert()
+        doc.submit()
+        
+        client.status = "Checked-in"
+        client.checkin_document = doc.name
+        client.save()
 
-    frappe.response["message"] = {
-        "Name": doc.name,
-        "Status": 1,
-        "Status Message":"Checked in successfully"
-    }
+        frappe.response["message"] = {
+            "disabled": 0,
+            "Name": doc.name,
+            "Status": 1,
+            "Status Message":"Checked in successfully"
+        }
