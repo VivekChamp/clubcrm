@@ -1,28 +1,26 @@
 {
- "attach_print": 0,
- "channel": "SMS",
- "condition": "",
- "creation": "2021-04-07 01:04:37.248287",
- "days_in_advance": 0,
- "docstatus": 0,
- "doctype": "Notification",
- "document_type": "Club Tour",
- "enabled": 1,
- "event": "New",
- "idx": 0,
- "is_standard": 1,
- "message": "A new club tour request has been received from {{ doc.client_name }}",
- "modified": "2021-04-14 01:33:54.043309",
- "modified_by": "Administrator",
- "module": "Club CRM",
- "name": "Club Tour Booking",
- "owner": "Administrator",
- "recipients": [
-  {
-   "receiver_by_role": "Sales Manager"
-  }
- ],
- "send_system_notification": 1,
- "send_to_all_assignees": 0,
- "value_changed": "workflow_status"
+    "attach_print": 0,
+    "channel": "SMS",
+    "condition": "",
+    "creation": "2021-04-07 01:04:37.248287",
+    "days_in_advance": 0,
+    "docstatus": 0,
+    "doctype": "Notification",
+    "document_type": "Club Tour",
+    "enabled": 1,
+    "event": "New",
+    "idx": 0,
+    "is_standard": 1,
+    "message": "A new club tour request has been received from {{ doc.client_name }}",
+    "modified": "2021-04-14 01:33:54.043309",
+    "modified_by": "Administrator",
+    "module": "Club CRM",
+    "name": "Club Tour Booking",
+    "owner": "Administrator",
+    "recipients": [{
+        "receiver_by_role": "CE Manager"
+    }],
+    "send_system_notification": 1,
+    "send_to_all_assignees": 0,
+    "value_changed": "workflow_status"
 }

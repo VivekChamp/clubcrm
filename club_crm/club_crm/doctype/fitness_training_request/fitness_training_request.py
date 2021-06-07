@@ -7,27 +7,37 @@ import frappe
 from frappe.utils import getdate, get_time, flt, now_datetime
 from datetime import datetime, timedelta, date, time
 from frappe.model.document import Document
-# from club_crm.club_crm.utils.sms_notification import send_sms
-from frappe.core.doctype.sms_settings.sms_settings import send_sms
+from club_crm.club_crm.utils.sms_notification import send_sms
 from club_crm.club_crm.utils.push_notification import send_push
 from club_crm.club_crm.doctype.client_sessions.client_sessions import create_session
 
 class FitnessTrainingRequest(Document):
 	def after_insert(self):
-		self.send_notification()
+		self.trainer_notification()
 	
 	def validate(self):
+		self.validate_table()
 		self.calculate_time()
 		self.set_payment_details()
 		self.create_sessions()
 		self.send_notification()
 
-	def send_notification(self):
-		settings = frappe.get_doc('Fitness Training Settings')
-		if settings.enabled==1:
-			msg = "New Fitness Training Request has been received from "+self.client_name+"."
-			receiver_list='"'+self.trainer_mobile_no+'"'
-			send_sms(receiver_list,msg)
+	def validate_table(self):
+		if self.request_status == "Scheduled":
+			if not self.table_schedule:
+				frappe.throw("Please fill your training schedule under the 'Trainer Schedule' section.")
+			else:
+				no_rows=0
+				for row in self.table_schedule:
+					no_rows += 1
+				if not int(self.number_of_sessions) == no_rows:
+					frappe.throw("Number of appointment schedules does not match number of requested sessions")
+
+		if self.request_status == "Completed":
+			if not self.table_schedule:
+				frappe.throw("Please fill your training schedule under the 'Trainer Schedule' section.")
+			if self.payment_status== "Not Paid":
+				frappe.throw("The training request has not been paid yet.")
 
 	def calculate_time(self):
 		package = frappe.get_doc('Club Packages', self.fitness_package)
@@ -56,7 +66,7 @@ class FitnessTrainingRequest(Document):
 
 	def create_sessions(self):
 		if self.sessions_created==0:
-			if self.request_status == "Completed":
+			if self.request_status == "Completed" and self.payment_status == "Paid":
 				club_package = frappe.get_doc('Club Packages', self.fitness_package)
 				if club_package.package_table:
 					for row in club_package.package_table:
@@ -80,17 +90,30 @@ class FitnessTrainingRequest(Document):
 								doc.save()
 					self.sessions_created = 1
 	
-	def send_notification(self):
-		# Notification for new application to Member
-		if self.schedule_notification==0 and self.request_status=="Scheduled":
-			msg = "Schedule has been created for your Fitness Training request. Please check the Fitness Training section."
-			receiver_list='"'+self.mobile_number+'"'
+	def trainer_notification(self):
+		settings = frappe.get_doc('Fitness Training Settings')
+		if settings.enabled_trainer==1:
+			msg = "New Fitness Training Request has been received from "+self.client_name+"."
+			receiver_list='"'+str(self.trainer_mobile_no)+'"'
 			send_sms(receiver_list,msg)
-			client = frappe.get_doc('Client', self.client_id)
-			if client.fcm_token:
-				title = "Fitness Training schedule is ready"
-				send_push(client.name,title,msg)
-			self.schedule_notification=1
+
+	def send_notification(self):
+		settings = frappe.get_doc('Fitness Training Settings')
+		if settings.enabled_client==1:
+			if settings.scheduled_message:
+				msg = str(settings.scheduled_message)
+			else:
+				msg = "Your personalized Fitness Training schedule is ready on the app."
+
+			# Notification for scheduled appointments to Client
+			if self.schedule_notification==0 and self.request_status=="Scheduled":
+				receiver_list='"'+self.mobile_number+'"'
+				send_sms(receiver_list,msg)
+				client = frappe.get_doc('Client', self.client_id)
+				if client.fcm_token:
+					title = "Fitness Training schedule is ready"
+					send_push(client.name,title,msg)
+				self.schedule_notification=1
 
 @frappe.whitelist(allow_guest=True)
 def convert24(str1):

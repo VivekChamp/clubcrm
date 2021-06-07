@@ -57,7 +57,8 @@
    "fieldname": "client_id",
    "fieldtype": "Link",
    "label": "Client ID",
-   "options": "Client"
+   "options": "Client",
+   "read_only": 1
   },
   {
    "fetch_from": "client_id.client_name",
@@ -78,7 +79,8 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Fitness Trainer",
-   "options": "Service Staff"
+   "options": "Service Staff",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_6",
@@ -118,7 +120,8 @@
    "fieldname": "fitness_package",
    "fieldtype": "Link",
    "label": "Fitness Training Package",
-   "options": "Club Packages"
+   "options": "Club Packages",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_12",
@@ -195,6 +198,7 @@
    "options": "Fitness Training Trainer Scheduler"
   },
   {
+   "depends_on": "eval:doc.request_status==\"Completed\"",
    "fieldname": "section_break_4",
    "fieldtype": "Section Break",
    "label": "Payment Details"
@@ -277,11 +281,12 @@
   {
    "fieldname": "validity",
    "fieldtype": "Duration",
+   "hidden": 1,
    "label": "Validity"
   }
  ],
  "links": [],
- "modified": "2021-05-25 22:05:32.117721",
+ "modified": "2021-05-31 03:19:37.837098",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Request",

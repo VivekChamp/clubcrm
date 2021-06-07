@@ -1,0 +1,278 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2021-05-27 13:57:30.347304",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_10",
+  "title",
+  "staff_name",
+  "spa_check",
+  "fitness_check",
+  "cec_check",
+  "column_break_3",
+  "month",
+  "column_break_5",
+  "year",
+  "section_break_29",
+  "commission_from_spa",
+  "commission_from_fitness_training",
+  "commission_from_group_class",
+  "column_break_15",
+  "total_commission",
+  "spa_appointments_section",
+  "spa_count_table",
+  "section_break_13",
+  "total_spa_count",
+  "column_break_14",
+  "total_spa_appointments_calculated",
+  "fitness_appointments_section",
+  "fitness_count_table",
+  "section_break_19",
+  "total_pt_count",
+  "column_break_19",
+  "total_pt_count_calculated",
+  "group_classes_section",
+  "gc_count_table",
+  "section_break_25",
+  "total_gx_count",
+  "column_break_24",
+  "total_gx_count_calculated",
+  "naming_series"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Title"
+  },
+  {
+   "fieldname": "staff_name",
+   "fieldtype": "Link",
+   "label": "Staff Name",
+   "options": "Service Staff"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "month",
+   "fieldtype": "Select",
+   "label": "Month",
+   "options": "\nJanuary\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "year",
+   "fieldtype": "Link",
+   "label": "Year",
+   "options": "Fiscal Year"
+  },
+  {
+   "default": "0",
+   "fetch_from": "staff_name.spa_check",
+   "fieldname": "spa_check",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Spa"
+  },
+  {
+   "default": "0",
+   "fetch_from": "staff_name.fitness_check",
+   "fieldname": "fitness_check",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Fitness"
+  },
+  {
+   "default": "0",
+   "fetch_from": "staff_name.cec_check",
+   "fieldname": "cec_check",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "CEC"
+  },
+  {
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break",
+   "label": "Staff Details"
+  },
+  {
+   "depends_on": "eval:doc.spa_check==1",
+   "fieldname": "spa_appointments_section",
+   "fieldtype": "Section Break",
+   "label": "Spa Appointments"
+  },
+  {
+   "depends_on": "eval:doc.fitness_check==1",
+   "fieldname": "fitness_appointments_section",
+   "fieldtype": "Section Break",
+   "label": "Fitness Appointments"
+  },
+  {
+   "depends_on": "eval:doc.fitness_check==1",
+   "fieldname": "group_classes_section",
+   "fieldtype": "Section Break",
+   "label": "Group Classes"
+  },
+  {
+   "default": "0",
+   "fieldname": "total_spa_count",
+   "fieldtype": "Data",
+   "label": "Total Spa Appointments (Actual)",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "total_pt_count",
+   "fieldtype": "Data",
+   "label": "Total PT Appointments (Actual)",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "total_gx_count",
+   "fieldtype": "Data",
+   "label": "Total Group Classes (Actual)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_14",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "total_spa_appointments_calculated",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Total Spa Appointments (Calculated)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_19",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "total_pt_count_calculated",
+   "fieldtype": "Data",
+   "label": "Total PT Appointments (Calculated)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_24",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "total_gx_count_calculated",
+   "fieldtype": "Data",
+   "label": "Total Group Classes (Calculated)",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.spa_check==1",
+   "fieldname": "section_break_13",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.fitness_check==1",
+   "fieldname": "section_break_19",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.fitness_check==1",
+   "fieldname": "section_break_25",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "spa_count_table",
+   "fieldtype": "Table",
+   "options": "Spa Appointment Count"
+  },
+  {
+   "fieldname": "fitness_count_table",
+   "fieldtype": "Table",
+   "options": "Fitness Appointment Count"
+  },
+  {
+   "fieldname": "gc_count_table",
+   "fieldtype": "Table",
+   "options": "Group Class Count"
+  },
+  {
+   "fieldname": "section_break_29",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0.0",
+   "depends_on": "eval:doc.spa_check==1",
+   "fieldname": "commission_from_spa",
+   "fieldtype": "Currency",
+   "label": "Commission from Spa"
+  },
+  {
+   "default": "0.0",
+   "depends_on": "eval:doc.fitness_check==1",
+   "fieldname": "commission_from_fitness_training",
+   "fieldtype": "Currency",
+   "label": "Commission from Fitness Training"
+  },
+  {
+   "default": "0.0",
+   "depends_on": "eval:doc.fitness_check==1",
+   "fieldname": "commission_from_group_class",
+   "fieldtype": "Currency",
+   "label": "Commission from Group Class"
+  },
+  {
+   "default": "0.0",
+   "fieldname": "total_commission",
+   "fieldtype": "Currency",
+   "label": "Total Commission (QAR)"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "SSC-.YYYY.-"
+  },
+  {
+   "fieldname": "column_break_15",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2021-05-27 22:44:17.257524",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Service Staff Commissions",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "title",
+ "track_changes": 1
+}

@@ -54,8 +54,8 @@ def get_spa_item(spa_category):
         discount = mem_discount
         if item.no_member_discount == 1:
             discount = 0.0
-        discount_price = item.price - (item.price * (discount/100.0))
-        price = discount_price//0.5*0.5
+        price = item.price - (item.price * (discount/100.0))
+        # price = discount_price//0.5*0.5
         if item.gender_preference == doc.gender or item.gender_preference == "No Preference" or not item.gender_preference:
             spa_item.append({
                 "spa_item_name" : item.spa_name,
@@ -106,6 +106,58 @@ def get_therapist(spa_item, client_id):
                     })
 
     return therapist
+
+@frappe.whitelist()
+def get_spa_details():
+    rating_point = -1
+    client = frappe.db.get("Client", {"email": frappe.session.user})
+    time = frappe.get_doc('Spa Settings')
+
+    sessions = []
+    client_session_list = frappe.get_all('Client Sessions', filters={'client_id': client.name, 'session_status': 'Active', 'package_type': 'Spa'}, order_by="expiry_date asc")
+    if client_session_list:
+        for client_session in client_session_list:
+            client_session_doc = frappe.get_doc('Client Sessions', client_session.name)
+            sessions.append({
+                'package_name': client_session_doc.package_name,
+                'expiry_date' : client_session_doc.expiry_date,
+                'used_sessions': client_session_doc.used_sessions,
+                'remaining_sessions': client_session_doc.remaining_sessions
+            })
+
+    details = []
+    spa_list = frappe.get_all('Spa Appointment', filters={'client_id':client.name, 'appointment_status':['not in',{'Cancelled','No Show'}]}, fields=['name', 'appointment_date'], order_by="appointment_date asc")
+    if spa_list:
+        for spa in spa_list:
+            spa_doc = frappe.get_doc('Spa Appointment', spa.name)
+            cancel_time = spa_doc.start_time - timedelta(seconds=int(time.spa_cancellation_time))
+
+            rating_list = frappe.get_all('Rating', filters={'document_id':spa.name}, fields=['rating_point'])
+            if rating_list:
+                for rating in rating_list:
+                    rating_point = rating.rating_point
+
+            if spa_doc.cart:
+                cart_doc = frappe.get_doc('Cart', spa_doc.cart)
+                details.append({
+                        "name": cart_doc.name,
+                        "spa_item": spa_doc.spa_service,
+                        "duration": int(spa_doc.service_duration),
+                        "status": spa_doc.appointment_status,
+                        "payment_status": spa_doc.payment_status,
+                        "appointment_date": spa_doc.appointment_date,
+                        "appointment_time": spa_doc.appointment_time,
+                        "start_time": spa_doc.start_time,
+                        "rate": cart_doc.grand_total,
+                        "therapist_name": spa_doc.service_staff,
+                        "cancellation_time": cancel_time,
+                        "rating": rating_point 
+                })
+    
+    frappe.response["message"] = {
+        "spa_appointments": details,
+        "packages": sessions
+    }
 
 @frappe.whitelist()
 def get_details(client_id):

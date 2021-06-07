@@ -272,6 +272,7 @@ def add_cart_from_spa_online(client_id, appointment_id):
 			'transaction_status': 'Complete'
     	})
 		wallet.save()
+		frappe.db.set_value("Wallet Transaction",wallet.name,"docstatus", 1)
 		doc.append('payment_table', {
 			"mode_of_payment": "Wallet",
 			"paid_amount": doc.grand_total

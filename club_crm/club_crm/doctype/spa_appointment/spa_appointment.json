@@ -1,656 +1,668 @@
 {
-    "actions": [],
-    "allow_copy": 1,
-    "allow_import": 1,
-    "autoname": "naming_series:",
-    "creation": "2020-11-16 08:54:16.546241",
-    "doctype": "DocType",
-    "editable_grid": 1,
-    "engine": "InnoDB",
-    "field_order": [
-        "title",
-        "online",
-        "column_break_3",
-        "session",
-        "section_break_2",
-        "naming_series",
-        "booking_date",
-        "booking_time",
-        "client_id",
-        "session_name",
-        "column_break_6",
-        "client_name",
-        "member_id",
-        "mobile_no",
-        "column_break_8",
-        "membership_status",
-        "gender",
-        "appointment_status",
-        "payment_status",
-        "appointment_details_section",
-        "appointment_date",
-        "appointment_time",
-        "appointment_end_time",
-        "start_time",
-        "end_time",
-        "column_break_20",
-        "spa_service",
-        "addon_service_check",
-        "spa_group",
-        "spa_category",
-        "service_duration",
-        "service_turnover",
-        "zero_turnover",
-        "column_break_spa",
-        "service_staff",
-        "therapist_requested",
-        "club_room",
-        "default_price",
-        "addon_section",
-        "addon_table",
-        "column_break_31",
-        "addon_total_price",
-        "addon_duration",
-        "addon_turnover",
-        "zero_turnover_addon",
-        "section_break_42",
-        "notes",
-        "column_break_44",
-        "any_surgeries",
-        "section_break_46",
-        "total_service_duration",
-        "total_addon_duration",
-        "total_duration",
-        "column_break_26",
-        "service_amount",
-        "addon_amount",
-        "column_break_40",
-        "net_total",
-        "member_discount",
-        "grand_total",
-        "more_info_section",
-        "payment_method",
-        "paid_amount",
-        "sales_invoice",
-        "column_break_28",
-        "transaction_date",
-        "transaction_reference",
-        "card_type",
-        "amended_from",
-        "section_break_70",
-        "color",
-        "progress_notes",
-        "cart",
-        "checkin_document",
-        "progress_notes_id"
-    ],
-    "fields": [{
-            "allow_in_quick_entry": 1,
-            "fieldname": "client_id",
-            "fieldtype": "Link",
-            "label": "Client ID",
-            "options": "Client",
-            "reqd": 1,
-            "set_only_once": 1
-        },
-        {
-            "allow_in_quick_entry": 1,
-            "fetch_from": "client_id.client_name",
-            "fieldname": "client_name",
-            "fieldtype": "Data",
-            "in_standard_filter": 1,
-            "label": "Client Name",
-            "no_copy": 1,
-            "read_only": 1
-        },
-        {
-            "fieldname": "column_break_20",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "appointment_details_section",
-            "fieldtype": "Section Break",
-            "label": "Service Details"
-        },
-        {
-            "collapsible": 1,
-            "fieldname": "more_info_section",
-            "fieldtype": "Section Break",
-            "hidden": 1,
-            "label": "Payment Details"
-        },
-        {
-            "fieldname": "column_break_28",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fetch_from": "client_id.gender",
-            "fieldname": "gender",
-            "fieldtype": "Select",
-            "label": "Gender",
-            "no_copy": 1,
-            "options": "\nMale\nFemale",
-            "read_only": 1
-        },
-        {
-            "fieldname": "naming_series",
-            "fieldtype": "Select",
-            "hidden": 1,
-            "label": "Series",
-            "options": "SPA-APP-.YYYY.-"
-        },
-        {
-            "fetch_from": "client_id.mobile_no",
-            "fieldname": "mobile_no",
-            "fieldtype": "Data",
-            "in_standard_filter": 1,
-            "label": "Mobile Number",
-            "read_only": 1
-        },
-        {
-            "fieldname": "amended_from",
-            "fieldtype": "Link",
-            "label": "Amended From",
-            "no_copy": 1,
-            "options": "Spa Appointment",
-            "print_hide": 1,
-            "read_only": 1
-        },
-        {
-            "allow_on_submit": 1,
-            "fieldname": "sales_invoice",
-            "fieldtype": "Link",
-            "label": "Sales Invoice",
-            "options": "Sales Invoice",
-            "read_only": 1
-        },
-        {
-            "allow_on_submit": 1,
-            "default": "Not Paid",
-            "fieldname": "payment_status",
-            "fieldtype": "Select",
-            "label": "Payment Status",
-            "options": "Paid\nAdded to cart\nNot Paid",
-            "read_only": 1
-        },
-        {
-            "allow_on_submit": 1,
-            "fieldname": "payment_method",
-            "fieldtype": "Select",
-            "label": "Payment Method",
-            "options": "\nCredit Card\nWallet\nCash\nComplimentary",
-            "read_only": 1
-        },
-        {
-            "fieldname": "column_break_spa",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "total_duration",
-            "fieldtype": "Duration",
-            "hide_days": 1,
-            "hide_seconds": 1,
-            "label": "Total Appointment Duration",
-            "read_only": 1
-        },
-        {
-            "fieldname": "member_discount",
-            "fieldtype": "Currency",
-            "hidden": 1,
-            "label": "Member Discount Amount",
-            "precision": "2",
-            "read_only": 1
-        },
-        {
-            "fieldname": "column_break_26",
-            "fieldtype": "Column Break"
-        },
-        {
-            "allow_on_submit": 1,
-            "fieldname": "club_room",
-            "fieldtype": "Link",
-            "label": "Allocated Room",
-            "options": "Club Room"
-        },
-        {
-            "allow_in_quick_entry": 1,
-            "allow_on_submit": 1,
-            "fieldname": "start_time",
-            "fieldtype": "Datetime",
-            "label": "Start Time",
-            "reqd": 1
-        },
-        {
-            "allow_in_quick_entry": 1,
-            "allow_on_submit": 1,
-            "fieldname": "end_time",
-            "fieldtype": "Datetime",
-            "label": "End Time",
-            "read_only": 1
-        },
-        {
-            "fieldname": "any_surgeries",
-            "fieldtype": "Small Text",
-            "label": "Recent surgeries"
-        },
-        {
-            "fieldname": "color",
-            "fieldtype": "Data",
-            "hidden": 1,
-            "label": "Color",
-            "read_only": 1
-        },
-        {
-            "allow_on_submit": 1,
-            "fieldname": "transaction_date",
-            "fieldtype": "Data",
-            "label": "Transaction Date",
-            "read_only": 1
-        },
-        {
-            "allow_on_submit": 1,
-            "fieldname": "paid_amount",
-            "fieldtype": "Currency",
-            "label": "Paid Amount",
-            "read_only": 1
-        },
-        {
-            "allow_on_submit": 1,
-            "fieldname": "transaction_reference",
-            "fieldtype": "Data",
-            "label": "Transaction Reference",
-            "read_only": 1
-        },
-        {
-            "default": "0",
-            "description": "This checkbox implies that this booking is made using web/mobile app.",
-            "fieldname": "online",
-            "fieldtype": "Check",
-            "label": "Online Booking",
-            "read_only": 1
-        },
-        {
-            "fieldname": "card_type",
-            "fieldtype": "Select",
-            "label": "Card Type",
-            "options": "\nVisa\nMasterCard\nAmex\nNAPS\nCB-Smart",
-            "read_only": 1
-        },
-        {
-            "fetch_from": "client_id.member_id",
-            "fieldname": "member_id",
-            "fieldtype": "Data",
-            "in_standard_filter": 1,
-            "label": "Member ID",
-            "read_only": 1
-        },
-        {
-            "fieldname": "column_break_40",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "section_break_2",
-            "fieldtype": "Section Break",
-            "label": "Client Details"
-        },
-        {
-            "default": "Today",
-            "fieldname": "booking_date",
-            "fieldtype": "Date",
-            "label": "Booking Date",
-            "read_only": 1
-        },
-        {
-            "fieldname": "booking_time",
-            "fieldtype": "Time",
-            "label": "Booking Time",
-            "read_only": 1
-        },
-        {
-            "fieldname": "column_break_6",
-            "fieldtype": "Column Break"
-        },
-        {
-            "allow_on_submit": 1,
-            "default": "Scheduled",
-            "depends_on": "eval:doc.is_new==0",
-            "fieldname": "appointment_status",
-            "fieldtype": "Select",
-            "label": "Appointment Status",
-            "options": "Draft\nScheduled\nOpen\nChecked-in\nComplete\nNo Show\nCancelled",
-            "read_only": 1
-        },
-        {
-            "fieldname": "column_break_8",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fetch_from": "session_name.service_name",
-            "fetch_if_empty": 1,
-            "fieldname": "spa_service",
-            "fieldtype": "Link",
-            "label": "Spa Service",
-            "mandatory_depends_on": "eval:doc.session==0",
-            "options": "Spa Services",
-            "read_only_depends_on": "eval:doc.session==1"
-        },
-        {
-            "fetch_from": "spa_service.spa_group",
-            "fieldname": "spa_group",
-            "fieldtype": "Data",
-            "hidden": 1,
-            "label": "Spa  Service Group",
-            "read_only": 1
-        },
-        {
-            "fetch_from": "spa_service.spa_category",
-            "fieldname": "spa_category",
-            "fieldtype": "Data",
-            "label": "Spa Service Category",
-            "read_only": 1
-        },
-        {
-            "fieldname": "appointment_date",
-            "fieldtype": "Date",
-            "hidden": 1,
-            "in_list_view": 1,
-            "in_preview": 1,
-            "label": "Appointment Date",
-            "read_only": 1
-        },
-        {
-            "fieldname": "appointment_time",
-            "fieldtype": "Time",
-            "hidden": 1,
-            "in_list_view": 1,
-            "in_preview": 1,
-            "label": "Appointment Time",
-            "read_only": 1
-        },
-        {
-            "fetch_from": "spa_service.price",
-            "fieldname": "default_price",
-            "fieldtype": "Currency",
-            "label": "Price (in QAR)",
-            "precision": "2",
-            "read_only": 1
-        },
-        {
-            "depends_on": "eval:doc.session==0",
-            "fieldname": "addon_section",
-            "fieldtype": "Section Break",
-            "label": "Add-ons"
-        },
-        {
-            "description": "Add or delete add-on services and click save to calculate the total duration and total price.",
-            "fieldname": "addon_table",
-            "fieldtype": "Table",
-            "mandatory_depends_on": "eval:doc.has_addon==1",
-            "options": "Spa Addons"
-        },
-        {
-            "fetch_from": "spa_service.duration",
-            "fieldname": "service_duration",
-            "fieldtype": "Duration",
-            "hide_days": 1,
-            "hide_seconds": 1,
-            "label": "Service Duration",
-            "read_only": 1
-        },
-        {
-            "fieldname": "column_break_31",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "addon_total_price",
-            "fieldtype": "Currency",
-            "label": "Add-ons Price",
-            "read_only": 1
-        },
-        {
-            "fieldname": "addon_duration",
-            "fieldtype": "Duration",
-            "hide_days": 1,
-            "hide_seconds": 1,
-            "label": "Add-ons Duration",
-            "read_only": 1
-        },
-        {
-            "fieldname": "total_service_duration",
-            "fieldtype": "Duration",
-            "hide_days": 1,
-            "hide_seconds": 1,
-            "label": "Total Service Duration",
-            "read_only": 1
-        },
-        {
-            "default": "0",
-            "fieldname": "therapist_requested",
-            "fieldtype": "Check",
-            "in_preview": 1,
-            "label": "Requested by Customer"
-        },
-        {
-            "fetch_from": "client_id.membership_status",
-            "fieldname": "membership_status",
-            "fieldtype": "Data",
-            "label": "Membership Status",
-            "read_only": 1
-        },
-        {
-            "depends_on": "eval:doc.zero_turnover==0",
-            "fetch_from": "spa_service.turn_over_time",
-            "fetch_if_empty": 1,
-            "fieldname": "service_turnover",
-            "fieldtype": "Duration",
-            "hide_days": 1,
-            "hide_seconds": 1,
-            "label": "Service Turnover time"
-        },
-        {
-            "depends_on": "eval:doc.zero_turnover_addon==0",
-            "fieldname": "addon_turnover",
-            "fieldtype": "Duration",
-            "hide_days": 1,
-            "hide_seconds": 1,
-            "label": "Add-ons Turnover time",
-            "read_only": 1
-        },
-        {
-            "fieldname": "total_addon_duration",
-            "fieldtype": "Duration",
-            "hide_days": 1,
-            "hide_seconds": 1,
-            "label": "Total Addon Duration",
-            "read_only": 1
-        },
-        {
-            "bold": 1,
-            "fieldname": "net_total",
-            "fieldtype": "Currency",
-            "in_list_view": 1,
-            "label": "Net Total",
-            "read_only": 1
-        },
-        {
-            "fieldname": "grand_total",
-            "fieldtype": "Currency",
-            "hidden": 1,
-            "label": "Grand Total",
-            "precision": "2",
-            "read_only": 1
-        },
-        {
-            "fieldname": "notes",
-            "fieldtype": "Small Text",
-            "in_preview": 1,
-            "label": "Staff Notes"
-        },
-        {
-            "fieldname": "appointment_end_time",
-            "fieldtype": "Time",
-            "hidden": 1,
-            "label": "Appointment End Time",
-            "read_only": 1
-        },
-        {
-            "fieldname": "title",
-            "fieldtype": "Data",
-            "hidden": 1,
-            "in_preview": 1,
-            "label": "Title",
-            "no_copy": 1,
-            "print_hide": 1,
-            "read_only": 1
-        },
-        {
-            "fieldname": "progress_notes",
-            "fieldtype": "Text",
-            "hidden": 1,
-            "label": "Progress Notes",
-            "read_only": 1
-        },
-        {
-            "fieldname": "column_break_3",
-            "fieldtype": "Column Break"
-        },
-        {
-            "default": "0",
-            "description": "This checkbox implies that this booking is part of paid sessions/packages.",
-            "fieldname": "session",
-            "fieldtype": "Check",
-            "label": "Session Booking"
-        },
-        {
-            "fieldname": "section_break_42",
-            "fieldtype": "Section Break",
-            "label": "Other Details"
-        },
-        {
-            "fieldname": "column_break_44",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "section_break_46",
-            "fieldtype": "Section Break",
-            "label": "Billing Details"
-        },
-        {
-            "fetch_from": "spa_service.price",
-            "fieldname": "service_amount",
-            "fieldtype": "Currency",
-            "label": "Service Amount",
-            "read_only": 1
-        },
-        {
-            "fieldname": "addon_amount",
-            "fieldtype": "Currency",
-            "label": "Total Add-on Amount",
-            "read_only": 1
-        },
-        {
-            "fieldname": "cart",
-            "fieldtype": "Link",
-            "hidden": 1,
-            "label": "Cart",
-            "options": "Cart",
-            "read_only": 1
-        },
-        {
-            "default": "0",
-            "fieldname": "zero_turnover",
-            "fieldtype": "Check",
-            "label": "Zero Service Turnover"
-        },
-        {
-            "default": "0",
-            "fieldname": "zero_turnover_addon",
-            "fieldtype": "Check",
-            "label": "Zero Add-on Turnover"
-        },
-        {
-            "depends_on": "eval:doc.session==1",
-            "fieldname": "session_name",
-            "fieldtype": "Link",
-            "label": "Session Name",
-            "mandatory_depends_on": "eval:doc.session==1",
-            "options": "Client Sessions"
-        },
-        {
-            "fieldname": "checkin_document",
-            "fieldtype": "Link",
-            "hidden": 1,
-            "label": "Checkin Document",
-            "options": "Check In",
-            "read_only": 1
-        },
-        {
-            "default": "0",
-            "depends_on": "eval:doc.session==0",
-            "fieldname": "addon_service_check",
-            "fieldtype": "Check",
-            "label": "Add-on Service only"
-        },
-        {
-            "fieldname": "progress_notes_id",
-            "fieldtype": "Link",
-            "hidden": 1,
-            "label": "Progress Notes ID",
-            "options": "Spa Progress Notes",
-            "read_only": 1
-        },
-        {
-            "fieldname": "section_break_70",
-            "fieldtype": "Section Break"
-        },
-        {
-            "fieldname": "service_staff",
-            "fieldtype": "Link",
-            "in_list_view": 1,
-            "in_standard_filter": 1,
-            "label": "Spa Therapist",
-            "no_copy": 1,
-            "options": "Service Staff",
-            "reqd": 1
-        }
-    ],
-    "links": [],
-    "modified": "2021-05-22 20:36:12.792974",
-    "modified_by": "Administrator",
-    "module": "Club CRM",
-    "name": "Spa Appointment",
-    "owner": "Administrator",
-    "permissions": [{
-            "create": 1,
-            "delete": 1,
-            "email": 1,
-            "export": 1,
-            "print": 1,
-            "read": 1,
-            "report": 1,
-            "role": "System Manager",
-            "share": 1,
-            "write": 1
-        },
-        {
-            "create": 1,
-            "delete": 1,
-            "email": 1,
-            "export": 1,
-            "print": 1,
-            "read": 1,
-            "report": 1,
-            "role": "General Manager",
-            "select": 1,
-            "share": 1,
-            "write": 1
-        }
-    ],
-    "search_fields": "client_name, service_staff, spa_service, appointment_date, appointment_time",
-    "show_name_in_global_search": 1,
-    "show_preview_popup": 1,
-    "sort_field": "appointment_date",
-    "sort_order": "DESC",
-    "title_field": "title",
-    "track_changes": 1
+ "actions": [],
+ "allow_copy": 1,
+ "allow_import": 1,
+ "autoname": "naming_series:",
+ "creation": "2020-11-16 08:54:16.546241",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "online",
+  "column_break_3",
+  "session",
+  "section_break_2",
+  "naming_series",
+  "booking_date",
+  "booking_time",
+  "client_id",
+  "session_name",
+  "column_break_6",
+  "client_name",
+  "member_id",
+  "mobile_no",
+  "column_break_8",
+  "membership_status",
+  "gender",
+  "appointment_status",
+  "payment_status",
+  "appointment_details_section",
+  "appointment_date",
+  "appointment_time",
+  "appointment_end_time",
+  "start_time",
+  "end_time",
+  "column_break_20",
+  "spa_service",
+  "addon_service_check",
+  "spa_group",
+  "spa_category",
+  "service_duration",
+  "service_turnover",
+  "zero_turnover",
+  "column_break_spa",
+  "service_staff",
+  "therapist_requested",
+  "club_room",
+  "default_price",
+  "addon_section",
+  "addon_table",
+  "column_break_31",
+  "addon_total_price",
+  "addon_duration",
+  "addon_turnover",
+  "zero_turnover_addon",
+  "section_break_42",
+  "notes",
+  "column_break_44",
+  "any_surgeries",
+  "section_break_46",
+  "total_service_duration",
+  "total_addon_duration",
+  "total_duration",
+  "column_break_26",
+  "service_amount",
+  "addon_amount",
+  "column_break_40",
+  "net_total",
+  "member_discount",
+  "grand_total",
+  "more_info_section",
+  "payment_method",
+  "paid_amount",
+  "sales_invoice",
+  "column_break_28",
+  "transaction_date",
+  "transaction_reference",
+  "card_type",
+  "amended_from",
+  "section_break_70",
+  "color",
+  "progress_notes",
+  "cart",
+  "checkin_document",
+  "progress_notes_id",
+  "commission_processed"
+ ],
+ "fields": [
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "client_id",
+   "fieldtype": "Link",
+   "label": "Client ID",
+   "options": "Client",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fetch_from": "client_id.client_name",
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Client Name",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "appointment_details_section",
+   "fieldtype": "Section Break",
+   "label": "Service Details"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "more_info_section",
+   "fieldtype": "Section Break",
+   "hidden": 1,
+   "label": "Payment Details"
+  },
+  {
+   "fieldname": "column_break_28",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "client_id.gender",
+   "fieldname": "gender",
+   "fieldtype": "Select",
+   "label": "Gender",
+   "no_copy": 1,
+   "options": "\nMale\nFemale",
+   "read_only": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "SPA-APP-.YYYY.-"
+  },
+  {
+   "fetch_from": "client_id.mobile_no",
+   "fieldname": "mobile_no",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Mobile Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Spa Appointment",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "sales_invoice",
+   "fieldtype": "Link",
+   "label": "Sales Invoice",
+   "options": "Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Not Paid",
+   "fieldname": "payment_status",
+   "fieldtype": "Select",
+   "label": "Payment Status",
+   "options": "Paid\nAdded to cart\nNot Paid",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "payment_method",
+   "fieldtype": "Select",
+   "label": "Payment Method",
+   "options": "\nCredit Card\nWallet\nCash\nComplimentary",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_spa",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_duration",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Total Appointment Duration",
+   "read_only": 1
+  },
+  {
+   "fieldname": "member_discount",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Member Discount Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_26",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "club_room",
+   "fieldtype": "Link",
+   "label": "Allocated Room",
+   "mandatory_depends_on": "eval:doc.online==0",
+   "options": "Club Room"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "allow_on_submit": 1,
+   "fieldname": "start_time",
+   "fieldtype": "Datetime",
+   "label": "Start Time",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "allow_on_submit": 1,
+   "fieldname": "end_time",
+   "fieldtype": "Datetime",
+   "label": "End Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "any_surgeries",
+   "fieldtype": "Small Text",
+   "label": "Recent surgeries"
+  },
+  {
+   "fieldname": "color",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Color",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "transaction_date",
+   "fieldtype": "Data",
+   "label": "Transaction Date",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "paid_amount",
+   "fieldtype": "Currency",
+   "label": "Paid Amount",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "transaction_reference",
+   "fieldtype": "Data",
+   "label": "Transaction Reference",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "description": "This checkbox implies that this booking is made using web/mobile app.",
+   "fieldname": "online",
+   "fieldtype": "Check",
+   "label": "Online Booking",
+   "read_only": 1
+  },
+  {
+   "fieldname": "card_type",
+   "fieldtype": "Select",
+   "label": "Card Type",
+   "options": "\nVisa\nMasterCard\nAmex\nNAPS\nCB-Smart",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "client_id.member_id",
+   "fieldname": "member_id",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Member ID",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_40",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break",
+   "label": "Client Details"
+  },
+  {
+   "default": "Today",
+   "fieldname": "booking_date",
+   "fieldtype": "Date",
+   "label": "Booking Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "booking_time",
+   "fieldtype": "Time",
+   "label": "Booking Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Scheduled",
+   "depends_on": "eval:doc.is_new==0",
+   "fieldname": "appointment_status",
+   "fieldtype": "Select",
+   "label": "Appointment Status",
+   "options": "Draft\nScheduled\nOpen\nChecked-in\nComplete\nNo Show\nCancelled",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "session_name.service_name",
+   "fetch_if_empty": 1,
+   "fieldname": "spa_service",
+   "fieldtype": "Link",
+   "label": "Spa Service",
+   "mandatory_depends_on": "eval:doc.session==0",
+   "options": "Spa Services",
+   "read_only_depends_on": "eval:doc.session==1"
+  },
+  {
+   "fetch_from": "spa_service.spa_group",
+   "fieldname": "spa_group",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Spa  Service Group",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "spa_service.spa_category",
+   "fieldname": "spa_category",
+   "fieldtype": "Data",
+   "label": "Spa Service Category",
+   "read_only": 1
+  },
+  {
+   "fieldname": "appointment_date",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Appointment Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "appointment_time",
+   "fieldtype": "Time",
+   "hidden": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Appointment Time",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "spa_service.price",
+   "fieldname": "default_price",
+   "fieldtype": "Currency",
+   "label": "Price (in QAR)",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.session==0",
+   "fieldname": "addon_section",
+   "fieldtype": "Section Break",
+   "label": "Add-ons"
+  },
+  {
+   "description": "Add or delete add-on services and click save to calculate the total duration and total price.",
+   "fieldname": "addon_table",
+   "fieldtype": "Table",
+   "mandatory_depends_on": "eval:doc.has_addon==1",
+   "options": "Spa Addons"
+  },
+  {
+   "fetch_from": "spa_service.duration",
+   "fieldname": "service_duration",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Service Duration",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_31",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "addon_total_price",
+   "fieldtype": "Currency",
+   "label": "Add-ons Price",
+   "read_only": 1
+  },
+  {
+   "fieldname": "addon_duration",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Add-ons Duration",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_service_duration",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Total Service Duration",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "therapist_requested",
+   "fieldtype": "Check",
+   "in_preview": 1,
+   "label": "Requested by Customer"
+  },
+  {
+   "fetch_from": "client_id.membership_status",
+   "fieldname": "membership_status",
+   "fieldtype": "Data",
+   "label": "Membership Status",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.zero_turnover==0",
+   "fetch_from": "spa_service.turn_over_time",
+   "fetch_if_empty": 1,
+   "fieldname": "service_turnover",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Service Turnover time"
+  },
+  {
+   "depends_on": "eval:doc.zero_turnover_addon==0",
+   "fieldname": "addon_turnover",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Add-ons Turnover time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_addon_duration",
+   "fieldtype": "Duration",
+   "hide_days": 1,
+   "hide_seconds": 1,
+   "label": "Total Addon Duration",
+   "read_only": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "net_total",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Net Total",
+   "read_only": 1
+  },
+  {
+   "fieldname": "grand_total",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Grand Total",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "in_preview": 1,
+   "label": "Staff Notes"
+  },
+  {
+   "fieldname": "appointment_end_time",
+   "fieldtype": "Time",
+   "hidden": 1,
+   "label": "Appointment End Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "in_preview": 1,
+   "label": "Title",
+   "no_copy": 1,
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "progress_notes",
+   "fieldtype": "Text",
+   "hidden": 1,
+   "label": "Progress Notes",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "This checkbox implies that this booking is part of paid sessions/packages.",
+   "fieldname": "session",
+   "fieldtype": "Check",
+   "label": "Session Booking"
+  },
+  {
+   "fieldname": "section_break_42",
+   "fieldtype": "Section Break",
+   "label": "Other Details"
+  },
+  {
+   "fieldname": "column_break_44",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_46",
+   "fieldtype": "Section Break",
+   "label": "Billing Details"
+  },
+  {
+   "fetch_from": "spa_service.price",
+   "fieldname": "service_amount",
+   "fieldtype": "Currency",
+   "label": "Service Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "addon_amount",
+   "fieldtype": "Currency",
+   "label": "Total Add-on Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cart",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Cart",
+   "options": "Cart",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "zero_turnover",
+   "fieldtype": "Check",
+   "label": "Zero Service Turnover"
+  },
+  {
+   "default": "0",
+   "fieldname": "zero_turnover_addon",
+   "fieldtype": "Check",
+   "label": "Zero Add-on Turnover"
+  },
+  {
+   "depends_on": "eval:doc.session==1",
+   "fieldname": "session_name",
+   "fieldtype": "Link",
+   "label": "Session Name",
+   "mandatory_depends_on": "eval:doc.session==1",
+   "options": "Client Sessions"
+  },
+  {
+   "fieldname": "checkin_document",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Checkin Document",
+   "options": "Check In",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.session==0",
+   "fieldname": "addon_service_check",
+   "fieldtype": "Check",
+   "label": "Add-on Service only"
+  },
+  {
+   "fieldname": "progress_notes_id",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Progress Notes ID",
+   "options": "Spa Progress Notes",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_70",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "service_staff",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Spa Therapist",
+   "no_copy": 1,
+   "options": "Service Staff",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "commission_processed",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Commission processed"
+  }
+ ],
+ "links": [],
+ "modified": "2021-06-01 10:07:46.219494",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Spa Appointment",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "General Manager",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "client_name, service_staff, spa_service, appointment_date, appointment_time",
+ "show_name_in_global_search": 1,
+ "show_preview_popup": 1,
+ "sort_field": "appointment_date",
+ "sort_order": "DESC",
+ "title_field": "title",
+ "track_changes": 1
 }

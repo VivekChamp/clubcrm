@@ -23,6 +23,7 @@ class FoodOrderEntry(Document):
 		self.total_quantity = 0
 		self.total_amount = 0.0
 		self.total_to_be_paid = 0.0
+		self.paid_amount = 0.0
 		self.balance_amount = 0.0
 
 		if self.order_items:
