@@ -155,3 +155,27 @@ def generate_otp(mobile_no):
     receiver_list='"'+mobile_no+'"'
     send_sms(receiver_list,msg)
     return OTP
+
+@frappe.whitelist(allow_guest=True)
+def generate_otp_email(mobile_no, email):
+    digits = "0123456789"
+    OTP = "" 
+    for i in range(6): 
+        OTP += digits[math.floor(random.random() * 10)]
+    msg = "Your verification code is "+OTP+". Do not share it with anyone."
+    receiver_list='"'+mobile_no+'"'
+    send_sms(receiver_list,msg)
+
+    from email.utils import formataddr
+    attachments = None
+    sender = formataddr(("Katara Club", "notifications@bluelynx.qa"))
+    frappe.sendmail(
+		recipients = email,
+        sender = sender,
+		subject = "Katara Club verification",
+		message = "Thank you for registering on the Katara Club app!. Your verification code is "+OTP+". Looking forward to seeing you at the club.",
+		attachments = attachments,
+		# reference_doctype = self.doctype,
+		reference_name = "Katara Club"
+	)
+    return OTP

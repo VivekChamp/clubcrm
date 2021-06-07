@@ -251,13 +251,10 @@ class MembershipsApplication(Document):
 			self.new_notify=1
 
 		# Notification to CEC on assignment	
-		if self.new_notify==1 and self.assignment_notify==0 and self.application_status=="Pending" and self.assigned_to:
-			cec_list = frappe.get_all('Service Staff', filters={'display_name': self.assigned_to})
+		if self.new_notify==1 and self.assignment_notify==0 and self.assigned_to:
 			msg = "You have been assigned to a new membership application "+self.name+"."
-			if cec_list:
-				for cec in cec_list:
-					receiver_list='"'+str(cec.mobile_no)+'"'
-					send_sms(receiver_list,msg)
+			receiver_list='"'+str(self.cec_mobile_no)+'"'
+			send_sms(receiver_list,msg)
 			self.assignment_notify==1
 
 		# Notification to CE Manager for approval

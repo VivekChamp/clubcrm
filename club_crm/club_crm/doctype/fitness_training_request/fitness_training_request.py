@@ -7,6 +7,7 @@ import frappe
 from frappe.utils import getdate, get_time, flt, now_datetime
 from datetime import datetime, timedelta, date, time
 from frappe.model.document import Document
+from frappe import _
 from club_crm.club_crm.utils.sms_notification import send_sms
 from club_crm.club_crm.utils.push_notification import send_push
 from club_crm.club_crm.doctype.client_sessions.client_sessions import create_session
@@ -32,6 +33,30 @@ class FitnessTrainingRequest(Document):
 					no_rows += 1
 				if not int(self.number_of_sessions) == no_rows:
 					frappe.throw("Number of appointment schedules does not match number of requested sessions")
+
+				duration = 0.0
+				package = frappe.get_doc('Club Packages', self.fitness_package)
+				if package.package_table:
+					for fitness in package.package_table:
+						if fitness.service_type=="Fitness Services":
+							duration = fitness.validity
+				if type(self.start_date) == str:
+					start_datetime= datetime.strptime(self.start_date, "%Y-%m-%d")
+				else:
+					start_datetime = self.start_date
+				expiry = start_datetime + timedelta(seconds=duration)
+				
+				for row in self.table_schedule:
+					if type(row.date) == str:
+						row_datetime= datetime.strptime(row.date, "%Y-%m-%d")
+					else:
+						row_datetime = row.date
+
+					if expiry < row_datetime:
+						expiry_date = datetime.strftime(expiry, "%d-%m-%Y")
+						msg = _('One of the scheduled dates exceeds the validity of the package from the start date. The dates should be within ')
+						msg += _('<b>{0}</b>.').format(expiry_date)
+						frappe.throw(msg, title=_('Schedule date error'))
 
 		if self.request_status == "Completed":
 			if not self.table_schedule:

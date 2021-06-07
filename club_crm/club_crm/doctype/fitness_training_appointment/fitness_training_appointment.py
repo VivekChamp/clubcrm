@@ -16,6 +16,9 @@ class FitnessTrainingAppointment(Document):
 		if self.session==1:
 			self.set_paid_and_net_total()
 		self.set_appointment_date_time()
+		if self.online != 1:
+			self.validate_session_expiry()
+			self.validate_session_count()
 		# self.validate_past_days()
 		self.set_total_duration()
 		self.validate_overlaps()
@@ -23,7 +26,6 @@ class FitnessTrainingAppointment(Document):
 		self.set_status()
 		# self.set_color()
 		self.set_title()
-
 	
 	def after_insert(self):
 		if self.session==1:
@@ -136,6 +138,26 @@ class FitnessTrainingAppointment(Document):
 			overlapping_details += _('<b>{0}</b> has appointment scheduled with <b>{1}</b> at {2} until {4}.').format(
 				overlaps[0][1], overlaps[0][2], overlaps[0][3], overlaps[0][4], overlaps[0][5])
 			frappe.throw(overlapping_details, title=_('Appointments Overlapping'))
+
+	def validate_session_expiry(self):
+		session = frappe.get_doc('Client Sessions', self.session_name)
+		if type(self.start_time) == str:
+			start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
+		else:
+			start_datetime = self.start_time
+		start = start_datetime.date()
+
+		if start > session.expiry_date:
+			expiry = datetime.strftime(session.expiry_date, "%d-%m-%Y")
+			msg = _('The appointment date exceeds the expiry date of the package. This package expires on ')
+			msg += _('<b>{0}</b>').format(expiry)
+			frappe.throw(msg, title=_('Appointment date error'))
+	
+	def validate_session_count(self):
+		session = frappe.get_doc('Client Sessions', self.session_name)
+		balance = int(session.remaining_sessions) - int(session.booked_sessions)
+		if balance == 0:
+			frappe.throw(msg="All remaining sessions in this package are already booked.", title='Error')
 
 @frappe.whitelist()
 def no_show(appointment_id):
