@@ -33,7 +33,8 @@ frappe.views.calendar["Spa Appointment"] = {
                 type: 'agendaDay',
                 duration: { days: 1 },
                 buttonText: 'Day',
-                slotDuration: "00:30:00",
+                slotDuration: "00:30",
+                slotLabelInterval: "01:00",
                 minTime: "08:00:00",
                 maxTime: "22:00:00"
             },

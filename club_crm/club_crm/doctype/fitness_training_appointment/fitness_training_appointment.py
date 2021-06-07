@@ -8,6 +8,7 @@ from frappe.utils import getdate, get_time, flt, now_datetime
 from datetime import datetime, timedelta, date, time
 from frappe import _
 from frappe.model.document import Document
+from club_crm.club_crm.doctype.service_staff_commissions.service_staff_commissions import add_pt_commission
 from club_crm.api.wallet import get_balance
 
 class FitnessTrainingAppointment(Document):
@@ -84,7 +85,7 @@ class FitnessTrainingAppointment(Document):
 			self.color="#8549ff"
 		elif self.appointment_status=="Checked-in":
 			self.color="#ffc107"
-		elif self.appointment_status=="Complete":
+		elif self.appointment_status=="Completed":
 			self.color="#20a7ff"
 		elif self.appointment_status=="No Show":
 			self.color="#ff8a8a"
@@ -149,10 +150,13 @@ def no_show(appointment_id):
 		doc.booked_sessions -= 1
 		doc.save()
 
+	frappe.msgprint(msg="Appointment marked as 'No Show'", title='Success')
+
 @frappe.whitelist()
 def complete(appointment_id):
 	appointment = frappe.get_doc('Fitness Training Appointment', appointment_id)
-	frappe.db.set_value("Fitness Training Appointment",appointment_id,"appointment_status","Complete")
+	add_pt_commission(appointment.appointment_date, appointment.service_staff, appointment.name)
+	frappe.db.set_value("Fitness Training Appointment",appointment_id,"appointment_status","Completed")
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"color","#20a7ff")
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"docstatus",1)
 	doc = frappe.get_doc('Check In', appointment.checkin_document)
@@ -164,6 +168,8 @@ def complete(appointment_id):
 		doc.used_sessions += 1
 		doc.booked_sessions -= 1
 		doc.save()
+	
+	frappe.msgprint(msg="Appointment marked as 'Completed'", title='Success')
 
 @frappe.whitelist()
 def cancel_appointment(appointment_id):
@@ -176,13 +182,15 @@ def cancel_appointment(appointment_id):
 		doc = frappe.get_doc('Client Sessions', appointment.session_name)
 		doc.booked_sessions -= 1
 		doc.save()
+	
+	frappe.msgprint(msg="Appointment has been cancelled", title='Success')
 
 @frappe.whitelist()
 def get_trainer_resources():
 	roles = frappe.get_roles()
 	all_trainer = True
 	for role in roles:
-		if role == "Fitness Trainer":
+		if role == "Fitness Trainer" or role == "Fitness Staff":
 			all_trainer = False
 			break
 	
@@ -208,34 +216,63 @@ def get_trainer_resources():
 
 @frappe.whitelist()
 def get_events(start, end, filters=None):
-
 	from frappe.desk.calendar import get_event_conditions
 	conditions = get_event_conditions('Fitness Training Appointment', filters)
 
-	data = frappe.db.sql("""
-		select
-		`tabFitness Training Appointment`.name, `tabFitness Training Appointment`.client_name,
-		`tabFitness Training Appointment`.title, `tabFitness Training Appointment`.service_staff,
-		`tabFitness Training Appointment`.appointment_status,
-		`tabFitness Training Appointment`.total_duration,
-		`tabFitness Training Appointment`.notes,
-		`tabFitness Training Appointment`.start_time,
-		`tabFitness Training Appointment`.end_time,
-		`tabFitness Training Appointment`.color
-		from
-		`tabFitness Training Appointment`
-		where
-		(`tabFitness Training Appointment`.appointment_date between %(start)s and %(end)s)
-		and `tabFitness Training Appointment`.appointment_status != 'Cancelled' {conditions}""".format(conditions=conditions),
-		{"start": start, "end": end}, as_dict=True, update={"textColor": '#ffffff'})
-
-	return data
+	roles = frappe.get_roles()
+	all_trainer = True
+	for role in roles:
+		if role == "Fitness Trainer" or role == "Fitness Staff":
+			all_trainer = False
+			break
+	
+	if all_trainer:
+		data = frappe.db.sql("""
+			select
+			`tabFitness Training Appointment`.name, `tabFitness Training Appointment`.client_name,
+			`tabFitness Training Appointment`.title, `tabFitness Training Appointment`.service_staff,
+			`tabFitness Training Appointment`.appointment_status,
+			`tabFitness Training Appointment`.total_duration,
+			`tabFitness Training Appointment`.notes,
+			`tabFitness Training Appointment`.start_time,
+			`tabFitness Training Appointment`.end_time,
+			`tabFitness Training Appointment`.color
+			from
+			`tabFitness Training Appointment`
+			where
+			(`tabFitness Training Appointment`.appointment_date between %(start)s and %(end)s)
+			and `tabFitness Training Appointment`.appointment_status != 'Cancelled' {conditions}""".format(conditions=conditions),
+			{"start": start, "end": end}, as_dict=True)
+		return data
+	
+	else:
+		trainers = frappe.get_all('Service Staff', filters={'fitness_check':1, 'email': frappe.session.user}, fields=['display_name'])
+		if trainers:
+			for trainer in trainers:
+				data = frappe.db.sql("""
+					select
+					`tabFitness Training Appointment`.name, `tabFitness Training Appointment`.client_name,
+					`tabFitness Training Appointment`.title, `tabFitness Training Appointment`.service_staff,
+					`tabFitness Training Appointment`.appointment_status,
+					`tabFitness Training Appointment`.total_duration,
+					`tabFitness Training Appointment`.notes,
+					`tabFitness Training Appointment`.start_time,
+					`tabFitness Training Appointment`.end_time,
+					`tabFitness Training Appointment`.color
+					from
+					`tabFitness Training Appointment`
+					where
+					(`tabFitness Training Appointment`.appointment_date between %(start)s and %(end)s)
+					and (`tabFitness Training Appointment`.service_staff = %(staff)s)
+					and `tabFitness Training Appointment`.appointment_status != 'Cancelled' {conditions}""".format(conditions=conditions),
+					{"start": start, "end": end, "staff": trainer.display_name}, as_dict=True)
+				return data
 
 @frappe.whitelist()
 def update_appointment_status():
 	# update the status of appointments daily
 	today = getdate()
-	appointments = frappe.get_all('Fitness Training Appointment', filters={'appointment_status': ('not in', ['Complete', 'Cancelled', 'Checked-in', 'No Show']), 'docstatus': 0}, fields=['name','appointment_status','online','appointment_date'])
+	appointments = frappe.get_all('Fitness Training Appointment', filters={'appointment_status': ('not in', ['Completed', 'Cancelled', 'Checked-in', 'No Show']), 'docstatus': 0}, fields=['name','appointment_status','online','appointment_date'])
 	for appointment in appointments:
 		appointment_date = getdate(appointment.appointment_date)
 

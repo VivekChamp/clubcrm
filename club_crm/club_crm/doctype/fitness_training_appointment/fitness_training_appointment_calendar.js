@@ -14,7 +14,7 @@ frappe.views.calendar["Fitness Training Appointment"] = {
         header: {
             left: 'prev, title, next',
             center: 'today',
-            right: ' listOneWeek, listOneDay, agendaOneDay, agendaOneWeek, timelineOneDay'
+            right: ' listOneWeek, listOneDay, agendaOneDay, agendaOneWeek'
         },
         views: {
             listOneDay: {
@@ -34,24 +34,24 @@ frappe.views.calendar["Fitness Training Appointment"] = {
                 duration: { days: 1 },
                 buttonText: 'Day',
                 slotDuration: "01:00:00",
-                minTime: "08:00:00",
-                maxTime: "22:00:00"
+                minTime: "06:00:00",
+                maxTime: "21:00:00"
             },
             agendaOneWeek: {
                 type: 'agendaDay',
                 duration: { days: 7 },
                 buttonText: 'Week',
                 slotDuration: "01:00:00",
-                minTime: "08:00:00",
-                maxTime: "22:00:00"
-            },
-            timelineOneDay: {
-                type: 'timeline',
-                duration: { days: 1 },
-                buttonText: 'Timeline',
-                minTime: "08:00:00",
-                maxTime: "22:00:00"
+                minTime: "06:00:00",
+                maxTime: "21:00:00"
             }
+            // timelineOneDay: {
+            //     type: 'timeline',
+            //     duration: { days: 1 },
+            //     buttonText: 'Timeline',
+            //     minTime: "06:00:00",
+            //     maxTime: "21:00:00"
+            // }
         },
         resources: function(callback) {
             return frappe.call({

@@ -15,7 +15,7 @@
  "is_standard": 1,
  "label": "Club CRM",
  "links": [],
- "modified": "2021-04-16 12:32:07.161524",
+ "modified": "2021-05-27 13:18:53.996920",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club CRM",
@@ -27,7 +27,7 @@
    "color": "#449CF0",
    "doc_view": "List",
    "format": "{}",
-   "icon": "getting-started",
+   "icon": "",
    "label": "Client List",
    "link_to": "Client",
    "stats_filter": "",
@@ -37,6 +37,21 @@
    "doc_view": "List",
    "label": "Cart",
    "link_to": "Cart",
+   "type": "DocType"
+  },
+  {
+   "color": "#39E4A5",
+   "doc_view": "List",
+   "format": "{} Active",
+   "label": "Memberships",
+   "link_to": "Memberships",
+   "stats_filter": "",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Club Tour",
+   "link_to": "Club Tour",
    "type": "DocType"
   },
   {
@@ -80,13 +95,7 @@
    "label": "Valet Parking",
    "link_to": "Valet Parking",
    "type": "DocType"
-  },
-  {
-   "doc_view": "List",
-   "label": "Club Tour",
-   "link_to": "Club Tour",
-   "type": "DocType"
   }
  ],
- "shortcuts_label": " "
+ "shortcuts_label": " Quick Access"
 }

@@ -21,6 +21,7 @@
   "preferred_time_between",
   "tour_details_section",
   "assign_cec",
+  "cec_mobile_number",
   "column_break_15",
   "date",
   "column_break_18",
@@ -184,10 +185,17 @@
    "fieldtype": "Select",
    "label": "To",
    "options": "\n07:30\n08:00\n08:30\n09:00\n09:30\n10:00\n10:30\n11:00\n11:30\n12:00\n12:30\n13:00\n13:30\n14:00\n14:30\n15:00\n15:30\n16:00\n16:30\n17:00\n17:30\n18:00\n18:30\n19:00\n19:30\n20:00\n20:30\n21:00\n21:30"
+  },
+  {
+   "fetch_from": "assign_cec.mobile_no",
+   "fieldname": "cec_mobile_number",
+   "fieldtype": "Data",
+   "label": "CEC Mobile Number",
+   "read_only": 1
   }
  ],
  "links": [],
- "modified": "2021-05-07 14:03:53.126566",
+ "modified": "2021-06-06 15:24:47.963342",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club Tour",

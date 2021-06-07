@@ -69,60 +69,106 @@ frappe.ui.form.on("Fitness Training Appointment", {
         // Mark appointment as 'Completed'
         if (frm.doc.payment_status == "Paid" && frm.doc.appointment_status == "Checked-in") {
             frm.add_custom_button(__('Complete'), function() {
-                frappe.call({
-                    method: 'club_crm.club_crm.doctype.fitness_training_appointment.fitness_training_appointment.complete',
-                    args: { appointment_id: frm.doc.name },
-                    callback: function(r) {
-                        cur_frm.reload_doc();
-                    }
-                });
+                frappe.confirm("Please confirm to complete this appointment.",
+                    () => {
+                        // action to perform if Yes is selected
+                        frappe.call({
+                            method: 'club_crm.club_crm.doctype.fitness_training_appointment.fitness_training_appointment.complete',
+                            args: { appointment_id: frm.doc.name },
+                            callback: function(r) {
+                                cur_frm.reload_doc();
+                            }
+                        });
+                    }, () => {
+                        // action to perform if No is selected
+                    })
             }, __("Set Status"));
 
             frm.page.add_menu_item(__("Set as Complete"), function() {
-                frappe.call({
-                    method: 'club_crm.club_crm.doctype.fitness_training_appointment.fitness_training_appointment.complete',
-                    args: { appointment_id: frm.doc.name },
-                    callback: function(r) {
-                        cur_frm.reload_doc();
-                    }
-                });
+                frappe.confirm("Please confirm to complete this appointment.",
+                    () => {
+                        // action to perform if Yes is selected
+                        frappe.call({
+                            method: 'club_crm.club_crm.doctype.fitness_training_appointment.fitness_training_appointment.complete',
+                            args: { appointment_id: frm.doc.name },
+                            callback: function(r) {
+                                cur_frm.reload_doc();
+                            }
+                        });
+                    }, () => {
+                        // action to perform if No is selected
+                    })
             });
         }
 
         // Mark appointment as 'No-show'
         if (!frm.is_new() && frm.doc.appointment_status == "Open") {
             frm.add_custom_button(__('No Show'), function() {
-                frappe.call({
-                    method: 'club_crm.club_crm.doctype.fitness_training_appointment.fitness_training_appointment.no_show',
-                    args: { appointment_id: frm.doc.name },
-                    callback: function(r) {
-                        cur_frm.reload_doc();
-                    }
-                });
+                frappe.confirm("Please confirm to mark this appointment as 'No-Show'",
+                    () => {
+                        // action to perform if Yes is selected
+                        frappe.call({
+                            method: 'club_crm.club_crm.doctype.fitness_training_appointment.fitness_training_appointment.no_show',
+                            args: { appointment_id: frm.doc.name },
+                            callback: function(r) {
+                                cur_frm.reload_doc();
+                            }
+                        });
+                    }, () => {
+                        // action to perform if No is selected
+                    })
             }, __("Set Status"));
 
             frm.page.add_menu_item(__("Set as No-Show"), function() {
-                frappe.call({
-                    method: 'club_crm.club_crm.doctype.fitness_training_appointment.fitness_training_appointment.no_show',
-                    args: { appointment_id: frm.doc.name },
-                    callback: function(r) {
-                        cur_frm.reload_doc();
-                    }
-                });
+                frappe.confirm("Please confirm to mark this appointment as 'No-Show'",
+                    () => {
+                        // action to perform if Yes is selected
+                        frappe.call({
+                            method: 'club_crm.club_crm.doctype.fitness_training_appointment.fitness_training_appointment.no_show',
+                            args: { appointment_id: frm.doc.name },
+                            callback: function(r) {
+                                cur_frm.reload_doc();
+                            }
+                        });
+                    }, () => {
+                        // action to perform if No is selected
+                    })
             });
         }
 
         // Cancel an appointment
         if (!frm.is_new() && (frm.doc.appointment_status == "Scheduled" || frm.doc.appointment_status == "Open" || frm.doc.appointment_status == "Draft")) {
             frm.add_custom_button(__('Cancel'), function() {
-                frappe.call({
-                    method: 'club_crm.club_crm.doctype.fitness_training_appointment.fitness_training_appointment.cancel_appointment',
-                    args: { appointment_id: frm.doc.name },
-                    callback: function(r) {
-                        cur_frm.reload_doc();
-                    }
-                });
+                frappe.confirm('Please confirm to cancel this appointment',
+                    () => {
+                        // action to perform if Yes is selected
+                        frappe.call({
+                            method: 'club_crm.club_crm.doctype.fitness_training_appointment.fitness_training_appointment.cancel_appointment',
+                            args: { appointment_id: frm.doc.name },
+                            callback: function(r) {
+                                cur_frm.reload_doc();
+                            }
+                        });
+                    }, () => {
+                        // action to perform if No is selected
+                    })
             }, __("Set Status"));
+
+            frm.page.add_menu_item(__("Cancel"), function() {
+                frappe.confirm('Please confirm to cancel this appointment',
+                    () => {
+                        // action to perform if Yes is selected
+                        frappe.call({
+                            method: 'club_crm.club_crm.doctype.fitness_training_appointment.fitness_training_appointment.cancel_appointment',
+                            args: { appointment_id: frm.doc.name },
+                            callback: function(r) {
+                                cur_frm.reload_doc();
+                            }
+                        });
+                    }, () => {
+                        // action to perform if No is selected
+                    })
+            });
         }
 
         if (frm.doc.appointment_status == "Cancelled" || frm.doc.appointment_status == "No Show") {

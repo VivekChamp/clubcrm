@@ -11,6 +11,7 @@ from frappe import _
 from frappe.model.document import Document
 from club_crm.api.wallet import get_balance
 from club_crm.club_crm.doctype.client_sessions.client_sessions import check_spa_bookings
+from club_crm.club_crm.doctype.service_staff_commissions.service_staff_commissions import add_spa_commission
 from frappe.model.mapper import get_mapped_doc
 
 class SpaAppointment(Document):
@@ -161,6 +162,8 @@ class SpaAppointment(Document):
 						self.appointment_status = 'Scheduled'
 				else:
 					self.appointment_status = 'Draft'
+		if self.appointment_status=="Complete" and self.payment_status=="Paid":
+			frappe.db.set_value("Spa Appointment",self.name,"docstatus",1)
 
 	def validate_overlaps(self):
 		if type(self.start_time) == str:
@@ -325,16 +328,19 @@ def cancel_appointment(appointment_id):
 		frappe.db.set_value('Cart', appointment.cart, 'payment_status', 'Cancelled')
 		frappe.db.commit()
 		
-	if appointment.payment_status == "Paid":
+	if appointment.online == 1 and appointment.payment_status == "Paid":
 		doc= frappe.get_doc({
 			"doctype": 'Wallet Transaction',
 			"online": 1,
 			"client_id": appointment.client_id,
+			"transaction_status": 'Complete',
 			"transaction_type": 'Refund',
 			"amount": appointment.rate,
 			"payment_type": 'Spa'
 		})
 		doc.save()
+
+	frappe.msgprint(msg="Appointment has been cancelled", title='Success')
 
 @frappe.whitelist()
 def no_show(appointment_id):
@@ -349,12 +355,16 @@ def no_show(appointment_id):
 		doc.booked_sessions -= 1
 		doc.save()
 
+	frappe.msgprint(msg="Appointment marked as 'No Show'", title='Success')
+
 @frappe.whitelist()
 def complete(appointment_id):
 	appointment = frappe.get_doc('Spa Appointment', appointment_id)
+	add_spa_commission(appointment.appointment_date, appointment.service_staff, appointment.name)
+	frappe.db.set_value("Spa Appointment",appointment_id,"commission_processed",1)
 	frappe.db.set_value("Spa Appointment",appointment_id,"appointment_status","Complete")
-	# frappe.db.set_value("Spa Appointment",appointment_id,"color","#20a7ff")
-	frappe.db.set_value("Spa Appointment",appointment_id,"docstatus",1)
+	if appointment.payment_status=="Paid":	
+		frappe.db.set_value("Spa Appointment",appointment_id,"docstatus",1)
 	doc = frappe.get_doc('Check In', appointment.checkin_document)
 	doc.check_out_time = now_datetime()
 	doc.save()
@@ -365,6 +375,7 @@ def complete(appointment_id):
 		doc.booked_sessions -= 1
 		doc.save()
 
+	frappe.msgprint(msg="Appointment has been marked as 'Completed'", title='Success')
 	#For cancellation
 	# if appointment.invoiced:
 	# 	sales_invoice = check_sales_invoice_exists(appointment)

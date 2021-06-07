@@ -17,6 +17,7 @@
   "column_break_3",
   "order_status",
   "payment_status",
+  "order_type",
   "card",
   "cash",
   "order_item_details_section",
@@ -225,10 +226,16 @@
    "fieldtype": "Currency",
    "label": "Balance Amount",
    "read_only": 1
+  },
+  {
+   "fieldname": "order_type",
+   "fieldtype": "Select",
+   "label": "Order Type",
+   "options": "\nDine-in\nTake Away"
   }
  ],
  "links": [],
- "modified": "2021-05-29 02:19:23.228291",
+ "modified": "2021-06-04 13:15:56.436823",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Food Order Entry",
