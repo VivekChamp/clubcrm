@@ -12,7 +12,6 @@ from club_crm.club_crm.utils.push_notification import send_push
 from club_crm.club_crm.utils.date import add_month
 from frappe.utils import getdate, get_time, flt, cint
 from frappe.model.naming import getseries
-
 from club_crm.club_crm.doctype.client_sessions.client_sessions import create_benefit_sessions
 from frappe.model.document import Document
 
@@ -418,6 +417,7 @@ def cancel_membership(appointment_id):
 	mem = frappe.get_doc('Memberships', appointment_id)
 	mem.membership_status = "Cancelled"
 	mem.save()
+	frappe.msgprint(msg = "Membership has been cancelled", title="Success")
 
 @frappe.whitelist()
 def update_membership_status():

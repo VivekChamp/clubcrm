@@ -11,7 +11,9 @@
   "employee_name",
   "column_break_3",
   "mobile_no",
-  "email"
+  "email",
+  "section_break_8",
+  "grace_time"
  ],
  "fields": [
   {
@@ -56,11 +58,23 @@
    "fieldtype": "Data",
    "label": "Mobile Number",
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "3",
+   "description": "in month(s)",
+   "fieldname": "grace_time",
+   "fieldtype": "Select",
+   "label": "Grace time for membership renewal",
+   "options": "0\n1\n2\n3\n4\n5\n6"
   }
  ],
  "issingle": 1,
  "links": [],
- "modified": "2021-04-11 15:23:29.887266",
+ "modified": "2021-06-08 20:24:27.545255",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Settings",

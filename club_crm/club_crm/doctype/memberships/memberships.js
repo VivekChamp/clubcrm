@@ -49,27 +49,23 @@ frappe.ui.form.on('Memberships', {
                         cur_frm.reload_doc();
                     }
                 });
-                // frappe.msgprint({
-                //     title: __('Notification'),
-                //     indicator: 'green',
-                //     message: __('Membership has been activated')
-                // });
             }, __("Set"));
         }
         if (frm.doc.membership_status == "Active") {
             frm.add_custom_button(__('Cancel'), function() {
-                frappe.call({
-                    method: 'club_crm.club_crm.doctype.memberships.memberships.cancel_membership',
-                    args: { appointment_id: frm.doc.name },
-                    callback: function(r) {
-                        cur_frm.reload_doc();
-                    }
-                });
-                frappe.msgprint({
-                    title: __('Notification'),
-                    indicator: 'red',
-                    message: __('Membership has been cancelled')
-                });
+                frappe.confirm("Please confirm to cancel this membership",
+                    () => {
+                        // action to perform if Yes is selected
+                        frappe.call({
+                            method: 'club_crm.club_crm.doctype.memberships.memberships.cancel_membership',
+                            args: { appointment_id: frm.doc.name },
+                            callback: function(r) {
+                                cur_frm.reload_doc();
+                            }
+                        });
+                    }, () => {
+                        // action to perform if No is selected
+                    })
             });
         }
         frm.add_custom_button(__("Extend Validity"), function() {
@@ -111,11 +107,16 @@ frappe.ui.form.on('Memberships', {
             d.show();
         });
 
-        // frm.add_custom_button(__("Renew Membership"), function() {
-        //     frappe.model.open_mapped_doc({
-        //         method: 'club_crm.club_crm.doctype.memberships_application.memberships_application.renew_membership_single',
-        //         frm: frm,
-        //     });
-        // });
+        if (frm.doc.membership_status == "Expired") {
+            frm.add_custom_button(__("Renew Membership"), function() {
+                frappe.call({
+                    method: 'club_crm.club_crm.doctype.memberships_application.memberships_application.renew_membership',
+                    args: { membership_id: frm.doc.name },
+                    callback: function(r) {
+                        cur_frm.reload_doc();
+                    }
+                });
+            });
+        }
     }
 });

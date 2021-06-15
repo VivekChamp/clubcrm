@@ -36,7 +36,9 @@
   "sales_invoice",
   "transaction_date",
   "transaction_reference",
-  "amended_from"
+  "amended_from",
+  "ready_notify",
+  "order_notify_client"
  ],
  "fields": [
   {
@@ -232,10 +234,24 @@
    "fieldtype": "Select",
    "label": "Order Type",
    "options": "\nDine-in\nTake Away"
+  },
+  {
+   "default": "0",
+   "fieldname": "ready_notify",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Ready notification"
+  },
+  {
+   "default": "0",
+   "fieldname": "order_notify_client",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Order notification to client"
   }
  ],
  "links": [],
- "modified": "2021-06-04 13:15:56.436823",
+ "modified": "2021-06-09 15:21:11.982947",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Food Order Entry",

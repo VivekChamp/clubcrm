@@ -140,7 +140,8 @@
    "fieldtype": "Int",
    "label": "Total Sessions",
    "non_negative": 1,
-   "precision": "0"
+   "precision": "0",
+   "read_only_depends_on": "eval:doc.is_benefit==0"
   },
   {
    "fieldname": "column_break_16",
@@ -191,6 +192,7 @@
    "default": "0.0",
    "fieldname": "validity",
    "fieldtype": "Duration",
+   "hidden": 1,
    "hide_seconds": 1,
    "label": "Validity",
    "read_only": 1
@@ -318,7 +320,7 @@
   }
  ],
  "links": [],
- "modified": "2021-05-29 11:51:20.677507",
+ "modified": "2021-06-14 15:49:37.515460",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client Sessions",
