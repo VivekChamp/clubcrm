@@ -18,15 +18,17 @@ class FitnessTrainingAppointment(Document):
 		self.set_appointment_date_time()
 		if self.online != 1:
 			self.validate_session_expiry()
-			self.validate_session_count()
 		# self.validate_past_days()
 		self.set_total_duration()
 		self.validate_overlaps()
 		self.set_prices()
 		self.set_status()
-		# self.set_color()
 		self.set_title()
-	
+
+	def before_insert(self):
+		if self.online != 1:
+			self.validate_session_count()
+
 	def after_insert(self):
 		if self.session==1:
 			self.set_booked_session_count()
@@ -321,3 +323,16 @@ def update_appointment_status():
 				elif appointment_date < today:
 					frappe.db.set_value('Fitness Training Appointment', appointment.name, 'appointment_status', 'No Show')
 					frappe.db.commit()
+
+@frappe.whitelist()
+def cancel_appointment_online(appointment_id):
+	appointment = frappe.get_doc('Fitness Training Appointment', appointment_id)
+	frappe.db.set_value("Fitness Training Appointment",appointment_id,"appointment_status","Cancelled")
+	frappe.db.set_value("Fitness Training Appointment",appointment_id,"docstatus",2)
+
+	if appointment.session==1:
+		doc = frappe.get_doc('Client Sessions', appointment.session_name)
+		doc.booked_sessions -= 1
+		doc.save()
+		
+	return 1

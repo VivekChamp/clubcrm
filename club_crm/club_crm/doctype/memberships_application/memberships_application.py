@@ -6,8 +6,9 @@ from __future__ import unicode_literals
 import frappe
 from frappe import _
 from frappe.utils import getdate, get_time, flt
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from club_crm.club_crm.doctype.client_sessions.client_sessions import create_session
+from club_crm.club_crm.utils.date import add_month
 from club_crm.club_crm.utils.sms_notification import send_sms 
 from club_crm.club_crm.utils.push_notification import send_push
 from frappe.model.document import Document
@@ -120,8 +121,20 @@ class MembershipsApplication(Document):
 		self.net_total = 0.0
 		
 		mem_plan = frappe.get_doc('Memberships Plan', self.membership_plan)
-		if self.application_type == "New":
-			self.joining_fee = mem_plan.joining_fee_adult * float(self.no_of_adults)
+		if self.application_type == "New" or self.application_type == "Late Renew":
+			if self.custom_joining_fee == 0:
+				self.joining_fee_applicable = self.no_of_adults
+				self.joining_fee = mem_plan.joining_fee_adult * float(self.joining_fee_applicable)
+			else:
+				self.joining_fee = mem_plan.joining_fee_adult * float(self.joining_fee_applicable)
+		
+		if self.application_type == "Early Renew":
+			if self.custom_joining_fee == 0:
+				self.joining_fee_applicable = 0
+				self.joining_fee = mem_plan.joining_fee_adult * float(self.joining_fee_applicable)
+			else:
+				self.joining_fee = mem_plan.joining_fee_adult * float(self.joining_fee_applicable)
+
 		self.membership_fee_adult = mem_plan.membership_fee_adult * float(self.no_of_adults)
 		
 		if self.membership_type == "Family Membership":
@@ -241,7 +254,7 @@ class MembershipsApplication(Document):
 
 	def send_notification(self):
 		# Notification for new application to CE Manager
-		if self.new_notify==0 and self.application_status=="Pending":
+		if self.new_notify==0 and self.application_type=="New" and self.application_status=="Pending":
 			msg = "New membership application has been received from "+self.first_name_1+" "+self.last_name_1+"."
 			users = frappe.get_all('User', filters={'role_profile_name': 'CE Manager'}, fields=['name', 'mobile_no'])
 			if users:
@@ -352,23 +365,44 @@ def update_payment(docname, amount):
 	doc.payment_status = "Paid"
 	doc.save()
 
-# @frappe.whitelist()
-# def renew_membership_single(source_name, target_doc=None):
-# 	def set_missing_values(source, target):
-# 		target.application_type = 'Renew'
-# 		target.existing_client_1 = 1
+@frappe.whitelist()
+def renew_membership(membership_id):
+	today = date.today()
+	membership = frappe.get_doc('Memberships', membership_id)
+	setting = frappe.get_doc('Memberships Settings')
+	grace_date = add_month(membership.expiry_date, int(setting.grace_time))
+	time = grace_date - today
+	if time >= timedelta(days=0):
+		application_type = "Early Renew"
+	else:
+		application_type = "Late Renew"
 
-# 	doc = get_mapped_doc('Memberships', source_name, {
-# 			'Memberships': {
-# 				'doctype': 'Memberships Application',
-# 				'field_map': {
-# 					'membership_category': 'membership_category',
-# 					'membership_plan': 'membership_plan',
-# 					'assigned_to': 'assigned_to_1',
-# 					'client_id': 'client_id_1',
-# 					'occupation_1': 'client_id_1',
-# 					'company_1': 'client_id_1'
-# 				}
-# 			}
-# 		}, target_doc)
-# 	return doc
+	if membership.membership_type=="Single Membership":	
+		doc = frappe.get_doc({
+			'doctype': 'Memberships Application',
+			'application_type': application_type,
+			'membership_plan': membership.membership_plan,
+			'membership_category': membership.membership_category,
+			'existing_client_1': 1,
+			'client_id': membership.primary_client_id
+		})
+		doc.save()
+		frappe.msgprint('Single Membership renewal application has been created. Please check the membership application list.')
+	
+	if membership.membership_type=="Couple Membership":
+		client_2 = frappe.get_doc('Client', membership.client_id_2)
+		doc = frappe.get_doc({
+			'doctype': 'Memberships Application',
+			'application_type': application_type,
+			'membership_plan': membership.membership_plan,
+			'membership_category': membership.membership_category,
+			'existing_client_1': 1,
+			'client_id': membership.primary_client_id,
+			'existing_client_1': 1,
+			'client_id_2': membership.client_id_2,
+			'occupation_2': client_2.occupation,
+			'company_2': client_2.company,
+			'nationality_2': client_2.nationality
+		})
+		doc.save()
+		frappe.msgprint('Couple Membership renewal application has been created. Please check the membership application list.')

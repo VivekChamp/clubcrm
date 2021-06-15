@@ -107,7 +107,8 @@ scheduler_events = {
  		"club_crm.club_crm.doctype.spa_appointment.spa_appointment.update_appointment_status",
 		"club_crm.club_crm.doctype.fitness_training_appointment.fitness_training_appointment.update_appointment_status",
         "club_crm.club_crm.doctype.client.client.auto_checkout",
-		"club_crm.club_crm.doctype.memberships.memberships.update_membership_status"
+		"club_crm.club_crm.doctype.memberships.memberships.update_membership_status",
+		"club_crm.club_crm.doctype.client_sessions.client_sessions.update_session_status"
  	],
 	"hourly": [
 		"club_crm.club_crm.doctype.spa_appointment.spa_appointment.update_appointment_status"

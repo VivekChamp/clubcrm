@@ -2,6 +2,7 @@ import frappe
 from frappe.website.utils import is_signup_enabled
 from frappe.utils import escape_html
 from frappe.utils import getdate, get_time, flt, now_datetime
+from club_crm.club_crm.doctype.fitness_training_appointment.fitness_training_appointment import cancel_appointment_online
 from datetime import datetime, timedelta, date, time
 from frappe import throw, msgprint, _
 from club_crm.api.wallet import get_balance
@@ -225,16 +226,10 @@ def cancel_request(doc_id):
     #         "status_message": "Fitness Training Appointmnent already cancelled"
     #         }
 
-
 @frappe.whitelist()
 def cancel_session(appointment_id):
-    doc= frappe.get_doc('Fitness Training Appointment', appointment_id)
-    if doc.docstatus==1:
-        frappe.db.set_value('Fitness Training Appointment', appointment_id, {
-            'status': 'Cancelled',
-            'docstatus': 2
-            })
-        doc.reload()
+    doc = cancel_appointment_online(appointment_id)
+    if doc == 1:
         frappe.response["message"] = {
             "status": 1,
             "status_message": "Fitness Training Appointment has been cancelled"

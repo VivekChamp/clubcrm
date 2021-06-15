@@ -519,10 +519,10 @@
   },
   {
    "default": "0",
-   "description": "This checkbox implies that this booking is part of paid sessions/packages.",
+   "description": "This checkbox implies that this booking is part of paid sessions/packages/benefits.",
    "fieldname": "session",
    "fieldtype": "Check",
-   "label": "Session Booking"
+   "label": "Session/Benefit Booking"
   },
   {
    "fieldname": "section_break_42",
@@ -625,7 +625,7 @@
   }
  ],
  "links": [],
- "modified": "2021-06-01 10:07:46.219494",
+ "modified": "2021-06-14 14:40:17.102855",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Appointment",

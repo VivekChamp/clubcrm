@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 import frappe
-from frappe.utils import escape_html
-from frappe import throw, msgprint, _
+from datetime import datetime, timedelta, date, time
+from frappe.utils import getdate, get_time, flt, now_datetime
 
 @frappe.whitelist()
 def member_checkin(client_id):
@@ -142,3 +142,15 @@ def club_checkin(client_id):
             "Status": 1,
             "Status Message":"Checked in successfully"
         }
+
+@frappe.whitelist(allow_guest=True)
+def get_date_time():
+    date_time = datetime.now()
+    date = date_time.date()
+    time = datetime.strftime(date_time, "%H:%M:%S")
+
+    frappe.response["message"] = {
+        'datetime': date_time,
+        'date': date,
+        'time': time
+    }

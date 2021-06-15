@@ -4,8 +4,9 @@ from frappe.utils import now_datetime
 from frappe.utils import escape_html
 from frappe import throw, msgprint, _
 
+@frappe.whitelist()
 def get_vehicle_vehicleno(vehicle_no):
-    vehicle = frappe.get_all('Valet Parking', filters={'vehicle_no': vehicle_id, 'status': 'Parked'}, fields=['name','date','client_id','client_name','membership_status','membership_id','vehicle_no','vehicle_type','location','parking_time','valet_staff'])
+    vehicle = frappe.get_all('Valet Parking', filters={'vehicle_no': vehicle_no, 'status': 'Parked'}, fields=['name','date','client_id','client_name','membership_status','membership_id','vehicle_no','vehicle_type','location','parking_time','valet_staff'])
     frappe.response["message"] =  vehicle
 
 @frappe.whitelist()

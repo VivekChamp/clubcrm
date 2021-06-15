@@ -1,101 +1,106 @@
 {
- "cards_label": "Menu",
- "category": "Domains",
- "charts": [],
- "creation": "2020-10-08 02:26:52.788984",
- "developer_mode_only": 0,
- "disable_user_customization": 1,
- "docstatus": 0,
- "doctype": "Workspace",
- "extends_another_page": 0,
- "hide_custom": 1,
- "icon": "crm",
- "idx": 0,
- "is_default": 0,
- "is_standard": 1,
- "label": "Club CRM",
- "links": [],
- "modified": "2021-05-27 13:18:53.996920",
- "modified_by": "Administrator",
- "module": "Club CRM",
- "name": "Club CRM",
- "owner": "Administrator",
- "pin_to_bottom": 0,
- "pin_to_top": 0,
- "shortcuts": [
-  {
-   "color": "#449CF0",
-   "doc_view": "List",
-   "format": "{}",
-   "icon": "",
-   "label": "Client List",
-   "link_to": "Client",
-   "stats_filter": "",
-   "type": "DocType"
-  },
-  {
-   "doc_view": "List",
-   "label": "Cart",
-   "link_to": "Cart",
-   "type": "DocType"
-  },
-  {
-   "color": "#39E4A5",
-   "doc_view": "List",
-   "format": "{} Active",
-   "label": "Memberships",
-   "link_to": "Memberships",
-   "stats_filter": "",
-   "type": "DocType"
-  },
-  {
-   "doc_view": "List",
-   "label": "Club Tour",
-   "link_to": "Club Tour",
-   "type": "DocType"
-  },
-  {
-   "doc_view": "List",
-   "label": "Membership Applications",
-   "link_to": "Memberships Application",
-   "type": "DocType"
-  },
-  {
-   "doc_view": "Calendar",
-   "label": "Spa Appointments",
-   "link_to": "Spa Appointment",
-   "type": "DocType"
-  },
-  {
-   "doc_view": "Calendar",
-   "label": "Fitness Training",
-   "link_to": "Fitness Training Appointment",
-   "type": "DocType"
-  },
-  {
-   "doc_view": "Calendar",
-   "label": "Group Class",
-   "link_to": "Group Class",
-   "type": "DocType"
-  },
-  {
-   "doc_view": "List",
-   "label": "Restaurant Orders",
-   "link_to": "Food Order Entry",
-   "type": "DocType"
-  },
-  {
-   "doc_view": "List",
-   "label": "Online Orders",
-   "link_to": "Online Order",
-   "type": "DocType"
-  },
-  {
-   "doc_view": "List",
-   "label": "Valet Parking",
-   "link_to": "Valet Parking",
-   "type": "DocType"
-  }
- ],
- "shortcuts_label": " Quick Access"
+    "cards_label": "Menu",
+    "category": "Domains",
+    "charts": [],
+    "creation": "2020-10-08 02:26:52.788984",
+    "developer_mode_only": 0,
+    "disable_user_customization": 1,
+    "docstatus": 0,
+    "doctype": "Workspace",
+    "extends_another_page": 0,
+    "hide_custom": 1,
+    "icon": "crm",
+    "idx": 0,
+    "is_default": 0,
+    "is_standard": 1,
+    "label": "Club CRM",
+    "links": [],
+    "modified": "2021-06-13 14:19:47.746980",
+    "modified_by": "Administrator",
+    "module": "Club CRM",
+    "name": "Club CRM",
+    "owner": "Administrator",
+    "pin_to_bottom": 0,
+    "pin_to_top": 0,
+    "shortcuts": [{
+            "color": "#449CF0",
+            "doc_view": "List",
+            "format": "{}",
+            "icon": "",
+            "label": "Client List",
+            "link_to": "Client",
+            "stats_filter": "",
+            "type": "DocType"
+        },
+        {
+            "doc_view": "List",
+            "label": "Cart",
+            "link_to": "Cart",
+            "type": "DocType"
+        },
+        {
+            "color": "#39E4A5",
+            "doc_view": "List",
+            "format": "{} Active",
+            "label": "Memberships",
+            "link_to": "Memberships",
+            "stats_filter": "",
+            "type": "DocType"
+        },
+        {
+            "doc_view": "List",
+            "label": "Club Tour",
+            "link_to": "Club Tour",
+            "type": "DocType"
+        },
+        {
+            "doc_view": "List",
+            "label": "Membership Applications",
+            "link_to": "Memberships Application",
+            "type": "DocType"
+        },
+        {
+            "doc_view": "List",
+            "label": "Check Ins",
+            "link_to": "Check In",
+            "type": "DocType"
+        },
+        {
+            "doc_view": "Calendar",
+            "label": "Spa Appointments",
+            "link_to": "Spa Appointment",
+            "type": "DocType"
+        },
+        {
+            "doc_view": "Calendar",
+            "label": "Fitness Training",
+            "link_to": "Fitness Training Appointment",
+            "type": "DocType"
+        },
+        {
+            "doc_view": "Calendar",
+            "label": "Group Class",
+            "link_to": "Group Class",
+            "type": "DocType"
+        },
+        {
+            "doc_view": "List",
+            "label": "Restaurant Orders",
+            "link_to": "Food Order Entry",
+            "type": "DocType"
+        },
+        {
+            "doc_view": "List",
+            "label": "Online Orders",
+            "link_to": "Online Order",
+            "type": "DocType"
+        },
+        {
+            "doc_view": "List",
+            "label": "Valet Parking",
+            "link_to": "Valet Parking",
+            "type": "DocType"
+        }
+    ],
+    "shortcuts_label": " Quick Access"
 }
