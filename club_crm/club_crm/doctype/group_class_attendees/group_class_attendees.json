@@ -8,32 +8,34 @@
  "engine": "InnoDB",
  "field_order": [
   "naming_series",
+  "client_details",
   "date",
+  "client_id",
+  "client_name",
+  "column_break_5",
+  "membership_status",
+  "member_id",
+  "mobile_number",
+  "column_break_4",
+  "class_status",
+  "attendee_status",
+  "attendee_details_section",
   "group_class",
   "group_class_name",
-  "column_break_5",
+  "column_break_10",
   "class_date",
   "from_time",
   "to_time",
-  "column_break_4",
-  "class_status",
+  "column_break_18",
   "trainer_name",
-  "attendee_details_section",
-  "client_id",
-  "client_name",
-  "member_id",
-  "column_break_10",
-  "membership_status",
-  "mobile_number",
-  "checked_in",
-  "amended_from"
+  "checked_in"
  ],
  "fields": [
   {
    "default": "Today",
    "fieldname": "date",
    "fieldtype": "Date",
-   "label": "Booked Date",
+   "label": "Booking Date",
    "read_only": 1
   },
   {
@@ -45,31 +47,23 @@
    "read_only": 1
   },
   {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Group Class Attendees",
-   "print_hide": 1,
-   "read_only": 1
-  },
-  {
    "fieldname": "group_class",
    "fieldtype": "Link",
    "label": "Group Class",
-   "options": "Group Class"
+   "options": "Group Class",
+   "set_only_once": 1
   },
   {
    "fetch_from": "group_class.class_from_time",
    "fieldname": "from_time",
-   "fieldtype": "Time",
+   "fieldtype": "Data",
    "label": "From Time",
    "read_only": 1
   },
   {
    "fetch_from": "group_class.class_to_time",
    "fieldname": "to_time",
-   "fieldtype": "Time",
+   "fieldtype": "Data",
    "label": "To Time",
    "read_only": 1
   },
@@ -80,18 +74,20 @@
   {
    "fieldname": "attendee_details_section",
    "fieldtype": "Section Break",
-   "label": "Attendee Details"
+   "label": "Class Details"
   },
   {
    "fieldname": "client_id",
    "fieldtype": "Link",
    "label": "Client ID",
-   "options": "Client"
+   "options": "Client",
+   "set_only_once": 1
   },
   {
    "fetch_from": "client_id.client_name",
    "fieldname": "client_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Client Name",
    "read_only": 1
   },
@@ -125,8 +121,10 @@
    "default": "Scheduled",
    "fieldname": "class_status",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Class Status",
-   "options": "Scheduled\nOpen\nCompleted\nCancelled\nNo Show"
+   "options": "Scheduled\nOpen\nComplete\nCancelled",
+   "read_only": 1
   },
   {
    "fetch_from": "group_class.trainer_name",
@@ -162,11 +160,27 @@
   {
    "fieldname": "column_break_5",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "client_details",
+   "fieldtype": "Section Break",
+   "label": "Client Details"
+  },
+  {
+   "fieldname": "column_break_18",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "attendee_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Attendee Status",
+   "options": "Waiting List\nScheduled\nOpen\nChecked-in\nComplete\nCancelled\nNo Show",
+   "read_only": 1
   }
  ],
- "is_submittable": 1,
  "links": [],
- "modified": "2021-04-06 02:13:33.965506",
+ "modified": "2021-06-28 17:35:15.988824",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class Attendees",

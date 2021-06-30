@@ -13,24 +13,29 @@ class GroupClass(Document):
     def validate(self):
         self.set_datetime()
         self.set_title()
+        self.set_remaining()
         self.set_status()
 
-    def before_save(self):
-        self.remaining = self.capacity
-
     def set_datetime(self):
-        self.from_time = "%s %s" % (self.class_date, self.class_from_time or "00:00:00")
-        self.to_time = "%s %s" % (self.class_date, self.class_to_time or "00:00:00")
+        class_from_time = convert24(self.class_from_time)
+        self.from_time = "%s %s" % (self.class_date, class_from_time or "00:00:00")
+
+        class_to_time = convert24(self.class_to_time)
+        self.to_time = "%s %s" % (self.class_date, class_to_time or "00:00:00")
 
     def set_title(self):
         self.title = _('{0} with {1}').format(self.group_class_name,self.trainer_name)
 
+    def set_remaining(self):
+        self.remaining = self.capacity - self.booked
+
     def set_status(self):
+        today = getdate()
 		# If appointment is created for today set status as Open else Scheduled
-        if not self.class_status == "Complete":
-            if class_date == today:
+        if not self.class_status == "Complete" or not self.class_status == "Cancelled" or self.class_status == "":
+            if self.class_date == today:
                 self.class_status = "Open"
-            elif class_date > today:
+            elif self.class_date > today:
                 self.class_status = "Scheduled"
 
     def on_update_after_submit(self):
@@ -58,7 +63,7 @@ class GroupClass(Document):
     def set_status(self):
         today = getdate()
         class_date= datetime.strptime(str(self.from_time), '%Y-%m-%d %H:%M:%S')
-        date= class_date.date()
+        date = class_date.date()
 
 		# If appointment is created for today set status as Open else Scheduled
         if not self.class_status == "Complete":
@@ -66,3 +71,42 @@ class GroupClass(Document):
                 self.class_status = "Open"
             elif date > today:
                 self.class_status = "Scheduled"
+
+@frappe.whitelist()
+def convert24(str1):
+	if str1[-3:] == " AM" and str1[:2] == "12":
+		return "00" + str1[2:-3]
+	elif str1[-3:] == " AM":
+		return str1[:-3]
+	elif str1[-3:] == " PM" and str1[:2] == "12":
+		return str1[:-3]
+	else:
+		return str(int(str1[:2]) + 12) + str1[2:8]
+
+@frappe.whitelist()
+def cancel_class(group_class_id):
+    frappe.db.set_value('Group Class', group_class_id, {
+                'class_status': "Cancelled",
+                'docstatus': 2
+            })
+    frappe.db.commit()
+
+    gc_attendees =  frappe.get_all('Group Class Attendees', filters={'group_class': group_class_id})
+    if gc_attendees:
+        for attendee in gc_attendees:
+            frappe.db.set_value('Group Class Attendees', attendee.name, {
+                'attendee_status': "Cancelled",
+                'docstatus': 2
+            })
+            frappe.db.commit()
+
+    frappe.msgprint(msg="Group Class has been cancelled", title='Success')
+
+@frappe.whitelist()
+def complete_class(group_class_id):
+    group_class = frappe.get_doc('Group Class', group_class_id)
+    frappe.db.set_value('Group Class', group_class_id, {
+                'class_status': "Complete",
+                'docstatus': 1
+            })
+    frappe.db.commit()

@@ -12,7 +12,7 @@
   "on_app",
   "column_break_4",
   "members_only",
-  "section_break_4",
+  "section_break_7",
   "naming_series",
   "created_date",
   "group_class_name",
@@ -20,21 +20,24 @@
   "group_class_type",
   "group_class_image",
   "column_break_10",
+  "trainer_name",
   "for_gender",
-  "capacity",
-  "remaining",
+  "location",
   "column_break_3",
   "class_status",
   "booking_status",
-  "location",
-  "section_break_7",
-  "trainer_name",
-  "column_break_8",
+  "section_break_4",
   "class_date",
-  "day",
-  "column_break_27",
   "class_from_time",
   "class_to_time",
+  "column_break_8",
+  "capacity",
+  "waitlist",
+  "column_break_27",
+  "remaining",
+  "booked",
+  "in_waitlist",
+  "day",
   "from_time",
   "to_time",
   "title"
@@ -76,24 +79,26 @@
   {
    "allow_on_submit": 1,
    "fieldname": "remaining",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "in_list_view": 1,
    "label": "Remaining",
+   "non_negative": 1,
    "read_only": 1
   },
   {
    "allow_on_submit": 1,
    "default": "0",
-   "description": "Uncheck to hide this group class from client web/mobile apps",
+   "description": "Uncheck to hide this group class from client apps",
    "fieldname": "on_app",
    "fieldtype": "Check",
    "label": "Show on App"
   },
   {
    "fieldname": "capacity",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "in_list_view": 1,
-   "label": "Capacity",
+   "label": "Class Capacity ",
+   "non_negative": 1,
    "reqd": 1
   },
   {
@@ -163,7 +168,7 @@
   },
   {
    "default": "1",
-   "description": "Uncheck to disable this group class",
+   "description": "Uncheck to disable selecting this group class on CRM",
    "fieldname": "enabled",
    "fieldtype": "Check",
    "label": "Enabled"
@@ -216,14 +221,16 @@
   },
   {
    "fieldname": "class_from_time",
-   "fieldtype": "Time",
+   "fieldtype": "Select",
    "label": "From Time",
+   "options": "\n06:00:00 AM\n06:30:00 AM\n07:00:00 AM\n07:30:00 AM\n08:00:00 AM\n08:30:00 AM\n09:00:00 AM\n09:30:00 AM\n10:00:00 AM\n10:30:00 AM\n11:00:00 AM\n11:30:00 AM\n12:00:00 PM\n12:30:00 PM\n01:00:00 PM\n01:30:00 PM\n02:00:00 PM\n02:30:00 PM\n03:00:00 PM\n03:30:00 PM\n04:00:00 PM\n04:30:00 PM\n05:00:00 PM\n05:30:00 PM\n06:00:00 PM\n06:30:00 PM\n07:00:00 PM\n07:30:00 PM\n08:00:00 PM\n08:30:00 PM\n09:00:00 PM\n09:30:00 PM\n10:00:00 PM",
    "reqd": 1
   },
   {
    "fieldname": "class_to_time",
-   "fieldtype": "Time",
+   "fieldtype": "Select",
    "label": "To Time",
+   "options": "\n06:00:00 AM\n06:30:00 AM\n07:00:00 AM\n07:30:00 AM\n08:00:00 AM\n08:30:00 AM\n09:00:00 AM\n09:30:00 AM\n10:00:00 AM\n10:30:00 AM\n11:00:00 AM\n11:30:00 AM\n12:00:00 PM\n12:30:00 PM\n01:00:00 PM\n01:30:00 PM\n02:00:00 PM\n02:30:00 PM\n03:00:00 PM\n03:30:00 PM\n04:00:00 PM\n04:30:00 PM\n05:00:00 PM\n05:30:00 PM\n06:00:00 PM\n06:30:00 PM\n07:00:00 PM\n07:30:00 PM\n08:00:00 PM\n08:30:00 PM\n09:00:00 PM\n09:30:00 PM\n10:00:00 PM",
    "reqd": 1
   },
   {
@@ -235,11 +242,34 @@
    "fieldtype": "Data",
    "hidden": 1,
    "label": "Title"
+  },
+  {
+   "default": "0",
+   "fieldname": "waitlist",
+   "fieldtype": "Int",
+   "label": "Waitlist Capacity",
+   "non_negative": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "booked",
+   "fieldtype": "Int",
+   "label": "Booked",
+   "non_negative": 1,
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "in_waitlist",
+   "fieldtype": "Int",
+   "label": "Waiting List",
+   "non_negative": 1,
+   "read_only": 1
   }
  ],
  "image_field": "group_class_image",
  "links": [],
- "modified": "2021-04-06 01:58:20.518637",
+ "modified": "2021-06-28 17:20:48.015007",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class",
