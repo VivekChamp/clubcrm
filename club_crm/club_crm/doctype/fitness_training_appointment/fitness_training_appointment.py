@@ -188,10 +188,10 @@ def complete(appointment_id):
 	doc.save()
 
 	if appointment.session==1:
-		doc = frappe.get_doc('Client Sessions', appointment.session_name)
-		doc.used_sessions += 1
-		doc.booked_sessions -= 1
-		doc.save()
+		sess = frappe.get_doc('Client Sessions', appointment.session_name)
+		sess.used_sessions += 1
+		sess.booked_sessions -= 1
+		sess.save()
 	
 	frappe.msgprint(msg="Appointment marked as 'Completed'", title='Success')
 
