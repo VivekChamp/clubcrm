@@ -306,6 +306,8 @@ def submit_cart(cart_id):
 				service_type = "Spa Services"
 			if row.package_type == "Fitness":
 				service_type = "Fitness Services"
+			if row.package_type == "Club":
+				service_type = "Club Services"
 			club_package = frappe.get_doc('Club Packages', row.package_name)
 			if club_package.package_table:
 				for item in club_package.package_table:
