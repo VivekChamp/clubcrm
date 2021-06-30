@@ -1,5 +1,6 @@
 frappe.listview_settings['Client Sessions'] = {
     add_fields: ["member_id", "session_status", "remaining_session_text"],
+    hide_name_column: true,
     // colwidths: {"title": 4, 'session_status':2, "used_sessions": 1, "remaining_sessions":1, "booked_sessions":1},
     get_indicator: function(doc) {
         if (doc.session_status === "Draft") {

@@ -190,14 +190,16 @@ def create_sessions(doc, method=None):
 def update_session_status():
 	# update the status of sessions daily
 	today = getdate()
-	session_list = frappe.get_all('Client Sessions', filters={'session_status': 'Active'}, fields=['name','appointment_status','online','appointment_date'])
+	session_list = frappe.get_all('Client Sessions', filters={'session_status': 'Active'})
 	if session_list:
 		for session in session_list:
-			if type(session.expiry_date) == str:
-				expiry_date= datetime.strptime(session.expiry_date, "%Y-%m-%d")
+			client_session = frappe.get_doc('Client Sessions', session.name)
+			if type(client_session.expiry_date) == str:
+				expiry_date= datetime.strptime(client_session.expiry_date, "%Y-%m-%d")
 			else:
-				expiry_date = session.expiry_date
+				expiry_date = client_session.expiry_date
 
 			# If session is past today's date, set as Expired
 			if expiry_date < today:
-				session.session_status = 'Expired'
+				client_session.session_status = 'Expired'
+				client_session.save()
