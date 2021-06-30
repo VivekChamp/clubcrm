@@ -32,6 +32,7 @@
   "gender_preference",
   "no_member_discount",
   "column_break_21",
+  "therapist_preference",
   "capacity",
   "dependencies_section",
   "male_rooms",
@@ -311,15 +312,23 @@
   },
   {
    "default": "No Preference",
+   "description": "Select gender in case of gender-specific service.",
    "fieldname": "gender_preference",
    "fieldtype": "Select",
    "label": "Gender Preference",
    "options": "\nNo Preference\nMale\nFemale"
+  },
+  {
+   "default": "Same gender for non-members only",
+   "fieldname": "therapist_preference",
+   "fieldtype": "Select",
+   "label": "Therapist Preference",
+   "options": "\nNo preference\nSame gender for non-members only\nSame gender for non-members and members"
   }
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-05-02 00:22:49.199829",
+ "modified": "2021-06-20 13:52:44.314709",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Services",

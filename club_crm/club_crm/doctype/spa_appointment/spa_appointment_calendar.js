@@ -19,6 +19,7 @@ frappe.views.calendar["Spa Appointment"] = {
         views: {
             listOneDay: {
                 type: 'list',
+                titleFormat: 'ddd, DD MMMM YYYY',
                 duration: { days: 1 },
                 buttonText: 'Day list',
                 noEventsMessage: "No appointments for this date"
@@ -31,6 +32,7 @@ frappe.views.calendar["Spa Appointment"] = {
             },
             agendaOneDay: {
                 type: 'agendaDay',
+                titleFormat: 'ddd, DD MMMM YYYY',
                 duration: { days: 1 },
                 buttonText: 'Day',
                 slotDuration: "00:30",

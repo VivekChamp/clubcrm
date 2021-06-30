@@ -10,7 +10,6 @@ from datetime import datetime, timedelta, date, time
 from frappe import _
 from frappe.model.document import Document
 from club_crm.api.wallet import get_balance
-from club_crm.club_crm.doctype.client_sessions.client_sessions import check_spa_bookings
 from club_crm.club_crm.doctype.service_staff_commissions.service_staff_commissions import add_spa_commission
 from frappe.model.mapper import get_mapped_doc
 
