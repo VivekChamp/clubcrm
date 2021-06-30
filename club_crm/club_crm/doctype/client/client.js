@@ -169,6 +169,7 @@ let get_age = function(birth) {
     let years = age.getFullYear() - 1970;
     return years + ' Year(s) ' + age.getMonth() + ' Month(s) ' + age.getDate() + ' Day(s)';
 };
+
 // frappe.ui.form.on("Client", "onload", function(frm) {
 // 	if(frm.doc.membership_status == "Member") {
 // 		$('div[data-fieldname="membership_status"]').css('background-color','#e2fff0')

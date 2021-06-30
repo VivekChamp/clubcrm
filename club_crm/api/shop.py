@@ -11,24 +11,25 @@ from club_crm.api.wallet import get_balance
 
 @frappe.whitelist()
 def get_category():
-    shop_category = frappe.get_all('Item Group', filters={'parent_item_group': "Retail Inventory", 'show_on_app':1}, fields=['name','image'])
+    shop_category = frappe.get_all('Item Group', filters={'parent_item_group': "Retail Inventory", 'show_on_app':1}, fields=['name','image'], order_by="item_group_name asc")
     frappe.response["message"] = {
         "Shop Categories": shop_category
-         }
+    }
 
-@frappe.whitelist()         
+@frappe.whitelist()
 def get_products(category,count):
     client = frappe.db.get("Client", {"email": frappe.session.user})
+    item_group = frappe.get_doc('Item Group', category)
 
     product = []
-    if client.membership_status == "Member":
+    if client.membership_status == "Member" and item_group.no_member_discount == 0:
         discount = 0.0
         memberships = frappe.get_all('Memberships', filters={'membership_id': client.membership_id, 'membership_status':'Active'}, fields=['*'])
         if memberships:
             for mem in memberships:
                 discount = mem.retail_discount
             
-                items = frappe.get_all('Item', filters={'item_group':category, 'disabled': 0}, fields=['*'])
+                items = frappe.get_all('Item', filters={'item_group':category, 'disabled': 0}, fields=['*'], order_by="item_name asc")
                 if items:
                     for item in items:
                         price = frappe.get_all('Item Price', filters={'item_code':item.item_code, 'price_list':'Standard Selling'}, fields=['*'])
@@ -49,8 +50,28 @@ def get_products(category,count):
                                 "member_price": format(member_price, '.2f')
                             })
 
+    elif client.membership_status == "Member" and item_group.no_member_discount == 1:
+        items = frappe.get_all('Item', filters={'item_group':category, 'disabled': 0}, fields=['*'], order_by="item_name asc")
+        if items:
+            for item in items:
+                price = frappe.get_all('Item Price', filters={'item_code':item.item_code, 'price_list':'Standard Selling'}, fields=['*'])
+                if price:
+                    price_1 = price[0]
+                    description = re.sub("<.*?>", "", price_1.item_description)
+                    reg_price= price_1.price_list_rate
+                    product.append({
+                        "item_code": item.item_code,
+                        "item_name": item.item_name,
+                        "item_group": item.item_group,
+                        "image": item.image,
+                        "description": description,
+                        "currency": price_1.currency,
+                        "regular_price": format(reg_price, '.2f'),
+                        "member_price": format(reg_price, '.2f')
+                    })
+
     else:
-        items = frappe.get_all('Item', filters={'item_group':category, 'disabled': 0}, fields=['*'])
+        items = frappe.get_all('Item', filters={'item_group':category, 'disabled': 0}, fields=['*'], order_by="item_name asc")
         if items:
             for item in items:
                 price = frappe.get_all('Item Price', filters={'item_code':item.item_code, 'price_list':'Standard Selling'}, fields=['*'])
@@ -81,7 +102,7 @@ def get_products(category,count):
             "status_message": "No products available for this category"
         }
 
-@frappe.whitelist()         
+@frappe.whitelist()
 def get_product(client_id,category):
     client = frappe.db.get("Client", {"email": frappe.session.user})
     # client = frappe.get_doc('Client', client_id)
@@ -152,7 +173,7 @@ def get_product(client_id,category):
                 "status_message": "No products available for this category"
             }
 
-@frappe.whitelist()         
+@frappe.whitelist()
 def add_to_cart(client_id, item_code, qty):
     discount = 0.0
     client = frappe.db.get("Client", {"email": frappe.session.user})
@@ -180,19 +201,6 @@ def add_to_cart(client_id, item_code, qty):
                 'discount': discount
             })
             doc.save()
-
-            # items = []
-            # for item in doc.item:
-            #     items.append({
-            #         'name': item.name,
-            #         'parent': item.parent,
-            #         'item_code': item.item_code,
-            #         'item_name': item.item_name,
-            #         'quantity': int(item.quantity),
-            #         'rate': int(item.rate),
-            #         # 'discount': item.discount,
-            #         'amount': int(item.amount)
-            #     })
 
             frappe.response["message"] = {
                 'name': doc.name,
@@ -222,18 +230,6 @@ def add_to_cart(client_id, item_code, qty):
         })
         doc.save()
 
-        # items = []
-        # for item in doc.item:
-        #     items.append({
-        #         'name': item.name,
-        #         'parent': item.parent,
-        #         'item_code': item.item_code,
-        #         'item_name': item.item_name,
-        #         'quantity': item.quantity,
-        #         'rate': int(item.rate),
-        #         # 'discount': item.discount,
-        #         'amount': int(item.amount)
-        #     })
         frappe.response["message"] = {
                 'name': doc.name,
                 'client_id': doc.client_id,

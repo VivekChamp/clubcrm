@@ -20,6 +20,7 @@
   {
    "fieldname": "fitness_settings",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Fitness Settings"
   },
   {
@@ -78,7 +79,7 @@
  ],
  "issingle": 1,
  "links": [],
- "modified": "2021-05-16 14:32:25.618984",
+ "modified": "2021-06-26 14:02:35.089127",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club Settings",

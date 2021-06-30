@@ -3,7 +3,7 @@ import datetime
 import time
 from frappe.utils import getdate, get_time, flt
 from datetime import datetime, timedelta
-from frappe.utils import escape_html
+from frappe import utils
 from frappe import throw, msgprint, _
 from club_crm.api.wallet import get_balance
 from club_crm.club_crm.doctype.cart.cart import add_cart_from_spa_online
@@ -11,7 +11,7 @@ from club_crm.club_crm.doctype.spa_appointment.spa_appointment import cancel_app
 
 @frappe.whitelist()
 def get_spa_category(client_id):
-    spa_category = frappe.get_all('Spa Services Category', filters={'on_app': '1', 'complimentary':'0'}, fields=['spa_category_name','category_image'])
+    spa_category = frappe.get_all('Spa Services Category', filters={'on_app': '1', 'complimentary':'0'}, fields=['spa_category_name','category_image'], order_by="spa_category_name asc")
     frappe.response["message"] = {
             "Spa Categories": spa_category
         }
@@ -20,7 +20,7 @@ def get_spa_category(client_id):
 def get_spa_item(spa_category):
     client = frappe.db.get("Client", {"email": frappe.session.user})
     doc = frappe.get_doc('Client', client.name)
-    spa = frappe.get_all('Spa Services', filters={'spa_category':spa_category,'on_app': 1,'enabled':1,'session_type':'Single'}, fields=['spa_name','spa_group','spa_category','duration','price','description','image','gender_preference','no_member_discount'])
+    spa = frappe.get_all('Spa Services', filters={'spa_category':spa_category,'on_app': 1,'enabled':1,'session_type':'Single'}, fields=['spa_name','spa_group','spa_category','duration','price','description','image','gender_preference','no_member_discount'], order_by="spa_name asc")
     spa_item = []
 
     discount = 0.0
@@ -76,39 +76,53 @@ def get_spa_item(spa_category):
 def get_therapist(spa_item, client_id):
     spa = frappe.get_doc('Spa Services', spa_item)
     client = frappe.db.get("Client", {"email": frappe.session.user})
-    # client = frappe.get_doc('Client', client_id)
-    spa_therapists = frappe.get_all('Spa Services Assignment', filters={'spa_group':spa.spa_group, 'on_app':1}, fields=['name','parent','parenttype','parentfield','spa_group'])
+    spa_therapists = frappe.get_all('Spa Services Assignment', filters={'spa_group':spa.spa_group, 'on_app':1}, fields=['name','parent','parenttype','parentfield','spa_group'], order_by="name asc")
 
     therapist=[]
     for name in spa_therapists:
         staff = frappe.get_doc('Service Staff', name.parent)
         if staff.on_app == 1:
-            if client.membership_status == "Non-Member":
-                if staff.gender == client.gender:
-                    therapist.append({
-                        'Document Name': staff.name,
-                        'Therapist Name': staff.display_name,
-                        'Gender': staff.gender
-                        })
-            else:
-                if client.gender == "Female":
-                    if staff.gender == "Female":
+            if spa.therapist_preference == "No preference":
+                therapist.append({
+                    'Document Name': staff.name,
+                    'Therapist Name': staff.display_name,
+                    'Gender': staff.gender
+                })
+            elif spa.therapist_preference == "Same gender for non-members only" or spa.therapist_preference == "":
+                if client.membership_status == "Non-Member":
+                    if staff.gender == client.gender:
+                        therapist.append({
+                            'Document Name': staff.name,
+                            'Therapist Name': staff.display_name,
+                            'Gender': staff.gender
+                            })
+                else:
+                    if client.gender == "Female":
+                        if staff.gender == "Female":
+                            therapist.append({
+                                'Document Name': staff.name,
+                                'Therapist Name': staff.display_name,
+                                'Gender': staff.gender
+                            })
+                    else:
                         therapist.append({
                             'Document Name': staff.name,
                             'Therapist Name': staff.display_name,
                             'Gender': staff.gender
                         })
-                else:
-                    therapist.append({
-                        'Document Name': staff.name,
-                        'Therapist Name': staff.display_name,
-                        'Gender': staff.gender
-                    })
+            elif spa.therapist_preference == "Same gender for non-members and members":
+                if staff.gender == client.gender:
+                        therapist.append({
+                            'Document Name': staff.name,
+                            'Therapist Name': staff.display_name,
+                            'Gender': staff.gender
+                            })
 
     return therapist
 
 @frappe.whitelist()
 def get_spa_details():
+    today = getdate()
     rating_point = -1
     client = frappe.db.get("Client", {"email": frappe.session.user})
     time = frappe.get_doc('Spa Settings')
@@ -254,6 +268,7 @@ def get_room(gender):
 
 @frappe.whitelist()
 def get_slots(date, spa_item, therapist_name):
+    today = getdate()
     doc = frappe.get_doc('Spa Services', spa_item)
 
     date_converted = getdate(date)
@@ -306,7 +321,6 @@ def get_slots(date, spa_item, therapist_name):
             frappe.response["message"] = {
                     "available_slots": []
                 }
-
         # Find the number of 30 minutes interval in the total duration of spa service. Total duration is in seconds.
         b = int(doc.total_duration/900)
                     
@@ -319,45 +333,44 @@ def get_slots(date, spa_item, therapist_name):
                     if s.start_time <= slot_time <= s.end_time:
                         time_slot.remove(a)  
 
-                # Check for time slots fitting the duration of the selected treatment
-                slot= []
-                for i in range(len(time_slot) - b):
-                    d=1
-                    for j in range(i+1, i+b+1):
-                        if time_slot[j] - time_slot[i] == timedelta(minutes = 15*d):  
-                            d = d+1
-                            if d>b:
-                                slot.append(time_slot[i])
-                frappe.response["message"] = {
-                    "available_slots": slot
-                }
-        else:
-            slot= []
-            for i in range(len(time_slot) - b):
-                d=1
-                for j in range(i+1, i+b+1):
-                    if time_slot[j] - time_slot[i] == timedelta(minutes = 15*d):  
-                        d = d+1
-                        if d>b:
-                            slot.append(time_slot[i])
-                frappe.response["message"] = {
-                    "available_slots": slot
-                }
+        # Check for time slots fitting the duration of the selected treatment
+        slot= []
+        for i in range(len(time_slot) - b):
+            d=1
+            for j in range(i+1, i+b+1):
+                if time_slot[j] - time_slot[i] == timedelta(minutes = 15*d):  
+                    d = d+1
+                    if d>b:
+                        slot.append(time_slot[i])
 
-        # time_array = []
-        # for one_time in slot[:]:
-        #     one_time_datetime = datetime.strptime(str(one_time), "%H:%M:%S")
-        #     one_time_ampm = datetime.strftime(one_time_datetime, "%I:%M %p")
-        #     time_array.append(one_time_ampm)
-        
-        # frappe.response["message"] = {
-        #             "available_slots": time_array
-        # }
+        if date_converted == today:
+            now = datetime.now()
+            now_add = now + timedelta(minutes = 60)
+            for x in slot[:]:
+                x_dt = datetime.combine(getdate(today), get_time(x))
+                if now_add > x_dt:
+                    slot.remove(x)
+
+        frappe.response["message"] = {
+            "available_slots": slot
+        }
+        # else:
+        #     slot= []
+        #     for i in range(len(time_slot) - b):
+        #         d=1
+        #         for j in range(i+1, i+b+1):
+        #             if time_slot[j] - time_slot[i] == timedelta(minutes = 15*d):  
+        #                 d = d+1
+        #                 if d>b:
+        #                     slot.append(time_slot[i])
+        #         frappe.response["message"] = {
+        #             "available_slots": slot
+        #         }
 
     else:
         frappe.response["message"] = {
-                    "available_slots": []
-                }
+            "available_slots": []
+        }
 
 @frappe.whitelist()
 def cancel_spa(client_id,booking_id):

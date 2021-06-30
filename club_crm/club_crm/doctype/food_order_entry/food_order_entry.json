@@ -54,6 +54,7 @@
    "fieldtype": "Link",
    "label": "Client ID",
    "options": "Client",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -233,7 +234,8 @@
    "fieldname": "order_type",
    "fieldtype": "Select",
    "label": "Order Type",
-   "options": "\nDine-in\nTake Away"
+   "options": "\nDine-in\nTake Away",
+   "read_only": 1
   },
   {
    "default": "0",
@@ -251,7 +253,7 @@
   }
  ],
  "links": [],
- "modified": "2021-06-09 15:21:11.982947",
+ "modified": "2021-06-22 13:04:29.259730",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Food Order Entry",

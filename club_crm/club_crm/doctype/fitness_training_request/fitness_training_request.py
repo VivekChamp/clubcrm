@@ -140,7 +140,7 @@ class FitnessTrainingRequest(Document):
 					send_push(client.name,title,msg)
 				self.schedule_notification=1
 
-@frappe.whitelist(allow_guest=True)
+@frappe.whitelist()
 def convert24(str1):
 	if str1[-3:] == " AM" and str1[:2] == "12":
 		return "00" + str1[2:-3]

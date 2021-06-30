@@ -164,6 +164,7 @@ class FitnessTrainingAppointment(Document):
 @frappe.whitelist()
 def no_show(appointment_id):
 	appointment = frappe.get_doc('Fitness Training Appointment', appointment_id)
+	add_pt_commission(appointment.appointment_date, appointment.service_staff, appointment.name)
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"appointment_status","No Show")
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"color","#ff8a8a")
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"docstatus",2)

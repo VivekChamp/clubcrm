@@ -83,13 +83,13 @@ def cancel_reservation(client_id):
 
 @frappe.whitelist()         
 def get_menu_categories():
-    doc= frappe.get_all('Item Group', filters={'parent_item_group':'Restaurant'}, fields=['name','image'], order_by="creation asc")
+    doc= frappe.get_all('Item Group', filters={'parent_item_group':'Restaurant'}, fields=['name','image'], order_by="item_group_name asc")
     return doc
 
 # Remove after app update
 @frappe.whitelist()         
 def get_menu_item(category):
-    doc= frappe.get_all('Item', filters={'item_group':category, 'disabled': 0}, fields=['*'])
+    doc= frappe.get_all('Item', filters={'item_group':category, 'disabled': 0}, fields=['*'], order_by="item_name asc")
     if doc:
         menu = []
         for d in doc:
@@ -121,7 +121,7 @@ def get_menu_item(category):
 
 @frappe.whitelist()         
 def get_menu_items(category):
-    doc= frappe.get_all('Item', filters={'item_group':category, 'disabled': 0}, fields=['*'])
+    doc= frappe.get_all('Item', filters={'item_group':category, 'disabled': 0}, fields=['*'], order_by="item_name asc")
     if doc:
         menu = []
         for d in doc:
