@@ -4,11 +4,13 @@ import dateutil
 import re
 import numpy as np
 from frappe.utils import getdate
+from datetime import datetime, date
 from frappe.model.document import Document
 from frappe import throw, msgprint, _
 from club_crm.club_crm.doctype.cart.cart import add_cart_from_shop_online
 from club_crm.api.wallet import get_balance
 
+# Get product category list
 @frappe.whitelist()
 def get_category():
     shop_category = frappe.get_all('Item Group', filters={'parent_item_group': "Retail Inventory", 'show_on_app':1}, fields=['name','image'], order_by="item_group_name asc")
@@ -16,8 +18,10 @@ def get_category():
         "Shop Categories": shop_category
     }
 
+# Get product list
 @frappe.whitelist()
 def get_products(category,count):
+    today = date.today()
     client = frappe.db.get("Client", {"email": frappe.session.user})
     item_group = frappe.get_doc('Item Group', category)
 
@@ -90,12 +94,25 @@ def get_products(category,count):
                     })
     if product:
         total_count = len(product)
-        frappe.response["message"] = {
-            "status": 1,
-            "status_message": "Product Details",
-            "total_count": total_count,
-            "item": product[int(count):int(count)+16]
-    }
+        carts = frappe.get_all('Online Order', filters={'client_id':client.name, 'created_date': today, 'cart_status': 'Cart'})
+        if carts:
+            for cart in carts:
+                doc = frappe.get_doc('Online Order', cart.name)
+                frappe.response["message"] = {
+                    "status": 1,
+                    "status_message": "Product Details",
+                    "total_quantity": doc.total_quantity,
+                    "total_count": total_count,
+                    "item": product[int(count):int(count)+16]
+                }
+        else:
+            frappe.response["message"] = {
+                "status": 1,
+                "status_message": "Product Details",
+                "total_quantity": 0,
+                "total_count": total_count,
+                "item": product[int(count):int(count)+16]
+            }
     else:
         frappe.response["message"] = {
             "status": 0,
@@ -175,6 +192,7 @@ def get_product(client_id,category):
 
 @frappe.whitelist()
 def add_to_cart(client_id, item_code, qty):
+    today = date.today()
     discount = 0.0
     client = frappe.db.get("Client", {"email": frappe.session.user})
     doc = frappe.get_doc('Client', client.name)
@@ -190,7 +208,7 @@ def add_to_cart(client_id, item_code, qty):
         for price in price_list:
             item_price = price.price_list_rate
 
-    carts = frappe.get_all('Online Order', filters={'client_id':client.name, 'cart_status': 'Cart'})
+    carts = frappe.get_all('Online Order', filters={'client_id':client.name, 'created_date': today, 'cart_status': 'Cart'})
     if carts:
         for cart in carts:
             doc = frappe.get_doc('Online Order', cart.name)
@@ -246,8 +264,10 @@ def add_to_cart(client_id, item_code, qty):
                 'item': doc.item
             }
 
+# To remove
 @frappe.whitelist()         
 def add_to_carts(client_id, item_code, qty):
+    today = date.today()
     discount = 0.0
     client = frappe.db.get("Client", {"email": frappe.session.user})
     doc = frappe.get_doc('Client', client.name)
@@ -263,7 +283,7 @@ def add_to_carts(client_id, item_code, qty):
         for price in price_list:
             item_price = price.price_list_rate
 
-    carts = frappe.get_all('Online Order', filters={'client_id':client.name, 'cart_status': 'Cart'})
+    carts = frappe.get_all('Online Order', filters={'client_id':client.name, 'created_date': today, 'cart_status': 'Cart'})
     if carts:
         for cart in carts:
             doc = frappe.get_doc('Online Order', cart.name)
@@ -379,8 +399,9 @@ def delete_from_cart(document_name,item_document_name):
 
 @frappe.whitelist()         
 def get_cart(client_id):
+    today = date.today()
     client = frappe.db.get("Client", {"email": frappe.session.user})
-    cart= frappe.get_list('Online Order', filters={'client_id': client.name, 'cart_status': 'Cart'}, fields=['*'])
+    cart= frappe.get_list('Online Order', filters={'client_id': client.name, 'created_date': today, 'cart_status': 'Cart'}, fields=['*'])
     if cart:
         cart_1=cart[0]
         doc= frappe.get_doc('Online Order', cart_1.name)
