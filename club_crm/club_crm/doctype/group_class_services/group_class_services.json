@@ -11,7 +11,8 @@
   "section_break_2",
   "group_class_name",
   "group_class_category",
-  "group_class_type"
+  "group_class_type",
+  "group_class_image"
  ],
  "fields": [
   {
@@ -44,10 +45,16 @@
   {
    "fieldname": "section_break_2",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "group_class_image",
+   "fieldtype": "Attach Image",
+   "label": "Group Class Image"
   }
  ],
+ "image_field": "group_class_image",
  "links": [],
- "modified": "2021-04-06 01:02:53.797378",
+ "modified": "2021-06-30 15:23:00.723704",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class Services",

@@ -430,8 +430,8 @@ def update_membership_status():
 		expiry_date = getdate(mem.expiry_date)
 		# If expiry date is past, set membership status as expired
 		if expiry_date < today:
-			frappe.db.set_value('Memberships', membership.name, 'membership_status', 'Expired')
-			frappe.db.commit()
+			mem.membership_status = "Expired"
+		mem.save()
 
 def getseries_add(key, digits):
 	# series created ?

@@ -9,9 +9,6 @@ from frappe.utils import now_datetime
 from frappe.model.mapper import get_mapped_doc
 
 class CheckIn(Document):
-	def on_submit(self):
-		if self.check_in_type=="Group Class":
-			frappe.db.set_value('Group Class Attendees', self.class_attendee_id,'checked_in', 'Yes')
 
 	def validate(self):
 		self.check_spa()
@@ -26,24 +23,6 @@ class CheckIn(Document):
 		gc_check = frappe.get_all('Check In', filters={'docstatus':1,'class_attendee_id': self.class_attendee_id, 'group_class_id': self.group_class_id})
 		if gc_check:
 			frappe.throw("Already Checked in")
-
-@frappe.whitelist()
-def gc_checkin(source_name, target_doc=None):
-	def set_missing_values(source, target):
-		target.series = "CHK-.YYYY.-GC.-"
-		target.check_in_type = "Group Class"
-		target.class_attendee_id = source_name
-
-	doc = get_mapped_doc('Group Class Attendees', source_name, {
-			'Group Class Attendees': {
-				'doctype': 'Check In',
-				'field_map': [
-					['client_id', 'client_id']
-				]
-			}
-		}, target_doc, set_missing_values)
-	doc.submit()
-
 
 @frappe.whitelist()
 def club_checkin(client_id):
@@ -73,13 +52,14 @@ def club_checkout(client_id):
 
 @frappe.whitelist()
 def spa_checkin(client_id, appointment_id):
-	# client = frappe.get_doc('Client', client_id)
+	user = frappe.get_doc('User',frappe.session.user)
 	doc = frappe.get_doc({
         'doctype': 'Check In',
         'client_id': client_id,
 		'check_in_type' : 'Spa',
 		'naming_series' : 'CHK-.YYYY.-SPA.-',
-		'spa_booking': appointment_id
+		'spa_booking': appointment_id,
+		'checked_in_by': user.full_name
         })
 	doc.insert()
 	doc.submit()
@@ -91,18 +71,38 @@ def spa_checkin(client_id, appointment_id):
 
 @frappe.whitelist()
 def fitness_checkin(client_id, appointment_id):
-	# client = frappe.get_doc('Client', client_id)
+	user = frappe.get_doc('User',frappe.session.user)
 	doc = frappe.get_doc({
         'doctype': 'Check In',
         'client_id': client_id,
 		'check_in_type' : 'Fitness',
 		'naming_series' : 'CHK-.YYYY.-FITNESS.-',
-		'fitness_booking': appointment_id
+		'fitness_booking': appointment_id,
+		'checked_in_by': user.full_name
         })
 	doc.insert()
 	doc.submit()
 	
 	frappe.db.set_value("Fitness Training Appointment", appointment_id, "appointment_status", "Checked-in")
 	frappe.db.set_value("Fitness Training Appointment", appointment_id, "checkin_document", doc.name)
+
+	frappe.msgprint(msg='Checked-in successfully', title='Success')
+
+@frappe.whitelist()
+def gc_checkin(client_id, doc_id):
+	user = frappe.get_doc('User',frappe.session.user)
+	doc = frappe.get_doc({
+        'doctype': 'Check In',
+        'client_id': client_id,
+		'check_in_type' : 'Group Class',
+		'naming_series' : 'CHK-.YYYY.-GC.-',
+		'class_attendee_id': doc_id,
+		'checked_in_by': user.full_name
+        })
+	doc.insert()
+	doc.submit()
+	
+	frappe.db.set_value("Group Class Attendees", doc_id, "attendee_status", "Checked-in")
+	frappe.db.set_value("Group Class Attendees", doc_id, "checkin_document", doc.name)
 
 	frappe.msgprint(msg='Checked-in successfully', title='Success')

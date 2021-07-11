@@ -91,7 +91,7 @@
   {
    "default": "Today",
    "fieldname": "created_date",
-   "fieldtype": "Data",
+   "fieldtype": "Date",
    "in_list_view": 1,
    "label": "Order Date",
    "read_only": 1
@@ -190,7 +190,7 @@
   }
  ],
  "links": [],
- "modified": "2021-05-23 02:29:28.633609",
+ "modified": "2021-07-03 14:46:08.735808",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Online Order",

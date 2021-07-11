@@ -164,6 +164,7 @@ class FitnessTrainingAppointment(Document):
 @frappe.whitelist()
 def no_show(appointment_id):
 	appointment = frappe.get_doc('Fitness Training Appointment', appointment_id)
+	add_pt_commission(appointment.appointment_date, appointment.service_staff, appointment.name)
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"appointment_status","No Show")
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"color","#ff8a8a")
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"docstatus",2)
@@ -188,10 +189,10 @@ def complete(appointment_id):
 	doc.save()
 
 	if appointment.session==1:
-		doc = frappe.get_doc('Client Sessions', appointment.session_name)
-		doc.used_sessions += 1
-		doc.booked_sessions -= 1
-		doc.save()
+		sess = frappe.get_doc('Client Sessions', appointment.session_name)
+		sess.used_sessions += 1
+		sess.booked_sessions -= 1
+		sess.save()
 	
 	frappe.msgprint(msg="Appointment marked as 'Completed'", title='Success')
 
@@ -296,7 +297,7 @@ def get_events(start, end, filters=None):
 def update_appointment_status():
 	# update the status of appointments daily
 	today = getdate()
-	appointments = frappe.get_all('Fitness Training Appointment', filters={'appointment_status': ('not in', ['Completed', 'Cancelled', 'Checked-in', 'No Show']), 'docstatus': 0}, fields=['name','appointment_status','online','appointment_date'])
+	appointments = frappe.get_all('Fitness Training Appointment', filters={'appointment_status': ('not in', ['Completed', 'Cancelled', 'Checked-in', 'No Show']), 'docstatus': 0}, fields=['name','appointment_status','online','session','appointment_date', 'session_name'])
 	for appointment in appointments:
 		appointment_date = getdate(appointment.appointment_date)
 
@@ -312,6 +313,11 @@ def update_appointment_status():
 				elif appointment_date < today:
 					frappe.db.set_value('Fitness Training Appointment', appointment.name, 'appointment_status', 'No Show')
 					frappe.db.commit()
+					if appointment.session==1:
+						session = frappe.get_doc('Client Sessions', appointment.session_name)
+						session.used_sessions += 1
+						session.booked_sessions -= 1
+						session.save()
 
 			elif appointment.online==1:
 				if appointment_date == today:
@@ -323,6 +329,11 @@ def update_appointment_status():
 				elif appointment_date < today:
 					frappe.db.set_value('Fitness Training Appointment', appointment.name, 'appointment_status', 'No Show')
 					frappe.db.commit()
+					if appointment.session==1:
+						session = frappe.get_doc('Client Sessions', appointment.session_name)
+						session.used_sessions += 1
+						session.booked_sessions -= 1
+						session.save()
 
 @frappe.whitelist()
 def cancel_appointment_online(appointment_id):

@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 import frappe
-import string
 import dateutil
 from frappe.utils import getdate
 from frappe.model.document import Document
@@ -19,10 +18,9 @@ class Client(Document):
     def set_full_name(self):
         if self.last_name:
             client_name = ' '.join(filter(None, [self.first_name, self.last_name]))
-            self.client_name = string.capwords(client_name)
         else:
             client_name = self.first_name
-            self.client_name = string.capwords(client_name)
+        self.client_name = client_name.title()
     
     def get_age(self):
         if self.birth_date:

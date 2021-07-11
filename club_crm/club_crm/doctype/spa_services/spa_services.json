@@ -32,6 +32,7 @@
   "gender_preference",
   "no_member_discount",
   "column_break_21",
+  "therapist_preference",
   "capacity",
   "dependencies_section",
   "male_rooms",
@@ -41,13 +42,12 @@
   "equipment_female",
   "column_break_29",
   "cost_center",
-  "revenue_account",
   "item_details_section",
   "item",
-  "column_break_20",
   "item_name",
+  "column_break_20",
+  "revenue_account",
   "item_group",
-  "column_break_37",
   "section_break_39",
   "image",
   "color"
@@ -224,12 +224,12 @@
    "collapsible": 1,
    "fieldname": "item_details_section",
    "fieldtype": "Section Break",
-   "label": "Item Details"
+   "label": "Accounting Details"
   },
   {
    "fieldname": "item",
    "fieldtype": "Link",
-   "label": "Item",
+   "label": "Link to Item Master",
    "options": "Item"
   },
   {
@@ -250,10 +250,6 @@
    "label": "Item Group",
    "options": "Item Group",
    "read_only": 1
-  },
-  {
-   "fieldname": "column_break_37",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "cost_center",
@@ -311,15 +307,23 @@
   },
   {
    "default": "No Preference",
+   "description": "Select gender in case of gender-specific service.",
    "fieldname": "gender_preference",
    "fieldtype": "Select",
    "label": "Gender Preference",
    "options": "\nNo Preference\nMale\nFemale"
+  },
+  {
+   "default": "Same gender for non-members only",
+   "fieldname": "therapist_preference",
+   "fieldtype": "Select",
+   "label": "Therapist Preference",
+   "options": "\nNo preference\nSame gender for non-members only\nSame gender for non-members and members"
   }
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-05-02 00:22:49.199829",
+ "modified": "2021-07-11 00:52:18.235873",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Services",

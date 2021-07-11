@@ -58,7 +58,7 @@ frappe.ui.form.on("Cart", "onload", function(frm) {
     frm.fields_dict.cart_product.grid.get_field("cart_item").get_query = function() {
         return {
             filters: [
-                ["Item", "item_group", "in", ["Body Care", "Facial Products", "Hair Care", "Skin Care", "Miscellaneous"]]
+                ["Item", "item_group", "in", ["Body Care", "Facial Products", "Hair Care", "Skin Care", "Miscellaneous", "Perfumes"]]
             ]
         }
     }

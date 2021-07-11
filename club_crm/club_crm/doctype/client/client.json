@@ -390,6 +390,7 @@
   {
    "fieldname": "member_id",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Member ID",
@@ -499,6 +500,7 @@
   {
    "fieldname": "assigned_to",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Assigned CEC",
    "read_only": 1
   },
@@ -513,7 +515,7 @@
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2021-05-27 14:42:25.745859",
+ "modified": "2021-06-19 19:15:14.921145",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",

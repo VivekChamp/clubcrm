@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from . import __version__ as app_version
+import frappe
+# from . import __version__ as app_version
 
 app_name = "club_crm"
 app_title = "Club CRM"
@@ -108,10 +109,14 @@ scheduler_events = {
 		"club_crm.club_crm.doctype.fitness_training_appointment.fitness_training_appointment.update_appointment_status",
         "club_crm.club_crm.doctype.client.client.auto_checkout",
 		"club_crm.club_crm.doctype.memberships.memberships.update_membership_status",
-		"club_crm.club_crm.doctype.client_sessions.client_sessions.update_session_status"
+		"club_crm.club_crm.doctype.client_sessions.client_sessions.update_session_status",
+		"club_crm.club_crm.doctype.group_class.group_class.update_gc_status"
  	],
 	"hourly": [
 		"club_crm.club_crm.doctype.spa_appointment.spa_appointment.update_appointment_status"
+	],
+	"all": [
+		"club_crm.club_crm.doctype.payment_log.payment_log.update_payments"
 	]
 # 	"weekly": [
 # 		"club_crm.tasks.weekly"

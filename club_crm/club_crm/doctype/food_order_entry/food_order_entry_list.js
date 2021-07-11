@@ -15,7 +15,7 @@ frappe.listview_settings['Food Order Entry'] = {
             return [__("Delivered"), "blue", "order_status,=,Delivered"];
         } else if (doc.order_status === "Cancelled") {
             // Cancelled
-            return [__("Cancelled"), "red", "order_status,=,Delivered"];
+            return [__("Cancelled"), "red", "order_status,=,Cancelled"];
         }
     }
 };

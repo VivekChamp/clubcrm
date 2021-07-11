@@ -36,7 +36,7 @@ def get_dashboard_details(client_id):
     else:
         food_order = None
 
-    group_class = frappe.get_list('Group Class Attendees', filters={'client_id': client.name, 'class_status':['in', {'Open','Scheduled'}]}, fields={'group_class_name', 'class_date'}, order_by="from_time asc")
+    group_class = frappe.get_list('Group Class Attendees', filters={'client_id': client.name, 'attendee_status':['in', {'Open','Scheduled'}]}, fields={'group_class_name', 'class_date'}, order_by="from_time asc")
     if group_class:
         gc = group_class[0]
         grp_class = gc.class_date

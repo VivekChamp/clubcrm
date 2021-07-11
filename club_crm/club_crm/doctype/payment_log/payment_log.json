@@ -6,32 +6,34 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "section_break_6",
   "date_time",
+  "time",
+  "req_bill_to_forename",
+  "req_bill_to_surname",
+  "column_break_8",
+  "req_reference_number",
+  "auth_amount",
+  "transaction_id",
+  "column_break_11",
+  "decision",
+  "reason_code",
+  "message",
+  "other_details_section",
+  "signed_date_time",
   "generated_hash",
   "payment_gateway_hash",
   "signature_verified",
-  "section_break_6",
-  "req_bill_to_forename",
-  "req_bill_to_surname",
-  "req_customer_ip_address",
-  "column_break_8",
-  "req_reference_number",
+  "payment_updated",
+  "column_break_10",
   "req_transaction_type",
   "req_transaction_uuid",
-  "column_break_11",
-  "decision",
-  "message",
-  "section_break_14",
-  "req_amount",
-  "auth_amount",
-  "column_break_10",
+  "req_customer_ip_address",
+  "column_break_19",
   "req_card_number",
   "card_type_name",
-  "column_break_19",
-  "reason_code",
-  "signed_date_time",
-  "transaction_id",
-  "section_break_24",
+  "req_amount",
+  "section_break_14",
   "response_data",
   "signed_field_names",
   "title",
@@ -41,6 +43,7 @@
   {
    "fieldname": "response_data",
    "fieldtype": "Long Text",
+   "hidden": 1,
    "label": "Response Data"
   },
   {
@@ -63,18 +66,21 @@
    "read_only": 1
   },
   {
+   "default": "Today",
    "fieldname": "date_time",
-   "fieldtype": "Datetime",
-   "label": "Creation Date and Time",
+   "fieldtype": "Date",
+   "label": "Date",
    "read_only": 1
   },
   {
    "fieldname": "section_break_6",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Payment Details"
   },
   {
    "fieldname": "decision",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Decision",
    "read_only": 1
   },
@@ -101,7 +107,9 @@
   {
    "fieldname": "req_reference_number",
    "fieldtype": "Data",
-   "label": "Reference Number"
+   "in_standard_filter": 1,
+   "label": "Reference Number",
+   "read_only": 1
   },
   {
    "fieldname": "req_amount",
@@ -112,7 +120,8 @@
   {
    "fieldname": "auth_amount",
    "fieldtype": "Data",
-   "label": "Authorized Amount"
+   "label": "Authorized Amount",
+   "read_only": 1
   },
   {
    "fieldname": "req_card_number",
@@ -129,12 +138,14 @@
   {
    "fieldname": "req_bill_to_forename",
    "fieldtype": "Data",
-   "label": "First Name"
+   "label": "First Name",
+   "read_only": 1
   },
   {
    "fieldname": "req_bill_to_surname",
    "fieldtype": "Data",
-   "label": "Last Name"
+   "label": "Last Name",
+   "read_only": 1
   },
   {
    "fieldname": "req_customer_ip_address",
@@ -165,10 +176,6 @@
    "fieldtype": "Data",
    "label": "Transaction Type",
    "read_only": 1
-  },
-  {
-   "fieldname": "section_break_24",
-   "fieldtype": "Section Break"
   },
   {
    "fieldname": "signed_field_names",
@@ -204,11 +211,30 @@
    "label": "Series",
    "options": "PAY-.YYYY.-",
    "read_only": 1
+  },
+  {
+   "fieldname": "other_details_section",
+   "fieldtype": "Section Break",
+   "label": "Other Details"
+  },
+  {
+   "default": "0",
+   "fieldname": "payment_updated",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Payment Updated",
+   "read_only": 1
+  },
+  {
+   "fieldname": "time",
+   "fieldtype": "Time",
+   "label": "Time",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-04-17 21:33:51.245136",
+ "modified": "2021-07-08 15:46:55.768772",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Payment Log",

@@ -15,7 +15,6 @@ def create_log(**kwargs):
     kwargs=frappe._dict(kwargs)
 
     doc = frappe.new_doc("Payment Log")
-    doc.date_time=now()
     doc.response_data=str(kwargs)
     doc.payment_gateway_hash = kwargs['signature']
     doc.decision=kwargs['decision']
