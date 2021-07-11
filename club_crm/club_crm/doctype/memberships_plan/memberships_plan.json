@@ -42,7 +42,9 @@
   "retail_discount",
   "column_break_31",
   "boho_discount",
-  "grams_discount"
+  "grams_discount",
+  "accounting_details_section",
+  "item"
  ],
  "fields": [
   {
@@ -261,10 +263,22 @@
    "label": "Duration in Months",
    "mandatory_depends_on": "eval:doc.membership_duration==\"Month(s)\"",
    "options": "\n1\n2\n3\n6\n12"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "accounting_details_section",
+   "fieldtype": "Section Break",
+   "label": "Accounting Details"
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "label": "Link to Item Master",
+   "options": "Item"
   }
  ],
  "links": [],
- "modified": "2021-05-12 03:26:56.939316",
+ "modified": "2021-07-11 01:02:09.666643",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Plan",

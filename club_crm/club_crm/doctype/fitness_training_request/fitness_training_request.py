@@ -40,6 +40,7 @@ class FitnessTrainingRequest(Document):
 					for fitness in package.package_table:
 						if fitness.service_type=="Fitness Services":
 							duration = fitness.validity
+				
 				if type(self.start_date) == str:
 					start_datetime= datetime.strptime(self.start_date, "%Y-%m-%d")
 				else:
@@ -56,6 +57,13 @@ class FitnessTrainingRequest(Document):
 						expiry_date = datetime.strftime(expiry, "%d-%m-%Y")
 						msg = _('One of the scheduled dates exceeds the validity of the package from the start date. The dates should be within ')
 						msg += _('<b>{0}</b>.').format(expiry_date)
+						frappe.throw(msg, title=_('Schedule date error'))
+
+					appointments = frappe.get_all('Fitness Training Appointment', filters={'service_staff': self.trainer, 'appointment_date': row.date, 'appointment_time': row.time_from})
+					if appointments:
+						msg = _('The schedule on this request for ')
+						msg += _('<b>{0}</b>').format(row.date)
+						msg += _('overlaps with one of your existing appointments.')
 						frappe.throw(msg, title=_('Schedule date error'))
 
 		if self.request_status == "Completed":

@@ -8,9 +8,9 @@ frappe.listview_settings['Group Class'] = {
         } else if (doc.class_status === "Open") {
             // Ordered
             return [__("Open"), "purple", "class_status,=,Open"];
-        } else if (doc.class_status === "Complete") {
+        } else if (doc.class_status === "Completed") {
             // Delivered
-            return [__("Complete"), "blue", "class_status,=,Complete"];
+            return [__("Completed"), "blue", "class_status,=,Completed"];
         } else if (doc.class_status === "Cancelled") {
             // Cancelled
             return [__("Cancelled"), "red", "class_status,=,Cancelled"];

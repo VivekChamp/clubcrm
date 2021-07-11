@@ -71,7 +71,7 @@ class ClientSessions(Document):
 			if expiry_date >= today:
 				self.session_status = 'Active'
 
-		if self.session_status=="Active" or self.session_status=="On Hold":
+		if self.session_status=="Active":
 			if expiry_date < today:
 				self.session_status = 'Expired'
 		if self.session_status=="Expired":
@@ -201,5 +201,5 @@ def update_session_status():
 
 			# If session is past today's date, set as Expired
 			if expiry_date < today:
-				client_session.session_status = 'Expired'
-				client_session.save()
+				frappe.db.set_value("Client Sessions", client_session.name, "session_status", "Expired")
+				frappe.db.commit()

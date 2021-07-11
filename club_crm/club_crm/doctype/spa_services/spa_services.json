@@ -42,13 +42,12 @@
   "equipment_female",
   "column_break_29",
   "cost_center",
-  "revenue_account",
   "item_details_section",
   "item",
-  "column_break_20",
   "item_name",
+  "column_break_20",
+  "revenue_account",
   "item_group",
-  "column_break_37",
   "section_break_39",
   "image",
   "color"
@@ -225,12 +224,12 @@
    "collapsible": 1,
    "fieldname": "item_details_section",
    "fieldtype": "Section Break",
-   "label": "Item Details"
+   "label": "Accounting Details"
   },
   {
    "fieldname": "item",
    "fieldtype": "Link",
-   "label": "Item",
+   "label": "Link to Item Master",
    "options": "Item"
   },
   {
@@ -251,10 +250,6 @@
    "label": "Item Group",
    "options": "Item Group",
    "read_only": 1
-  },
-  {
-   "fieldname": "column_break_37",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "cost_center",
@@ -328,7 +323,7 @@
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-06-20 13:52:44.314709",
+ "modified": "2021-07-11 00:52:18.235873",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Services",

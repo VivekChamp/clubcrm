@@ -1,19 +1,46 @@
 // Copyright (c) 2020, Blue Lynx and contributors
 // For license information, please see license.txt
 
+frappe.ui.form.on("Group Class Attendees", "onload", function(frm) {
+    //Show only active classes in group class field 
+    frm.set_query("group_class", function() {
+        return {
+            "filters": [
+                ["Group Class", "class_status", "in", ["Open", "Scheduled"]]
+            ]
+        }
+    });
+});
+
 frappe.ui.form.on('Group Class Attendees', {
     refresh: function(frm) {
-        if (!frm.is_new() && (frm.doc.class_status == "Open")) {
-            frm.add_custom_button(__('Check-in'), function() {
-                frappe.model.open_mapped_doc({
-                    method: 'club_crm.club_crm.doctype.check_in.check_in.gc_checkin',
-                    frm: frm,
-                });
-                frappe.msgprint({
-                    title: __('Notification'),
-                    indicator: 'green',
-                    message: __('Checked in successfully')
-                });
+        if (!frm.is_new() && (frm.doc.attendee_status == "Open")) {
+            frappe.call({
+                method: 'club_crm.club_crm.doctype.client.client.check_status',
+                args: { client_id: frm.doc.client_id },
+                callback: function(r) {
+                    if (r.message == "Checked-in") {
+                        frm.add_custom_button(__('Check-In'), function() {
+                            frappe.call({
+                                method: 'club_crm.club_crm.doctype.check_in.check_in.gc_checkin',
+                                args: { client_id: frm.doc.client_id, doc_id: frm.doc.name },
+                                callback: function(r) {
+                                    cur_frm.reload_doc();
+                                }
+                            });
+                        });
+
+                        frm.page.add_menu_item(__("Check-in"), function() {
+                            frappe.call({
+                                method: 'club_crm.club_crm.doctype.check_in.check_in.gc_checkin',
+                                args: { client_id: frm.doc.client_id, doc_id: frm.doc.name },
+                                callback: function(r) {
+                                    cur_frm.reload_doc();
+                                }
+                            });
+                        });
+                    }
+                }
             });
         }
 
@@ -36,7 +63,7 @@ frappe.ui.form.on('Group Class Attendees', {
             }, __("Set"));
 
             frm.page.add_menu_item(__("Cancel"), function() {
-                frappe.confirm('Please confirm to cancel this appointment',
+                frappe.confirm('Please confirm to cancel this group class attendee',
                     () => {
                         // action to perform if Yes is selected
                         frappe.call({
@@ -52,9 +79,9 @@ frappe.ui.form.on('Group Class Attendees', {
             });
         }
 
-        if (frm.doc.attendee_status == "Waiting List") {
+        if (!frm.is_new() && frm.doc.attendee_status == "Waiting List") {
             frm.add_custom_button(__('Scheduled'), function() {
-                frappe.confirm('Please confirm to confirm this member for the group class',
+                frappe.confirm('Please confirm to book this member for the group class',
                     () => {
                         // action to perform if Yes is selected
                         frappe.call({

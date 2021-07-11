@@ -21,10 +21,10 @@ frappe.ui.form.on('Client', {
         }
 
         if (frm.doc.membership_status == "Member") {
-            frm.add_custom_button('View Memberships', () => {
+            frm.add_custom_button('Membership', () => {
                 frappe.route_options = { "membership_id": frm.doc.membership_id }
                 frappe.set_route('List', 'Memberships');
-            })
+            }, __("View"))
         }
 
         //Disable a client
@@ -134,7 +134,7 @@ frappe.ui.form.on('Client', {
             }
         });
 
-        frm.add_custom_button(__('Benefits List'), function() {
+        frm.add_custom_button(__('Benefits'), function() {
             frappe.call({
                 method: 'club_crm.club_crm.doctype.client.client.benefits',
                 args: { client_id: frm.doc.name }
@@ -142,7 +142,7 @@ frappe.ui.form.on('Client', {
                 // 	cur_frm.reload_doc();
                 // }
             });
-        });
+        }, __("View"));
     }
 });
 
@@ -169,18 +169,3 @@ let get_age = function(birth) {
     let years = age.getFullYear() - 1970;
     return years + ' Year(s) ' + age.getMonth() + ' Month(s) ' + age.getDate() + ' Day(s)';
 };
-
-// frappe.ui.form.on("Client", "onload", function(frm) {
-// 	if(frm.doc.membership_status == "Member") {
-// 		$('div[data-fieldname="membership_status"]').css('background-color','#e2fff0')
-// 	}
-// 	if(frm.doc.membership_status == "Non-Member") {
-// 		$('div[data-fieldname="membership_status"]').css('background-color','#ffe2e2')
-// 	}
-// });
-
-// var color_it = function(frm) {	
-// 	if(frm.doc.membership_status == "Member") {
-// 		document.querySelectorAll("[data-fieldname='membership_status']")[1].style.color="red";
-// 	}
-// }

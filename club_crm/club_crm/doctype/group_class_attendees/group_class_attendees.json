@@ -28,7 +28,7 @@
   "to_time",
   "column_break_18",
   "trainer_name",
-  "checked_in"
+  "checkin_document"
  ],
  "fields": [
   {
@@ -118,12 +118,12 @@
   },
   {
    "allow_on_submit": 1,
-   "default": "Scheduled",
    "fieldname": "class_status",
    "fieldtype": "Select",
+   "hidden": 1,
    "in_list_view": 1,
    "label": "Class Status",
-   "options": "Scheduled\nOpen\nComplete\nCancelled",
+   "options": "\nScheduled\nOpen\nComplete\nCancelled",
    "read_only": 1
   },
   {
@@ -131,15 +131,6 @@
    "fieldname": "trainer_name",
    "fieldtype": "Data",
    "label": "Trainer Name",
-   "read_only": 1
-  },
-  {
-   "default": "No",
-   "fieldname": "checked_in",
-   "fieldtype": "Select",
-   "hidden": 1,
-   "label": "Checked in?",
-   "options": "Yes\nNo",
    "read_only": 1
   },
   {
@@ -175,12 +166,20 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Attendee Status",
-   "options": "Waiting List\nScheduled\nOpen\nChecked-in\nComplete\nCancelled\nNo Show",
+   "options": "\nWaiting List\nScheduled\nOpen\nChecked-in\nComplete\nCancelled\nNo Show",
+   "read_only": 1
+  },
+  {
+   "fieldname": "checkin_document",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Checkin Document",
+   "options": "Check In",
    "read_only": 1
   }
  ],
  "links": [],
- "modified": "2021-06-28 17:35:15.988824",
+ "modified": "2021-07-11 04:19:01.414433",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Group Class Attendees",

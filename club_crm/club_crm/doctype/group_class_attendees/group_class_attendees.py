@@ -14,7 +14,7 @@ class GroupClassAttendees(Document):
         if check:
             frappe.throw('This member has already enrolled for this Group Class')
         doc = frappe.get_doc('Group Class', self.group_class)
-        if doc. waitlist != 0 and doc.in_waitlist == doc.waitlist:
+        if doc.waitlist != 0 and doc.in_waitlist == doc.waitlist:
             frappe.throw('No more slots available for this group class.')
             
     def validate(self):
@@ -25,9 +25,6 @@ class GroupClassAttendees(Document):
             group_class = frappe.get_doc('Group Class', self.group_class)
             group_class.booked += 1
             group_class.save()
-            if group_class.remaining == 0:
-                frappe.db.set_value('Group Class', self.group_class, 'booking_status', 'Full')
-                frappe.db.commit()
         
         if self.attendee_status == "Waiting List":
             group_class = frappe.get_doc('Group Class', self.group_class)
@@ -69,25 +66,18 @@ class GroupClassAttendees(Document):
             frappe.db.set_value('Group Class', self.group_class, 'remaining', int(gr_class.remaining)+1)
             frappe.db.commit()
         
-    def set_status(self):
-        today = getdate()
-        # If appointment is created for today set status as Open else Scheduled
-        if not self.attendee_status == "Complete":
-            if self.attendee_status == today:
-                self.attendee_status = "Open"
-            elif self.attendee_status > today:
-                self.attendee_status = "Scheduled"
-
+    # def set_status(self):
+    #     today = getdate()
+    #     # If appointment is created for today set status as Open else Scheduled
+    #     if not self.attendee_status == "Complete":
+    #         if self.attendee_status == today:
+    #             self.attendee_status = "Open"
+    #         elif self.attendee_status > today:
+    #             self.attendee_status = "Scheduled"
 
 @frappe.whitelist()
 def cancel_attendee(group_class_attendee_id):
     doc = frappe.get_doc('Group Class Attendees', group_class_attendee_id )
-    frappe.db.set_value('Group Class Attendees', group_class_attendee_id, {
-        'attendee_status': "Cancelled",
-        'docstatus': 2
-        })
-    frappe.db.commit()
-    
     group_class = frappe.get_doc('Group Class', doc.group_class)
 
     if doc.attendee_status == "Open" or doc.attendee_status == "Scheduled":
@@ -98,9 +88,15 @@ def cancel_attendee(group_class_attendee_id):
         group_class.in_waitlist -= 1
         group_class.save()
     
-    if group_class.booking_status == "Full" and not 0 < group_class.in_waitlist <= group_class.waitlist and group_class.remaining > 0:
-        frappe.db.set_value('Group Class', group_class.name, 'booking_status', 'Available')
-        frappe.db.commit()
+    frappe.db.set_value('Group Class Attendees', group_class_attendee_id, {
+        'attendee_status': "Cancelled",
+        'docstatus': 2
+        })
+    frappe.db.commit()
+    
+    # if group_class.booking_status == "Full" and not 0 < group_class.in_waitlist <= group_class.waitlist and group_class.remaining > 0:
+    #     frappe.db.set_value('Group Class', group_class.name, 'booking_status', 'Available')
+    #     frappe.db.commit()
 
     frappe.msgprint(msg="Member has been unenrolled from the group class", title='Success')
 

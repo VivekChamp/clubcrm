@@ -1,307 +1,306 @@
 {
- "actions": [],
- "allow_rename": 1,
- "autoname": "naming_series:",
- "creation": "2020-10-27 10:48:07.455485",
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "enabled",
-  "column_break_2",
-  "on_app",
-  "column_break_4",
-  "members_only",
-  "section_break_7",
-  "naming_series",
-  "created_date",
-  "group_class_name",
-  "group_class_category",
-  "group_class_type",
-  "group_class_image",
-  "column_break_10",
-  "trainer_name",
-  "for_gender",
-  "location",
-  "column_break_3",
-  "class_status",
-  "booking_status",
-  "section_break_4",
-  "class_date",
-  "class_from_time",
-  "class_to_time",
-  "column_break_8",
-  "capacity",
-  "waitlist",
-  "column_break_27",
-  "remaining",
-  "booked",
-  "in_waitlist",
-  "day",
-  "from_time",
-  "to_time",
-  "title"
- ],
- "fields": [
-  {
-   "fieldname": "column_break_3",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_7",
-   "fieldtype": "Section Break",
-   "label": "Class Details"
-  },
-  {
-   "fieldname": "column_break_8",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "from_time",
-   "fieldtype": "Datetime",
-   "hidden": 1,
-   "in_list_view": 1,
-   "label": "From Time"
-  },
-  {
-   "fieldname": "to_time",
-   "fieldtype": "Datetime",
-   "hidden": 1,
-   "label": "To Time"
-  },
-  {
-   "fieldname": "group_class_name",
-   "fieldtype": "Link",
-   "label": "Group Class Name",
-   "options": "Group Class Services",
-   "reqd": 1
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "remaining",
-   "fieldtype": "Int",
-   "in_list_view": 1,
-   "label": "Remaining",
-   "non_negative": 1,
-   "read_only": 1
-  },
-  {
-   "allow_on_submit": 1,
-   "default": "0",
-   "description": "Uncheck to hide this group class from client apps",
-   "fieldname": "on_app",
-   "fieldtype": "Check",
-   "label": "Show on App"
-  },
-  {
-   "fieldname": "capacity",
-   "fieldtype": "Int",
-   "in_list_view": 1,
-   "label": "Class Capacity ",
-   "non_negative": 1,
-   "reqd": 1
-  },
-  {
-   "fieldname": "naming_series",
-   "fieldtype": "Select",
-   "hidden": 1,
-   "label": "Series",
-   "options": "GPC-.YYYY.-"
-  },
-  {
-   "default": "1",
-   "fieldname": "members_only",
-   "fieldtype": "Check",
-   "label": "Members only"
-  },
-  {
-   "fieldname": "booking_status",
-   "fieldtype": "Select",
-   "label": "Booking Status",
-   "options": "Available\nFull",
-   "read_only": 1
-  },
-  {
-   "allow_on_submit": 1,
-   "default": "Scheduled",
-   "fieldname": "class_status",
-   "fieldtype": "Select",
-   "hidden": 1,
-   "in_standard_filter": 1,
-   "label": "Class Status",
-   "options": "Scheduled\nOpen\nCompleted\nCancelled",
-   "read_only": 1
-  },
-  {
-   "fieldname": "day",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "label": "Day",
-   "read_only": 1
-  },
-  {
-   "fieldname": "for_gender",
-   "fieldtype": "Select",
-   "label": "For Gender",
-   "options": "\nMale\nFemale\nMixed",
-   "reqd": 1
-  },
-  {
-   "fieldname": "location",
-   "fieldtype": "Link",
-   "label": "Location",
-   "options": "Club Room"
-  },
-  {
-   "default": "Today",
-   "fieldname": "created_date",
-   "fieldtype": "Date",
-   "label": "Created Date",
-   "read_only": 1
-  },
-  {
-   "fieldname": "trainer_name",
-   "fieldtype": "Link",
-   "label": "Trainer Name",
-   "options": "Service Staff",
-   "reqd": 1
-  },
-  {
-   "default": "1",
-   "description": "Uncheck to disable selecting this group class on CRM",
-   "fieldname": "enabled",
-   "fieldtype": "Check",
-   "label": "Enabled"
-  },
-  {
-   "fieldname": "column_break_2",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_4",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fetch_from": "group_class_name.group_class_category",
-   "fieldname": "group_class_category",
-   "fieldtype": "Link",
-   "label": "Group Class Category",
-   "options": "Group Class Services Category",
-   "read_only": 1
-  },
-  {
-   "fetch_from": "group_class_name.group_class_type",
-   "fieldname": "group_class_type",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Group Class Type",
-   "options": "Group Class Type",
-   "read_only": 1
-  },
-  {
-   "fieldname": "column_break_10",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_4",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fetch_from": "group_class_category.group_class_image",
-   "fieldname": "group_class_image",
-   "fieldtype": "Attach Image",
-   "label": "Group Class Image",
-   "read_only": 1
-  },
-  {
-   "fieldname": "class_date",
-   "fieldtype": "Date",
-   "label": "Class Date",
-   "reqd": 1
-  },
-  {
-   "fieldname": "class_from_time",
-   "fieldtype": "Select",
-   "label": "From Time",
-   "options": "\n06:00:00 AM\n06:30:00 AM\n07:00:00 AM\n07:30:00 AM\n08:00:00 AM\n08:30:00 AM\n09:00:00 AM\n09:30:00 AM\n10:00:00 AM\n10:30:00 AM\n11:00:00 AM\n11:30:00 AM\n12:00:00 PM\n12:30:00 PM\n01:00:00 PM\n01:30:00 PM\n02:00:00 PM\n02:30:00 PM\n03:00:00 PM\n03:30:00 PM\n04:00:00 PM\n04:30:00 PM\n05:00:00 PM\n05:30:00 PM\n06:00:00 PM\n06:30:00 PM\n07:00:00 PM\n07:30:00 PM\n08:00:00 PM\n08:30:00 PM\n09:00:00 PM\n09:30:00 PM\n10:00:00 PM",
-   "reqd": 1
-  },
-  {
-   "fieldname": "class_to_time",
-   "fieldtype": "Select",
-   "label": "To Time",
-   "options": "\n06:00:00 AM\n06:30:00 AM\n07:00:00 AM\n07:30:00 AM\n08:00:00 AM\n08:30:00 AM\n09:00:00 AM\n09:30:00 AM\n10:00:00 AM\n10:30:00 AM\n11:00:00 AM\n11:30:00 AM\n12:00:00 PM\n12:30:00 PM\n01:00:00 PM\n01:30:00 PM\n02:00:00 PM\n02:30:00 PM\n03:00:00 PM\n03:30:00 PM\n04:00:00 PM\n04:30:00 PM\n05:00:00 PM\n05:30:00 PM\n06:00:00 PM\n06:30:00 PM\n07:00:00 PM\n07:30:00 PM\n08:00:00 PM\n08:30:00 PM\n09:00:00 PM\n09:30:00 PM\n10:00:00 PM",
-   "reqd": 1
-  },
-  {
-   "fieldname": "column_break_27",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "title",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "label": "Title"
-  },
-  {
-   "default": "0",
-   "fieldname": "waitlist",
-   "fieldtype": "Int",
-   "label": "Waitlist Capacity",
-   "non_negative": 1
-  },
-  {
-   "default": "0",
-   "fieldname": "booked",
-   "fieldtype": "Int",
-   "label": "Booked",
-   "non_negative": 1,
-   "read_only": 1
-  },
-  {
-   "default": "0",
-   "fieldname": "in_waitlist",
-   "fieldtype": "Int",
-   "label": "Waiting List",
-   "non_negative": 1,
-   "read_only": 1
-  }
- ],
- "image_field": "group_class_image",
- "links": [],
- "modified": "2021-06-28 17:20:48.015007",
- "modified_by": "Administrator",
- "module": "Club CRM",
- "name": "Group Class",
- "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "All",
-   "share": 1,
-   "write": 1
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "title_field": "title",
- "track_changes": 1
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "naming_series:",
+    "creation": "2020-10-27 10:48:07.455485",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "enabled",
+        "column_break_2",
+        "on_app",
+        "column_break_4",
+        "members_only",
+        "section_break_7",
+        "naming_series",
+        "created_date",
+        "group_class_name",
+        "group_class_category",
+        "group_class_type",
+        "group_class_image",
+        "column_break_10",
+        "trainer_name",
+        "for_gender",
+        "location",
+        "column_break_3",
+        "class_status",
+        "booking_status",
+        "section_break_4",
+        "class_date",
+        "class_from_time",
+        "class_to_time",
+        "column_break_8",
+        "capacity",
+        "waitlist",
+        "column_break_27",
+        "remaining",
+        "booked",
+        "in_waitlist",
+        "day",
+        "from_time",
+        "to_time",
+        "title"
+    ],
+    "fields": [{
+            "fieldname": "column_break_3",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_7",
+            "fieldtype": "Section Break",
+            "label": "Class Details"
+        },
+        {
+            "fieldname": "column_break_8",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "from_time",
+            "fieldtype": "Datetime",
+            "hidden": 1,
+            "in_list_view": 1,
+            "label": "From Time"
+        },
+        {
+            "fieldname": "to_time",
+            "fieldtype": "Datetime",
+            "hidden": 1,
+            "label": "To Time"
+        },
+        {
+            "fieldname": "group_class_name",
+            "fieldtype": "Link",
+            "label": "Group Class Name",
+            "options": "Group Class Services",
+            "reqd": 1
+        },
+        {
+            "allow_on_submit": 1,
+            "fieldname": "remaining",
+            "fieldtype": "Int",
+            "in_list_view": 1,
+            "label": "Remaining",
+            "non_negative": 1,
+            "read_only": 1
+        },
+        {
+            "allow_on_submit": 1,
+            "default": "0",
+            "description": "Uncheck to hide this group class from client apps",
+            "fieldname": "on_app",
+            "fieldtype": "Check",
+            "in_list_view": 1,
+            "label": "Show on App"
+        },
+        {
+            "fieldname": "capacity",
+            "fieldtype": "Int",
+            "in_list_view": 1,
+            "label": "Class Capacity ",
+            "non_negative": 1,
+            "reqd": 1
+        },
+        {
+            "fieldname": "naming_series",
+            "fieldtype": "Select",
+            "hidden": 1,
+            "label": "Series",
+            "options": "GPC-.YYYY.-"
+        },
+        {
+            "default": "1",
+            "fieldname": "members_only",
+            "fieldtype": "Check",
+            "label": "Members only"
+        },
+        {
+            "fieldname": "booking_status",
+            "fieldtype": "Select",
+            "label": "Booking Status",
+            "options": "\nAvailable\nFull",
+            "read_only": 1
+        },
+        {
+            "allow_on_submit": 1,
+            "default": "Scheduled",
+            "fieldname": "class_status",
+            "fieldtype": "Select",
+            "hidden": 1,
+            "in_standard_filter": 1,
+            "label": "Class Status",
+            "options": "Scheduled\nOpen\nCompleted\nCancelled",
+            "read_only": 1
+        },
+        {
+            "fieldname": "day",
+            "fieldtype": "Data",
+            "hidden": 1,
+            "label": "Day",
+            "read_only": 1
+        },
+        {
+            "fieldname": "for_gender",
+            "fieldtype": "Select",
+            "label": "For Gender",
+            "options": "\nMale\nFemale\nMixed",
+            "reqd": 1
+        },
+        {
+            "fieldname": "location",
+            "fieldtype": "Link",
+            "label": "Location",
+            "options": "Club Room"
+        },
+        {
+            "default": "Today",
+            "fieldname": "created_date",
+            "fieldtype": "Date",
+            "label": "Created Date",
+            "read_only": 1
+        },
+        {
+            "fieldname": "trainer_name",
+            "fieldtype": "Link",
+            "label": "Trainer Name",
+            "options": "Service Staff",
+            "reqd": 1
+        },
+        {
+            "default": "1",
+            "description": "Uncheck to disable selecting this group class on CRM",
+            "fieldname": "enabled",
+            "fieldtype": "Check",
+            "label": "Enabled"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_4",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fetch_from": "group_class_name.group_class_category",
+            "fieldname": "group_class_category",
+            "fieldtype": "Link",
+            "label": "Group Class Category",
+            "options": "Group Class Services Category",
+            "read_only": 1
+        },
+        {
+            "fetch_from": "group_class_name.group_class_type",
+            "fieldname": "group_class_type",
+            "fieldtype": "Link",
+            "hidden": 1,
+            "label": "Group Class Type",
+            "options": "Group Class Type",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_10",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fetch_from": "group_class_category.group_class_image",
+            "fieldname": "group_class_image",
+            "fieldtype": "Attach Image",
+            "label": "Group Class Image",
+            "read_only": 1
+        },
+        {
+            "fieldname": "class_date",
+            "fieldtype": "Date",
+            "label": "Class Date",
+            "reqd": 1
+        },
+        {
+            "fieldname": "class_from_time",
+            "fieldtype": "Select",
+            "label": "From Time",
+            "options": "\n06:00:00 AM\n06:30:00 AM\n07:00:00 AM\n07:30:00 AM\n08:00:00 AM\n08:30:00 AM\n09:00:00 AM\n09:30:00 AM\n10:00:00 AM\n10:30:00 AM\n11:00:00 AM\n11:30:00 AM\n12:00:00 PM\n12:30:00 PM\n01:00:00 PM\n01:30:00 PM\n02:00:00 PM\n02:30:00 PM\n03:00:00 PM\n03:30:00 PM\n04:00:00 PM\n04:30:00 PM\n05:00:00 PM\n05:30:00 PM\n06:00:00 PM\n06:30:00 PM\n07:00:00 PM\n07:30:00 PM\n08:00:00 PM\n08:30:00 PM\n09:00:00 PM\n09:30:00 PM\n10:00:00 PM",
+            "reqd": 1
+        },
+        {
+            "fieldname": "class_to_time",
+            "fieldtype": "Select",
+            "label": "To Time",
+            "options": "\n06:00:00 AM\n06:30:00 AM\n07:00:00 AM\n07:30:00 AM\n08:00:00 AM\n08:30:00 AM\n09:00:00 AM\n09:30:00 AM\n10:00:00 AM\n10:30:00 AM\n11:00:00 AM\n11:30:00 AM\n12:00:00 PM\n12:30:00 PM\n01:00:00 PM\n01:30:00 PM\n02:00:00 PM\n02:30:00 PM\n03:00:00 PM\n03:30:00 PM\n04:00:00 PM\n04:30:00 PM\n05:00:00 PM\n05:30:00 PM\n06:00:00 PM\n06:30:00 PM\n07:00:00 PM\n07:30:00 PM\n08:00:00 PM\n08:30:00 PM\n09:00:00 PM\n09:30:00 PM\n10:00:00 PM",
+            "reqd": 1
+        },
+        {
+            "fieldname": "column_break_27",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "title",
+            "fieldtype": "Data",
+            "hidden": 1,
+            "label": "Title"
+        },
+        {
+            "default": "0",
+            "fieldname": "waitlist",
+            "fieldtype": "Int",
+            "label": "Waitlist Capacity",
+            "non_negative": 1
+        },
+        {
+            "default": "0",
+            "fieldname": "booked",
+            "fieldtype": "Int",
+            "label": "Booked",
+            "non_negative": 1,
+            "read_only": 1
+        },
+        {
+            "default": "0",
+            "fieldname": "in_waitlist",
+            "fieldtype": "Int",
+            "label": "Waiting List",
+            "non_negative": 1,
+            "read_only": 1
+        }
+    ],
+    "image_field": "group_class_image",
+    "links": [],
+    "modified": "2021-07-11 04:09:27.982694",
+    "modified_by": "Administrator",
+    "module": "Club CRM",
+    "name": "Group Class",
+    "owner": "Administrator",
+    "permissions": [{
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "All",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "title_field": "title",
+    "track_changes": 1
 }

@@ -30,10 +30,9 @@
   "revenue_account",
   "item_details_section",
   "item",
-  "column_break_20",
   "item_name",
+  "column_break_20",
   "item_group",
-  "column_break_37",
   "section_break_39",
   "image"
  ],
@@ -159,12 +158,12 @@
    "collapsible": 1,
    "fieldname": "item_details_section",
    "fieldtype": "Section Break",
-   "label": "Item Details"
+   "label": "Accounting Details"
   },
   {
    "fieldname": "item",
    "fieldtype": "Link",
-   "label": "Item",
+   "label": "Link to Item Master",
    "options": "Item"
   },
   {
@@ -175,18 +174,16 @@
    "fetch_from": "item.item_name",
    "fieldname": "item_name",
    "fieldtype": "Data",
-   "label": "Item Name"
+   "label": "Item Name",
+   "read_only": 1
   },
   {
    "fetch_from": "item.item_group",
    "fieldname": "item_group",
    "fieldtype": "Link",
    "label": "Item Group",
-   "options": "Item Group"
-  },
-  {
-   "fieldname": "column_break_37",
-   "fieldtype": "Column Break"
+   "options": "Item Group",
+   "read_only": 1
   },
   {
    "fieldname": "section_break_39",
@@ -201,7 +198,7 @@
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-04-01 23:47:35.539500",
+ "modified": "2021-07-11 01:07:02.352646",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club Services",

@@ -7,8 +7,9 @@ from frappe import throw, msgprint, _
 
 @frappe.whitelist()
 def get_group_class():
+    today = getdate()
     client = frappe.db.get("Client", {"email": frappe.session.user})
-    group_class = frappe.get_all('Group Class', filters={'on_app':1, 'enabled':1, 'booking_status': 'Available', 'class_status': ['not in', {'Cancelled'}]}, fields=['name','group_class_name','group_class_image','group_class_type','group_class_category','trainer_name','capacity','remaining','class_date','class_from_time','for_gender','class_to_time','members_only'], order_by="class_date asc")
+    group_class = frappe.get_all('Group Class', filters={'on_app':1, 'enabled':1, 'class_date': ['>=', today], 'booking_status': 'Available', 'class_status': ['not in', {'Cancelled'}]}, fields=['name','group_class_name','group_class_image','group_class_type','group_class_category','trainer_name','capacity','remaining','class_date','class_from_time','for_gender','class_to_time','members_only'], order_by="class_date asc")
     group_class_list = []
     if group_class:
         for gc_class in group_class:
@@ -64,7 +65,7 @@ def create_attendee(client_id, class_id):
 @frappe.whitelist()
 def get_details(client_id):
     client = frappe.db.get("Client", {"email": frappe.session.user})
-    doc = frappe.get_all('Group Class Attendees', filters={'client_id':client.name, 'attendee_status':['not in', {'Cancelled', 'Waiting List'}]}, fields=['name','group_class','group_class_name','trainer_name','class_status','class_date','from_time','to_time'], order_by="class_date asc")
+    doc = frappe.get_all('Group Class Attendees', filters={'client_id':client.name, 'attendee_status':['not in', {'Cancelled', 'Waiting List'}]}, fields=['name','group_class','group_class_name','trainer_name','attendee_status','class_date','from_time','to_time'], order_by="class_date asc")
     details=[]
     if doc:
         for rating in doc:
@@ -82,7 +83,7 @@ def get_details(client_id):
                         "group_class": rating.group_class,
                         "group_class_name": rating.group_class_name,
                         "trainer_name": rating.trainer_name,
-                        "class_status": rating.class_status,
+                        "class_status": rating.attendee_status,
                         "from_time": start_time_dt,
                         "to_time": end_time_dt
                     },
@@ -95,7 +96,7 @@ def get_details(client_id):
                         "group_class": rating.group_class,
                         "group_class_name": rating.group_class_name,
                         "trainer_name": rating.trainer_name,
-                        "class_status": rating.class_status,
+                        "class_status": rating.attendee_status,
                         "from_time": start_time_dt,
                         "to_time": end_time_dt
                     },
@@ -115,10 +116,6 @@ def cancel_attendee(group_class_attendee_id):
     group_class = frappe.get_doc('Group Class', doc.group_class)
     group_class.booked -= 1
     group_class.save()
-
-    if group_class.booking_status == "Full":
-        frappe.db.set_value('Group Class', group_class.name, 'booking_status', 'Available')
-        frappe.db.commit()
 
     frappe.response["message"] = {
         "Status": 1,

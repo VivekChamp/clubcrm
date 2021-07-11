@@ -147,9 +147,9 @@ class MembershipsApplication(Document):
 		self.net_total = self.joining_fee + self.total_membership_fee
 
 	def set_discounts_and_grand_total(self):
-		self.discount_amount = 0.0
 		self.grand_total = 0.0
 		if self.discount_type == "Percentage":
+			self.discount_amount = 0.0
 			if self.apply_discount == "On Joining Fee":
 				discount_amount =  (self.joining_fee * self.discount_percentage) / 100
 				self.discount_amount = float(discount_amount//0.5*0.5)
