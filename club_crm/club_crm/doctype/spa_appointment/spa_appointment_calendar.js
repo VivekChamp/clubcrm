@@ -109,7 +109,7 @@ frappe.views.calendar["Spa Appointment"] = {
             return "no-show";
         } else if (data.appointment_status == "Draft") {
             return "draft";
-        } else if (data.appointment_status == "Completed") {
+        } else if (data.appointment_status == "Completed" && payment_status == "Paid") {
             return "completed";
         }
     }

@@ -20,7 +20,7 @@ def get_spa_category(client_id):
 def get_spa_item(spa_category):
     client = frappe.db.get("Client", {"email": frappe.session.user})
     doc = frappe.get_doc('Client', client.name)
-    spa = frappe.get_all('Spa Services', filters={'spa_category':spa_category,'on_app': 1,'enabled':1,'session_type':'Single'}, fields=['spa_name','spa_group','spa_category','duration','price','description','image','gender_preference','no_member_discount'], order_by="spa_name asc")
+    spa = frappe.get_all('Spa Services', filters={'spa_category':spa_category,'on_app': 1,'enabled':1,'session_type':'Standard'}, fields=['spa_name','spa_group','spa_category','duration','price','description','image','gender_preference','no_member_discount'], order_by="spa_name asc")
     spa_item = []
 
     discount = 0.0
