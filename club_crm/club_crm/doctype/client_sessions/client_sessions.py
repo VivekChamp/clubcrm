@@ -33,18 +33,32 @@ class ClientSessions(Document):
 				start_date = self.start_date
 			
 			if self.package_name:
-				club_package = frappe.get_doc('Club Packages', self.package_name)
-				if club_package.package_table:
-					for row in club_package.package_table:
-						if self.service_name == row.service_name:
-							if row.validity_in == "Months":
-								expiry_date = add_month(start_date, row.validity_months)
-							elif row.validity_in == "Days":
-								expiry_date = start_date + timedelta(seconds=float(row.validity)) - timedelta(seconds=float(86400))
+				if not self.package_name == "Additional Benefits": 
+					club_package = frappe.get_doc('Club Packages', self.package_name)
+					if club_package.package_table:
+						for row in club_package.package_table:
+							if self.service_name == row.service_name:
+								if row.validity_in == "Months":
+									expiry_date = add_month(start_date, row.validity_months)
+								elif row.validity_in == "Days":
+									expiry_date = start_date + timedelta(seconds=float(row.validity)) - timedelta(seconds=float(86400))
 
-							new_expiry_date = expiry_date + timedelta(seconds=float(self.extension))
-							self.actual_expiry_date = expiry_date.strftime("%Y-%m-%d")
-							self.expiry_date = new_expiry_date.strftime("%Y-%m-%d")
+								new_expiry_date = expiry_date + timedelta(seconds=float(self.extension))
+								self.actual_expiry_date = expiry_date.strftime("%Y-%m-%d")
+								self.expiry_date = new_expiry_date.strftime("%Y-%m-%d")
+				else:
+					mem = frappe.get_doc('Memberships', self.membership_no)
+					mem_plan = frappe.get_doc('Memberships Plan', mem.membership_plan)
+
+					if mem_plan.membership_duration=="Months":
+						expiry_date = add_month(start_date, mem_plan.duration_months)
+					elif mem_plan.membership_duration=="Days":
+						expiry_date = start_date + timedelta(seconds=float(self.duration)) - timedelta(seconds=float(86400))
+					
+					new_expiry_date = expiry_date + timedelta(seconds=float(self.extension))
+					self.actual_expiry_date = expiry_date.strftime("%Y-%m-%d")
+					self.expiry_date = new_expiry_date.strftime("%Y-%m-%d")
+
 		else:
 			frappe.throw("Please set the start date")
 
@@ -113,6 +127,30 @@ def create_benefit_sessions(client_id,package_name,start_date,service_type,servi
 		"membership_no": mem_no,
 		"session_status": "Draft",
 		"is_benefit": 1
+	})
+	doc.save()
+
+@frappe.whitelist()
+def create_additional_benefit_sessions(client_id,start_date,service_type,service_name,no_of_sessions,validity,mem_no):
+	if type(start_date) == str:
+		start_date_dt = datetime.strptime(start_date, "%Y-%m-%d")
+		new_start_date = start_date_dt.date()
+	else:
+		new_start_date = start_date
+
+	doc= frappe.get_doc({
+		"doctype": 'Client Sessions',
+		"client_id": client_id,
+		"package_name": "Additional Benefits",
+		"package_type": "Club",
+		"start_date" : new_start_date,
+		"service_type": service_type,
+		"service_name": service_name,
+		"total_sessions": no_of_sessions,
+		"validity": validity,
+		"membership_no": mem_no,
+		"is_benefit": 1,
+		"session_status": "Active"
 	})
 	doc.save()
 

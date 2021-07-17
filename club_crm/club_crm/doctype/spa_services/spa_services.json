@@ -25,13 +25,13 @@
   "description",
   "other_details_section",
   "session_type",
-  "no_of_sessions",
   "price",
+  "regular_price_reference",
   "column_break_17",
-  "validity",
-  "gender_preference",
+  "session_for",
   "no_member_discount",
   "column_break_21",
+  "gender_preference",
   "therapist_preference",
   "capacity",
   "dependencies_section",
@@ -138,30 +138,16 @@
    "label": "Other Details"
   },
   {
-   "default": "Single",
-   "depends_on": "eval:doc.is_addon==0",
+   "default": "Standard",
    "fieldname": "session_type",
    "fieldtype": "Select",
    "label": "Session Type",
-   "options": "Single\nComplimentary",
+   "options": "Standard\nComplimentary",
    "reqd": 1
-  },
-  {
-   "fieldname": "no_of_sessions",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "label": "No. of Sessions"
   },
   {
    "fieldname": "column_break_17",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "validity",
-   "fieldtype": "Duration",
-   "hidden": 1,
-   "hide_seconds": 1,
-   "label": "Validity"
   },
   {
    "fieldname": "column_break_21",
@@ -319,11 +305,24 @@
    "fieldtype": "Select",
    "label": "Therapist Preference",
    "options": "\nNo preference\nSame gender for non-members only\nSame gender for non-members and members"
+  },
+  {
+   "fieldname": "session_for",
+   "fieldtype": "Select",
+   "label": "Session for",
+   "options": "Single\nCouple"
+  },
+  {
+   "default": "0.0",
+   "depends_on": "eval:doc.session_type==\"Complimentary\"",
+   "fieldname": "regular_price_reference",
+   "fieldtype": "Currency",
+   "label": "Regular price for reference if complimentary (in QAR)"
   }
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-07-11 00:52:18.235873",
+ "modified": "2021-07-13 02:19:25.271310",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Services",

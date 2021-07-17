@@ -6,10 +6,10 @@ from frappe import throw, msgprint, _
 
 @frappe.whitelist()
 def package_requests():
-    doc= frappe.get_all('Fitness Trainer',filters={'email':frappe.session.user})
+    doc = frappe.get_all('Service Staff',filters={'email':frappe.session.user})
     if doc:
         for d in doc:
-            pending= frappe.get_list('Fitness Training Request', filters={'trainer':d.name, 'request_status':['in',{'Scheduled','Pending'}],'docstatus':1}, fields=['*'])
+            pending = frappe.get_list('Fitness Training Request', filters={'trainer':d.name, 'request_status':['in',{'Scheduled','Pending'}]}, fields=['*'])
             requests=[]
             for t in pending:
                 package=frappe.get_doc('Fitness Training Request', t.name)
@@ -39,14 +39,14 @@ def package_requests():
 
 @frappe.whitelist()
 def trainer_schedule(from_date,to_date):
-    doc= frappe.get_all('Fitness Trainer',filters={'email':frappe.session.user})
+    doc= frappe.get_all('Service Staff',filters={'email':frappe.session.user})
     if doc:
         for d in doc:
-            startdate = datetime.strptime(from_date, "%d-%m-%Y")
-            end= datetime.strptime(to_date, "%d-%m-%Y")
-            enddate= end + timedelta(1)
-            
-            schedule= frappe.get_list('Fitness Training Appointment', filters={'trainer_id':d.name, 'docstatus':1, 'status':['in',{'Scheduled','Open'}], 'start_time':['between', [startdate, enddate]]}, fields=['name','date','client_id','client_name','mobile_number','package_name','start_time','end_time'])
+            startdate = datetime.strptime(from_date, "%Y-%m-%d")
+            end = datetime.strptime(to_date, "%Y-%m-%d")
+            enddate = end + timedelta(1)
+
+            schedule = frappe.get_all('Fitness Training Appointment', filters={'service_staff':d.name, 'appointment_status':['not in',{'Cancelled'}], 'start_time':['between', [startdate, enddate]]}, fields=['name','date','client_id','client_name','mobile_number','package_name','start_time','end_time'])
             count= len(schedule)
             if schedule:
                 frappe.response["message"] = {

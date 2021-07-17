@@ -24,7 +24,12 @@ def login(usr,pwd):
     frappe.response["message"]={
             "success_key":1,
             "sid": frappe.session.sid,
-            "user_details":{"email":user.name,"full_name":user.full_name,"is_employee":user.is_employee,"gender":user.gender,"mobile_no":user.mobile_no,"api_key":user.api_key},
+            "email":user.name,
+            "full_name":user.full_name,
+            "is_employee":user.is_employee,
+            "gender":user.gender,
+            "mobile_no":user.mobile_no,
+            "api_key":user.api_key,
             "api_secret":api_generate,
             "roles":roles
             }

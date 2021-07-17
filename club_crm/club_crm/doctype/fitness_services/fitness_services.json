@@ -22,20 +22,19 @@
   "description",
   "other_details_section",
   "session_type",
-  "no_of_sessions",
-  "sessions_per_week",
   "price",
   "column_break_17",
-  "validity",
+  "session_for",
   "no_member_discount",
   "column_break_19",
-  "cost_center",
   "item_details_section",
   "item",
   "item_name",
-  "column_break_20",
   "item_group",
+  "column_break_20",
+  "cost_center",
   "revenue_account",
+  "expense_account",
   "section_break_39",
   "image"
  ],
@@ -98,19 +97,12 @@
    "label": "Other Details"
   },
   {
-   "default": "Single",
+   "default": "Standard",
    "fieldname": "session_type",
    "fieldtype": "Select",
-   "label": "Session Type",
-   "options": "Single\nComplimentary",
+   "label": "Session type",
+   "options": "Standard\nComplimentary",
    "reqd": 1
-  },
-  {
-   "fieldname": "no_of_sessions",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "label": "No. of Sessions",
-   "mandatory_depends_on": "eval:doc.session_type==\"Multiple\""
   },
   {
    "default": "0.00",
@@ -125,13 +117,6 @@
   {
    "fieldname": "column_break_17",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "validity",
-   "fieldtype": "Duration",
-   "hidden": 1,
-   "hide_seconds": 1,
-   "label": "Validity"
   },
   {
    "default": "0",
@@ -173,8 +158,9 @@
   },
   {
    "fieldname": "cost_center",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "label": "Cost Center",
+   "options": "Cost Center",
    "read_only": 1
   },
   {
@@ -188,20 +174,15 @@
    "label": "Image"
   },
   {
-   "depends_on": "eval:doc.session_type==\"Multiple\"",
-   "fieldname": "sessions_per_week",
-   "fieldtype": "Data",
-   "label": "Sessions per week"
-  },
-  {
    "fieldname": "column_break_19",
    "fieldtype": "Column Break"
   },
   {
    "fieldname": "revenue_account",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "label": "Revenue Account",
-   "options": "\n40100005 - Fitness Services - KC"
+   "options": "Account",
+   "read_only": 1
   },
   {
    "fieldname": "fitness_name",
@@ -218,12 +199,25 @@
    "default": "0",
    "fieldname": "members_only_check",
    "fieldtype": "Check",
-   "label": "Members Only"
+   "label": "Members only"
+  },
+  {
+   "fieldname": "session_for",
+   "fieldtype": "Select",
+   "label": "Session for",
+   "options": "Single\nCouple"
+  },
+  {
+   "fieldname": "expense_account",
+   "fieldtype": "Link",
+   "label": "Expense Account",
+   "options": "Account",
+   "read_only": 1
   }
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-07-11 01:05:06.966230",
+ "modified": "2021-07-11 17:00:52.508462",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Services",
