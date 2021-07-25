@@ -1,8 +1,69 @@
 {
- "cards": [],
+ "cards": [
+  {
+   "card": "Total Clients"
+  },
+  {
+   "card": "Members"
+  },
+  {
+   "card": "Non-Members"
+  },
+  {
+   "card": "Disabled Clients"
+  },
+  {
+   "card": "Registered on App"
+  },
+  {
+   "card": "Members on App"
+  },
+  {
+   "card": "Check-ins Today"
+  },
+  {
+   "card": "Expired Members"
+  },
+  {
+   "card": "Total Sales (Last 30 Days)"
+  },
+  {
+   "card": "Spa Sales (Last 30 Days)"
+  },
+  {
+   "card": "Fitness Sales (Last 30 Days)"
+  },
+  {
+   "card": "Retail Sales (Last 30 Days)"
+  },
+  {
+   "card": "Membership Sales (Last 30 Days)"
+  },
+  {
+   "card": "Total Spa Bookings"
+  },
+  {
+   "card": "Total PT Bookings"
+  },
+  {
+   "card": "Membership Applications"
+  }
+ ],
  "charts": [
   {
-   "chart": "Spa Bookings Today",
+   "chart": "Client Distribution",
+   "width": "Half"
+  },
+  {
+   "chart": "Gender Distribution",
+   "width": "Half"
+  },
+  {
+   "chart": "Spa Bookings",
+   "width": "Half"
+  },
+  {
+   "chart": "PT Bookings",
    "width": "Half"
   }
  ],
@@ -13,7 +74,7 @@
  "idx": 0,
  "is_default": 1,
  "is_standard": 1,
- "modified": "2021-04-02 12:29:41.407947",
+ "modified": "2021-07-25 04:46:27.067547",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club CRM",

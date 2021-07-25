@@ -43,7 +43,8 @@
   "transaction_date",
   "transaction_reference",
   "sessions_created",
-  "schedule_notification"
+  "schedule_notification",
+  "invoiced"
  ],
  "fields": [
   {
@@ -283,10 +284,17 @@
    "fieldtype": "Duration",
    "hidden": 1,
    "label": "Validity"
+  },
+  {
+   "default": "0",
+   "fieldname": "invoiced",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Invoiced"
   }
  ],
  "links": [],
- "modified": "2021-05-31 03:19:37.837098",
+ "modified": "2021-07-25 04:58:12.833314",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Request",

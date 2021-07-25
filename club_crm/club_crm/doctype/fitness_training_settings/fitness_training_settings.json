@@ -1,77 +1,129 @@
 {
-    "actions": [],
-    "creation": "2021-04-04 02:16:24.341810",
-    "doctype": "DocType",
-    "editable_grid": 1,
-    "engine": "InnoDB",
-    "field_order": [
-        "fitness_training_cancellation_section",
-        "pt_cancellation_time",
-        "notification_settings_section",
-        "enabled_trainer",
-        "enabled_client",
-        "section_break_4",
-        "scheduled_message"
-    ],
-    "fields": [{
-            "fieldname": "notification_settings_section",
-            "fieldtype": "Section Break",
-            "label": "Notification Settings"
-        },
-        {
-            "description": "Special characters other than . and , may cause the message to not get sent.",
-            "fieldname": "scheduled_message",
-            "fieldtype": "Small Text",
-            "label": "Scheduled message to Client"
-        },
-        {
-            "default": "1",
-            "fieldname": "enabled_trainer",
-            "fieldtype": "Check",
-            "label": "Enable SMS to Trainers"
-        },
-        {
-            "default": "1",
-            "fieldname": "enabled_client",
-            "fieldtype": "Check",
-            "label": "Enable SMS to Clients"
-        },
-        {
-            "fieldname": "section_break_4",
-            "fieldtype": "Section Break",
-            "label": "Notification Messages"
-        },
-        {
-            "fieldname": "fitness_training_cancellation_section",
-            "fieldtype": "Section Break",
-            "label": "Fitness Training Cancellation"
-        },
-        {
-            "default": "0.0",
-            "description": "Minimum time for an appointment to be available for cancellation (in minutes)",
-            "fieldname": "pt_cancellation_time",
-            "fieldtype": "Duration",
-            "label": "Cancellation Time"
-        }
-    ],
-    "issingle": 1,
-    "links": [],
-    "modified": "2021-06-01 14:33:08.998879",
-    "modified_by": "Administrator",
-    "module": "Club CRM",
-    "name": "Fitness Training Settings",
-    "owner": "Administrator",
-    "permissions": [{
-        "create": 1,
-        "delete": 1,
-        "email": 1,
-        "print": 1,
-        "read": 1,
-        "role": "System Manager",
-        "share": 1,
-        "write": 1
-    }],
-    "sort_field": "modified",
-    "sort_order": "DESC",
-    "track_changes": 1
+ "actions": [],
+ "creation": "2021-04-04 02:16:24.341810",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "fitness_training_cancellation_section",
+  "pt_cancellation_time",
+  "notification_settings_section",
+  "enabled_trainer",
+  "enabled_client",
+  "scheduled_message",
+  "commission_calculation_section",
+  "single_session",
+  "couple_session",
+  "column_break_10",
+  "complimentary_session",
+  "column_break_12",
+  "group_class_session",
+  "group_class_rate"
+ ],
+ "fields": [
+  {
+   "collapsible": 1,
+   "fieldname": "notification_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Notification Settings"
+  },
+  {
+   "description": "Special characters other than . and , may cause the message to not get sent.",
+   "fieldname": "scheduled_message",
+   "fieldtype": "Small Text",
+   "label": "Scheduled message to Client"
+  },
+  {
+   "default": "0",
+   "fieldname": "enabled_trainer",
+   "fieldtype": "Check",
+   "label": "Enable SMS to Trainers"
+  },
+  {
+   "default": "0",
+   "fieldname": "enabled_client",
+   "fieldtype": "Check",
+   "label": "Enable SMS to Clients"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "fitness_training_cancellation_section",
+   "fieldtype": "Section Break",
+   "label": "Appointment Cancellation"
+  },
+  {
+   "default": "0.0",
+   "description": "Minimum time for an appointment to be available for cancellation.",
+   "fieldname": "pt_cancellation_time",
+   "fieldtype": "Duration",
+   "label": "Cancellation Time"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "commission_calculation_section",
+   "fieldtype": "Section Break",
+   "label": "Commission Calculation"
+  },
+  {
+   "default": "0.0",
+   "fieldname": "single_session",
+   "fieldtype": "Float",
+   "label": "Single Session"
+  },
+  {
+   "default": "0.0",
+   "fieldname": "couple_session",
+   "fieldtype": "Float",
+   "label": "Couple Session"
+  },
+  {
+   "default": "0.0",
+   "fieldname": "complimentary_session",
+   "fieldtype": "Float",
+   "label": "Complimentary Session"
+  },
+  {
+   "default": "0.0",
+   "fieldname": "group_class_session",
+   "fieldtype": "Float",
+   "label": "Group Class"
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_12",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0.0",
+   "fieldname": "group_class_rate",
+   "fieldtype": "Currency",
+   "label": "Rate per Group Class session (in QAR)"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2021-07-12 17:10:58.083004",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Fitness Training Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
 }

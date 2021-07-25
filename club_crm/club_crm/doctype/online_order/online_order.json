@@ -30,7 +30,8 @@
   "transaction_date",
   "cart_id",
   "amended_from",
-  "naming_series"
+  "naming_series",
+  "invoiced"
  ],
  "fields": [
   {
@@ -187,10 +188,17 @@
    "hidden": 1,
    "label": "Cart ID",
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "invoiced",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Invoiced"
   }
  ],
  "links": [],
- "modified": "2021-07-03 14:46:08.735808",
+ "modified": "2021-07-25 05:00:54.090726",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Online Order",

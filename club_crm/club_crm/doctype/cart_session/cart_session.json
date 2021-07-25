@@ -13,7 +13,7 @@
  ],
  "fields": [
   {
-   "columns": 1,
+   "columns": 2,
    "fetch_from": "package_name.total_price",
    "fieldname": "unit_price",
    "fieldtype": "Currency",
@@ -31,7 +31,7 @@
    "precision": "2"
   },
   {
-   "columns": 1,
+   "columns": 2,
    "fieldname": "total_price",
    "fieldtype": "Currency",
    "in_list_view": 1,
@@ -39,7 +39,7 @@
    "read_only": 1
   },
   {
-   "columns": 1,
+   "columns": 2,
    "fieldname": "package_type",
    "fieldtype": "Select",
    "in_list_view": 1,
@@ -47,7 +47,7 @@
    "options": "Spa\nFitness\nClub"
   },
   {
-   "columns": 4,
+   "columns": 3,
    "fieldname": "package_name",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -58,7 +58,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-03-22 01:58:28.862068",
+ "modified": "2021-07-24 23:29:38.099797",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Cart Session",

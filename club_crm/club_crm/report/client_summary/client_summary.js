@@ -2,7 +2,7 @@
 // For license information, please see license.txt
 /* eslint-disable */
 
-frappe.query_reports["Client"] = {
+frappe.query_reports["Client Summary"] = {
     "filters": [{
             'fieldname': "membership_status",
             'label': "Membership Status",

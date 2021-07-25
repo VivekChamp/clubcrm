@@ -44,7 +44,8 @@
   "boho_discount",
   "grams_discount",
   "accounting_details_section",
-  "item"
+  "membership_fee_item",
+  "joining_fee_item"
  ],
  "fields": [
   {
@@ -271,14 +272,20 @@
    "label": "Accounting Details"
   },
   {
-   "fieldname": "item",
+   "fieldname": "membership_fee_item",
    "fieldtype": "Link",
-   "label": "Link to Item Master",
+   "label": "Link to Membership Fee Item",
+   "options": "Item"
+  },
+  {
+   "fieldname": "joining_fee_item",
+   "fieldtype": "Link",
+   "label": "Link to Joining Fee Item",
    "options": "Item"
   }
  ],
  "links": [],
- "modified": "2021-07-11 01:02:09.666643",
+ "modified": "2021-07-17 14:57:24.258446",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Plan",

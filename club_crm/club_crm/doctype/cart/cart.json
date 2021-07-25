@@ -11,8 +11,10 @@
   "appointments_check",
   "column_break_2",
   "sessions_check",
-  "column_break_4",
+  "column_break_6",
   "products_check",
+  "column_break_4",
+  "tips_check",
   "general_information_section",
   "date",
   "time",
@@ -29,6 +31,8 @@
   "cart_session",
   "section_break_19",
   "cart_product",
+  "section_break_26",
+  "cart_tips",
   "section_break_14",
   "quantity_appointments",
   "quantity_sessions",
@@ -38,6 +42,7 @@
   "net_total_appointments",
   "net_total_sessions",
   "net_total_products",
+  "total_tips",
   "net_total",
   "column_break_20",
   "apply_discount",
@@ -51,7 +56,8 @@
   "paid_amount",
   "balance_amount",
   "naming_series",
-  "amended_from"
+  "amended_from",
+  "invoiced"
  ],
  "fields": [
   {
@@ -354,11 +360,49 @@
   {
    "fieldname": "section_break_2",
    "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "invoiced",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Invoiced"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.tips_check==\"1\"",
+   "fieldname": "cart_tips",
+   "fieldtype": "Table",
+   "label": "Tips",
+   "mandatory_depends_on": "eval:doc.tips_check==\"1\"",
+   "options": "Cart Tips"
+  },
+  {
+   "fieldname": "section_break_26",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "description": "Enable tips for service staffs",
+   "fieldname": "tips_check",
+   "fieldtype": "Check",
+   "label": "Tips"
+  },
+  {
+   "default": "0.0",
+   "depends_on": "eval:doc.tips_check==\"1\"",
+   "fieldname": "total_tips",
+   "fieldtype": "Currency",
+   "label": "Total Tips",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-05-25 09:47:40.493909",
+ "modified": "2021-07-25 01:01:29.043977",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Cart",
