@@ -239,7 +239,7 @@ frappe.ui.form.on("Spa Appointment", {
         }
 
         // View Cart
-        if (!frm.is_new() && (frm.doc.payment_status == "Added to cart" || frm.doc.payment_status == "Paid")) {
+        if (!frm.is_new() && (frm.doc.payment_status == "Added to cart" || frm.doc.payment_status == "Paid") && (frm.doc.session == 0)) {
             frm.add_custom_button(__('Cart'), function() {
                 frappe.set_route("Form", "Cart", frm.doc.cart);
             }, __("View"));
