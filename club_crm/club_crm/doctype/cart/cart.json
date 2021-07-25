@@ -1,428 +1,426 @@
 {
- "actions": [],
- "autoname": "naming_series:",
- "creation": "2021-03-07 22:17:45.346133",
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "online",
-  "section_break_2",
-  "appointments_check",
-  "column_break_2",
-  "sessions_check",
-  "column_break_6",
-  "products_check",
-  "column_break_4",
-  "tips_check",
-  "general_information_section",
-  "date",
-  "time",
-  "column_break_3",
-  "client_id",
-  "client_name",
-  "mobile_no",
-  "column_break_10",
-  "payment_status",
-  "membership_status",
-  "section_break_5",
-  "cart_appointment",
-  "section_break_11",
-  "cart_session",
-  "section_break_19",
-  "cart_product",
-  "section_break_26",
-  "cart_tips",
-  "section_break_14",
-  "quantity_appointments",
-  "quantity_sessions",
-  "quantity_products",
-  "total_quantity",
-  "column_break_12",
-  "net_total_appointments",
-  "net_total_sessions",
-  "net_total_products",
-  "total_tips",
-  "net_total",
-  "column_break_20",
-  "apply_discount",
-  "discount_percentage",
-  "discount_amount",
-  "grand_total",
-  "payment_details_section",
-  "payment_table",
-  "column_break_42",
-  "total_to_be_paid",
-  "paid_amount",
-  "balance_amount",
-  "naming_series",
-  "amended_from",
-  "invoiced"
- ],
- "fields": [
-  {
-   "fieldname": "client_id",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Client ID",
-   "options": "Client",
-   "reqd": 1
-  },
-  {
-   "fetch_from": "client_id.client_name",
-   "fieldname": "client_name",
-   "fieldtype": "Data",
-   "label": "Client Name",
-   "read_only": 1
-  },
-  {
-   "depends_on": "eval:doc.appointments_check==\"1\"",
-   "fieldname": "section_break_5",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Cart",
-   "print_hide": 1,
-   "read_only": 1
-  },
-  {
-   "default": "Today",
-   "fieldname": "date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Date",
-   "read_only": 1
-  },
-  {
-   "default": "Now",
-   "fieldname": "time",
-   "fieldtype": "Time",
-   "label": "Time",
-   "read_only": 1
-  },
-  {
-   "fieldname": "column_break_3",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fetch_from": "client_id.mobile_no",
-   "fieldname": "mobile_no",
-   "fieldtype": "Data",
-   "label": "Mobile Number",
-   "read_only": 1
-  },
-  {
-   "default": "0.0",
-   "fieldname": "grand_total",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Grand Total",
-   "read_only": 1
-  },
-  {
-   "depends_on": "eval:doc.sessions_check==\"1\"",
-   "fieldname": "cart_session",
-   "fieldtype": "Table",
-   "label": "Sessions",
-   "mandatory_depends_on": "eval:doc.sessions_check==\"1\"",
-   "options": "Cart Session"
-  },
-  {
-   "fieldname": "general_information_section",
-   "fieldtype": "Section Break",
-   "label": "General Information"
-  },
-  {
-   "fetch_from": "client_id.membership_status",
-   "fieldname": "membership_status",
-   "fieldtype": "Data",
-   "label": "Membership Status",
-   "read_only": 1
-  },
-  {
-   "depends_on": "eval:doc.sessions_check==\"1\"",
-   "fieldname": "section_break_11",
-   "fieldtype": "Section Break"
-  },
-  {
-   "depends_on": "eval:doc.appointments_check==\"1\"",
-   "fieldname": "column_break_12",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_14",
-   "fieldtype": "Section Break",
-   "label": "Billing Details"
-  },
-  {
-   "depends_on": "eval:doc.products_check==\"1\"",
-   "fieldname": "cart_product",
-   "fieldtype": "Table",
-   "label": "Products",
-   "mandatory_depends_on": "eval:doc.products_check==\"1\"",
-   "options": "Cart Product"
-  },
-  {
-   "default": "0.0",
-   "depends_on": "eval:doc.sessions_check==\"1\"",
-   "fieldname": "net_total_sessions",
-   "fieldtype": "Currency",
-   "label": "Net Total (Sessions)",
-   "read_only": 1
-  },
-  {
-   "default": "0.0",
-   "depends_on": "eval:doc.products_check==\"1\"",
-   "fieldname": "net_total_products",
-   "fieldtype": "Currency",
-   "label": "Net Total (Products)",
-   "read_only": 1
-  },
-  {
-   "depends_on": "eval:doc.products_check==\"1\"",
-   "fieldname": "section_break_19",
-   "fieldtype": "Section Break"
-  },
-  {
-   "depends_on": "eval:doc.sessions_check==\"1\"",
-   "fieldname": "column_break_20",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval:doc.sessions_check==\"1\"",
-   "fieldname": "quantity_sessions",
-   "fieldtype": "Int",
-   "label": "Quantity (Sessions)",
-   "read_only": 1
-  },
-  {
-   "fieldname": "column_break_10",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "0",
-   "description": "Enable billing for appointments",
-   "fieldname": "appointments_check",
-   "fieldtype": "Check",
-   "label": "Appointments"
-  },
-  {
-   "default": "0",
-   "description": "Enable billing for sessions/packages",
-   "fieldname": "sessions_check",
-   "fieldtype": "Check",
-   "label": "Sessions"
-  },
-  {
-   "default": "0",
-   "description": "Enable billing for retail products",
-   "fieldname": "products_check",
-   "fieldtype": "Check",
-   "label": "Products"
-  },
-  {
-   "depends_on": "eval:doc.appointments_check==\"1\"",
-   "fieldname": "cart_appointment",
-   "fieldtype": "Table",
-   "label": "Appointments",
-   "mandatory_depends_on": "eval:doc.appointments_check==\"1\"",
-   "options": "Cart Appointment"
-  },
-  {
-   "fieldname": "naming_series",
-   "fieldtype": "Select",
-   "hidden": 1,
-   "label": "Series",
-   "options": "CART-.YYYY.-"
-  },
-  {
-   "default": "None",
-   "fieldname": "apply_discount",
-   "fieldtype": "Select",
-   "label": "Apply additional discount",
-   "options": "None\nAmount\nPercentage on Net Total"
-  },
-  {
-   "depends_on": "eval:doc.apply_discount==\"Percentage on Net Total\"",
-   "fieldname": "discount_percentage",
-   "fieldtype": "Percent",
-   "label": "Additional Discount Percentage",
-   "mandatory_depends_on": "eval:doc.apply_discount==\"Percentage on Net Total\" || doc.apply_discount==\"Percentage on Net Total after member discount\"",
-   "precision": "2"
-  },
-  {
-   "default": "0.0",
-   "fieldname": "discount_amount",
-   "fieldtype": "Currency",
-   "label": "Additional Discount Amount",
-   "mandatory_depends_on": "eval:doc.apply_discount==\"Amount\"",
-   "read_only_depends_on": "eval:doc.apply_discount!=\"Amount\""
-  },
-  {
-   "fieldname": "column_break_2",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_4",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval:doc.products_check==\"1\"",
-   "fieldname": "quantity_products",
-   "fieldtype": "Int",
-   "label": "Quantity (Products)",
-   "read_only": 1
-  },
-  {
-   "default": "0.0",
-   "fieldname": "net_total",
-   "fieldtype": "Currency",
-   "label": "Net Total",
-   "read_only": 1
-  },
-  {
-   "depends_on": "eval:doc.appointments_check==\"1\"",
-   "fieldname": "quantity_appointments",
-   "fieldtype": "Int",
-   "label": "Quantity (Appointments)",
-   "read_only": 1
-  },
-  {
-   "default": "0.0",
-   "depends_on": "eval:doc.appointments_check==\"1\"",
-   "fieldname": "net_total_appointments",
-   "fieldtype": "Currency",
-   "label": "Net Total (Appointments)",
-   "read_only": 1
-  },
-  {
-   "fieldname": "total_quantity",
-   "fieldtype": "Int",
-   "label": "Total Quantity",
-   "read_only": 1
-  },
-  {
-   "default": "Not Paid",
-   "fieldname": "payment_status",
-   "fieldtype": "Select",
-   "hidden": 1,
-   "label": "Payment Status",
-   "options": "Not Paid\nPaid\nCancelled",
-   "read_only": 1
-  },
-  {
-   "fieldname": "payment_details_section",
-   "fieldtype": "Section Break",
-   "label": "Payment Details"
-  },
-  {
-   "fieldname": "payment_table",
-   "fieldtype": "Table",
-   "options": "Cart Payment"
-  },
-  {
-   "default": "0.0",
-   "fieldname": "total_to_be_paid",
-   "fieldtype": "Currency",
-   "label": "Total to be Paid",
-   "read_only": 1
-  },
-  {
-   "fieldname": "column_break_42",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "0.0",
-   "fieldname": "paid_amount",
-   "fieldtype": "Currency",
-   "label": "Paid Amount",
-   "read_only": 1
-  },
-  {
-   "default": "0.0",
-   "fieldname": "balance_amount",
-   "fieldtype": "Currency",
-   "label": "Balance Amount",
-   "read_only": 1
-  },
-  {
-   "default": "0",
-   "description": "This checkbox implies that this cart is made using web/mobile app.",
-   "fieldname": "online",
-   "fieldtype": "Check",
-   "label": "Online",
-   "read_only": 1
-  },
-  {
-   "fieldname": "section_break_2",
-   "fieldtype": "Section Break"
-  },
-  {
-   "default": "0",
-   "fieldname": "invoiced",
-   "fieldtype": "Check",
-   "hidden": 1,
-   "label": "Invoiced"
-  },
-  {
-   "fieldname": "column_break_6",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval:doc.tips_check==\"1\"",
-   "fieldname": "cart_tips",
-   "fieldtype": "Table",
-   "label": "Tips",
-   "mandatory_depends_on": "eval:doc.tips_check==\"1\"",
-   "options": "Cart Tips"
-  },
-  {
-   "fieldname": "section_break_26",
-   "fieldtype": "Section Break"
-  },
-  {
-   "default": "0",
-   "description": "Enable tips for service staffs",
-   "fieldname": "tips_check",
-   "fieldtype": "Check",
-   "label": "Tips"
-  },
-  {
-   "default": "0.0",
-   "depends_on": "eval:doc.tips_check==\"1\"",
-   "fieldname": "total_tips",
-   "fieldtype": "Currency",
-   "label": "Total Tips",
-   "read_only": 1
-  }
- ],
- "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2021-07-25 01:01:29.043977",
- "modified_by": "Administrator",
- "module": "Club CRM",
- "name": "Cart",
- "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "title_field": "client_name",
- "track_changes": 1
+    "actions": [],
+    "autoname": "naming_series:",
+    "creation": "2021-03-07 22:17:45.346133",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "online",
+        "section_break_2",
+        "appointments_check",
+        "column_break_2",
+        "sessions_check",
+        "column_break_6",
+        "products_check",
+        "column_break_4",
+        "tips_check",
+        "general_information_section",
+        "date",
+        "time",
+        "column_break_3",
+        "client_id",
+        "client_name",
+        "mobile_no",
+        "column_break_10",
+        "payment_status",
+        "membership_status",
+        "section_break_5",
+        "cart_appointment",
+        "section_break_11",
+        "cart_session",
+        "section_break_19",
+        "cart_product",
+        "section_break_26",
+        "cart_tips",
+        "section_break_14",
+        "quantity_appointments",
+        "quantity_sessions",
+        "quantity_products",
+        "total_quantity",
+        "column_break_12",
+        "net_total_appointments",
+        "net_total_sessions",
+        "net_total_products",
+        "total_tips",
+        "net_total",
+        "column_break_20",
+        "apply_discount",
+        "discount_percentage",
+        "discount_amount",
+        "grand_total",
+        "payment_details_section",
+        "payment_table",
+        "column_break_42",
+        "total_to_be_paid",
+        "paid_amount",
+        "balance_amount",
+        "naming_series",
+        "amended_from",
+        "invoiced"
+    ],
+    "fields": [{
+            "fieldname": "client_id",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Client ID",
+            "options": "Client",
+            "reqd": 1
+        },
+        {
+            "fetch_from": "client_id.client_name",
+            "fieldname": "client_name",
+            "fieldtype": "Data",
+            "label": "Client Name",
+            "read_only": 1
+        },
+        {
+            "depends_on": "eval:doc.appointments_check==\"1\"",
+            "fieldname": "section_break_5",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "amended_from",
+            "fieldtype": "Link",
+            "label": "Amended From",
+            "no_copy": 1,
+            "options": "Cart",
+            "print_hide": 1,
+            "read_only": 1
+        },
+        {
+            "default": "Today",
+            "fieldname": "date",
+            "fieldtype": "Date",
+            "in_list_view": 1,
+            "label": "Date",
+            "read_only": 1
+        },
+        {
+            "default": "Now",
+            "fieldname": "time",
+            "fieldtype": "Time",
+            "label": "Time",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_3",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fetch_from": "client_id.mobile_no",
+            "fieldname": "mobile_no",
+            "fieldtype": "Data",
+            "label": "Mobile Number",
+            "read_only": 1
+        },
+        {
+            "default": "0.0",
+            "fieldname": "grand_total",
+            "fieldtype": "Currency",
+            "in_list_view": 1,
+            "label": "Grand Total",
+            "read_only": 1
+        },
+        {
+            "depends_on": "eval:doc.sessions_check==\"1\"",
+            "fieldname": "cart_session",
+            "fieldtype": "Table",
+            "label": "Sessions",
+            "mandatory_depends_on": "eval:doc.sessions_check==\"1\"",
+            "options": "Cart Session"
+        },
+        {
+            "fieldname": "general_information_section",
+            "fieldtype": "Section Break",
+            "label": "General Information"
+        },
+        {
+            "fetch_from": "client_id.membership_status",
+            "fieldname": "membership_status",
+            "fieldtype": "Data",
+            "label": "Membership Status",
+            "read_only": 1
+        },
+        {
+            "depends_on": "eval:doc.sessions_check==\"1\"",
+            "fieldname": "section_break_11",
+            "fieldtype": "Section Break"
+        },
+        {
+            "depends_on": "eval:doc.appointments_check==\"1\"",
+            "fieldname": "column_break_12",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_14",
+            "fieldtype": "Section Break",
+            "label": "Billing Details"
+        },
+        {
+            "depends_on": "eval:doc.products_check==\"1\"",
+            "fieldname": "cart_product",
+            "fieldtype": "Table",
+            "label": "Products",
+            "mandatory_depends_on": "eval:doc.products_check==\"1\"",
+            "options": "Cart Product"
+        },
+        {
+            "default": "0.0",
+            "depends_on": "eval:doc.sessions_check==\"1\"",
+            "fieldname": "net_total_sessions",
+            "fieldtype": "Currency",
+            "label": "Net Total (Sessions)",
+            "read_only": 1
+        },
+        {
+            "default": "0.0",
+            "depends_on": "eval:doc.products_check==\"1\"",
+            "fieldname": "net_total_products",
+            "fieldtype": "Currency",
+            "label": "Net Total (Products)",
+            "read_only": 1
+        },
+        {
+            "depends_on": "eval:doc.products_check==\"1\"",
+            "fieldname": "section_break_19",
+            "fieldtype": "Section Break"
+        },
+        {
+            "depends_on": "eval:doc.sessions_check==\"1\"",
+            "fieldname": "column_break_20",
+            "fieldtype": "Column Break"
+        },
+        {
+            "depends_on": "eval:doc.sessions_check==\"1\"",
+            "fieldname": "quantity_sessions",
+            "fieldtype": "Int",
+            "label": "Quantity (Sessions)",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_10",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "0",
+            "description": "Enable billing for appointments",
+            "fieldname": "appointments_check",
+            "fieldtype": "Check",
+            "label": "Appointments"
+        },
+        {
+            "default": "0",
+            "description": "Enable billing for sessions/packages",
+            "fieldname": "sessions_check",
+            "fieldtype": "Check",
+            "label": "Sessions"
+        },
+        {
+            "default": "0",
+            "description": "Enable billing for retail products",
+            "fieldname": "products_check",
+            "fieldtype": "Check",
+            "label": "Products"
+        },
+        {
+            "depends_on": "eval:doc.appointments_check==\"1\"",
+            "fieldname": "cart_appointment",
+            "fieldtype": "Table",
+            "label": "Appointments",
+            "mandatory_depends_on": "eval:doc.appointments_check==\"1\"",
+            "options": "Cart Appointment"
+        },
+        {
+            "fieldname": "naming_series",
+            "fieldtype": "Select",
+            "hidden": 1,
+            "label": "Series",
+            "options": "CART-.YYYY.-"
+        },
+        {
+            "default": "None",
+            "fieldname": "apply_discount",
+            "fieldtype": "Select",
+            "label": "Apply additional discount",
+            "options": "None\nAmount\nPercentage on Net Total"
+        },
+        {
+            "depends_on": "eval:doc.apply_discount==\"Percentage on Net Total\"",
+            "fieldname": "discount_percentage",
+            "fieldtype": "Percent",
+            "label": "Additional Discount Percentage",
+            "mandatory_depends_on": "eval:doc.apply_discount==\"Percentage on Net Total\" || doc.apply_discount==\"Percentage on Net Total after member discount\"",
+            "precision": "2"
+        },
+        {
+            "default": "0.0",
+            "fieldname": "discount_amount",
+            "fieldtype": "Currency",
+            "label": "Additional Discount Amount",
+            "mandatory_depends_on": "eval:doc.apply_discount==\"Amount\"",
+            "read_only_depends_on": "eval:doc.apply_discount!=\"Amount\""
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "depends_on": "eval:doc.products_check==\"1\"",
+            "fieldname": "quantity_products",
+            "fieldtype": "Int",
+            "label": "Quantity (Products)",
+            "read_only": 1
+        },
+        {
+            "default": "0.0",
+            "fieldname": "net_total",
+            "fieldtype": "Currency",
+            "label": "Net Total",
+            "read_only": 1
+        },
+        {
+            "depends_on": "eval:doc.appointments_check==\"1\"",
+            "fieldname": "quantity_appointments",
+            "fieldtype": "Int",
+            "label": "Quantity (Appointments)",
+            "read_only": 1
+        },
+        {
+            "default": "0.0",
+            "depends_on": "eval:doc.appointments_check==\"1\"",
+            "fieldname": "net_total_appointments",
+            "fieldtype": "Currency",
+            "label": "Net Total (Appointments)",
+            "read_only": 1
+        },
+        {
+            "fieldname": "total_quantity",
+            "fieldtype": "Int",
+            "label": "Total Quantity",
+            "read_only": 1
+        },
+        {
+            "default": "Not Paid",
+            "fieldname": "payment_status",
+            "fieldtype": "Select",
+            "hidden": 1,
+            "label": "Payment Status",
+            "options": "Not Paid\nPaid\nCancelled",
+            "read_only": 1
+        },
+        {
+            "fieldname": "payment_details_section",
+            "fieldtype": "Section Break",
+            "label": "Payment Details"
+        },
+        {
+            "fieldname": "payment_table",
+            "fieldtype": "Table",
+            "options": "Cart Payment"
+        },
+        {
+            "default": "0.0",
+            "fieldname": "total_to_be_paid",
+            "fieldtype": "Currency",
+            "label": "Total to be Paid",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_42",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "0.0",
+            "fieldname": "paid_amount",
+            "fieldtype": "Currency",
+            "label": "Paid Amount",
+            "read_only": 1
+        },
+        {
+            "default": "0.0",
+            "fieldname": "balance_amount",
+            "fieldtype": "Currency",
+            "label": "Balance Amount",
+            "read_only": 1
+        },
+        {
+            "default": "0",
+            "description": "This checkbox implies that this cart is made using web/mobile app.",
+            "fieldname": "online",
+            "fieldtype": "Check",
+            "label": "Online",
+            "read_only": 1
+        },
+        {
+            "fieldname": "section_break_2",
+            "fieldtype": "Section Break"
+        },
+        {
+            "default": "0",
+            "fieldname": "invoiced",
+            "fieldtype": "Check",
+            "hidden": 1,
+            "label": "Invoiced"
+        },
+        {
+            "fieldname": "column_break_6",
+            "fieldtype": "Column Break"
+        },
+        {
+            "depends_on": "eval:doc.tips_check==1",
+            "fieldname": "cart_tips",
+            "fieldtype": "Table",
+            "label": "Tips",
+            "mandatory_depends_on": "eval:doc.tips_check==\"1\"",
+            "options": "Cart Tips"
+        },
+        {
+            "depends_on": "eval:doc.tips_check==1",
+            "fieldname": "section_break_26",
+            "fieldtype": "Section Break"
+        },
+        {
+            "default": "0",
+            "description": "Enable tips for service staffs",
+            "fieldname": "tips_check",
+            "fieldtype": "Check",
+            "label": "Tips"
+        },
+        {
+            "default": "0.0",
+            "depends_on": "eval:doc.tips_check==\"1\"",
+            "fieldname": "total_tips",
+            "fieldtype": "Currency",
+            "label": "Total Tips",
+            "read_only": 1
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2021-07-25 01:01:29.043977",
+    "modified_by": "Administrator",
+    "module": "Club CRM",
+    "name": "Cart",
+    "owner": "Administrator",
+    "permissions": [{
+        "create": 1,
+        "delete": 1,
+        "email": 1,
+        "export": 1,
+        "print": 1,
+        "read": 1,
+        "report": 1,
+        "role": "System Manager",
+        "share": 1,
+        "write": 1
+    }],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "title_field": "client_name",
+    "track_changes": 1
 }
