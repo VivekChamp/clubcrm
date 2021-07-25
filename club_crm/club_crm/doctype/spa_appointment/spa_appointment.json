@@ -83,7 +83,8 @@
   "cart",
   "checkin_document",
   "progress_notes_id",
-  "commission_processed"
+  "count_updated",
+  "invoiced"
  ],
  "fields": [
   {
@@ -612,20 +613,26 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Spa Therapist",
-   "no_copy": 1,
    "options": "Service Staff",
    "reqd": 1
   },
   {
    "default": "0",
-   "fieldname": "commission_processed",
+   "fieldname": "count_updated",
    "fieldtype": "Check",
    "hidden": 1,
-   "label": "Commission processed"
+   "label": "Count updated",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "invoiced",
+   "fieldtype": "Check",
+   "label": "Invoiced"
   }
  ],
  "links": [],
- "modified": "2021-06-14 14:40:17.102855",
+ "modified": "2021-07-15 04:46:07.748310",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Appointment",

@@ -39,6 +39,7 @@ class Cart(Document):
 		self.net_total_appointments = 0.0
 		self.net_total_sessions = 0.0
 		self.net_total_products = 0.0
+		self.total_tips = 0.0
 		self.quantity_appointments = 0
 		self.quantity_sessions = 0
 		self.quantity_products = 0
@@ -63,7 +64,11 @@ class Cart(Document):
 				self.quantity_products += int(row.qty)
 				self.net_total_products += row.total_price
 		
-		self.net_total = self.net_total_appointments + self.net_total_sessions + self.net_total_products
+		if self.tips_check ==1:
+			for row in self.cart_tips:
+				self.total_tips += row.tips_amount
+		
+		self.net_total = self.net_total_appointments + self.net_total_sessions + self.net_total_products + self.total_tips
 		self.total_quantity = self.quantity_appointments + self.quantity_sessions + self.quantity_products
 
 	def set_discount_and_grand_total(self):

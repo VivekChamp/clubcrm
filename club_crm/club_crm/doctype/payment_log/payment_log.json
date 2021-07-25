@@ -8,18 +8,23 @@
  "field_order": [
   "section_break_6",
   "date_time",
-  "time",
+  "client_id",
   "req_bill_to_forename",
   "req_bill_to_surname",
   "column_break_8",
+  "time",
+  "document_type",
   "req_reference_number",
-  "auth_amount",
+  "reference_doc",
   "transaction_id",
+  "req_payment_token",
   "column_break_11",
   "decision",
   "reason_code",
   "message",
+  "auth_amount",
   "other_details_section",
+  "req_bill_to_email",
   "signed_date_time",
   "generated_hash",
   "payment_gateway_hash",
@@ -31,6 +36,7 @@
   "req_customer_ip_address",
   "column_break_19",
   "req_card_number",
+  "req_card_expiry_date",
   "card_type_name",
   "req_amount",
   "section_break_14",
@@ -107,6 +113,7 @@
   {
    "fieldname": "req_reference_number",
    "fieldtype": "Data",
+   "hidden": 1,
    "in_standard_filter": 1,
    "label": "Reference Number",
    "read_only": 1
@@ -173,8 +180,9 @@
   },
   {
    "fieldname": "req_transaction_type",
-   "fieldtype": "Data",
+   "fieldtype": "Select",
    "label": "Transaction Type",
+   "options": "sale\ncreate_payment_token",
    "read_only": 1
   },
   {
@@ -230,11 +238,50 @@
    "fieldtype": "Time",
    "label": "Time",
    "read_only": 1
+  },
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Link",
+   "label": "Client ID",
+   "options": "Client",
+   "read_only": 1
+  },
+  {
+   "fieldname": "req_bill_to_email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "read_only": 1
+  },
+  {
+   "fieldname": "document_type",
+   "fieldtype": "Link",
+   "label": "Document Type",
+   "options": "DocType",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reference_doc",
+   "fieldtype": "Dynamic Link",
+   "label": "Reference Document",
+   "options": "document_type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "req_payment_token",
+   "fieldtype": "Data",
+   "label": "Payment Token",
+   "read_only": 1
+  },
+  {
+   "fieldname": "req_card_expiry_date",
+   "fieldtype": "Data",
+   "label": "Expiry Date",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-07-08 15:46:55.768772",
+ "modified": "2021-07-23 00:46:09.936448",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Payment Log",

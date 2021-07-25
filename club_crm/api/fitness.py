@@ -34,7 +34,7 @@ def get_fitness_category(client_id):
                         "Schedule": schedule
                         }
         else:
-            fitness_category = frappe.get_all('Fitness Services', filters={'on_app': 1}, fields=['fitness_name','image'])
+            fitness_category = frappe.get_all('Fitness Services', filters={'on_app': 1}, fields=['fitness_name','image'], order_by='fitness_name asc')
             fitness_item = []
             for item in fitness_category:
                 fitness_item.append({

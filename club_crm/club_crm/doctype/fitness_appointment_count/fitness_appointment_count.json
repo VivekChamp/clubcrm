@@ -5,7 +5,9 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "appointment_date",
   "appointment_doc",
+  "client_name",
   "service_category",
   "count"
  ],
@@ -13,12 +15,12 @@
   {
    "fieldname": "appointment_doc",
    "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Appointment Doc",
+   "label": "Appointment ID",
    "options": "Fitness Training Appointment",
    "read_only": 1
   },
   {
+   "columns": 2,
    "fieldname": "service_category",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -26,17 +28,34 @@
    "read_only": 1
   },
   {
+   "columns": 1,
    "fieldname": "count",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Count",
+   "label": "Hours",
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "fieldname": "appointment_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "read_only": 1
+  },
+  {
+   "columns": 5,
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Client Name",
    "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-05-27 22:41:29.354066",
+ "modified": "2021-07-12 21:08:28.419509",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Appointment Count",

@@ -1,0 +1,39 @@
+{
+ "actions": [],
+ "creation": "2021-07-18 16:37:37.847327",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "service_staff",
+  "tips_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "service_staff",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Service Staff",
+   "options": "Service Staff"
+  },
+  {
+   "default": "0.0",
+   "fieldname": "tips_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount (in QAR)"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2021-07-18 16:40:04.460764",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Cart Tips",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -1,0 +1,91 @@
+{
+ "add_total_row": 1,
+ "columns": [
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "width": 100
+  },
+  {
+   "fieldname": "name",
+   "fieldtype": "Link",
+   "label": "Name",
+   "options": "Cart",
+   "width": 120
+  },
+  {
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "label": "Client Name",
+   "width": 225
+  },
+  {
+   "fieldname": "net_total_appointments",
+   "fieldtype": "Currency",
+   "label": "Appointments",
+   "width": 125
+  },
+  {
+   "fieldname": "net_total_sessions",
+   "fieldtype": "Currency",
+   "label": "Sessions",
+   "width": 125
+  },
+  {
+   "fieldname": "net_total_products",
+   "fieldtype": "Currency",
+   "label": "Retail",
+   "width": 125
+  },
+  {
+   "fieldname": "total_tips",
+   "fieldtype": "Currency",
+   "label": "Tips",
+   "width": 125
+  },
+  {
+   "fieldname": "discount_amount",
+   "fieldtype": "Currency",
+   "label": "Discount",
+   "width": 125
+  },
+  {
+   "fieldname": "grand_total",
+   "fieldtype": "Currency",
+   "label": "Grand Total",
+   "width": 125
+  }
+ ],
+ "creation": "2021-07-18 17:17:20.550773",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "mandatory": 0,
+   "wildcard_filter": 0
+  }
+ ],
+ "idx": 0,
+ "is_standard": "Yes",
+ "modified": "2021-07-18 18:17:32.060991",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Cart Summary",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "select\r\n\tcart.date,\r\n\tcart.name,\r\n\tcart.client_name,\r\n\tcart.net_total_appointments,\r\n\tcart.net_total_sessions,\r\n\tcart.net_total_products,\r\n\tcart.total_tips,\r\n\tcart.discount_amount,\r\n\tcart.grand_total\r\n\t\t\t\t\t\t\t\r\nfrom `tabCart` cart\r\n\r\nwhere cart.docstatus<2 and cart.payment_status = 'Paid'",
+ "ref_doctype": "Cart",
+ "report_name": "Cart Summary",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ]
+}

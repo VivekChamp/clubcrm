@@ -25,14 +25,16 @@ frappe.ui.form.on("Spa Appointment", "onload", function(frm) {
             return {
                 "filters": [
                     ["Spa Services", "is_addon", "=", "0"],
-                    ["Spa Services", "enabled", "=", "1"]
+                    ["Spa Services", "enabled", "=", "1"],
+                    ['Spa Services', 'session_type', '=', 'Standard']
                 ]
             }
         } else if (frm.doc.addon_service_check == 1) {
             return {
                 "filters": [
                     ["Spa Services", "is_addon", "=", "1"],
-                    ["Spa Services", "enabled", "=", "1"]
+                    ["Spa Services", "enabled", "=", "1"],
+                    ['Spa Services', 'session_type', '=', 'Standard']
                 ]
             }
         }

@@ -93,7 +93,6 @@
   "total_to_be_paid",
   "paid_amount",
   "balance_amount",
-  "sales_invoice",
   "staff_notes_section",
   "notes",
   "membership_document",
@@ -104,7 +103,9 @@
   "cem_approval_notify",
   "gm_approval_notify",
   "md_approval_notify",
-  "reject_notify"
+  "reject_notify",
+  "invoiced",
+  "sales_invoice"
  ],
  "fields": [
   {
@@ -792,11 +793,19 @@
    "fieldname": "custom_joining_fee",
    "fieldtype": "Check",
    "label": "Custom Joining Fee"
+  },
+  {
+   "default": "0",
+   "fieldname": "invoiced",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Invoiced",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-06-08 18:04:12.698723",
+ "modified": "2021-07-17 18:23:35.314184",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Application",

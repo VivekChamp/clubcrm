@@ -8,7 +8,6 @@ from frappe.utils import getdate, get_time, flt, now_datetime
 from datetime import datetime, timedelta, date, time
 from frappe import _
 from frappe.model.document import Document
-from club_crm.club_crm.doctype.service_staff_commissions.service_staff_commissions import add_pt_commission
 from club_crm.api.wallet import get_balance
 
 class FitnessTrainingAppointment(Document):
@@ -164,7 +163,6 @@ class FitnessTrainingAppointment(Document):
 @frappe.whitelist()
 def no_show(appointment_id):
 	appointment = frappe.get_doc('Fitness Training Appointment', appointment_id)
-	add_pt_commission(appointment.appointment_date, appointment.service_staff, appointment.name)
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"appointment_status","No Show")
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"color","#ff8a8a")
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"docstatus",2)
@@ -180,7 +178,6 @@ def no_show(appointment_id):
 @frappe.whitelist()
 def complete(appointment_id):
 	appointment = frappe.get_doc('Fitness Training Appointment', appointment_id)
-	add_pt_commission(appointment.appointment_date, appointment.service_staff, appointment.name)
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"appointment_status","Completed")
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"color","#20a7ff")
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"docstatus",1)

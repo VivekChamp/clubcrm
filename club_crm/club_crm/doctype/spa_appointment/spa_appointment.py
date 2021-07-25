@@ -10,7 +10,6 @@ from datetime import datetime, timedelta, date, time
 from frappe import _
 from frappe.model.document import Document
 from club_crm.api.wallet import get_balance
-from club_crm.club_crm.doctype.service_staff_commissions.service_staff_commissions import add_spa_commission
 from frappe.model.mapper import get_mapped_doc
 
 class SpaAppointment(Document):
@@ -359,7 +358,6 @@ def no_show(appointment_id):
 @frappe.whitelist()
 def complete(appointment_id):
 	appointment = frappe.get_doc('Spa Appointment', appointment_id)
-	add_spa_commission(appointment.appointment_date, appointment.service_staff, appointment.name)
 	frappe.db.set_value("Spa Appointment",appointment_id,"commission_processed",1)
 	frappe.db.set_value("Spa Appointment",appointment_id,"appointment_status","Complete")
 	if appointment.payment_status=="Paid":	

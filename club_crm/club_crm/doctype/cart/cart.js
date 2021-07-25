@@ -56,12 +56,19 @@ frappe.ui.form.on("Cart", "onload", function(frm) {
         }
     }
     frm.fields_dict.cart_product.grid.get_field("cart_item").get_query = function() {
-        return {
-            filters: [
-                ["Item", "item_group", "in", ["Body Care", "Facial Products", "Hair Care", "Skin Care", "Miscellaneous", "Perfumes"]]
-            ]
+            return {
+                filters: [
+                    ["Item", "item_group", "in", ["Body Care", "Facial Products", "Hair Care", "Skin Care", "Miscellaneous", "Perfumes"]]
+                ]
+            }
         }
-    }
+        // frm.fields_dict.cart_tips.grid.get_field("service_staff").get_query = function() {
+        //     return {
+        //         filters: [
+        //             ["Service Staff", "spa_check", "=", 1] || ["Service Staff", "cec_check", "=", 1]
+        //         ]
+        //     }
+        // }
 
 });
 
@@ -141,6 +148,7 @@ frappe.ui.form.on("Cart", {
                             d.hide();
                             frm.save();
                             let row = frappe.model.add_child(frm.doc, 'Cart Payment', 'payment_table');
+                            frappe.model.set_value(row.doctype, row.name, 'payment_date', d.get_value('transaction_date'));
                             frappe.model.set_value(row.doctype, row.name, 'mode_of_payment', d.get_value('mode_of_payment'));
                             frappe.model.set_value(row.doctype, row.name, 'paid_amount', d.get_value('amount_paid'));
                         }
@@ -164,7 +172,7 @@ frappe.ui.form.on("Cart", {
     net_total_appointments: function(frm) {
         var net_total = 0.0;
         var grand_total = 0.0;
-        net_total = frm.doc.net_total_appointments + frm.doc.net_total_sessions + frm.doc.net_total_products;
+        net_total = frm.doc.net_total_appointments + frm.doc.net_total_sessions + frm.doc.net_total_products + frm.doc.total_tips;
         frm.set_value('net_total', net_total);
         grand_total = frm.doc.net_total - frm.doc.discount_amount
         frm.set_value('grand_total', grand_total);
@@ -172,7 +180,7 @@ frappe.ui.form.on("Cart", {
     net_total_sessions: function(frm) {
         var net_total = 0.0;
         var grand_total = 0.0;
-        net_total = frm.doc.net_total_appointments + frm.doc.net_total_sessions + frm.doc.net_total_products;
+        net_total = frm.doc.net_total_appointments + frm.doc.net_total_sessions + frm.doc.net_total_products + frm.doc.total_tips;
         frm.set_value('net_total', net_total);
         grand_total = frm.doc.net_total - frm.doc.discount_amount
         frm.set_value('grand_total', grand_total);
@@ -180,7 +188,15 @@ frappe.ui.form.on("Cart", {
     net_total_products: function(frm) {
         var net_total = 0.0;
         var grand_total = 0.0;
-        net_total = frm.doc.net_total_appointments + frm.doc.net_total_sessions + frm.doc.net_total_products;
+        net_total = frm.doc.net_total_appointments + frm.doc.net_total_sessions + frm.doc.net_total_products + frm.doc.total_tips;
+        frm.set_value('net_total', net_total);
+        grand_total = frm.doc.net_total - frm.doc.discount_amount
+        frm.set_value('grand_total', grand_total);
+    },
+    total_tips: function(frm) {
+        var net_total = 0.0;
+        var grand_total = 0.0;
+        net_total = frm.doc.net_total_appointments + frm.doc.net_total_sessions + frm.doc.net_total_products + frm.doc.total_tips;
         frm.set_value('net_total', net_total);
         grand_total = frm.doc.net_total - frm.doc.discount_amount
         frm.set_value('grand_total', grand_total);
@@ -293,6 +309,18 @@ frappe.ui.form.on("Cart Session", {
         frm.set_value('net_total_sessions', total_sessions);
     },
     cart_session_remove: function(frm) {
+        frm.save();
+    }
+});
+
+frappe.ui.form.on("Cart Tips", {
+    tips_amount: function(frm, cdt, cdn) {
+        var d = locals[cdt][cdn];
+        var total_tips = 0.0;
+        frm.doc.cart_tips.forEach(function(d) { total_tips += d.tips_amount; });
+        frm.set_value('total_tips', total_tips);
+    },
+    cart_tips_remove: function(frm) {
         frm.save();
     }
 });

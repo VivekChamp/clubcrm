@@ -50,7 +50,8 @@
   "net_total",
   "color",
   "cart",
-  "checkin_document"
+  "checkin_document",
+  "count_updated"
  ],
  "fields": [
   {
@@ -338,10 +339,18 @@
    "label": "Fitness Trainer",
    "options": "Service Staff",
    "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "count_updated",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Count updated",
+   "read_only": 1
   }
  ],
  "links": [],
- "modified": "2021-06-30 15:19:34.942770",
+ "modified": "2021-07-11 16:15:49.645082",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Appointment",
