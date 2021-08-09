@@ -11,6 +11,7 @@
  "field_order": [
   "enabled",
   "is_group",
+  "hide_calendar",
   "section_break_3",
   "club_room_name",
   "club_room_type",
@@ -124,11 +125,18 @@
    "label": "Gender Preference",
    "options": "Male\nFemale\nMixed\nNo Preference",
    "reqd": 1
+  },
+  {
+   "default": "0",
+   "description": "Check this box to hide this room from room schedule calendar",
+   "fieldname": "hide_calendar",
+   "fieldtype": "Check",
+   "label": "Hide in Calendar"
   }
  ],
  "is_tree": 1,
  "links": [],
- "modified": "2021-03-09 16:08:10.260812",
+ "modified": "2021-08-04 02:29:48.568494",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club Room",

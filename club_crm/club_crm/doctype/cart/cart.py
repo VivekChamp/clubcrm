@@ -193,6 +193,23 @@ def add_cart_from_spa(client_id, appointment_id):
 		return cart.name
 
 @frappe.whitelist()
+def remove_cart_from_spa(cart_id, appointment_id):
+	cart = frappe.get_doc('Cart', cart_id)
+	if cart.cart_appointment:
+		for row in cart.cart_appointment:
+			if appointment_id == row.appointment_id:
+				cart.remove(row)
+		
+	if not cart.cart_appointmnent:
+		cart.payment_status = "Cancelled"
+		cart.save()
+
+	frappe.db.set_value("Spa Appointment",appointment_id,"cart", "")
+	frappe.db.set_value("Spa Appointment",appointment_id,"payment_status", "Not Paid")
+
+	frappe.msgprint(msg="Removed from Cart", title='Success')
+
+@frappe.whitelist()
 def add_cart_from_fitness(client_id, appointment_id):
 	discount_amount= 0.0
 	today = getdate()

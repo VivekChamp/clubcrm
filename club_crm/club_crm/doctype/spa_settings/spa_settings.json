@@ -8,7 +8,9 @@
   "spa_hours",
   "table_2",
   "spa_cancellation_section",
-  "spa_cancellation_time"
+  "spa_cancellation_time",
+  "section_break_5",
+  "complimentary_image"
  ],
  "fields": [
   {
@@ -22,6 +24,7 @@
    "label": "Spa Cancellation"
   },
   {
+   "collapsible": 1,
    "fieldname": "spa_hours",
    "fieldtype": "Section Break",
    "label": "Spa Business Hours"
@@ -31,12 +34,22 @@
    "fieldname": "spa_cancellation_time",
    "fieldtype": "Duration",
    "label": "Spa Appointment Cancellation Time"
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break",
+   "label": "Images"
+  },
+  {
+   "fieldname": "complimentary_image",
+   "fieldtype": "Attach Image",
+   "label": "Category Image for Complimentary"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-02-28 14:50:36.072738",
+ "modified": "2021-08-07 17:30:48.886725",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Settings",

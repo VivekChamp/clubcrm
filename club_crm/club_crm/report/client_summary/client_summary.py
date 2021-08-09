@@ -16,40 +16,40 @@ def execute(filters=None):
 
 def get_columns(filters):
 	columns = [
-		_("Client Name") + ":Data:250",
-		_("Gender") + "::80",
-		_("Nationality") + "::90",
+		_("ID") + ":Link/Client:100",
+		_("Client Name") + ":Data:275",
+		_("Gender") + ":Data:80",
+		_("Nationality") + ":Data:100",
+		_("Mem Status") + ":Data:100",
 		_("Birth Date") + ":Date:100",
 		_("Qatar ID") + ":Data:110",
 		_("Mobile No") + ":Data:100",
-		_("Assigned To") + ":Data:100"
+		_("Email") + ":Data:150",
+		_("Occupation") + ":Data:150",
+		_("Marital Status") + ":Data:100"
 	]
-
-	if filters.get('membership_status') == "Member":
-		columns.insert(8, _("Membership Plan") + ":Data:220"),
-		columns.insert(9, _("Start Date") + ":Data:100"),
-		columns.insert(10, _("End Date") + ":Data:100")
 
 	return columns
 
 def get_data(filters):
 	conditions = get_conditions(filters)
 	query = frappe.db.sql("""select
+								client.name as id,
 								client.client_name,
 								client.gender,
 								client.nationality,
+								client.membership_status as mem_status,
 								client.birth_date,
 								client.qatar_id,
 								client.mobile_no,
-								client.assigned_to,
-								id.membership_plan,
-								id.start_date,
-								id.end_date
+								client.email,
+								client.occupation,
+								client.marital_status
 							
 							from `tabClient` client
-							left join `tabMembership History` id on id.parent = client.name
 
-							where client.docstatus<2 %s """ % 
+							where client.docstatus<2 %s
+							order by client.name""" %
 							conditions, filters, as_dict=1)
 	return query
 
@@ -59,9 +59,7 @@ def get_conditions(filters):
 	if filters.get('nationality'): conditions += " and client.nationality = %(nationality)s"
 	if filters.get('reg_on_app'): conditions += " and client.reg_on_app = %(reg_on_app)s"
 	if filters.get('membership_status'): conditions += "  and client.membership_status = %(membership_status)s"
-	if filters.get('assigned_to'): conditions += " and client.assigned_to = %(assigned_to)s"
 	if filters.get('vaccination_status'): conditions += " and client.vaccination_status = %(vaccination_status)s"
-	if filters.get('vaccination_status'): conditions += " and client.vaccination_status = %(vaccination_status)s"
-	if filters.get("membership_plan"): conditions += " and id.membership_plan = %(membership_plan)s"
+	if filters.get("occupation_sector"): conditions += " and client.occupation_sector = %(occupation_sector)s"
 
 	return conditions

@@ -11,7 +11,7 @@ frappe.query_reports["Client Summary"] = {
         },
         {
             'fieldname': "reg_on_app",
-            'label': "App Users",
+            'label': "Registered on app",
             'fieldtype': "Select",
             'options': "\nYes\nNo"
         },
@@ -28,30 +28,16 @@ frappe.query_reports["Client Summary"] = {
             "options": "Country"
         },
         {
-            "fieldname": "assigned_to",
+            "fieldname": "occupation_sector",
             "fieldtype": "Link",
-            "label": "Assigned to",
-            "options": "Service Staff",
-            "get_query": function() {
-                return {
-                    "filters": {
-                        'cec_check': 1
-                    }
-                }
-            }
+            "label": "Occupation Sector",
+            "options": "Industry Type"
         },
         {
             "fieldname": "vaccination_status",
             "fieldtype": "Select",
             "label": "Vaccination Status",
             "options": "\nVaccinated\nFirst shot\nNot vaccinated\nNo info"
-        },
-        {
-            'fieldname': "membership_plan",
-            'label': "Membership Plan",
-            'fieldtype': "Link",
-            'options': "Memberships Plan",
-            'depends_on': "eval: doc.membership_status == 'Member'"
         }
     ]
 };

@@ -151,6 +151,7 @@ frappe.ui.form.on("Cart", {
                             frappe.model.set_value(row.doctype, row.name, 'payment_date', d.get_value('transaction_date'));
                             frappe.model.set_value(row.doctype, row.name, 'mode_of_payment', d.get_value('mode_of_payment'));
                             frappe.model.set_value(row.doctype, row.name, 'paid_amount', d.get_value('amount_paid'));
+                            frappe.model.set_value(row.doctype, row.name, 'transaction_reference', d.get_value('transaction_reference'));
                         }
                     });
                     d.show();

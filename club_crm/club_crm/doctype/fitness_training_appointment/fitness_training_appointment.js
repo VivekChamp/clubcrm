@@ -21,11 +21,10 @@ frappe.ui.form.on("Fitness Training Appointment", "onload", function(frm) {
     //Filter Session Name based on Client ID, client active session and fitness services
     frm.set_query("session_name", function() {
         return {
-            "filters": [
-                ["Client Sessions", "client_id", "=", frm.doc.client_id],
-                ["Client Sessions", "session_status", "=", "Active"],
-                ["Client Sessions", "service_type", "=", "Fitness Services"]
-            ]
+            query: "club_crm.club_crm.doctype.client_sessions.client_sessions.get_fitness_session_name",
+            filters: {
+                'client_id': frm.doc.client_id
+            }
         }
     });
 })
@@ -205,20 +204,18 @@ frappe.ui.form.on("Fitness Training Appointment", {
             }, __("View"));
         }
 
+    },
+    session: function(frm) {
+        frm.set_value('session_name', "");
+    },
+    session_name: function(frm) {
+        frm.set_value('fitness_service', "");
+    },
+    client_id: function(frm) {
+        frm.set_value('session_name', "");
+    },
+    fitness_service: function(frm) {
+        frm.set_value('fitness_service_category', "");
+        frm.set_value('service_duration', "");
     }
 })
-
-// frappe.ui.form.on("Fitness Training Appointment", {
-// 	onload_post_render: function(frm) {
-// 		if (!frm.doc.client_id) {
-//         	$(frm.fields_dict.session_name.input).on('click', function(e) {
-//             // your code goes here
-
-// 				frappe.throw(
-// 					title='Client not selected',
-// 					msg='Please select a client first'
-// 				)
-//        		});
-// 		}
-//     }
-// })

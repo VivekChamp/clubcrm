@@ -1,6 +1,8 @@
 import frappe
 import datetime
 from frappe.utils import now_datetime
+from club_crm.club_crm.utils.sms_notification import send_sms
+from club_crm.club_crm.utils.push_notification import send_push
 from frappe.utils import escape_html
 from frappe import throw, msgprint, _
 
@@ -61,6 +63,14 @@ def request_vehicle(valet_name):
             "Success":1,
             "Status":"Vehicle has been requested for delivery"
         }
+
+        msg = "You have received new vehicle delivery request from  "+doc.client_name+" for vehicle "+doc.vehicle_no+"."
+        valet_staff = frappe.get_all('User', filters={'role_profile_name': 'Valet Staff'}, fields=['name', 'mobile_no'])
+        if valet_staff:
+            for staff in valet_staff:
+                receiver_list='"'+staff.mobile_no+'"'
+                send_sms(receiver_list,msg)
+
     else:
         frappe.response["message"] = {
             "Success":0,
@@ -78,12 +88,20 @@ def ready_vehicle(valet_name):
             "Success":1,
             "Status":"Vehicle is ready for delivery"
         }
+
+        msg = "Dear valued member, your vehicle is ready at the door."
+        client = frappe.get_doc('Client', doc.client_id)
+        receiver_list='"'+client.mobile_no+'"'
+        send_sms(receiver_list,msg)
+        if client.fcm_token:
+            title = "Message from Valet"
+            send_push(doc.client_id,title,msg)
+
     else:
         frappe.response["message"] = {
             "Success":0,
             "Status":"Vehicle has not been requested"
         }
-
 
 @frappe.whitelist()
 def deliver_vehicle(valet_name):
