@@ -9,11 +9,12 @@
   "qty",
   "unit_price",
   "discount",
-  "total_price"
+  "total_price",
+  "commission_staff"
  ],
  "fields": [
   {
-   "columns": 4,
+   "columns": 3,
    "fieldname": "cart_item",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -28,7 +29,7 @@
    "label": "Qty"
   },
   {
-   "columns": 2,
+   "columns": 1,
    "fetch_from": "cart_item.standard_rate",
    "fetch_if_empty": 1,
    "fieldname": "unit_price",
@@ -52,12 +53,21 @@
    "fieldtype": "Percent",
    "in_list_view": 1,
    "label": "Discount"
+  },
+  {
+   "allow_on_submit": 1,
+   "columns": 2,
+   "fieldname": "commission_staff",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Commission for",
+   "options": "Service Staff"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-05-23 02:01:20.535150",
+ "modified": "2021-08-05 14:56:21.904699",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Cart Product",

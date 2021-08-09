@@ -18,6 +18,7 @@
   "booking_time",
   "client_id",
   "session_name",
+  "package_name",
   "column_break_9",
   "client_name",
   "member_id",
@@ -217,8 +218,9 @@
   {
    "fieldname": "session_name",
    "fieldtype": "Link",
-   "label": "Session Name",
-   "options": "Client Sessions"
+   "label": "Session ID",
+   "options": "Client Sessions",
+   "set_only_once": 1
   },
   {
    "fieldname": "service_details_section",
@@ -347,10 +349,18 @@
    "hidden": 1,
    "label": "Count updated",
    "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.session_name",
+   "fetch_from": "session_name.package_name",
+   "fieldname": "package_name",
+   "fieldtype": "Data",
+   "label": "Session Name",
+   "read_only": 1
   }
  ],
  "links": [],
- "modified": "2021-07-11 16:15:49.645082",
+ "modified": "2021-08-07 15:51:38.652320",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Appointment",

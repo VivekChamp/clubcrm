@@ -14,7 +14,6 @@
   "column_break_3",
   "membership_status",
   "member_id",
-  "mobile_number",
   "column_break_8",
   "session_status",
   "start_date",
@@ -39,6 +38,8 @@
   "column_break_31",
   "extension",
   "no_of_extensions",
+  "session_sharing_section",
+  "session_sharing",
   "staff_notes_section",
   "notes",
   "column_break_26",
@@ -61,13 +62,6 @@
    "fieldtype": "Data",
    "in_standard_filter": 1,
    "label": "Client Name",
-   "read_only": 1
-  },
-  {
-   "fetch_from": "client_id.mobile_no",
-   "fieldname": "mobile_number",
-   "fieldtype": "Data",
-   "label": "Mobile Number",
    "read_only": 1
   },
   {
@@ -239,6 +233,7 @@
    "fieldtype": "Dynamic Link",
    "label": "Service Name",
    "options": "service_type",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -315,12 +310,22 @@
    "default": "0",
    "fieldname": "is_benefit",
    "fieldtype": "Check",
-   "hidden": 1,
-   "label": "Is Benefit"
+   "label": "Is Benefit",
+   "read_only": 1
+  },
+  {
+   "fieldname": "session_sharing_section",
+   "fieldtype": "Section Break",
+   "label": "Share sessions with"
+  },
+  {
+   "fieldname": "session_sharing",
+   "fieldtype": "Table",
+   "options": "Client Session Sharing"
   }
  ],
  "links": [],
- "modified": "2021-06-14 15:49:37.515460",
+ "modified": "2021-08-07 14:23:21.175131",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client Sessions",

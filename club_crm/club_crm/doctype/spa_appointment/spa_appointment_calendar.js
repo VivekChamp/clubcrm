@@ -11,10 +11,26 @@ frappe.views.calendar["Spa Appointment"] = {
     },
     gantt: false,
     options: {
+        // customButtons: {
+        //     gotoDate: {
+        //         text: 'Date',
+        //         buttonIcons: 'fa fa-calendar',
+        //         click: function() {
+
+        //             $(this).datepicker({
+        //                 autoclose: true
+        //             });
+        //             $(this).datepicker().on('changeDate', function(e) {
+        //                 $('#fullcalendar').fullCalendar('gotoDate', e.date);
+        //             });
+        //             $(this).datepicker('show');
+        //         }
+        //     },
+        // },
         header: {
             left: 'prev, title, next',
             center: 'today',
-            right: ' listOneWeek, listOneDay, agendaOneDay, agendaOneWeek, timelineOneDay'
+            right: ' listOneWeek, listOneDay, agendaOneDay, agendaOneWeek'
         },
         views: {
             listOneDay: {
@@ -47,14 +63,14 @@ frappe.views.calendar["Spa Appointment"] = {
                 slotDuration: "01:00:00",
                 minTime: "08:00:00",
                 maxTime: "22:00:00"
-            },
-            timelineOneDay: {
-                type: 'timeline',
-                duration: { days: 1 },
-                buttonText: 'Timeline',
-                minTime: "08:00:00",
-                maxTime: "22:00:00"
             }
+            // timelineOneDay: {
+            //     type: 'timeline',
+            //     duration: { days: 1 },
+            //     buttonText: 'Timeline',
+            //     minTime: "07:00:00",
+            //     maxTime: "22:00:00"
+            // }
         },
         resources: function(callback) {
             return frappe.call({
@@ -70,17 +86,25 @@ frappe.views.calendar["Spa Appointment"] = {
         defaultView: 'agendaOneDay',
         allDaySlot: false,
         slotEventOverlap: false,
-        editable: false
-            // eventRender: function(eventObj, $el) {
-            // 	$el.popover({
-            // 	  title: "Notes",
-            // 	  html: true,
-            // 	  content: eventObj.description,
-            // 	  trigger: 'hover',
-            // 	  placement: 'top',
-            // 	  container: 'body'
-            // 	});
-            //   },
+        editable: false,
+        // eventMouseover: function(event, jsEvent, view) {
+        //     $("[data-fieldname=name]").mouseover(function() {
+        //         frappe.msgprint("hello")
+        //     })
+        // },
+        // $event.mouseover(function() {
+        //     console.log("Hello");
+        // })
+        // eventRender: function(event, jsEvent, view) {
+        //     $("[data-fieldname=name]").mouseover(function() {
+        //         frappe.msgprint("hello")
+        //     })
+        // },
+        // eventRender: function(eventObj, $el) {
+        //     $el.mouseover({
+        //         alert(eventObj);
+        //     })
+        // },
     },
     color_map: {
         "paid_scheduled": "green",

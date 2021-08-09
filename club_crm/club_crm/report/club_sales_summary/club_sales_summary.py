@@ -63,8 +63,7 @@ def get_column():
 	return columns
 	
 def get_data(filters):
-	data =[]
-	filter_data =[]
+	data = []
 	final_data = []
 	mem_app_list = frappe.db.sql('''select
 										ma.application_date as date,
@@ -77,7 +76,8 @@ def get_data(filters):
 										ma.grand_total as in_amount
 									from `tabMemberships Application` ma 
 									where 
-										ma.application_date between %s and %s and ma.docstatus = 1''',
+										ma.application_date between %s and %s and ma.docstatus = 1
+									order by ma.application_date asc''',
 
 									('Memberships Application',filters['from_date'],filters['to_date']), as_dict = True)
 
@@ -92,7 +92,8 @@ def get_data(filters):
 								ftr.fitness_package as description,
 								ftr.price as in_amount
 							from `tabFitness Training Request` ftr
-							where ftr.date between %s and %s and ftr.payment_status="Paid" ''',
+							where ftr.date between %s and %s and ftr.payment_status="Paid"
+							order by ftr.date asc''',
 
 							('Fitness Training Request',1,filters['from_date'],filters['to_date']), as_dict = True)
 
@@ -122,7 +123,8 @@ def get_data(filters):
 								ca.sessions_check,
 								ca.appointments_check 
 							from `tabCart` ca
-							where ca.date between %s and %s and ca.payment_status = "Paid" ''',
+							where ca.date between %s and %s and ca.payment_status = "Paid"
+							order by ca.date asc''',
 
 							('Cart',filters['from_date'],filters['to_date']), as_dict = True)
 	
@@ -214,8 +216,9 @@ def get_data(filters):
 			if in_amount:
 				row['in_amount'] = in_amount
 				row['description'] = 'Cart'
+				data.append(row)
 
-		data = ftr + mem_app_list + cart
+		data += ftr + mem_app_list
 
 	for row in data:
 		allow_by_membership_status = False
@@ -239,11 +242,7 @@ def get_data(filters):
 		else:
 			allow_by_transaction_type = True
 
-		if allow_by_membership_status and allow_by_transaction_type:
-			filter_data.append(row)
-
-	for row in filter_data:
-		if row['in_amount'] != 0.0:
+		if allow_by_membership_status and allow_by_transaction_type and row['in_amount'] != 0.0:
 			final_data.append(row)
 
 	return final_data
