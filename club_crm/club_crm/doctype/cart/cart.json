@@ -20,6 +20,8 @@
   "client_id",
   "client_name",
   "mobile_no",
+  "wallet_amount",
+  "coupon_amount",
   "column_break_10",
   "payment_status",
   "membership_status",
@@ -354,11 +356,23 @@
   {
    "fieldname": "section_break_2",
    "fieldtype": "Section Break"
+  },
+  {
+   "fetch_from": "client_id.wallet_balance",
+   "fieldname": "wallet_amount",
+   "fieldtype": "Currency",
+   "label": "Wallet Amount"
+  },
+  {
+   "fetch_from": "client_id.coupon_amount",
+   "fieldname": "coupon_amount",
+   "fieldtype": "Currency",
+   "label": "Coupon Amount"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-05-25 09:47:40.493909",
+ "modified": "2021-08-13 13:11:19.975863",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Cart",

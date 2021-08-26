@@ -26,6 +26,8 @@
   "membership_status",
   "member_id",
   "card_no",
+  "wallet_balance",
+  "coupon_amount",
   "membership_id",
   "assigned_to",
   "primary_member",
@@ -509,13 +511,23 @@
    "fieldtype": "Select",
    "label": "Vaccination Status",
    "options": "\nVaccinated\nFirst shot\nNot vaccinated\nNo info"
+  },
+  {
+   "fieldname": "wallet_balance",
+   "fieldtype": "Currency",
+   "label": "Wallet Balance"
+  },
+  {
+   "fieldname": "coupon_amount",
+   "fieldtype": "Currency",
+   "label": "Coupon Amount"
   }
  ],
  "icon": "fa fa-user",
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2021-06-19 19:15:14.921145",
+ "modified": "2021-08-13 13:09:12.735854",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",

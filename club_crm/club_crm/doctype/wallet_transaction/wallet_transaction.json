@@ -140,8 +140,7 @@
    "fieldname": "transaction_status",
    "fieldtype": "Select",
    "label": "Transaction Status",
-   "options": "Draft\nComplete\nCancelled",
-   "read_only": 1
+   "options": "Draft\nComplete\nCancelled"
   },
   {
    "fieldname": "column_break_6",
@@ -162,7 +161,7 @@
   }
  ],
  "links": [],
- "modified": "2021-05-30 03:17:17.245398",
+ "modified": "2021-07-29 11:54:16.739060",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Wallet Transaction",

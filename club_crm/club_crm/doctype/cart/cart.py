@@ -16,6 +16,55 @@ class Cart(Document):
 		self.set_net_price()
 		self.set_discount_and_grand_total()
 		self.set_payment_details()
+		self.create_wallet_transaction()
+		self.create_coupon_transaction()
+	
+	def create_wallet_transaction(self):
+		# if self.payment_status == "Paid":
+		for row in self.payment_table:
+			if not frappe.db.get_value('Wallet Transaction', {
+				'client_id': self.client_id,
+				'transaction_type': 'Payment',
+				'mode_of_payment': row.mode_of_payment,
+				'transaction_date': getdate(),
+				'amount': float(row.paid_amount),
+				'transaction_document':self.name,
+				'transaction_status':'Complete'
+			}):
+				doc = frappe.get_doc({
+					'doctype': 'Wallet Transaction',
+					'client_id': self.client_id,
+					'transaction_type': 'Payment',
+					'mode_of_payment': row.mode_of_payment,
+					'transaction_date': getdate(),
+					'amount': float(row.paid_amount),
+					'transaction_document':self.name,
+					'transaction_status':'Complete'
+				})
+				doc.save()
+	def create_coupon_transaction(self):
+		# if self.payment_status == "Paid":
+		for row in self.payment_table:
+			if not frappe.db.get_value('Coupon Transaction', {
+				'client_id': self.client_id,
+				'transaction_type': 'Payment',
+				'mode_of_payment': row.mode_of_payment,
+				'transaction_date': getdate(),
+				'amount': float(row.paid_amount),
+				'reference_doc':self.name,
+				'transaction_status':'Complete'
+			}):
+				doc = frappe.get_doc({
+					'doctype': 'Coupon Transaction',
+					'client_id': self.client_id,
+					'transaction_type': 'Payment',
+					'mode_of_payment': row.mode_of_payment,
+					'transaction_date': getdate(),
+					'amount': float(row.paid_amount),
+					'reference_doc':self.name,
+					'transaction_status':'Complete'
+				})
+				doc.save()
 
 	def on_trash(self):
 		if self.payment_status=="Paid":
@@ -371,3 +420,4 @@ def add_cart_from_pt_online(client_id, request_id):
 	})
 	doc.save()
 	return doc
+

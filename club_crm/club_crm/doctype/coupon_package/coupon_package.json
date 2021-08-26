@@ -1,0 +1,119 @@
+{
+ "actions": [],
+ "autoname": "field:title",
+ "creation": "2021-08-13 09:43:08.314351",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "quantity_and_amount_section",
+  "qty_from",
+  "qty_upto",
+  "column_break_5",
+  "total_amount_from",
+  "total_amount_upto",
+  "price_discount_details_section",
+  "percentage_or_amount",
+  "column_break_4",
+  "discount_percentage",
+  "discount_amount",
+  "section_break_13",
+  "price"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title",
+   "unique": 1
+  },
+  {
+   "fieldname": "price_discount_details_section",
+   "fieldtype": "Section Break",
+   "label": "Price Discount Details"
+  },
+  {
+   "fieldname": "percentage_or_amount",
+   "fieldtype": "Select",
+   "label": "Percentage or Amount",
+   "options": "\nPercentage\nAmount"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "discount_percentage",
+   "fieldtype": "Float",
+   "label": "Discount Percentage"
+  },
+  {
+   "fieldname": "discount_amount",
+   "fieldtype": "Currency",
+   "label": "Discount Amount"
+  },
+  {
+   "fieldname": "quantity_and_amount_section",
+   "fieldtype": "Section Break",
+   "label": "Quantity and Amount"
+  },
+  {
+   "fieldname": "qty_from",
+   "fieldtype": "Float",
+   "label": "Qty From"
+  },
+  {
+   "fieldname": "qty_upto",
+   "fieldtype": "Float",
+   "label": "Qty Upto"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_amount_from",
+   "fieldtype": "Float",
+   "label": "Total Amount From"
+  },
+  {
+   "fieldname": "total_amount_upto",
+   "fieldtype": "Float",
+   "label": "Total Amount Upto"
+  },
+  {
+   "fieldname": "section_break_13",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "label": "Price (In QAR)"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2021-08-13 10:27:56.216922",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Coupon Package",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

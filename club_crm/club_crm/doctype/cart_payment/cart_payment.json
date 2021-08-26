@@ -23,13 +23,12 @@
    "fieldname": "paid_amount",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Paid Amount (in QAR)",
-   "read_only": 1
+   "label": "Paid Amount (in QAR)"
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2021-04-21 01:46:18.495497",
+ "modified": "2021-07-21 20:47:12.463324",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Cart Payment",

@@ -176,8 +176,7 @@
    "fieldname": "payment_status",
    "fieldtype": "Select",
    "label": "Payment Status",
-   "options": "Paid\nNot Paid",
-   "read_only": 1
+   "options": "Paid\nNot Paid"
   },
   {
    "allow_on_submit": 1,
@@ -286,7 +285,7 @@
   }
  ],
  "links": [],
- "modified": "2021-05-31 03:19:37.837098",
+ "modified": "2021-07-21 20:45:58.933855",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Request",
