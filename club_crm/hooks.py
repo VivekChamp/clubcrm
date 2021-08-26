@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import frappe
+# import frappe
 # from . import __version__ as app_version
 
 app_name = "club_crm"
