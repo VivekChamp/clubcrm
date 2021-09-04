@@ -40,14 +40,13 @@
   "column_break_18",
   "equipment_male",
   "equipment_female",
-  "column_break_29",
-  "cost_center",
   "item_details_section",
   "item",
   "item_name",
+  "item_group",
   "column_break_20",
   "revenue_account",
-  "item_group",
+  "cost_center",
   "section_break_39",
   "image",
   "color"
@@ -197,10 +196,6 @@
    "options": "Spa Equipment Table"
   },
   {
-   "fieldname": "column_break_29",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "capacity",
    "fieldtype": "Int",
    "hidden": 1,
@@ -233,6 +228,7 @@
    "fetch_from": "item.item_group",
    "fieldname": "item_group",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Item Group",
    "options": "Item Group",
    "read_only": 1
@@ -240,10 +236,8 @@
   {
    "fieldname": "cost_center",
    "fieldtype": "Link",
-   "hidden": 1,
    "label": "Cost Center",
-   "options": "Cost Center",
-   "read_only": 1
+   "options": "Cost Center"
   },
   {
    "fieldname": "section_break_39",
@@ -271,7 +265,7 @@
   },
   {
    "default": "0",
-   "description": "Check this option if this service is an add-on. This service will be available for purchase only with another service of same service group.",
+   "description": "Check this option if this service is an add-on.",
    "fieldname": "is_addon",
    "fieldtype": "Check",
    "in_list_view": 1,
@@ -287,9 +281,9 @@
   {
    "default": "40100001 - Massage&Body Services - KC",
    "fieldname": "revenue_account",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "label": "Revenue Account",
-   "options": "\n40100001 - Massage&Body Services - KC\n40100002 - Skin Care Services - KC\n40100003 - Hair Care Services - KC\n40100004 - Nail Care Services - KC"
+   "options": "Account"
   },
   {
    "default": "No Preference",
@@ -322,7 +316,7 @@
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-08-08 16:59:53.981273",
+ "modified": "2021-08-19 16:10:01.220032",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Spa Services",

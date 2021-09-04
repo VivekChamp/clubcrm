@@ -23,6 +23,27 @@ frappe.ui.form.on("Memberships Plan", "onload", function(frm) {
             ]
         }
     });
+    frm.set_query("membership_fee_item", function() {
+        return {
+            "filters": [
+                ["Item", "item_group", "=", "Membership"]
+            ]
+        }
+    });
+    frm.set_query("joining_fee_item", function() {
+        return {
+            "filters": [
+                ["Item", "item_group", "=", "Membership"]
+            ]
+        }
+    });
+    frm.set_query("revenue_account", function() {
+        return {
+            "filters": [
+                ["Account", "root_type", "=", "Income"]
+            ]
+        }
+    });
 });
 
 frappe.ui.form.on('Memberships Plan', {

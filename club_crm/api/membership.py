@@ -1,5 +1,5 @@
 import frappe
-from frappe.website.utils import is_signup_enabled
+from datetime import datetime, timedelta, date, time
 from frappe.utils import escape_html
 from frappe import throw, msgprint, _
 
@@ -51,12 +51,16 @@ def member_benefits(client_id):
                     grams_discount = int(mem.grams_discount)
                     boho_discount = int(mem.boho_discount)
                     salon_discount = int(mem.salon_discount)
+                    start_date = mem.start_date
+                    expiry_date = mem.expiry_date
         else:
             spa_discount = 0
             retail_discount = 0
             grams_discount = 0
             boho_discount = 0
             salon_discount = 0
+            start_date = date.today()
+            expiry_date = date.today()
         
         if doc.member_id:
             member_id = doc.member_id
@@ -74,30 +78,21 @@ def member_benefits(client_id):
                 "remaining": str(comp.remaining_sessions)
             })
 
-        mem = frappe.get_all('Memberships', filters={'client_id_1': doc.name, 'membership_status': 'Active'}, fields=['*'])
-
-        if mem:
-            mem_1 = mem[0]
-            frappe.response["message"] = {
-                    'status': 1,
-                    'membership_status': 'Member',
-                    'client_name': doc.name,
-                    'member_id': member_id,
-                    'membership': doc.membership_id,
-                    'start_date': mem_1.start_date,
-                    'expiry_date': mem_1.expiry_date,
-                    'spa_discount': spa_discount,
-                    'retail_discount': retail_discount,
-                    'grams_discount': grams_discount,
-                    'boho_discount': boho_discount,
-                    'salon_discount': salon_discount,
-                    'benefits': benefits
-            }
-        else:
-            frappe.response["message"] = {
-                'status': 0,
-                'membership_status': 'Non-Member'
-            }
+        frappe.response["message"] = {
+            'status': 1,
+            'membership_status': 'Member',
+            'client_name': doc.name,
+            'member_id': member_id,
+            'membership': doc.membership_id,
+            'start_date': start_date,
+            'expiry_date': expiry_date,
+            'spa_discount': spa_discount,
+            'retail_discount': retail_discount,
+            'grams_discount': grams_discount,
+            'boho_discount': boho_discount,
+            'salon_discount': salon_discount,
+            'benefits': benefits
+        }
     else:
         frappe.response["message"] = {
             'status': 0,

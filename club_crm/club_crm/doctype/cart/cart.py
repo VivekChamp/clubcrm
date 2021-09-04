@@ -19,7 +19,7 @@ class Cart(Document):
 
 	def on_trash(self):
 		if self.payment_status=="Paid":
-			frappe.throw(msg="Paid cart cannot be cancelled", title=_('Room Overlap'))
+			frappe.throw(msg="Paid cart cannot be cancelled", title=_('Not Allowed'))
 		else:
 			spa_list = frappe.get_all('Spa Appointment', filters={'cart': self.name})
 			if spa_list:
@@ -250,12 +250,11 @@ def add_cart_from_fitness(client_id, appointment_id):
 		frappe.db.set_value("Fitness Training Appointment",appointment_id,"cart", cart.name)
 	frappe.db.set_value("Fitness Training Appointment",appointment_id,"payment_status", "Added to cart")
 
-
 @frappe.whitelist()
 def add_cart_from_spa_online(client_id, appointment_id):
 	discount_amount = 0.0
 	client = frappe.get_doc('Client', client_id)
-	if client.membership_status=="Member":
+	if client.membership_status == "Member":
 		if client.membership_history:
 			for row in client.membership_history:
 				if row.status == "Active":
@@ -289,14 +288,13 @@ def add_cart_from_spa_online(client_id, appointment_id):
         	'doctype': 'Wallet Transaction',
         	'client_id': client_id,
         	'transaction_type': 'Payment',
-			'payment_type': 'Spa',
+			'payment_type': 'Cart',
 			'transaction_document': doc.name,
         	'transaction_date': getdate(),
-        	'amount': doc.grand_total,
-			'transaction_status': 'Complete'
+        	'amount': doc.grand_total
     	})
 		wallet.save()
-		frappe.db.set_value("Wallet Transaction",wallet.name,"docstatus", 1)
+		wallet.submit()
 		doc.append('payment_table', {
 			"mode_of_payment": "Wallet",
 			"paid_amount": doc.grand_total
@@ -306,50 +304,75 @@ def add_cart_from_spa_online(client_id, appointment_id):
 
 	return doc.name
 
-@frappe.whitelist(allow_guest=True)
+# Submit cart and create sales invoice
+@frappe.whitelist()
 def submit_cart(cart_id):
+	today = getdate()
+	user = frappe.get_doc('User',frappe.session.user)
 	cart = frappe.get_doc('Cart', cart_id)
 	if cart.balance_amount != 0.0:
 		frappe.throw("The Payment is not complete.")
 	else:
 		cart.payment_status = "Paid"
 
-	if cart.cart_appointment:
-		for row in cart.cart_appointment:
-			if row.appointment_type == "Spa Appointment":
-				doc = frappe.get_doc('Spa Appointment', row.appointment_id)
-				doc.payment_status = 'Paid'
-				doc.save()
-			if row.appointment_type == "Fitness Training Appointment":
-				frappe.db.set_value('Fitness Training Appointment', row.appointment_id, 'payment_status', 'Paid')
-				frappe.db.commit()
+		if cart.payment_table:
+			for row in cart.payment_table:
+				if row.mode_of_payment == "Wallet":
+						doc = frappe.get_doc({
+							'doctype': 'Wallet Transaction',
+							'client_id': cart.client_id,
+							'transaction_type': 'Payment',
+							'transaction_date': getdate(),
+							'amount': float(row.paid_amount),
+							'payment_type' : 'Cart',
+							'transaction_document': cart.name
+						})
+						doc.save()
+						doc.submit()
 
-	if cart.cart_session:
-		for row in cart.cart_session:
-			if row.package_type == "Spa":
-				service_type = "Spa Services"
-			if row.package_type == "Fitness":
-				service_type = "Fitness Services"
-			if row.package_type == "Club":
-				service_type = "Club Services"
-			club_package = frappe.get_doc('Club Packages', row.package_name)
-			if club_package.package_table:
-				for item in club_package.package_table:
-					create_session(cart.client_id,row.package_name,service_type,item.service_name,item.no_of_sessions,item.validity)
-	
-	if cart.cart_product:
-		if cart.online==1:
-			online = frappe.get_all('Online Order', filters={'cart_id':cart_id})
-			if online:
-				for order in online:
-					online_cart = frappe.get_doc('Online Order', order.name)
-					online_cart.cart_status = "Ordered"
-					online_cart.payment_status = "Paid"
-					online_cart.save()
+		if cart.cart_appointment:
+			for row in cart.cart_appointment:
+				if row.appointment_type == "Spa Appointment":
+					doc = frappe.get_doc('Spa Appointment', row.appointment_id)
+					doc.cart = cart_id
+					doc.payment_date = today
+					doc.paid_amount = row.total_price
+					doc.cart_amount = cart.grand_total
+					doc.paid_by = cart.client_id
+					if not user.full_name == "Administrator":
+						doc.billing_staff = user.full_name
+					doc.payment_status = 'Paid'
+					doc.save()
 
-	cart.save()
-	frappe.db.set_value('Cart', cart_id, 'docstatus', 1)
-	frappe.msgprint(msg='Cart has been submitted successfully')
+				if row.appointment_type == "Fitness Training Appointment":
+					frappe.db.set_value('Fitness Training Appointment', row.appointment_id, 'payment_status', 'Paid')
+					frappe.db.commit()
+
+		if cart.cart_session:
+			for row in cart.cart_session:
+				if row.package_type == "Spa":
+					service_type = "Spa Services"
+				if row.package_type == "Fitness":
+					service_type = "Fitness Services"
+				if row.package_type == "Club":
+					service_type = "Club Services"
+				club_package = frappe.get_doc('Club Packages', row.package_name)
+				if club_package.package_table:
+					for item in club_package.package_table:
+						create_session(cart.client_id,row.package_name,service_type,item.service_name,item.no_of_sessions,item.validity)
+		
+		if cart.cart_product:
+			if cart.online==1:
+				online = frappe.get_all('Online Order', filters={'cart_id':cart_id})
+				if online:
+					for order in online:
+						online_cart = frappe.get_doc('Online Order', order.name)
+						online_cart.cart_status = "Ordered"
+						online_cart.payment_status = "Paid"
+						online_cart.save()
+
+		cart.save()
+		frappe.msgprint(msg='Cart has been submitted successfully')
 
 @frappe.whitelist()
 def add_cart_from_shop_online(client_id, order_id):
@@ -393,3 +416,65 @@ def add_cart_from_pt_online(client_id, request_id):
 	})
 	doc.save()
 	return doc
+
+# Create Payment Entry for paid carts
+@frappe.whitelist()
+def create_payment_entry():
+	today = getdate()
+
+	cart_list = frappe.get_all('Cart', filters={'date': today, 'payment_status': 'Paid', 'payment_entry': 0})
+	if cart_list:
+		for carts in cart_list:
+			cart = frappe.get_doc('Cart', carts.name)
+
+			if cart.payment_status=="Paid":
+				if cart.payment_table:
+					for row in cart.payment_table:
+						pe = frappe.new_doc('Payment Entry')
+						pe.posting_date = row.payment_date
+						pe.payment_type = "Receive"
+						pe.mode_of_payment = row.mode_of_payment
+						pe.party_type = "Customer"
+						pe.party = frappe.get_value('Client', cart.client_id, 'customer')
+						pe.paid_to_account_currency = 'QAR'
+						pe.paid_to = get_paid_to_account(row.mode_of_payment)
+						pe.paid_amount = row.paid_amount
+						pe.received_amount = row.paid_amount
+						pe.target_exchange_rate = 1
+						pe.reference_no = row.transaction_reference
+						pe.reference_date = row.payment_date
+						pe.insert(ignore_permissions=True)
+						pe.submit()
+
+					frappe.db.set_value('Cart', cart.name, 'payment_entry', 1)
+					frappe.db.set_value('Cart', cart.name, 'docstatus', 1)
+
+
+#  Fetch accounts for mode of payment
+@frappe.whitelist()
+def get_paid_to_account(mode_of_payment):
+	mop = frappe.get_doc('Mode of Payment', mode_of_payment)
+	if not mop.accounts:
+		frappe.throw('Please set default account for this mode of payment')
+	else:
+		for row in mop.accounts:
+			account = row.default_account
+			
+			return account
+
+# Fetch items in Cart Products for item groups which has retail sale enabled
+@frappe.whitelist()
+@frappe.validate_and_sanitize_search_inputs
+def get_products(doctype, txt, searchfield, start, page_len, filters):
+	items_list = []
+	item_group = frappe.get_all('Item Group', filters={'is_retail': 1, 'is_group': 0})
+	if item_group:
+		for items in item_group:
+			item_list = frappe.get_all("Item", filters={'item_group': items.name}, fields={'name', 'item_name', 'item_group'})
+			if item_list:
+				for a in item_list:
+					items_list.append([
+						a.item_name, a.item_group
+					])
+	
+	return items_list

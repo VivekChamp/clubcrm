@@ -44,13 +44,14 @@
   "transaction_reference",
   "sessions_created",
   "schedule_notification",
-  "invoiced"
+  "invoiced",
+  "scheduled_at"
  ],
  "fields": [
   {
    "default": "Today",
    "fieldname": "date",
-   "fieldtype": "Data",
+   "fieldtype": "Date",
    "label": "Date",
    "read_only": 1
   },
@@ -291,10 +292,15 @@
    "fieldtype": "Check",
    "hidden": 1,
    "label": "Invoiced"
+  },
+  {
+   "fieldname": "scheduled_at",
+   "fieldtype": "Datetime",
+   "label": "Scheduled at"
   }
  ],
  "links": [],
- "modified": "2021-07-25 04:58:12.833314",
+ "modified": "2021-08-29 21:08:12.359435",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Training Request",

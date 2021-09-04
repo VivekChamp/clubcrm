@@ -48,6 +48,8 @@
   "membership_history",
   "sb_relation",
   "client_relation",
+  "section_break_40",
+  "wallet_balance",
   "allergy_and_medical_history",
   "allergies",
   "medication",
@@ -511,13 +513,25 @@
    "fieldtype": "Select",
    "label": "Vaccination Status",
    "options": "\nVaccinated\nFirst shot\nNot vaccinated\nNo info"
+  },
+  {
+   "default": "0.0",
+   "fieldname": "wallet_balance",
+   "fieldtype": "Currency",
+   "label": "Wallet Balance",
+   "non_negative": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_40",
+   "fieldtype": "Section Break"
   }
  ],
  "icon": "fa fa-user",
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
- "modified": "2021-08-07 17:16:17.636658",
+ "modified": "2021-08-25 16:48:05.805546",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",

@@ -45,7 +45,10 @@
   "grams_discount",
   "accounting_details_section",
   "membership_fee_item",
-  "joining_fee_item"
+  "revenue_account",
+  "column_break_40",
+  "joining_fee_item",
+  "revenue_account_joining_fee"
  ],
  "fields": [
   {
@@ -282,10 +285,28 @@
    "fieldtype": "Link",
    "label": "Link to Joining Fee Item",
    "options": "Item"
+  },
+  {
+   "fieldname": "column_break_40",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "revenue_account",
+   "fieldtype": "Link",
+   "label": "Revenue Account for Membership",
+   "options": "Account",
+   "read_only": 1
+  },
+  {
+   "fieldname": "revenue_account_joining_fee",
+   "fieldtype": "Link",
+   "label": "Revenue Account for Joining Fee",
+   "options": "Account",
+   "read_only": 1
   }
  ],
  "links": [],
- "modified": "2021-07-17 14:57:24.258446",
+ "modified": "2021-08-21 17:14:30.648731",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Plan",

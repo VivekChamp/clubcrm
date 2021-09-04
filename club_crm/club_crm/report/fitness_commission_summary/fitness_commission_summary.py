@@ -37,16 +37,29 @@ def get_column():
 	"width": 120
 	},
 	{
-	"label": "PT Commission",
+	"label": "Others (Hours)",
+	"fieldname": "ot_count",
+	"fieldtype": "Data",
+	"width": 120
+	},
+	{
+	"label": "PT Commissions",
 	"fieldname": "pt_commission",
 	"fieldtype": "Currency",
 	"width": 150
 	},
 	{
-	"label": "GX Commission",
+	"label": "GX Commissions",
 	"fieldname": "gc_commission",
 	"fieldtype": "Currency",
 	"width": 150
+	},
+	{
+	"label": "Other Commissions",
+	"fieldname": "other_commission",
+	"fieldtype": "Currency",
+	"width": 150,
+	"default": 0.0
 	},
 	{
 	"label": "Total Commission",
@@ -85,27 +98,45 @@ def get_data(filters):
 	settings = frappe.get_doc('Fitness Training Settings')
 	if staff_list:
 		for staff in staff_list:
-			staff['staff_name']= staff.name
 			pt_count = 0.0
-			appointments_list = frappe.db.get_list('Fitness Training Appointment', filters=[['appointment_date', 'between', [start, end]], ['payment_status', '=', 'Paid'], ['service_staff', '=', staff.name], ['appointment_status', 'in', {'Completed', 'No Show'}]], fields=['name', 'fitness_service'])
-			if appointments_list:
-				for appointments in appointments_list:
-					pt_service = frappe.get_doc('Fitness Services', appointments.fitness_service)
-					if pt_service.session_type == "Standard":
-						if pt_service.session_for == "Single":
-							pt_count += settings.single_session
-						elif pt_service.session_for == "Couple":
-							pt_count += settings.couple_session
-					elif pt_service.session_type == "Complimentary":
-							pt_count += settings.complimentary_session
+			ot_count = 0.0
+			other_commission = 0.0
+			service_staff = frappe.get_doc('Service Staff', staff.name)
+			if service_staff.fitness_service_assignment:
+				for services in service_staff.fitness_service_assignment:
+					if services.commission_applicable:
+						appointments_list = frappe.db.get_list('Fitness Training Appointment', filters=[['fitness_service', '=', services.fitness_package], ['appointment_date', 'between', [start, end]], ['payment_status', '=', 'Paid'], ['service_staff', '=', staff.name], ['appointment_status', 'in', {'Completed', 'No Show'}]], fields=['name', 'fitness_service'])
+					
+						if services.commission_type == "Standard":
+							if appointments_list:
+								for appointments in appointments_list:
+									pt_service = frappe.get_doc('Fitness Services', appointments.fitness_service)
+									if pt_service.session_for == "Single":
+										pt_count += settings.single_session
+									elif pt_service.session_for == "Couple":
+										pt_count += settings.couple_session
+						
+						elif services.commission_type == "Custom":
+							if appointments_list:
+								for appointments in appointments_list:
+									other_commission += services.commission_amount
+									ot_count += 1
 			
+			staff['staff_name']= staff.name
 			staff['pt_count'] = pt_count
-
+			staff['ot_count'] = ot_count
+			staff['other_commission'] = other_commission
+			
+			gc = []
 			gc_list = frappe.db.get_list('Group Class', filters=[['class_date', 'between', [start, end]], ['trainer_name', '=', staff.name], ['class_status', '=', 'Completed']], fields=['count(name) as gx_count'], group_by='trainer_name')
 			if gc_list:
-				staff['gx_count'] = gc_list[0].gx_count
-			else:
-				staff['gx_count'] = 0
+				for group_class in gc_list:
+					group_class_attendee = frappe.get_all('Group Class Attendees', filters={'group_class': group_class.name, 'attendee_status': 'Complete' })
+					if group_class_attendee:
+						if len(group_class_attendee) >= 3:
+							gc.append(group_class)
+
+			staff['gx_count'] = len(gc)
 
 			data.append(staff)
 			
@@ -115,13 +146,12 @@ def get_data(filters):
 			pt = calculate_pt(row['pt_count'], row['gx_count'])
 			row['pt_commission'] = pt
 
-			row['total_commission'] = row['gc_commission'] + row['pt_commission']
-				
+			row['total_commission'] = row['gc_commission'] + row['pt_commission'] + row['other_commission']
+			
 			final_data.append(row)
 
 	return final_data		
 
-@frappe.whitelist()
 def month():
 	year = 2021
 	months = 'July'
@@ -132,22 +162,6 @@ def month():
 	start = start_date.date()
 	end_date = datetime(year, month_number, last_day)
 	end = end_date.date()
-
-	# appointment_lists = frappe.db.sql('''select
-	# 										spa.name as document_id,
-	# 										spa.appointment_date as date,
-	# 										spa.client_id as client_id
-	# 									from
-	# 										`tabSpa Appointment` spa
-	# 									where 
-	#  										spa.appointment_date between %s and %s
-	# 										and spa.payment_status LIKE %s
-	# 										and (spa.appointment_status LIKE %s OR spa.appointment_status LIKE %s ) ''',
-	# 									(start, end, "Paid", "Complete", "No Show" ), as_dict = True)
-
-	# app_list = frappe.db.get_list('Spa Appointment', filters=[['appointment_date', 'between', [start, end]], ['payment_status', '=', 'Paid'], ['appointment_status', 'in', {'Complete', 'No Show'}]])
-		
-	# return app_list, appointment_lists
 
 	staff_list = frappe.db.get_list('Service Staff', filters=[['fitness_check', '=', 1]], fields=['name'])
 	for staff in staff_list:

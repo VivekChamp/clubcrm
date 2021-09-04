@@ -55,21 +55,13 @@ frappe.ui.form.on("Cart", "onload", function(frm) {
             }
         }
     }
-    frm.fields_dict.cart_product.grid.get_field("cart_item").get_query = function() {
-            return {
-                filters: [
-                    ["Item", "item_group", "in", ["Body Care", "Facial Products", "Hair Care", "Skin Care", "Miscellaneous", "Perfumes"]]
-                ]
-            }
-        }
-        // frm.fields_dict.cart_tips.grid.get_field("service_staff").get_query = function() {
-        //     return {
-        //         filters: [
-        //             ["Service Staff", "spa_check", "=", 1] || ["Service Staff", "cec_check", "=", 1]
-        //         ]
-        //     }
-        // }
 
+    // Fetch items in Cart Products for item groups which has retail sale enabled
+    frm.fields_dict.cart_product.grid.get_field("cart_item").get_query = function() {
+        return {
+            query: "club_crm.club_crm.doctype.cart.cart.get_products"
+        }
+    }
 });
 
 frappe.ui.form.on("Cart", {
@@ -138,6 +130,14 @@ frappe.ui.form.on("Cart", {
                                 reqd: 1
                             },
                             {
+                                label: 'Wallet Balance',
+                                fieldname: 'wallet_balance',
+                                fieldtype: 'Currency',
+                                depends_on: 'eval:doc.mode_of_payment == "Wallet"',
+                                default: frm.doc.wallet_balance,
+                                read_only: 1
+                            },
+                            {
                                 label: 'Transaction Reference #',
                                 fieldname: 'transaction_reference',
                                 fieldtype: 'Data'
@@ -145,6 +145,10 @@ frappe.ui.form.on("Cart", {
                         ],
                         primary_action_label: ('Submit'),
                         primary_action: function() {
+                            var data = d.get_values();
+                            if (data.amount_paid > data.wallet_balance) {
+                                frappe.throw(__('Payment amount exceeds the wallet balance.'));
+                            }
                             d.hide();
                             frm.save();
                             let row = frappe.model.add_child(frm.doc, 'Cart Payment', 'payment_table');

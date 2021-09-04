@@ -1,0 +1,151 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2021-08-28 16:59:33.048194",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "client_information",
+  "client_id",
+  "client_name",
+  "column_break_4",
+  "membership_status",
+  "member_id",
+  "column_break_7",
+  "mobile_number",
+  "section_break_9",
+  "service_type",
+  "column_break_11",
+  "service_staff",
+  "column_break_13",
+  "title",
+  "naming_series"
+ ],
+ "fields": [
+  {
+   "fieldname": "client_information",
+   "fieldtype": "Section Break",
+   "label": "Client Information"
+  },
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Link",
+   "label": "Client ID",
+   "options": "Client",
+   "set_only_once": 1
+  },
+  {
+   "fetch_from": "client_id.client_name",
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "label": "Client Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "client_id.membership_status",
+   "fieldname": "membership_status",
+   "fieldtype": "Data",
+   "label": "Membership Status",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "client_id.member_id",
+   "fieldname": "member_id",
+   "fieldtype": "Data",
+   "label": "Member ID",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "client_id.mobile_no",
+   "fieldname": "mobile_number",
+   "fieldtype": "Data",
+   "label": "Mobile Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_9",
+   "fieldtype": "Section Break",
+   "label": "Blacklist for"
+  },
+  {
+   "fieldname": "service_type",
+   "fieldtype": "Select",
+   "label": "Service Type",
+   "options": "Spa",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "service_staff",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Service Staff",
+   "options": "Service Staff",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Title",
+   "read_only": 1
+  },
+  {
+   "default": "BLK-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "BLK-.YYYY.-",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_13",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2021-08-28 18:26:41.750687",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Blacklist",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "title",
+ "track_changes": 1
+}

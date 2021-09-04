@@ -3,6 +3,7 @@ import frappe
 import dateutil
 from frappe.utils import getdate
 from frappe.model.document import Document
+from club_crm.club_crm.doctype.wallet_transaction.wallet_transaction import get_balance_client
 
 class Client(Document):
     def after_insert(self):
@@ -147,3 +148,12 @@ def create_missing_customers():
                 'territory': doc.territory
             })
             frappe.db.commit()
+
+@frappe.whitelist()
+def update_wallet_balance():
+    client_list = frappe.get_all('Client')
+    for clients in client_list:
+        client = frappe.get_doc('Client', clients.name)
+        wallet_balance = get_balance_client(client.name)
+        frappe.db.set_value('Client', client.name, 'wallet_balance', wallet_balance, update_modified=False)
+        frappe.db.commit()

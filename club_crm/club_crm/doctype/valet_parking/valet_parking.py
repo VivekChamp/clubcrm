@@ -4,6 +4,8 @@
 
 from __future__ import unicode_literals
 import frappe
+from frappe.utils import getdate, get_time, flt, now_datetime
+from datetime import datetime, timedelta, date, time
 from frappe.model.document import Document
 
 class ValetParking(Document):
@@ -16,4 +18,16 @@ class ValetParking(Document):
 					frappe.throw('This vehicle is already parked')
 					return "This vehicle is already parked"
 				
-	
+@frappe.whitelist()
+def release_parked_vehicle():
+	vehicle_list = frappe.get_all('Valet Parking', filters={'status': 'Parked'})
+	if vehicle_list:
+		for vehicles in vehicle_list:
+			vehicle = frappe.get_doc('Valet Parking', vehicles.name)
+			vehicle.status = 'Delivered'
+			vehicle.delivery_time = datetime.now()
+			vehicle.save()
+			frappe.db.set_value('Valet Parking', vehicle.name, 'docstatus', 1)
+			frappe.db.commit()
+
+

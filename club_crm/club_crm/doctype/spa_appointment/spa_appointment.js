@@ -66,6 +66,11 @@ frappe.ui.form.on("Spa Appointment", {
         // use the is_new method of frm, to check if the doc is saved or not
         frm.set_df_property("session", "read_only", frm.is_new() ? 0 : 1);
 
+        // Make service read-only if the service is paid
+        if (frm.doc.payment_status == "Paid") {
+            frm.set_df_property("spa_service", "read_only", 1)
+        }
+
         // 'Check-in' button for appointment check-in
         if (!frm.is_new() && (frm.doc.appointment_status == "Open" || frm.doc.appointment_status == "Draft")) {
             frappe.call({

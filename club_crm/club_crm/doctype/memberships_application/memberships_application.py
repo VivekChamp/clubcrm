@@ -20,7 +20,6 @@ class MembershipsApplication(Document):
 	def after_insert(self):
 		if self.online_application==0:
 			frappe.db.set_value('Memberships Application', self.name, 'workflow_status', 'Pending')
-		# self.send_notification()
 
 	def validate(self):
 		self.check_clients()
@@ -30,7 +29,6 @@ class MembershipsApplication(Document):
 		self.set_payment_details()
 		self.set_title()
 		self.send_notification()
-		# self.validate_submit()
 	
 	def before_submit(self):
 		self.check_payment()
@@ -38,6 +36,7 @@ class MembershipsApplication(Document):
 	def on_submit(self):
 		self.create_clients()
 		self.update_client_details()
+		self.update_activation_date()
 
 	def on_cancel(self):
 		if self.payment_status == "Not Paid":
@@ -252,6 +251,9 @@ class MembershipsApplication(Document):
 						doc.email = row.email
 					doc.save()
 
+	def update_activation_date(self):
+		self.membership_start_date = getdate()
+
 	def send_notification(self):
 		# Notification for new application to CE Manager
 		if self.new_notify==0 and self.application_type=="New" and self.application_status=="Pending":
@@ -406,3 +408,64 @@ def renew_membership(membership_id):
 		})
 		doc.save()
 		frappe.msgprint('Couple Membership renewal application has been created. Please check the membership application list.')
+
+#  Fetch accounts for mode of payment
+@frappe.whitelist()
+def get_paid_to_account(mode_of_payment):
+	mop = frappe.get_doc('Mode of Payment', mode_of_payment)
+	if not mop.accounts:
+		frappe.throw('Please set default account for this mode of payment')
+	else:
+		for row in mop.accounts:
+			account = row.default_account
+			
+			return account
+
+
+@frappe.whitelist()
+def create_sales_invoice():
+	mem_app_list = frappe.get_all('Memberships Application', filters={'invoiced': 0, 'payment_status': 'Paid'})
+	if mem_app_list:
+		for mem_app in mem_app_list:
+			mem_id = frappe.get_doc('Memberships Application', mem_app.name)
+			client = frappe.get_doc('Client', mem_id.client_id)
+			mem_plan = frappe.get_doc('Memberships Plan', mem_id.membership_plan )
+
+			sales_invoice = frappe.new_doc('Sales Invoice')
+			sales_invoice.posting_date = mem_id.application_date,
+			sales_invoice.customer = frappe.get_value('Client', client.name, 'customer')
+			sales_invoice.document_type = 'Memberships Application'
+			sales_invoice.document_id = mem_id.name
+			sales_invoice.due_date = mem_id.application_date
+
+			sales_invoice.set_missing_values(for_validate=True)
+			sales_invoice.flags.ignore_mandatory = True
+			sales_invoice.save(ignore_permissions=True)
+
+			frappe.db.set_value('Memberships Application', mem_id.name, {
+				'invoiced': 1,
+				'sales_invoice': sales_invoice.name
+			})
+			# sales_invoice.submit()
+
+			# item = sales_invoice.append('items', {})
+			# item 
+
+			# if mem_id.online_application == 0:
+
+
+
+	# 	})
+	# 	doc.save()
+
+	# item = sales_invoice.append('items', {})
+	# item = get_appointment_item(appointment_doc, item)
+
+	# # Add payments if payment details are supplied else proceed to create invoice as Unpaid
+	# if appointment_doc.mode_of_payment and appointment_doc.paid_amount:
+	# 	sales_invoice.is_pos = 1
+	# 	payment = sales_invoice.append('payments', {})
+	# 	payment.mode_of_payment = appointment_doc.mode_of_payment
+	# 	payment.amount = appointment_doc.paid_amount
+
+	
