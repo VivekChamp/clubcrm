@@ -12,7 +12,7 @@ def get_data():
 		'transactions': [
 			{
 				'label': _(''),
-				'items': ['Check In', 'Client Sessions', 'Spa Appointment', 'Spa Progress Notes']
+				'items': ['Check In', 'Client Sessions', 'Spa Appointment', 'Spa Progress Notes', 'Wallet Transaction']
 			},
 			{
 				'label': _(''),

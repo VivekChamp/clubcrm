@@ -16,17 +16,17 @@ class ServiceStaffAvailability(Document):
 	def validate(self):
 		self.set_title()
 		self.set_time_for_calendar()
-		for i, item in enumerate(sorted(self.week_1, key=lambda item: str(item.date))):
+		for i, item in enumerate(sorted(self.week_1, key=lambda item: str(item.date)), start=1):
 			item.idx = i
-		for i, item in enumerate(sorted(self.week_2, key=lambda item: str(item.date))):
+		for i, item in enumerate(sorted(self.week_2, key=lambda item: str(item.date)), start=1):
 			item.idx = i
-		for i, item in enumerate(sorted(self.week_3, key=lambda item: str(item.date))):
+		for i, item in enumerate(sorted(self.week_3, key=lambda item: str(item.date)), start=1):
 			item.idx = i
-		for i, item in enumerate(sorted(self.week_4, key=lambda item: str(item.date))):
+		for i, item in enumerate(sorted(self.week_4, key=lambda item: str(item.date)), start=1):
 			item.idx = i
-		for i, item in enumerate(sorted(self.week_5, key=lambda item: str(item.date))):
+		for i, item in enumerate(sorted(self.week_5, key=lambda item: str(item.date)), start=1):
 			item.idx = i
-		for i, item in enumerate(sorted(self.week_6, key=lambda item: str(item.date))):
+		for i, item in enumerate(sorted(self.week_6, key=lambda item: str(item.date)), start=1):
 			item.idx = i
 		
 	def set_title(self):

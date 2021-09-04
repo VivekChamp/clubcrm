@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 import frappe
 import datetime
 from frappe import _
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date, time
 from club_crm.club_crm.utils.sms_notification import send_sms
 from club_crm.club_crm.utils.push_notification import send_push
 from club_crm.club_crm.utils.date import add_month
@@ -422,7 +422,8 @@ def cancel_membership(appointment_id):
 @frappe.whitelist()
 def update_membership_status():
 	# update the status of membership daily
-	today = getdate()
+	# today = getdate()
+	today = date.today()
 	memberships = frappe.get_all('Memberships', filters={'membership_status': 'Active'})
 
 	for membership in memberships:

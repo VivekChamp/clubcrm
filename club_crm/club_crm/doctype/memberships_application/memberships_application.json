@@ -104,6 +104,8 @@
         "gm_approval_notify",
         "md_approval_notify",
         "reject_notify",
+        "section_break_99",
+        "membership_start_date",
         "invoiced",
         "sales_invoice"
     ],
@@ -653,7 +655,7 @@
             "fieldname": "apply_discount",
             "fieldtype": "Select",
             "label": "Apply Discount",
-            "options": "\nOn Joining Fee\nOn Membership Fee (Adult)\nOn Membership Fee (Child)\nOn Total Membership Fee\nOn Net Total"
+            "options": "\nOn Joining Fee\nOn Membership Fee (Adult)\nOn Membership Fee (Child)\nOn Total Membership Fee"
         },
         {
             "depends_on": "eval:doc.membership_category!=\"Complimentary\"",
@@ -719,8 +721,10 @@
             "read_only": 1
         },
         {
+            "allow_on_submit": 1,
             "fieldname": "assigned_to",
             "fieldtype": "Link",
+            "ignore_user_permissions": 1,
             "label": "Assigned To",
             "options": "Service Staff"
         },
@@ -796,14 +800,22 @@
             "default": "0",
             "fieldname": "invoiced",
             "fieldtype": "Check",
-            "hidden": 1,
             "label": "Invoiced",
             "read_only": 1
+        },
+        {
+            "fieldname": "section_break_99",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "membership_start_date",
+            "fieldtype": "Date",
+            "label": "Membership Start Date"
         }
     ],
     "is_submittable": 1,
     "links": [],
-    "modified": "2021-07-17 18:23:35.314184",
+    "modified": "2021-09-04 00:04:47.261561",
     "modified_by": "Administrator",
     "module": "Club CRM",
     "name": "Memberships Application",

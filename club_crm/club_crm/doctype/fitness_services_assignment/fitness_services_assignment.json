@@ -8,7 +8,9 @@
   "fitness_package",
   "on_app",
   "gender_preference",
-  "commission"
+  "commission_applicable",
+  "commission_type",
+  "commission_amount"
  ],
  "fields": [
   {
@@ -18,12 +20,6 @@
    "fieldtype": "Check",
    "in_list_view": 1,
    "label": "Show on App"
-  },
-  {
-   "fieldname": "commission",
-   "fieldtype": "Percent",
-   "hidden": 1,
-   "label": "Commission %"
   },
   {
    "fieldname": "fitness_package",
@@ -39,11 +35,34 @@
    "in_list_view": 1,
    "label": "Gender Preference",
    "options": "\nNo Preference\nSame Gender"
+  },
+  {
+   "columns": 2,
+   "default": "1",
+   "fieldname": "commission_applicable",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Commission Applicable"
+  },
+  {
+   "default": "Standard",
+   "depends_on": "eval:doc.commission_applicable==1",
+   "fieldname": "commission_type",
+   "fieldtype": "Select",
+   "label": "Commission Type",
+   "options": "Standard\nCustom"
+  },
+  {
+   "default": "0.0",
+   "depends_on": "eval:doc.commission_type==\"Custom\"",
+   "fieldname": "commission_amount",
+   "fieldtype": "Currency",
+   "label": "Commission Amount (per session)"
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2021-07-13 02:54:16.574098",
+ "modified": "2021-09-01 12:22:55.982835",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Services Assignment",

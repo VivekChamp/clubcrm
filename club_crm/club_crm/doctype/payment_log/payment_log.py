@@ -74,7 +74,8 @@ def update_payments():
 					doc.append('membership_payment', {
 						"payment_date": getdate(),
 						"mode_of_payment": "Online Payment",
-						"paid_amount": float(payment_log.auth_amount)
+						"paid_amount": float(payment_log.auth_amount),
+						"transaction_reference": payment_log.transaction_id
 					})
 					doc.payment_status = 'Paid'
 					doc.save(ignore_permissions=True)
@@ -89,27 +90,32 @@ def update_payments():
 					doc.append('payment_table', {
 						"payment_date": getdate(),
 						"mode_of_payment": "Online Payment",
-						"paid_amount": float(payment_log.auth_amount)
+						"paid_amount": float(payment_log.auth_amount),
+						"transaction_reference": payment_log.transaction_id
 					})
 					doc.save(ignore_permissions=True)
 					submit_cart(doc.name)
 				
 				if re.match(wallet, payment_log.req_reference_number):
 					doc = frappe.get_doc("Wallet Transaction", str(payment_log.req_reference_number))
-					
-					frappe.db.set_value('Wallet Transaction', payment_log.req_reference_number, {
-					'transaction_status': 'Complete',
-					'transaction_reference': payment_log.name,
-					'docstatus' : 1
-					})
-					frappe.db.commit()
+					doc.transaction_reference = payment_log.name
+					doc.save()
+					doc.submit()
+
+					# frappe.db.set_value('Wallet Transaction', payment_log.req_reference_number, {
+					# 'transaction_status': 'Complete',
+					# 'transaction_reference': payment_log.name,
+					# 'docstatus' : 1
+					# })
+					# frappe.db.commit()
 
 				if re.match(food, payment_log.req_reference_number):
 					doc = frappe.get_doc("Food Order Entry", str(payment_log.req_reference_number))
 					doc.append('payment_table', {
 						"payment_date": getdate(),
 						"mode_of_payment": "Online Payment",
-						"paid_amount": float(payment_log.auth_amount)
+						"paid_amount": float(payment_log.auth_amount),
+						"transaction_reference": payment_log.transaction_id
 					})
 					doc.order_status = "Ordered"
 					doc.payment_status = "Paid"
@@ -120,7 +126,8 @@ def update_payments():
 					doc.append('payment_table', {
 						"payment_date": getdate(),
 						"mode_of_payment": "Online Payment",
-						"paid_amount": float(payment_log.auth_amount)
+						"paid_amount": float(payment_log.auth_amount),
+						"transaction_reference": payment_log.transaction_id
 					})
 					doc.request_status = "Completed"
 					doc.payment_status = "Paid"
@@ -160,7 +167,8 @@ def update_payment_manual(doc_id):
 			doc.append('membership_payment', {
 				"payment_date": getdate(),
 				"mode_of_payment": "Online Payment",
-				"paid_amount": float(payment_log.auth_amount)
+				"paid_amount": float(payment_log.auth_amount),
+				"transaction_reference": payment_log.transaction_id
 			})
 			doc.payment_status = 'Paid'
 			doc.save(ignore_permissions=True)
@@ -175,7 +183,8 @@ def update_payment_manual(doc_id):
 			doc.append('payment_table', {
 				"payment_date": getdate(),
 				"mode_of_payment": "Online Payment",
-				"paid_amount": float(payment_log.auth_amount)
+				"paid_amount": float(payment_log.auth_amount),
+				"transaction_reference": payment_log.transaction_id
 			})
 			doc.save(ignore_permissions=True)
 			submit_cart(doc.name)
@@ -195,7 +204,8 @@ def update_payment_manual(doc_id):
 			doc.append('payment_table', {
 				"payment_date": getdate(),
 				"mode_of_payment": "Online Payment",
-				"paid_amount": float(payment_log.auth_amount)
+				"paid_amount": float(payment_log.auth_amount),
+				"transaction_reference": payment_log.transaction_id
 			})
 			doc.order_status = "Ordered"
 			doc.payment_status = "Paid"
@@ -206,7 +216,8 @@ def update_payment_manual(doc_id):
 			doc.append('payment_table', {
 				"payment_date": getdate(),
 				"mode_of_payment": "Online Payment",
-				"paid_amount": float(payment_log.auth_amount)
+				"paid_amount": float(payment_log.auth_amount),
+				"transaction_reference": payment_log.transaction_id
 			})
 			doc.request_status = "Completed"
 			doc.payment_status = "Paid"

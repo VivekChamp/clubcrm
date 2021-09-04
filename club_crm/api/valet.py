@@ -21,7 +21,8 @@ def get_parked_vehicle():
         }
     else:
         frappe.response['message'] = {
-            'status': 0
+            'status': 0,
+            'parked_vehicles': []
         }
 
 @frappe.whitelist()

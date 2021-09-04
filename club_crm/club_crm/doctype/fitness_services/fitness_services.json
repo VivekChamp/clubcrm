@@ -32,8 +32,8 @@
   "item_name",
   "item_group",
   "column_break_20",
-  "cost_center",
   "revenue_account",
+  "cost_center",
   "expense_account",
   "section_break_39",
   "image"
@@ -152,6 +152,7 @@
    "fetch_from": "item.item_group",
    "fieldname": "item_group",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Item Group",
    "options": "Item Group",
    "read_only": 1
@@ -160,8 +161,7 @@
    "fieldname": "cost_center",
    "fieldtype": "Link",
    "label": "Cost Center",
-   "options": "Cost Center",
-   "read_only": 1
+   "options": "Cost Center"
   },
   {
    "fieldname": "section_break_39",
@@ -181,8 +181,7 @@
    "fieldname": "revenue_account",
    "fieldtype": "Link",
    "label": "Revenue Account",
-   "options": "Account",
-   "read_only": 1
+   "options": "Account"
   },
   {
    "fieldname": "fitness_name",
@@ -210,14 +209,14 @@
   {
    "fieldname": "expense_account",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Expense Account",
-   "options": "Account",
-   "read_only": 1
+   "options": "Account"
   }
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-07-11 17:00:52.508462",
+ "modified": "2021-08-19 16:12:59.788727",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Fitness Services",

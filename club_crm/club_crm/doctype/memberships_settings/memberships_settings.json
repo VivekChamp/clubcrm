@@ -13,7 +13,9 @@
   "mobile_no",
   "email",
   "section_break_8",
-  "grace_time"
+  "grace_time",
+  "accounting_settings_section",
+  "default_deferred_revenue"
  ],
  "fields": [
   {
@@ -61,7 +63,8 @@
   },
   {
    "fieldname": "section_break_8",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Membership Renewals"
   },
   {
    "default": "3",
@@ -70,11 +73,22 @@
    "fieldtype": "Select",
    "label": "Grace time for membership renewal",
    "options": "0\n1\n2\n3\n4\n5\n6"
+  },
+  {
+   "fieldname": "accounting_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Accounting Settings"
+  },
+  {
+   "fieldname": "default_deferred_revenue",
+   "fieldtype": "Link",
+   "label": "Default Deferred Revenue Account",
+   "options": "Account"
   }
  ],
  "issingle": 1,
  "links": [],
- "modified": "2021-06-08 20:24:27.545255",
+ "modified": "2021-08-30 01:20:25.327908",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Settings",

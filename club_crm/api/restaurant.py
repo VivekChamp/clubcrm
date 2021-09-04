@@ -86,6 +86,36 @@ def get_menu_categories():
     doc= frappe.get_all('Item Group', filters={'parent_item_group':'Restaurant'}, fields=['name','image'], order_by="item_group_name asc")
     return doc
 
+# Get menu category list
+@frappe.whitelist()
+def get_menu_category():
+    categories = []
+    menu_category = frappe.get_all('Item Group', filters={'parent_item_group': "Restaurant", 'show_on_app':1}, fields=['name','image','is_group'], order_by="item_group_name asc")
+    if menu_category:
+        for category in menu_category:
+                categories.append({
+                    'name': category.name,
+                    'image': category.image,
+                    'is_group': category.is_group
+                })
+    frappe.response["message"] = categories
+
+# Get menu subcategory list
+@frappe.whitelist()
+def get_menu_subcategory(category):
+    categories = []
+    menu_category = frappe.get_all('Item Group', filters={'parent_item_group': category, 'show_on_app':1}, fields=['name','image','is_group'], order_by="item_group_name asc")
+    if menu_category:
+        for categorie in menu_category:
+                categories.append({
+                    'name': categorie.name,
+                    'image': categorie.image,
+                    'is_group': categorie.is_group
+                })
+    frappe.response["message"] = {
+        "Sub Categories": categories
+    }
+
 # Remove after app update
 @frappe.whitelist()         
 def get_menu_item(category):
@@ -145,7 +175,6 @@ def get_menu_items(category):
             "status_message": "Product Details",
             "item": menu
         }
-
     else:
         frappe.response["message"] = {
             "status": 0,

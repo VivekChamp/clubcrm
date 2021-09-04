@@ -22,16 +22,17 @@ class SpaAppointment(Document):
 			self.validate_overlaps()
 		self.validate_room_overlaps()
 		self.set_prices()
-		self.set_status()
-		self.set_title()
 		if self.session==1:
 			self.set_paid_and_net_total()
+		self.set_status()
+		self.set_title()
 
 	def after_insert(self):
 		if self.session==1:
 			self.set_booked_session_count()
 		if self.club_room:
 			self.create_room_schedule()
+		
 
 	def on_update(self):
 		if self.club_room:
@@ -147,11 +148,11 @@ class SpaAppointment(Document):
 			frappe.db.set_value("Spa Appointment",self.name,"docstatus",1)
 
 	def validate_overlaps(self):
-		if type(self.start_time) == str:
-			start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
-		else:
-			start_datetime = self.start_time
-		end_time = start_datetime + timedelta(seconds=self.total_duration)
+		# if type(self.start_time) == str:
+		# 	start_datetime= datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")
+		# else:
+		# 	start_datetime = self.start_time
+		# end_time = start_datetime + timedelta(seconds=self.total_duration)
 		overlaps = frappe.db.sql("""
 		select
 			name, service_staff, client_name, appointment_time, total_duration, appointment_end_time
@@ -176,11 +177,33 @@ class SpaAppointment(Document):
 			overlapping_details += _('<b>{0}</b> has appointment scheduled with <b>{1}</b> at {2} until {4}.').format(
 				overlaps[0][1], overlaps[0][2], overlaps[0][3], overlaps[0][4], overlaps[0][5])
 			frappe.throw(overlapping_details, title=_('Appointments Overlapping'))
-	
+
+		blocked = frappe.db.sql("""
+		select
+			name, from_time_dt, to_time_dt, staff_name
+		from
+			`tabService Staff Appointment Block`
+		where
+			date=%s	and staff_name=%s and
+			((from_time_dt<%s and to_time_dt>%s) or
+			(from_time_dt>%s and from_time_dt<%s) or
+			(from_time_dt>%s and to_time_dt<%s) or
+			(from_time_dt=%s))
+		""", (self.appointment_date, self.service_staff,
+		self.appointment_time, self.appointment_time,
+		self.appointment_time, self.appointment_end_time, 
+		self.appointment_time, self.appointment_end_time,
+		self.appointment_time))
+
+		if blocked:
+			blocked_details = _('Appointment is outside therapist availablity hours. ')
+			blocked_details += "{0} is unavailable from {1} to {2}".format(blocked[0][3], blocked[0][1], blocked[0][2])
+			frappe.throw(blocked_details, title=_('Therapist unavailable'))
+
 	def validate_room_overlaps(self):
 		overlaps = frappe.db.sql("""
 		select
-			name,room_name, from_time, to_time
+			name, room_name, from_time, to_time
 		from
 			`tabClub Room Schedule`
 		where
@@ -198,14 +221,8 @@ class SpaAppointment(Document):
 		if overlaps:
 			overlapping_details = _('This spa room is already booked for another appointment from ')
 			overlapping_details += _('<b>{0}</b> to <b>{1}</b>').format(
-				overlaps[0][1], overlaps[0][2])
+				overlaps[0][2], overlaps[0][3])
 			frappe.throw(overlapping_details, title=_('Room Overlap'))
-
-	# def validate_past_days(self):
-	# 	today = date.today()
-	# 	if self.appointment_date < today:
-	# 		past_day = _('Appointments cannot be created for a past date')
-	# 		frappe.throw(past_day, title=_('Appointment Date Error'))
 	
 	def create_room_schedule(self):
 		room = frappe.get_all('Club Room Schedule', filters={'spa_booking': self.name}, fields=["*"])
@@ -260,32 +277,6 @@ def update_appointment_status():
 				elif appointment_date < today:
 					frappe.db.set_value('Spa Appointment', appointment.name, 'appointment_status', 'No Show')
 					frappe.db.commit()
-
-# def invoice_appointment(appointment_doc):
-# 	if appointment_doc.payment_status=="Paid":
-
-# 		sales_invoice = frappe.new_doc('Sales Invoice')
-# 		sales_invoice.client_id = appointment_doc.client_id
-# 		sales_invoice.customer = frappe.get_value('Client', appointment_doc.client_id, 'customer')
-# 		sales_invoice.spa_booking_id = appointment_doc.name
-
-# 		item = sales_invoice.append('items', {})
-# 		item = get_appointment_item(appointment_doc, item)
-
-# 		# Add payments if payment details are supplied else proceed to create invoice as Unpaid
-# 		if appointment_doc.mode_of_payment and appointment_doc.paid_amount:
-# 			sales_invoice.is_pos = 1
-# 			payment = sales_invoice.append('payments', {})
-# 			payment.mode_of_payment = appointment_doc.mode_of_payment
-# 			payment.amount = appointment_doc.paid_amount
-
-# 		sales_invoice.set_missing_values(for_validate=True)
-# 		sales_invoice.flags.ignore_mandatory = True
-# 		sales_invoice.save(ignore_permissions=True)
-# 		sales_invoice.submit()
-# 		frappe.msgprint(_('Sales Invoice {0} created'.format(sales_invoice.name)), alert=True)
-# 		frappe.db.set_value('Patient Appointment', appointment_doc.name, 'invoiced', 1)
-# 		frappe.db.set_value('Patient Appointment', appointment_doc.name, 'ref_sales_invoice', sales_invoice.name)
 
 @frappe.whitelist()
 def update_status(appointment_id, status):
@@ -352,7 +343,7 @@ def complete(appointment_id):
 		sess.used_sessions += 1
 		sess.booked_sessions -= 1
 		sess.save()
-
+	
 	frappe.msgprint(msg="Appointment has been marked as 'Completed'", title='Success')
 	#For cancellation
 	# if appointment.invoiced:
@@ -383,14 +374,6 @@ def complete(appointment_id):
 
 @frappe.whitelist()
 def get_therapist_resources():
-	# from frappe.desk.calendar import get_event_conditions
-	# conditions = get_event_conditions('Spa Appointment', filters)
-
-	# if filters['service_staff']:
-	# 	resource = frappe.db.get_list('Service Staff', filters=[['spa_check', '=', 1], ['display_name', '=', filters['service_staff']]], fields=['name as id', 'display_name as title'], order_by='display_name asc')
-	# else:
-	# 	resource = frappe.db.get_list('Service Staff', filters=[['spa_check', '=', 1]], fields=['name as id', 'display_name as title'], order_by='display_name asc')
-
 	resource = frappe.db.sql("""
 								select
 									staff.name as id,
@@ -432,7 +415,7 @@ def get_events(start, end, filters=None):
 	bg_events = frappe.db.sql("""
 		select
 		`tabDay Schedule`.start_time,
-		`tabDay Schedule`.end_time,
+		`tabDay Schedule`.end_time,	
 		`tabDay Schedule`.service_staff
 		from
 		`tabDay Schedule`
@@ -441,7 +424,19 @@ def get_events(start, end, filters=None):
 		and `tabDay Schedule`.parenttype = 'Service Staff Availability'""",
 		{"start": start, "end": end}, as_dict=True, update={"rendering": 'background'})
 
-	return events + bg_events
+	block = frappe.db.sql("""
+		select
+			blk.from_datetime as start_time,
+			blk.to_datetime as end_time,
+			blk.staff_name as service_staff,
+			blk.reason as title
+		from
+			`tabService Staff Appointment Block` blk
+		where
+			(blk.date between %(start)s and %(end)s)""",
+		{"start": start, "end": end}, as_dict=True, update={"rendering": ''})
+
+	return events + bg_events + block
 
 @frappe.whitelist()
 def get_therapist_spa_service(spa_service):
@@ -450,19 +445,6 @@ def get_therapist_spa_service(spa_service):
 	therapist_data = frappe.db.get_all('Spa Services Assignment', {'spa_group': spa_services.spa_group}, ['parent as service_staff'])
 	if therapist_data:
 		return therapist_data
-	# therapists = []
-	# therapist_list = frappe.get_all('Service Staff', filters={'spa_check':1})
-	# if therapist_list:
-	# 	for therapist in therapist_list:
-	# 		doc = frappe.get_doc('Service Staff', therapist.name)
-	# 		if doc.spa_service_assignment:
-	# 			for spa in doc.spa_service_assignment:
-	# 				if spa.spa_group == spa_services.spa_group:
-	# 					therapists.append({
-	# 						"name": therapist.name
-	# 						})
-	# return therapists
-	# return {}
 
 @frappe.whitelist()
 def get_club_room(doctype, txt, searchfield, start, page_len, filters):
@@ -496,3 +478,34 @@ def get_spa_services(doctype, txt, searchfield, start, page_len, filters):
 				spa_services.append([spa['name']])
 	
 	return spa_services
+
+
+@frappe.whitelist()
+def create_sales_invoice(appointment_id):
+	appointment = frappe.get_doc('Spa Appointment', appointment_id)
+	if appointment.payment_status == "Paid":
+		cart = frappe.get_doc('Cart', appointment.cart)
+
+		sales_invoice = frappe.new_doc('Sales Invoice')
+		sales_invoice.client_id = appointment.client_id
+		sales_invoice.customer = frappe.get_value('Client', appointment.client_id, 'customer')
+
+		if cart.cart_appointment:
+			for row in cart.cart_appointment:
+				if row.appointment_id == appointment_id:
+					spa_item = frappe.get_doc('Spa Services', row.description)
+					sales_invoice.append('items', {
+						'item_code': spa_item.item,
+						'item_name': spa_item.item,
+						'qty': 1,
+						'conversion_factor' : 1,
+						'rate': row.unit_price,
+						'margin_type': 'Percentage',
+						'discount_percentage': row.discount,
+						'income_account': spa_item.revenue_account
+					})
+		
+		sales_invoice.disable_rounded_total = 1
+		sales_invoice.flags.ignore_mandatory = True
+		sales_invoice.save(ignore_permissions=True)
+		sales_invoice.submit()
