@@ -188,11 +188,7 @@
  ],
  "is_submittable": 1,
  "links": [],
-<<<<<<< HEAD
- "modified": "2021-07-29 11:54:16.739060",
-=======
  "modified": "2021-08-26 17:04:58.584482",
->>>>>>> 7c0ae1cbc0f331aeacabc7dd76d22d6a4329518b
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Wallet Transaction",
