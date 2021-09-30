@@ -61,6 +61,7 @@ def wallet_topup(amount):
     
     doc = frappe.get_doc({
         'doctype': 'Wallet Transaction',
+        'online' : 1,
         'client_id': client.name,
         'transaction_type': 'Top Up',
         'mode_of_payment': 'Online Payment',
@@ -72,4 +73,3 @@ def wallet_topup(amount):
         "status": 1,
         "wallet_name": doc.name
     }
-

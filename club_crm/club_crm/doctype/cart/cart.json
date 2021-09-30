@@ -11,8 +11,10 @@
   "appointments_check",
   "column_break_2",
   "sessions_check",
-  "column_break_4",
+  "column_break_6",
   "products_check",
+  "column_break_4",
+  "tips_check",
   "general_information_section",
   "date",
   "time",
@@ -25,12 +27,15 @@
   "column_break_10",
   "payment_status",
   "membership_status",
+  "wallet_balance",
   "section_break_5",
   "cart_appointment",
   "section_break_11",
   "cart_session",
   "section_break_19",
   "cart_product",
+  "section_break_26",
+  "cart_tips",
   "section_break_14",
   "quantity_appointments",
   "quantity_sessions",
@@ -40,6 +45,7 @@
   "net_total_appointments",
   "net_total_sessions",
   "net_total_products",
+  "total_tips",
   "net_total",
   "column_break_20",
   "apply_discount",
@@ -53,7 +59,8 @@
   "paid_amount",
   "balance_amount",
   "naming_series",
-  "amended_from"
+  "amended_from",
+  "payment_entry"
  ],
  "fields": [
   {
@@ -306,8 +313,8 @@
    "fieldname": "payment_status",
    "fieldtype": "Select",
    "hidden": 1,
-   "label": "Payment Status",
-   "options": "Not Paid\nPaid\nCancelled",
+   "label": "Cart Status",
+   "options": "Draft\nPaid\nNot Paid\nCancelled\nReturn",
    "read_only": 1
   },
   {
@@ -358,6 +365,7 @@
    "fieldtype": "Section Break"
   },
   {
+<<<<<<< HEAD
    "fetch_from": "client_id.wallet_balance",
    "fieldname": "wallet_amount",
    "fieldtype": "Currency",
@@ -368,11 +376,61 @@
    "fieldname": "coupon_amount",
    "fieldtype": "Currency",
    "label": "Coupon Amount"
+=======
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.tips_check==\"1\"",
+   "fieldname": "cart_tips",
+   "fieldtype": "Table",
+   "label": "Tips",
+   "mandatory_depends_on": "eval:doc.tips_check==\"1\"",
+   "options": "Cart Tips"
+  },
+  {
+   "fieldname": "section_break_26",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "description": "Enable tips for service staffs",
+   "fieldname": "tips_check",
+   "fieldtype": "Check",
+   "label": "Tips"
+  },
+  {
+   "default": "0.0",
+   "depends_on": "eval:doc.tips_check==\"1\"",
+   "fieldname": "total_tips",
+   "fieldtype": "Currency",
+   "label": "Total Tips",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "payment_entry",
+   "fieldtype": "Check",
+   "label": "Payment Entry Created",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "client_id.wallet_balance",
+   "fieldname": "wallet_balance",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Wallet Balance",
+   "read_only": 1
+>>>>>>> 7c0ae1cbc0f331aeacabc7dd76d22d6a4329518b
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2021-08-13 13:11:19.975863",
+=======
+ "modified": "2021-08-26 16:42:23.856336",
+>>>>>>> 7c0ae1cbc0f331aeacabc7dd76d22d6a4329518b
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Cart",

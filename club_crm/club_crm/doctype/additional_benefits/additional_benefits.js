@@ -41,7 +41,7 @@ frappe.ui.form.on('Additional Benefits Item', 'service_type', function(frm, cdt,
 
 frappe.ui.form.on("Additional Benefits", {
     refresh(frm) {
-        if (!frm.is_new() && frm.doc.docstatus == 1 && frm.doc.workflow_state == "Approved" && frm.doc.benefit_activated == 0) {
+        if (!frm.is_new() && frm.doc.workflow_state == "Approved" && frm.doc.benefit_activated == 0) {
             frm.add_custom_button(__('Activate'), function() {
                 frappe.call({
                     method: 'club_crm.club_crm.doctype.additional_benefits.additional_benefits.activate_additional_benefits',

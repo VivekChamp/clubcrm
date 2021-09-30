@@ -24,6 +24,14 @@ class CheckIn(Document):
 		if gc_check:
 			frappe.throw("Already Checked in")
 
+	def on_trash(self):
+		self.delete_checkin_link()
+
+	def delete_checkin_link(self):
+		if self.check_in_type == "Spa":
+			if self.spa_booking:
+				frappe.db.set_value("Spa Appointment", self.spa_booking, "checkin_document", "", update_modified=False)
+
 @frappe.whitelist()
 def club_checkin(client_id):
 	user = frappe.get_doc('User',frappe.session.user)

@@ -12,7 +12,7 @@ def get_data():
 		'transactions': [
 			{
 				'label': _(''),
-				'items': ['Check In', 'Client Sessions', 'Spa Appointment', 'Spa Progress Notes']
+				'items': ['Check In', 'Client Sessions', 'Spa Appointment', 'Spa Progress Notes', 'Wallet Transaction']
 			},
 			{
 				'label': _(''),
@@ -20,7 +20,7 @@ def get_data():
 			},
             {
 				'label': _(''),
-				'items': ['Valet Parking','Online Order','Food Order Entry']
+				'items': ['Valet Parking','Online Order','Food Order Entry', 'Payment Log']
 			}
 		]
 	}

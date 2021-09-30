@@ -1,0 +1,44 @@
+{
+ "add_total_row": 1,
+ "columns": [],
+ "creation": "2021-07-25 03:35:35.783929",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "modified": "2021-07-25 03:35:45.537835",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Club Sales Summary",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Cart",
+ "report_name": "Club Sales Summary",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Managing Director"
+  },
+  {
+   "role": "General Manager"
+  },
+  {
+   "role": "Spa Manager"
+  },
+  {
+   "role": "CE Manager"
+  },
+  {
+   "role": "Fitness Manager"
+  },
+  {
+   "role": "Commercial Manager"
+  }
+ ]
+}

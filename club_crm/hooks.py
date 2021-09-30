@@ -110,11 +110,13 @@ scheduler_events = {
         "club_crm.club_crm.doctype.client.client.auto_checkout",
 		"club_crm.club_crm.doctype.memberships.memberships.update_membership_status",
 		"club_crm.club_crm.doctype.client_sessions.client_sessions.update_session_status",
-		"club_crm.club_crm.doctype.group_class.group_class.update_gc_status"
+		"club_crm.club_crm.doctype.group_class.group_class.update_gc_status",
+		"club_crm.club_crm.doctype.wallet_transaction.wallet_transaction.remove_draft_topup",
+		"club_crm.club_crm.doctype.valet_parking.valet_parking.release_parked_vehicle"
  	],
-	"hourly": [
-		"club_crm.club_crm.doctype.spa_appointment.spa_appointment.update_appointment_status"
-	],
+	# "hourly": [
+	# 	"club_crm.club_crm.doctype.cart.cart.create_payment_entry"
+	# ],
 	"all": [
 		"club_crm.club_crm.doctype.payment_log.payment_log.update_payments"
 	]

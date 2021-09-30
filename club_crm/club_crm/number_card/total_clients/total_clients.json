@@ -10,13 +10,13 @@
  "is_public": 1,
  "is_standard": 1,
  "label": "Total Clients",
- "modified": "2021-07-14 19:34:51.063445",
+ "modified": "2021-07-25 04:33:18.715031",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Total Clients",
  "owner": "Administrator",
  "report_function": "Sum",
  "show_percentage_stats": 1,
- "stats_time_interval": "Daily",
+ "stats_time_interval": "Weekly",
  "type": "Document Type"
 }

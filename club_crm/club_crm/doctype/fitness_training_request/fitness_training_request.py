@@ -17,8 +17,10 @@ class FitnessTrainingRequest(Document):
 		self.trainer_notification()
 	
 	def validate(self):
-		self.validate_table()
+		for i, item in enumerate(sorted(self.table_schedule, key=lambda item: str(item.date)), start=1):
+			item.idx = i
 		self.calculate_time()
+		self.validate_table()
 		self.set_payment_details()
 		self.create_sessions()
 		self.send_notification()
@@ -59,12 +61,32 @@ class FitnessTrainingRequest(Document):
 						msg += _('<b>{0}</b>.').format(expiry_date)
 						frappe.throw(msg, title=_('Schedule date error'))
 
-					appointments = frappe.get_all('Fitness Training Appointment', filters={'service_staff': self.trainer, 'appointment_date': row.date, 'appointment_time': row.time_from})
+					appointments = frappe.db.sql("""
+						select
+							name, service_staff, client_name, appointment_date, appointment_time, appointment_end_time
+						from
+							`tabFitness Training Appointment`
+						where
+							appointment_date=%s and appointment_status NOT IN ("Cancelled", "No Show")
+							and (service_staff=%s or client_name=%s) and
+							((appointment_time<%s and appointment_end_time>%s) or
+							(appointment_time>%s and appointment_time<%s) or
+							(appointment_time>%s and appointment_end_time<%s) or
+							(appointment_time=%s))
+						""", (row.date, self.trainer, self.client_name,
+						row.from_time, row.from_time,
+						row.from_time, row.to_time, 
+						row.from_time, row.to_time,
+						row.from_time))
+
+					# appointments = frappe.get_all('Fitness Training Appointment', filters={'service_staff': self.trainer, 'appointment_date': row.date, 'appointment_time': row.time_from})
 					if appointments:
-						msg = _('The schedule on this request for ')
-						msg += _('<b>{0}</b>').format(row.date)
-						msg += _('overlaps with one of your existing appointments.')
+						msg = _('One of the schedules on this request ')
+						msg += _('overlaps with your appointment for <b>{0}</b> on <b>{1}</b> at <b>{2}</b>.').format(
+						appointments[0][2], appointments[0][3], appointments[0][4])
 						frappe.throw(msg, title=_('Schedule date error'))
+				
+				self.scheduled_at = getdate()
 
 		if self.request_status == "Completed":
 			if not self.table_schedule:

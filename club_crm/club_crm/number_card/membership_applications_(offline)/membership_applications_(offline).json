@@ -1,0 +1,23 @@
+{
+ "aggregate_function_based_on": "",
+ "creation": "2021-07-25 04:18:40.827345",
+ "docstatus": 0,
+ "doctype": "Number Card",
+ "document_type": "Memberships Application",
+ "dynamic_filters_json": "[]",
+ "filters_json": "[[\"Memberships Application\",\"payment_status\",\"=\",\"Paid\",false],[\"Memberships Application\",\"application_status\",\"=\",\"Complete\",false],[\"Memberships Application\",\"online_application\",\"=\",0,false]]",
+ "function": "Count",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "label": "Membership Applications (Offline)",
+ "modified": "2021-07-25 04:18:40.827345",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Membership Applications (Offline)",
+ "owner": "Administrator",
+ "report_function": "Sum",
+ "show_percentage_stats": 1,
+ "stats_time_interval": "Weekly",
+ "type": "Document Type"
+}

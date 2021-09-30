@@ -50,6 +50,8 @@
   "membership_history",
   "sb_relation",
   "client_relation",
+  "section_break_40",
+  "wallet_balance",
   "allergy_and_medical_history",
   "allergies",
   "medication",
@@ -343,6 +345,7 @@
    "allow_in_quick_entry": 1,
    "fieldname": "mobile_no",
    "fieldtype": "Data",
+   "in_global_search": 1,
    "in_standard_filter": 1,
    "label": "Mobile",
    "length": 8,
@@ -392,6 +395,7 @@
   {
    "fieldname": "member_id",
    "fieldtype": "Data",
+   "in_global_search": 1,
    "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
@@ -513,6 +517,7 @@
    "options": "\nVaccinated\nFirst shot\nNot vaccinated\nNo info"
   },
   {
+<<<<<<< HEAD
    "fieldname": "wallet_balance",
    "fieldtype": "Currency",
    "label": "Wallet Balance"
@@ -521,13 +526,29 @@
    "fieldname": "coupon_amount",
    "fieldtype": "Currency",
    "label": "Coupon Amount"
+=======
+   "default": "0.0",
+   "fieldname": "wallet_balance",
+   "fieldtype": "Currency",
+   "label": "Wallet Balance",
+   "non_negative": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_40",
+   "fieldtype": "Section Break"
+>>>>>>> 7c0ae1cbc0f331aeacabc7dd76d22d6a4329518b
   }
  ],
  "icon": "fa fa-user",
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
+<<<<<<< HEAD
  "modified": "2021-08-13 13:09:12.735854",
+=======
+ "modified": "2021-08-25 16:48:05.805546",
+>>>>>>> 7c0ae1cbc0f331aeacabc7dd76d22d6a4329518b
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",

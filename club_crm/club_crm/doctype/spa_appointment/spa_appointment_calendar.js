@@ -11,10 +11,26 @@ frappe.views.calendar["Spa Appointment"] = {
     },
     gantt: false,
     options: {
+        // customButtons: {
+        //     gotoDate: {
+        //         text: 'Date',
+        //         buttonIcons: 'fa fa-calendar',
+        //         click: function() {
+
+        //             $(this).datepicker({
+        //                 autoclose: true
+        //             });
+        //             $(this).datepicker().on('changeDate', function(e) {
+        //                 $('#fullcalendar').fullCalendar('gotoDate', e.date);
+        //             });
+        //             $(this).datepicker('show');
+        //         }
+        //     },
+        // },
         header: {
             left: 'prev, title, next',
             center: 'today',
-            right: ' listOneWeek, listOneDay, agendaOneDay, agendaOneWeek, timelineOneDay'
+            right: ' listOneWeek, listOneDay, agendaOneDay, agendaOneWeek'
         },
         views: {
             listOneDay: {
@@ -35,7 +51,7 @@ frappe.views.calendar["Spa Appointment"] = {
                 titleFormat: 'ddd, DD MMMM YYYY',
                 duration: { days: 1 },
                 buttonText: 'Day',
-                slotDuration: "00:30",
+                slotDuration: "01:00",
                 slotLabelInterval: "01:00",
                 minTime: "08:00:00",
                 maxTime: "22:00:00"
@@ -47,14 +63,14 @@ frappe.views.calendar["Spa Appointment"] = {
                 slotDuration: "01:00:00",
                 minTime: "08:00:00",
                 maxTime: "22:00:00"
-            },
-            timelineOneDay: {
-                type: 'timeline',
-                duration: { days: 1 },
-                buttonText: 'Timeline',
-                minTime: "08:00:00",
-                maxTime: "22:00:00"
             }
+            // timelineOneDay: {
+            //     type: 'timeline',
+            //     duration: { days: 1 },
+            //     buttonText: 'Timeline',
+            //     minTime: "07:00:00",
+            //     maxTime: "22:00:00"
+            // }
         },
         resources: function(callback) {
             return frappe.call({
@@ -70,26 +86,36 @@ frappe.views.calendar["Spa Appointment"] = {
         defaultView: 'agendaOneDay',
         allDaySlot: false,
         slotEventOverlap: false,
-        editable: false
-            // eventRender: function(eventObj, $el) {
-            // 	$el.popover({
-            // 	  title: "Notes",
-            // 	  html: true,
-            // 	  content: eventObj.description,
-            // 	  trigger: 'hover',
-            // 	  placement: 'top',
-            // 	  container: 'body'
-            // 	});
-            //   },
+        editable: false,
+        // eventMouseover: function(event, jsEvent, view) {
+        //     $("[data-fieldname=name]").mouseover(function() {
+        //         frappe.msgprint("hello")
+        //     })
+        // },
+        // $event.mouseover(function() {
+        //     console.log("Hello");
+        // })
+        // eventRender: function(event, jsEvent, view) {
+        //     $("[data-fieldname=name]").mouseover(function() {
+        //         frappe.msgprint("hello")
+        //     })
+        // },
+        // eventRender: function(eventObj, $el) {
+        //     $el.mouseover({
+        //         alert(eventObj);
+        //     })
+        // },
     },
     color_map: {
-        "paid": "blue",
-        "open": "purple",
-        "scheduled": "green",
-        "checked-in": "yellow",
-        "no-show": "red",
-        "draft": "pink",
-        "completed": "blue",
+        "paid_scheduled": "green",
+        "paid_open": "purple",
+        "paid_check": "dark-green",
+        "paid_complete": "blue",
+        "noshow_cancel": "gray",
+        "unpaid_scheduled": "red",
+        "unpaid_open_draft": "pink",
+        "unpaid_check": "orange",
+        "unpaid_complete": "yellow",
         "background": "#b9fff5"
     },
     get_events_method: "club_crm.club_crm.doctype.spa_appointment.spa_appointment.get_events",
@@ -97,20 +123,26 @@ frappe.views.calendar["Spa Appointment"] = {
         if (data.rendering == "background") {
             return "background";
         }
-        if (data.payment_status == "Paid") {
-            return "paid";
-        } else if (data.appointment_status == "Open") {
-            return "open";
-        } else if (data.appointment_status == "Scheduled") {
-            return "scheduled";
-        } else if (data.appointment_status == "Checked-in") {
-            return "checked-in";
-        } else if (data.appointment_status == "No Show") {
-            return "no-show";
-        } else if (data.appointment_status == "Draft") {
-            return "draft";
-        } else if (data.appointment_status == "Completed" && payment_status == "Paid") {
-            return "completed";
+        if (data.payment_status == "Paid" && data.appointment_status == "Scheduled") {
+            return "paid_scheduled";
+        } else if (data.payment_status == "Paid" && data.appointment_status == "Open") {
+            return "paid_open";
+        } else if (data.payment_status == "Paid" && data.appointment_status == "Checked-in") {
+            return "paid_check";
+        } else if (data.payment_status == "Paid" && data.appointment_status == "Complete") {
+            return "paid_complete";
+        } else if (data.appointment_status == "No Show" || data.appointment_status == "Cancelled") {
+            return "noshow_cancel";
+        } else if ((data.payment_status == "Not Paid" || data.payment_status == "Added to cart") && data.appointment_status == "Scheduled") {
+            return "unpaid_scheduled";
+        } else if ((data.payment_status == "Not Paid" || data.payment_status == "Added to cart") && data.appointment_status == "Open") {
+            return "unpaid_open_draft";
+        } else if ((data.payment_status == "Not Paid" || data.payment_status == "Added to cart") && data.appointment_status == "Checked-in") {
+            return "unpaid_check";
+        } else if ((data.payment_status == "Not Paid" || data.payment_status == "Added to cart") && data.appointment_status == "Complete") {
+            return "unpaid_complete";
+        } else if ((data.payment_status == "Not Paid" || data.payment_status == "Added to cart") && data.appointment_status == "Draft") {
+            return "unpaid_open_draft";
         }
     }
 };

@@ -285,14 +285,23 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Client Reports",
-   "link_to": "Client",
+   "label": "Client Summary",
+   "link_to": "Client Summary",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Club Sales Summary",
+   "link_to": "Club Sales Summary",
    "link_type": "Report",
    "onboard": 0,
    "type": "Link"
   }
  ],
- "modified": "2021-07-14 18:08:45.713102",
+ "modified": "2021-07-25 04:49:13.635536",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club CRM",

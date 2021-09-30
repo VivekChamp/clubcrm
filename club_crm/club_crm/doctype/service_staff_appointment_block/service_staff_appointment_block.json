@@ -1,0 +1,143 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2021-08-29 13:55:15.939665",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "staff_category",
+  "staff_name",
+  "column_break_3",
+  "date",
+  "from_time",
+  "to_time",
+  "column_break_7",
+  "reason",
+  "from_time_dt",
+  "to_time_dt",
+  "from_datetime",
+  "to_datetime",
+  "naming_series",
+  "title"
+ ],
+ "fields": [
+  {
+   "default": "Spa",
+   "fieldname": "staff_category",
+   "fieldtype": "Select",
+   "label": "Staff Category",
+   "options": "\nSpa\nFitness\nCEC",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "staff_name",
+   "fieldtype": "Link",
+   "label": "Staff Name",
+   "options": "Service Staff",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "from_time",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "From Time",
+   "options": "\n06:00:00 AM\n06:30:00 AM\n07:00:00 AM\n07:30:00 AM\n08:00:00 AM\n08:30:00 AM\n09:00:00 AM\n09:30:00 AM\n10:00:00 AM\n10:30:00 AM\n11:00:00 AM\n11:30:00 AM\n12:00:00 PM\n12:30:00 PM\n01:00:00 PM\n01:30:00 PM\n02:00:00 PM\n02:30:00 PM\n03:00:00 PM\n03:30:00 PM\n04:00:00 PM\n04:30:00 PM\n05:00:00 PM\n05:30:00 PM\n06:00:00 PM\n06:30:00 PM\n07:00:00 PM\n07:30:00 PM\n08:00:00 PM\n08:30:00 PM\n09:00:00 PM\n09:30:00 PM\n10:00:00 PM"
+  },
+  {
+   "fieldname": "to_time",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "To TIme",
+   "options": "\n06:00:00 AM\n06:30:00 AM\n07:00:00 AM\n07:30:00 AM\n08:00:00 AM\n08:30:00 AM\n09:00:00 AM\n09:30:00 AM\n10:00:00 AM\n10:30:00 AM\n11:00:00 AM\n11:30:00 AM\n12:00:00 PM\n12:30:00 PM\n01:00:00 PM\n01:30:00 PM\n02:00:00 PM\n02:30:00 PM\n03:00:00 PM\n03:30:00 PM\n04:00:00 PM\n04:30:00 PM\n05:00:00 PM\n05:30:00 PM\n06:00:00 PM\n06:30:00 PM\n07:00:00 PM\n07:30:00 PM\n08:00:00 PM\n08:30:00 PM\n09:00:00 PM\n09:30:00 PM\n10:00:00 PM"
+  },
+  {
+   "fieldname": "reason",
+   "fieldtype": "Small Text",
+   "label": "Reason"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "from_datetime",
+   "fieldtype": "Datetime",
+   "hidden": 1,
+   "label": "From Datetime",
+   "read_only": 1
+  },
+  {
+   "fieldname": "to_datetime",
+   "fieldtype": "Datetime",
+   "hidden": 1,
+   "label": "To Datetime",
+   "read_only": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "SSAB-.YYYY.-",
+   "read_only": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Title",
+   "read_only": 1
+  },
+  {
+   "fieldname": "from_time_dt",
+   "fieldtype": "Time",
+   "hidden": 1,
+   "label": "From Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "to_time_dt",
+   "fieldtype": "Time",
+   "hidden": 1,
+   "label": "To Time",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2021-08-29 19:13:24.454485",
+ "modified_by": "Administrator",
+ "module": "Club CRM",
+ "name": "Service Staff Appointment Block",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "title",
+ "track_changes": 1
+}

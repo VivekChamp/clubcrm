@@ -44,7 +44,11 @@
   "boho_discount",
   "grams_discount",
   "accounting_details_section",
-  "item"
+  "membership_fee_item",
+  "revenue_account",
+  "column_break_40",
+  "joining_fee_item",
+  "revenue_account_joining_fee"
  ],
  "fields": [
   {
@@ -271,14 +275,38 @@
    "label": "Accounting Details"
   },
   {
-   "fieldname": "item",
+   "fieldname": "membership_fee_item",
    "fieldtype": "Link",
-   "label": "Link to Item Master",
+   "label": "Link to Membership Fee Item",
    "options": "Item"
+  },
+  {
+   "fieldname": "joining_fee_item",
+   "fieldtype": "Link",
+   "label": "Link to Joining Fee Item",
+   "options": "Item"
+  },
+  {
+   "fieldname": "column_break_40",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "revenue_account",
+   "fieldtype": "Link",
+   "label": "Revenue Account for Membership",
+   "options": "Account",
+   "read_only": 1
+  },
+  {
+   "fieldname": "revenue_account_joining_fee",
+   "fieldtype": "Link",
+   "label": "Revenue Account for Joining Fee",
+   "options": "Account",
+   "read_only": 1
   }
  ],
  "links": [],
- "modified": "2021-07-11 01:02:09.666643",
+ "modified": "2021-08-21 17:14:30.648731",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Memberships Plan",

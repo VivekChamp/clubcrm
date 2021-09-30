@@ -55,14 +55,13 @@ frappe.ui.form.on("Cart", "onload", function(frm) {
             }
         }
     }
+
+    // Fetch items in Cart Products for item groups which has retail sale enabled
     frm.fields_dict.cart_product.grid.get_field("cart_item").get_query = function() {
         return {
-            filters: [
-                ["Item", "item_group", "in", ["Body Care", "Facial Products", "Hair Care", "Skin Care", "Miscellaneous", "Perfumes"]]
-            ]
+            query: "club_crm.club_crm.doctype.cart.cart.get_products"
         }
     }
-
 });
 
 frappe.ui.form.on("Cart", {
@@ -135,6 +134,7 @@ frappe.ui.form.on("Cart", {
                                 fieldname: 'wallet_balance',
                                 fieldtype: 'Currency',
                                 depends_on: 'eval:doc.mode_of_payment == "Wallet"',
+<<<<<<< HEAD
                                 default: frm.doc.wallet_amount,
                             },
                             {
@@ -142,6 +142,10 @@ frappe.ui.form.on("Cart", {
                                 fieldname: 'coupon_amount',
                                 fieldtype: 'Currency',
                                 default: frm.doc.coupon_amount
+=======
+                                default: frm.doc.wallet_balance,
+                                read_only: 1
+>>>>>>> 7c0ae1cbc0f331aeacabc7dd76d22d6a4329518b
                             },
                             {
                                 label: 'Transaction Reference #',
@@ -151,15 +155,24 @@ frappe.ui.form.on("Cart", {
                         ],
                         primary_action_label: ('Pay'),
                         primary_action: function() {
+<<<<<<< HEAD
 			    var data = d.get_values();
                             if(data.amount_paid > data.wallet_balance){
 				frappe.throw(__('Payment amount exceeds your wallet balance limit'));
 				}
+=======
+                            var data = d.get_values();
+                            if (data.amount_paid > data.wallet_balance) {
+                                frappe.throw(__('Payment amount exceeds the wallet balance.'));
+                            }
+>>>>>>> 7c0ae1cbc0f331aeacabc7dd76d22d6a4329518b
                             d.hide();
                             frm.save();
                             let row = frappe.model.add_child(frm.doc, 'Cart Payment', 'payment_table');
+                            frappe.model.set_value(row.doctype, row.name, 'payment_date', d.get_value('transaction_date'));
                             frappe.model.set_value(row.doctype, row.name, 'mode_of_payment', d.get_value('mode_of_payment'));
                             frappe.model.set_value(row.doctype, row.name, 'paid_amount', d.get_value('amount_paid'));
+                            frappe.model.set_value(row.doctype, row.name, 'transaction_reference', d.get_value('transaction_reference'));
                         }
                     });
                     d.show();
@@ -181,7 +194,7 @@ frappe.ui.form.on("Cart", {
     net_total_appointments: function(frm) {
         var net_total = 0.0;
         var grand_total = 0.0;
-        net_total = frm.doc.net_total_appointments + frm.doc.net_total_sessions + frm.doc.net_total_products;
+        net_total = frm.doc.net_total_appointments + frm.doc.net_total_sessions + frm.doc.net_total_products + frm.doc.total_tips;
         frm.set_value('net_total', net_total);
         grand_total = frm.doc.net_total - frm.doc.discount_amount
         frm.set_value('grand_total', grand_total);
@@ -189,7 +202,7 @@ frappe.ui.form.on("Cart", {
     net_total_sessions: function(frm) {
         var net_total = 0.0;
         var grand_total = 0.0;
-        net_total = frm.doc.net_total_appointments + frm.doc.net_total_sessions + frm.doc.net_total_products;
+        net_total = frm.doc.net_total_appointments + frm.doc.net_total_sessions + frm.doc.net_total_products + frm.doc.total_tips;
         frm.set_value('net_total', net_total);
         grand_total = frm.doc.net_total - frm.doc.discount_amount
         frm.set_value('grand_total', grand_total);
@@ -197,7 +210,15 @@ frappe.ui.form.on("Cart", {
     net_total_products: function(frm) {
         var net_total = 0.0;
         var grand_total = 0.0;
-        net_total = frm.doc.net_total_appointments + frm.doc.net_total_sessions + frm.doc.net_total_products;
+        net_total = frm.doc.net_total_appointments + frm.doc.net_total_sessions + frm.doc.net_total_products + frm.doc.total_tips;
+        frm.set_value('net_total', net_total);
+        grand_total = frm.doc.net_total - frm.doc.discount_amount
+        frm.set_value('grand_total', grand_total);
+    },
+    total_tips: function(frm) {
+        var net_total = 0.0;
+        var grand_total = 0.0;
+        net_total = frm.doc.net_total_appointments + frm.doc.net_total_sessions + frm.doc.net_total_products + frm.doc.total_tips;
         frm.set_value('net_total', net_total);
         grand_total = frm.doc.net_total - frm.doc.discount_amount
         frm.set_value('grand_total', grand_total);
@@ -310,6 +331,18 @@ frappe.ui.form.on("Cart Session", {
         frm.set_value('net_total_sessions', total_sessions);
     },
     cart_session_remove: function(frm) {
+        frm.save();
+    }
+});
+
+frappe.ui.form.on("Cart Tips", {
+    tips_amount: function(frm, cdt, cdn) {
+        var d = locals[cdt][cdn];
+        var total_tips = 0.0;
+        frm.doc.cart_tips.forEach(function(d) { total_tips += d.tips_amount; });
+        frm.set_value('total_tips', total_tips);
+    },
+    cart_tips_remove: function(frm) {
         frm.save();
     }
 });

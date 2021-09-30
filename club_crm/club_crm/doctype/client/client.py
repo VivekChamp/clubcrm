@@ -3,6 +3,7 @@ import frappe
 import dateutil
 from frappe.utils import getdate
 from frappe.model.document import Document
+from club_crm.club_crm.doctype.wallet_transaction.wallet_transaction import get_balance_client
 
 class Client(Document):
     def after_insert(self):
@@ -118,26 +119,41 @@ def medical_history(client_id,allergies,medication,history,notes):
 
 @frappe.whitelist()
 def create_missing_customers():
-    client_list = frappe.get_all('Clients')
+    client_list = frappe.get_all('Client')
     for clients in client_list:
-        client = frappe.get_doc('Clients', clients.name)
+        client = frappe.get_doc('Client', clients.name)
+        if client.email:
+            email = client.email
+        else:
+            email = None
         if not client.customer:
-            customer = frappe.get_doc({
+            doc = frappe.get_doc({
             'doctype': 'Customer',
             'customer_name': client.client_name,
             'client_type': 'Club Client',
             'customer_group': 'Clients',
             'territory' : 'Qatar',
             'gender': client.gender,
-            'email_id': client.email,
+            'email_id': email,
             'client_id': client.name,
             'so_required':1,
             'dn_required':1,
             'customer_type': 'Individual',
-        }).insert(ignore_permissions=True,ignore_mandatory=True)
-        frappe.db.set_value('Client', client.name, {
-            'customer': customer.name,
-            'customer_group': customer.customer_group,
-            'territory': customer.territory
-        })
+            })
+            doc.insert(ignore_permissions=True,ignore_mandatory=True)
+
+            frappe.db.set_value('Client', client.name, {
+                'customer': doc.name,
+                'customer_group': doc.customer_group,
+                'territory': doc.territory
+            })
+            frappe.db.commit()
+
+@frappe.whitelist()
+def update_wallet_balance():
+    client_list = frappe.get_all('Client')
+    for clients in client_list:
+        client = frappe.get_doc('Client', clients.name)
+        wallet_balance = get_balance_client(client.name)
+        frappe.db.set_value('Client', client.name, 'wallet_balance', wallet_balance, update_modified=False)
         frappe.db.commit()

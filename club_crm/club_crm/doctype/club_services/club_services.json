@@ -26,13 +26,13 @@
   "column_break_17",
   "validity",
   "column_break_19",
-  "cost_center",
-  "revenue_account",
   "item_details_section",
   "item",
   "item_name",
-  "column_break_20",
   "item_group",
+  "column_break_20",
+  "revenue_account",
+  "cost_center",
   "section_break_39",
   "image"
  ],
@@ -144,15 +144,15 @@
   },
   {
    "fieldname": "cost_center",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "label": "Cost Center",
-   "read_only": 1
+   "options": "Cost Center"
   },
   {
    "fieldname": "revenue_account",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "label": "Revenue Account",
-   "options": "\n40100005 - Fitness Services - KC"
+   "options": "Account"
   },
   {
    "collapsible": 1,
@@ -181,6 +181,7 @@
    "fetch_from": "item.item_group",
    "fieldname": "item_group",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Item Group",
    "options": "Item Group",
    "read_only": 1
@@ -198,7 +199,7 @@
  ],
  "image_field": "image",
  "links": [],
- "modified": "2021-07-11 01:07:02.352646",
+ "modified": "2021-08-19 16:30:18.753215",
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Club Services",
