@@ -365,18 +365,6 @@
    "fieldtype": "Section Break"
   },
   {
-<<<<<<< HEAD
-   "fetch_from": "client_id.wallet_balance",
-   "fieldname": "wallet_amount",
-   "fieldtype": "Currency",
-   "label": "Wallet Amount"
-  },
-  {
-   "fetch_from": "client_id.coupon_amount",
-   "fieldname": "coupon_amount",
-   "fieldtype": "Currency",
-   "label": "Coupon Amount"
-=======
    "fieldname": "column_break_6",
    "fieldtype": "Column Break"
   },
@@ -421,16 +409,11 @@
    "hidden": 1,
    "label": "Wallet Balance",
    "read_only": 1
->>>>>>> 7c0ae1cbc0f331aeacabc7dd76d22d6a4329518b
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
-<<<<<<< HEAD
- "modified": "2021-08-13 13:11:19.975863",
-=======
  "modified": "2021-08-26 16:42:23.856336",
->>>>>>> 7c0ae1cbc0f331aeacabc7dd76d22d6a4329518b
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Cart",

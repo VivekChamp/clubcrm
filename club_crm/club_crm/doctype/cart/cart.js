@@ -134,18 +134,8 @@ frappe.ui.form.on("Cart", {
                                 fieldname: 'wallet_balance',
                                 fieldtype: 'Currency',
                                 depends_on: 'eval:doc.mode_of_payment == "Wallet"',
-<<<<<<< HEAD
-                                default: frm.doc.wallet_amount,
-                            },
-                            {
-                                label: 'Coupon Amount',
-                                fieldname: 'coupon_amount',
-                                fieldtype: 'Currency',
-                                default: frm.doc.coupon_amount
-=======
                                 default: frm.doc.wallet_balance,
                                 read_only: 1
->>>>>>> 7c0ae1cbc0f331aeacabc7dd76d22d6a4329518b
                             },
                             {
                                 label: 'Transaction Reference #',
@@ -155,17 +145,10 @@ frappe.ui.form.on("Cart", {
                         ],
                         primary_action_label: ('Pay'),
                         primary_action: function() {
-<<<<<<< HEAD
-			    var data = d.get_values();
-                            if(data.amount_paid > data.wallet_balance){
-				frappe.throw(__('Payment amount exceeds your wallet balance limit'));
-				}
-=======
                             var data = d.get_values();
                             if (data.amount_paid > data.wallet_balance) {
                                 frappe.throw(__('Payment amount exceeds the wallet balance.'));
                             }
->>>>>>> 7c0ae1cbc0f331aeacabc7dd76d22d6a4329518b
                             d.hide();
                             frm.save();
                             let row = frappe.model.add_child(frm.doc, 'Cart Payment', 'payment_table');
