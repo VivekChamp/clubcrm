@@ -517,16 +517,6 @@
    "options": "\nVaccinated\nFirst shot\nNot vaccinated\nNo info"
   },
   {
-<<<<<<< HEAD
-   "fieldname": "wallet_balance",
-   "fieldtype": "Currency",
-   "label": "Wallet Balance"
-  },
-  {
-   "fieldname": "coupon_amount",
-   "fieldtype": "Currency",
-   "label": "Coupon Amount"
-=======
    "default": "0.0",
    "fieldname": "wallet_balance",
    "fieldtype": "Currency",
@@ -537,18 +527,13 @@
   {
    "fieldname": "section_break_40",
    "fieldtype": "Section Break"
->>>>>>> 7c0ae1cbc0f331aeacabc7dd76d22d6a4329518b
   }
  ],
  "icon": "fa fa-user",
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
-<<<<<<< HEAD
- "modified": "2021-08-13 13:09:12.735854",
-=======
  "modified": "2021-08-25 16:48:05.805546",
->>>>>>> 7c0ae1cbc0f331aeacabc7dd76d22d6a4329518b
  "modified_by": "Administrator",
  "module": "Club CRM",
  "name": "Client",
